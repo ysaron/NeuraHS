@@ -1,0 +1,21 @@
+{% extends 'core/base.html' %}
+ 
+{% block content %}
+{% load custom_filters %}
+<h1>{{ title }}</h1>
+<form action="{% url 'gallery:createcard' %}" method="post">
+    {% csrf_token %}    <!-- генерация скрытого поля с уникальным токеном (защита от CSRF-атак) -->
+    <div class="form-error">{{ form.non_field_errors }}</div>   <!-- вывод ошибок валидации, не связанных с заполнением полей -->
+    <table class="table align-middle" id="tFCC">
+    {% for f in form %}
+        <tr class="{{ f.name|display }}">
+            <td><label class="" for="{{ f.id_for_label }}"><b>{{ f.label }}</b></label></td>
+            <td>{{ f }}</td>
+            <td><i>{{ f.help_text }}</i></td>
+            <td class="form-error"><b>{{ f.errors }}</b></td>
+        </tr>
+    {% endfor %}
+    </table>
+    <button type="submit" class="btn btn-outline-success">Создать</button>
+</form>
+{% endblock %}

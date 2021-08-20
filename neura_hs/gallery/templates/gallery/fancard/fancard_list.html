@@ -1,0 +1,56 @@
+{% extends "core/base.html" %}
+
+{% block page_title %}
+    <h1>{{ title }}</h1>
+{% endblock %}
+
+{% block search %}
+    <form class="form-inline" method="get">
+        <div class="row">
+            <div class="col">
+                <label class="form-label">{{ form.name.label }}</label>
+                <p class="form-input">{{ form.name }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button type="submit" class="btn btn-outline-dark">Поиск</button>
+            </div>
+        </div>
+    </form>
+    <hr>
+{% endblock %}
+
+{% block content %}
+{% load custom_filters %}
+{% if fancards %}
+    {% if not is_paginated %}
+        <div class="pagination">
+            <span class="page-item disabled"><a class="page-link">Всего результатов: {{ fancards.count }}</a></span>
+        </div>
+        <hr>
+    {% endif %}
+    <table class="table" id="tRCL">
+      <thead class="darktable">
+        <tr>
+          <th style="width: 40%;">Название</th>
+          <th style="width: 20%;">Автор</th>
+          <th style="width: 15%;">Тип</th>
+          <th style="width: 25%;">Дата создания</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for card in fancards %}
+        <tr class="{{ card|cclass }} {{ card|rar }} flex-fill position-relative hl-cell">
+            <td><a class="stretched-link" href="{{ card.get_absolute_url }}">{{ card.name }}</a></td>
+            <td>{{ card.author }}</td>
+            <td>{{ card.get_card_type_display }}</td>
+            <td>{{ card.creation_date|date:"d.m.Y H:i:s" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+{% else %}
+  <p>Не обнаружено ни одной карты...</p>
+{% endif %}
+{% endblock %}

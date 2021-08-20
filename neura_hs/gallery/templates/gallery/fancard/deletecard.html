@@ -1,0 +1,11 @@
+{% extends 'core/base.html' %}
+ 
+{% block content %}
+    <h1>{{ title }}</h1>
+    <form action="{% url 'gallery:deletecard' card_slug=slug %}" method="post">
+        {% csrf_token %}    <!-- генерация скрытого поля с уникальным токеном (защита от CSRF-атак) -->
+        <p>Вы уверены, что хотите удалить карту "{{ name }}"?</p>
+        <button type="submit" class="btn btn-outline-danger">Удалить</button>
+    </form>
+    <hr>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<h1>Галерея: главная</h1>
+
+<h2>Статистика</h2>
+  <hr>
+  <p>Статистика фан-карт NeuraHS:</p>
+  <ul>
+    <li><strong>Всего карт:</strong> {{ num_fancards }}</li>
+    <li><strong>Легендарных карт:</strong> {{ num_leg_fancards }}</li>
+  </ul>
+  <hr>
+  <p>Статистика карт Hearthstone:</p>
+  <ul>
+    <li><strong>Всего карт:</strong> {{ num_realcards_all }}</li>
+    <li><strong>Из них коллекционных:</strong> {{ num_realcards_coll }}</li>
+    <li><strong>Легендарных карт:</strong> {{ num_realcards_leg }}</li>
+    <li><strong>Эпических карт:</strong> {{ num_realcards_epic }}</li>
+    <li><strong>Редких карт:</strong> {{ num_realcards_rare }}</li>
+    <li><strong>Обычных карт:</strong> {{ num_realcards_common }}</li>
+    <li><strong>Карт с Боевым кличем:</strong> {{ num_realcards_bc }}</li>
+    <li><strong>Карт с Предсмертным хрипом:</strong> {{ num_realcards_dr }}</li>
+    <li><strong>Карт с Похищением жизни:</strong> {{ num_realcards_lf }}</li>
+    <li><strong>Заклинаний:</strong> {{ num_realcards_spells }}</li>
+  </ul>
+  <hr>
+  <p>Статистика нейрокарт:</p>
+  <ul>
+    <li>Нет нейрокарт - нет статистики...</li>
+  </ul>
+{% endblock %}

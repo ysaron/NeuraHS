@@ -1,0 +1,476 @@
+html, body {
+	font-family: "Consolas";
+    background-color: #d3d3d3;
+	color: #262626;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	width: 100%;
+
+	scroll-behavior: smooth;
+}
+
+textarea.no-resize {
+  resize: none;
+}
+
+hr {
+  color: #ffffff;
+}
+
+h1 {
+  margin-top: 10px;
+  color: #ffffff;
+  text-align: center;
+  text-shadow: -2px -2px 2px #000, 1px -2px 2px #000, -2px 1px 2px #000, 1px 1px 2px #000;
+}
+h1:hover {
+  color: #333;
+}
+.detailhead {
+  text-align: center;
+  padding: px;
+}
+
+#footer {
+  background-color: #333;
+  color: white;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 30px;
+  text-align: right;
+  height: auto;
+  box-shadow: 0 50vh 6px 50vh #333;
+}
+
+/* Гиперссылки */
+a:link, a:visited {
+  color: #000000;
+  background-color: transparent;
+  text-decoration: none;
+}
+a:hover, a:active {
+  color: tomato;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+/* Таблицы *//*
+td.hl-cell {
+  text-align: center;
+}
+
+td.hl-cell:hover {
+  background-color: white;
+  box-shadow: 0 0 0 3px #262626;
+}
+
+td.hl-cell a:hover {
+  color: #262626;
+}*/
+
+/* Top menu bar */
+.topmenu {
+  overflow: hidden;
+  background-color: #333;
+  position: sticky;
+  z-index: 4;
+  top: 0;
+  width: 100%;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #333;
+}
+.topmenu a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 5px 5px;
+  text-decoration: none;
+  font-size: 20px;
+  width: 20%;
+}
+.topmenu a:hover {
+  background: #d3d3d3;
+  color: black;
+}
+.topmenu a.logbar {
+  float: right;
+}
+.topmenu a.logbar-in {
+  color: #00b300;
+}
+.topmenu a.logbar-out {
+  color: #e60000;
+}
+.topmenu a.logbar-out:hover {
+  color: #00b300;
+}
+#logout:hover {
+  color: #e60000;
+}
+
+.sidemenu {
+  overflow: hidden;
+  background-color: #333;
+  color: #f2f2f2;
+  position: sticky;
+  z-index: 3;
+  top: 46.5px;
+  width: 100%;
+  border-style: solid;
+  border-color: #333;
+  border-width: 2px;
+  margin-top: 3px;
+  margin-bottom: 20px;
+}
+
+.sidemenu a {
+  display: block;
+  color: #f2f2f2;
+  padding: 8px 8px;
+  text-decoration: none;
+}
+.sidemenu a:hover {
+  background: #d3d3d3;
+  color: black;
+}
+a.sub {
+  background: #595959;
+  padding-left: 20px;
+}
+
+/* Центрирование баннера */
+.banner {
+  max-width: 100%;
+  max-height: 100vh;
+  margin: auto;
+  margin-top: 3.5px;
+  margin-bottom: 10px;
+}
+/* Пагинация */
+.pagination span.active a.page-link {
+  background-color: #333;
+  color: white;
+  border-color: #ffffff;
+}
+.pagination span.active a.page-link:hover {color: #ffffff;}
+.pagination span:hover a.page-link {
+  color: #333;
+}
+.pagination span a.page-link {
+  box-shadow: none;
+}
+
+/* Таблицы */
+.table thead.darktable {
+  background-color: #333;
+  color: white;
+}
+
+/* Формы */
+.form-input {
+    width: 300px;
+    font-size: 16px;
+}
+.form-search {
+    width: 250px;
+    font-size: 18px;
+}
+.form-label {
+    padding-left: 3px;
+    margin-right: 3px;
+}
+.form-error ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    color: tomato;
+}
+.form-button {
+    min-width: 200px;
+    font-size: 16px;
+}
+.form-mod {
+  padding: 0px;
+  margin-bottom: 8px;
+  margin-top: 5px;
+}
+
+/* ------- Оформление классов Hearthstone ------- */
+/* Detail */
+.module {
+  padding: 6px;
+  background-color: #d3d3d3;
+  border: 1px solid black;
+}
+.module-wrap {
+  margin-top: 3.5px;
+  padding: 8px;
+  border: 1px solid black;
+}
+.module-wrap-mage {
+  background: linear-gradient(305deg, #6699ff, #e6eeff, #6699ff);
+}
+.module-wrap-priest {
+  background: linear-gradient(305deg, #ffffb3, #ffffff, #ffffb3);
+}
+.module-wrap-warlock {
+  background: linear-gradient(305deg, #4d004d, #cc00cc, #4d004d);
+}
+.module-wrap-druid {
+  background: linear-gradient(305deg, #33ff99, #b3ffd9, #33ff99);
+}
+.module-wrap-rogue {
+  background: linear-gradient(305deg, #001d25, #b3b3b3, #001d25);
+}
+.module-wrap-shaman {
+  background: linear-gradient(305deg, #000066, #3333ff, #000066);
+}
+.module-wrap-paladin {
+  background: linear-gradient(305deg, #ffff00, #ffffe6, #ffff00);
+}
+.module-wrap-warrior {
+  background: linear-gradient(305deg, #4d0000, #ff0000, #4d0000);
+}
+.module-wrap-hunter {
+  background: linear-gradient(305deg, #264d00, #73e600, #264d00);
+}
+.module-wrap-demonhunter {
+  background: linear-gradient(305deg, #004d4d, #00cccc, #004d4d);
+}
+.module-wrap-neutral {
+  background: linear-gradient(305deg, #b3b3b3, #f2f2f2, #b3b3b3);
+}
+.module-wrap-deathknight {
+  background: linear-gradient(305deg, #1e1e2f, #7373a5, #1e1e2f);
+}
+.module-wrap-dream {
+  background: linear-gradient(305deg, #cc33ff, #f9e6ff, #cc33ff);
+}
+.module-wrap-multiclass {
+  background: linear-gradient(305deg, #cc0000, #ffff00, #0033cc);
+}
+
+/* List */
+.mage:hover {
+  box-shadow: 0 0 0 1px #262626;
+  /*background: linear-gradient(180deg, rgba(0,175,255,0.4) 0%, rgba(116,211,255,0.3) 50%, rgba(0,175,255,0.4) 100%);*/
+  background: linear-gradient(305deg, #6699ff, #e6eeff, #6699ff);
+  color: #000000;
+  background-size: 600% 600%;
+  -webkit-animation: CardLink 4s ease infinite;
+  -moz-animation: CardLink 4s ease infinite;
+  animation: CardLink 4s ease infinite;
+}
+.mage a:hover {color: #000000;}
+
+.priest:hover {
+  box-shadow: 0 0 0 1px #262626;
+  /*background: linear-gradient(180deg, rgba(255,255,227,1) 0%, rgba(255,255,227,0.2) 50%, rgba(255,255,227,0.8) 100%);*/
+  background: linear-gradient(305deg, #ffffb3, #ffffff, #ffffb3);
+  color: #000000;
+  background-size: 600% 600%;
+  -webkit-animation: CardLink 4s ease infinite;
+  -moz-animation: CardLink 4s ease infinite;
+  animation: CardLink 4s ease infinite;
+}
+.priest a:hover {color: #000000;}
+
+.warlock:hover {
+  box-shadow: 0 0 0 1px #262626;
+  /*background: linear-gradient(180deg, rgba(107,0,160,0.3) 0%, rgba(107,0,160,0.15) 50%, rgba(107,0,160,0.3) 100%);*/
+  background: linear-gradient(305deg, #4d004d, #cc00cc, #4d004d);
+  color: #ffffff;
+  background-size: 600% 600%;
+  -webkit-animation: CardLink 4s ease infinite;
+  -moz-animation: CardLink 4s ease infinite;
+  animation: CardLink 4s ease infinite;
+}
+.warlock a:hover {color: #ffffff}
+
+.druid:hover {
+  box-shadow: 0 0 0 1px #262626;
+  /*background: linear-gradient(180deg, rgba(0,255,90,0.3) 0%, rgba(0,255,90,0.1) 50%, rgba(0,255,90,0.3) 100%);*/
+  background: linear-gradient(305deg, #33ff99, #b3ffd9, #33ff99);
+  color: #000000;
+  background-size: 600% 600%;
+  -webkit-animation: CardLink 4s ease infinite;
+  -moz-animation: CardLink 4s ease infinite;
+  animation: CardLink 4s ease infinite;
+}
+.druid a:hover {color: #000000;}
+
+.shaman:hover {
+  box-shadow: 0 0 0 1px #262626;
+  /*background: linear-gradient(180deg, rgba(0,54,255,0.4) 0%, rgba(0,54,255,0.15) 50%, rgba(0,54,255,0.4) 100%);*/
+  background: linear-gradient(305deg, #000066, #3333ff, #000066);
+  color: #ffffff;
+  background-size: 600% 600%;
+  -webkit-animation: CardLink 4s ease infinite;
+  -moz-animation: CardLink 4s ease infinite;
+  animation: CardLink 4s ease infinite;
+}
+.shaman a:hover {color: #ffffff;}
+
+.rogue:hover {
+  box-shadow: 0 0 0 1px #262626;
+  /*background: linear-gradient(180deg, rgba(0,29,37,0.4) 0%, rgba(0,29,37,0.2) 50%, rgba(0,29,37,0.4) 100%);*/
+  background: linear-gradient(305deg, #001d25, #b3b3b3, #001d25);
+  color: #ffffff;
+  background-size: 600% 600%;
+  -webkit-animation: CardLink 4s ease infinite;
+  -moz-animation: CardLink 4s ease infinite;
+  animation: CardLink 4s ease infinite;
+}
+.rogue a:hover {color: #ffffff;}
+
+.paladin:hover {
+  box-shadow: 0 0 0 1px #262626;
+  /*background: linear-gradient(180deg, rgba(255,255,0,0.4) 0%, rgba(255,255,0,0.1) 50%, rgba(255,255,0,0.4) 100%);*/
+  background: linear-gradient(305deg, #ffff00, #ffffe6, #ffff00);
+  color: #000000;
+  background-size: 600% 600%;
+  -webkit-animation: CardLink 4s ease infinite;
+  -moz-animation: CardLink 4s ease infinite;
+  animation: CardLink 4s ease infinite;
+}
+.paladin a:hover {color: #000000;}
+
+.warrior:hover {
+  box-shadow: 0 0 0 1px #262626;
+  /*background: linear-gradient(180deg, rgba(102,0,0,0.4) 0%, rgba(102,0,0,0.2) 50%, rgba(102,0,0,0.4) 100%);*/
+  background: linear-gradient(305deg, #4d0000, #ff0000, #4d0000);
+  color: #ffffff;
+  background-size: 600% 600%;
+  -webkit-animation: CardLink 4s ease infinite;
+  -moz-animation: CardLink 4s ease infinite;
+  animation: CardLink 4s ease infinite;
+}
+.warrior a:hover {color: #ffffff;}
+
+.hunter:hover {
+  box-shadow: 0 0 0 1px #262626;
+  /*background: linear-gradient(180deg, rgba(0,203,0,0.4) 0%, rgba(0,203,0,0.15) 50%, rgba(0,203,0,0.4) 100%);*/
+  background: linear-gradient(305deg, #264d00, #73e600, #264d00);
+  color: #ffffff;
+  background-size: 600% 600%;
+  -webkit-animation: CardLink 4s ease infinite;
+  -moz-animation: CardLink 4s ease infinite;
+  animation: CardLink 4s ease infinite;
+}
+.hunter a:hover {color: #ffffff}
+
+.demonhunter:hover {
+  box-shadow: 0 0 0 1px #262626;
+  /*background: linear-gradient(180deg, rgba(0,128,128,0.4) 0%, rgba(0,128,128,0.15) 50%, rgba(0,128,128,0.4) 100%);*/
+  background: linear-gradient(305deg, #004d4d, #00cccc, #004d4d);
+  color: #ffffff;
+  background-size: 600% 600%;
+  -webkit-animation: CardLink 4s ease infinite;
+  -moz-animation: CardLink 4s ease infinite;
+  animation: CardLink 4s ease infinite;
+}
+.demonhunter a:hover {color: #ffffff;}
+
+.neutral:hover {
+  box-shadow: 0 0 0 1px #262626;
+  /*background: linear-gradient(180deg, rgba(212,212,212,1) 0%, rgba(242,242,242,1) 50%, rgba(212,212,212,1) 100%);*/
+  background: linear-gradient(305deg, #b3b3b3, #f2f2f2, #b3b3b3);
+  color: #000000;
+  background-size: 600% 600%;
+  -webkit-animation: CardLink 4s ease infinite;
+  -moz-animation: CardLink 4s ease infinite;
+  animation: CardLink 4s ease infinite;
+}
+.neutral a:hover {color: #000000;}
+
+.dream:hover {
+  box-shadow: 0 0 0 1px #262626;
+  background: linear-gradient(305deg, #cc33ff, #f9e6ff, #cc33ff);
+  color: #000000;
+  background-size: 600% 600%;
+  -webkit-animation: CardLink 4s ease infinite;
+  -moz-animation: CardLink 4s ease infinite;
+  animation: CardLink 4s ease infinite;
+}
+.dream a:hover {color: #000000;}
+
+.deathknight:hover {
+  box-shadow: 0 0 0 1px #262626;
+  background: linear-gradient(305deg, #1e1e2f, #7373a5, #1e1e2f);
+  color: #ffffff;
+  background-size: 600% 600%;
+  -webkit-animation: CardLink 4s ease infinite;
+  -moz-animation: CardLink 4s ease infinite;
+  animation: CardLink 4s ease infinite;
+}
+.deathknight a:hover {color: #ffffff;}
+
+.multiclass:hover {
+  box-shadow: 0 0 0 1px #262626;
+  /*background: linear-gradient(180deg, rgba(131,58,180,0.4) 0%, rgba(253,29,29,0.4) 50%, rgba(252,176,69,0.4) 100%);*/
+  background: linear-gradient(305deg, #cc0000, #ffff00, #0033cc);
+  color: #ffffff;
+  background-size: 600% 600%;
+  -webkit-animation: CardLink 4s ease infinite;
+  -moz-animation: CardLink 4s ease infinite;
+  animation: CardLink 4s ease infinite;
+}
+.multiclass a:hover {color: #ffffff;}
+
+/* -------------------------------------------------- */
+
+
+/* Оформление редкостей */
+.legendary:hover, .legendary a:hover {
+  color: #ffdb4d;
+  letter-spacing: 1px;
+  text-shadow: -1px -1px 0 #737373, 1px -1px 0 #737373, -1px 1px 0 #737373, 1px 1px 0 #737373;
+}
+.epic:hover, .epic a:hover {
+  color: #db4dff;
+  letter-spacing: 1px;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+.rare:hover, .rare a:hover {
+  color: #668cff;
+  letter-spacing: 1px;
+  text-shadow: -1px -1px 0 #737373, 1px -1px 0 #737373, -1px 1px 0 #737373, 1px 1px 0 #737373;
+}
+.common:hover, .common a:hover {
+  color: #ffffff;
+  letter-spacing: 1px;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+/* Анимация градиента */
+@-webkit-keyframes CardLink {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes CardLink {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-o-keyframes CardLink {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes CardLink {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
+/* Псевдоэлементы */
+::selection {               /* Выделение текста */
+  color: white;
+  background: #262626;
+}
+
+

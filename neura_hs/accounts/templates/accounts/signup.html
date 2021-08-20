@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+ 
+{% block content %}
+<h1>{{ title }}</h1>
+ 
+<form method="post">
+    {% csrf_token %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+            <table class="table table-borderless align-middle">
+                {% for f in form %}
+                    <tr>
+                        <td><label class="" for="{{ f.id_for_label }}">{{ f.label }}</label></td>
+                        <td>{{ f }}</td>
+                        <td class="form-error">{{ f.errors }}</td>
+                    </tr>
+                {% endfor %}
+                <tr><td><button type="submit" class="btn btn-outline-success">Регистрация</button></td></tr>
+            </table>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}

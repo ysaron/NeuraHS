@@ -1,0 +1,38 @@
+{% extends 'core/base.html' %}
+ 
+{% block content %}
+<h1>{{ title }}</h1>
+
+{% if next %}
+    {% if user.is_authenticated %}
+      <p>Ваш аккаунт не имеет прав доступа к этой странице.</p>
+    {% else %}
+      <p>Войдите в систему, чтобы узреть сию страницу.</p>
+    {% endif %}
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-error">{{ form.non_field_errors }}</div>
+                <table class="table table-borderless align-middle">
+                    {% for f in form %}
+                    <tr>
+                        <td><label class="">{{ f.label }}</label></td>
+                        <td>{{ f }}</td>
+                        <td class="form-error">{{ f.errors }}</td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td><button type="submit" class="btn btn-outline-success">Войти</button></td>
+                        <td><a role="button" class="btn btn-outline-danger" href="{% url 'accounts:change_password' %}">Забыли пароль?</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" name="next" value="{{ next }}">
+</form>
+{% endblock %}

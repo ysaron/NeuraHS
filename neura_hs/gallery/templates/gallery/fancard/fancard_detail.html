@@ -1,0 +1,98 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+{% load custom_filters %}
+<div class="module-wrap module-wrap-{{ fan_card|cclass }}">
+<div class="module">
+<div class="detailhead">
+  <h1 class="d-inline-block">{{ fan_card.name }}</h1>
+  {% if user.is_authenticated %}
+  <p>
+    <span><a role="button" class="btn btn-sm btn-outline-primary" href="{{ fan_card.get_absolute_url }}/edit/">Редактировать</a></span>
+    <span><a role="button" class="btn btn-sm btn-outline-danger" href="{{ fan_card.get_absolute_url }}/delete/">Удалить</a></span>
+  </p>
+  {% endif %}
+</div>
+<hr>
+<p><i>Где-то здесь однажды будет и изображение</i></p>
+<hr>
+
+<table class="table table-hover table-bordered" id="tFCD">
+  <tbody>
+  <tr>
+    <td><strong>Автор</strong></td>
+    <td><a href="{{ fan_card.author.get_absolute_url }}">{{ fan_card.author }}</a></td>
+  </tr>
+  <tr>
+    <td><strong>Класс</strong></td>
+    <td>{% for card_class in fan_card.card_class.all %} {{ card_class }}{% if not forloop.last %} | {% endif %}{% endfor %}</td>
+  </tr>
+  {% if fan_card.text %}
+  <tr>
+    <td><strong>Текст</strong></td>
+    <td>{{ fan_card.text }}</td>
+  </tr>
+  {% endif %}
+  {% if fan_card.flavor %}
+  <tr>
+    <td><strong>Описание</strong></td>
+    <td>{{ fan_card.flavor }}</td>
+  </tr>
+  {% endif %}
+  <tr>
+    <td><strong>Тип</strong></td>
+    <td>{{ fan_card.get_card_type_display }}</td>   <!-- если есть choises: get_FOO_display, где FOO = имя поля -->
+  </tr>
+  <tr>
+    <td><strong>Редкость</strong></td>
+    <td>{{ fan_card.get_rarity_display }}</td>
+  </tr>
+  {% if fan_card.card_type == c_types.MINION %}
+  <tr>
+    <td><strong>Раса</strong></td>
+    <td>{% for tribe in fan_card.tribe.all %} {{ tribe }}{% if not forloop.last %} | {% endif %}{% endfor %}</td>
+  </tr>
+  {% endif %}
+  {% if fan_card.card_type == c_types.SPELL %}
+  <tr>
+    <td><strong>Тип заклинания</strong></td>
+    <td>{{ fan_card.get_spell_school_display }}</td>
+  </tr>
+  {% endif %}
+  <tr>
+    <td><strong>Стоимость</strong></td>
+    <td>{{ fan_card.cost }}</td>
+  </tr>
+  {% if fan_card.card_type == c_types.MINION or fan_card.card_type == c_types.WEAPON %}
+  <tr>
+    <td><strong>Атака</strong></td>
+    <td>{{ fan_card.attack }}</td>
+  </tr>
+  {% endif %}
+  {% if fan_card.card_type == c_types.MINION %}
+  <tr>
+    <td><strong>Здоровье</strong></td>
+    <td>{{ fan_card.health }}</td>
+  </tr>
+  {% endif %}
+  {% if fan_card.card_type == c_types.HERO %}
+  <tr>
+    <td><strong>Броня</strong></td>
+    <td>{{ fan_card.armor }}</td>
+  </tr>
+  {% endif %}
+  {% if fan_card.card_type == c_types.WEAPON %}
+  <tr>
+    <td><strong>Прочность</strong></td>
+    <td>{{ fan_card.durability }}</td>
+  </tr>
+  {% endif %}
+  <tr>
+    <td><strong>Дата создания</strong></td>
+    <td>{{ fan_card.creation_date|date:"d.m.Y H:i:s" }}</td>
+  </tr>
+  </tbody>
+</table>
+</div>
+</div>
+{% endblock %}
