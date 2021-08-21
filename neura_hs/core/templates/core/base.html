@@ -44,10 +44,22 @@
           {% block sidebar %}
           <div class="sidemenu">
             <a href="{% url side_menu.main.url_name %}" title="{{ side_menu.main.popup }}">{{ side_menu.main.title }}</a>
-            <a href="#" title="{{ side_menu.base.popup }}">{{ side_menu.base.title }}</a>
-            <a class="sub" href="{% url side_menu.base.real.url_name %}" title="{{ side_menu.base.real.popup }}">{{ side_menu.base.real.title }}</a>
-            <a class="sub" href="{% url side_menu.base.fan.url_name %}" title="{{ side_menu.base.fan.popup }}">{{ side_menu.base.fan.title }}</a>
-            <a class="sub" href="#" title="{{ side_menu.base.neura.popup }}">{{ side_menu.base.neura.title }}</a>
+            <div class="accordion" id="accordionBase">
+                <div class="accordion-item sidemenu">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                            <span>{{ side_menu.base.title }}</span>
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionBase">
+                        <div class="accordion-body">
+                            <a class="sub" href="{% url side_menu.base.real.url_name %}" title="{{ side_menu.base.real.popup }}">{{ side_menu.base.real.title }}</a>
+                            <a class="sub" href="{% url side_menu.base.fan.url_name %}" title="{{ side_menu.base.fan.popup }}">{{ side_menu.base.fan.title }}</a>
+                            <a class="sub" href="#" title="{{ side_menu.base.neura.popup }}">{{ side_menu.base.neura.title }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <a href="{% url side_menu.create.url_name %}" title="{{ side_menu.create.popup }}">{{ side_menu.create.title }}</a>
             <a href="{% url side_menu.authors.url_name %}" title="{{ side_menu.authors.popup }}">{{ side_menu.authors.title }}</a>
           </div>
