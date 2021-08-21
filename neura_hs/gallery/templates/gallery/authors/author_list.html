@@ -13,8 +13,8 @@
             </div>
             <hr>
         {% endif %}
-    <table class="table table-striped" id="tAL">
-      <thead class="table-dark">
+    <table class="tablelist" id="tAL">
+      <thead class="darktable">
         <tr>
           <th>Username</th>
           <th>Создано карт</th>
@@ -22,9 +22,9 @@
       </thead>
       <tbody>
       {% for author in authors %}
-      <tr class="flex-fill position-relative hl-cell">
-        <td><a class="stretched-link" href="{{ author.get_absolute_url }}" target="_blank">{{ author.user.username }}</a></td>
-        <td>{{ author.fancard_set.all.count }}</td>
+      <tr class="clickable-row">
+        <td><a class="" href="{{ author.get_absolute_url }}" target="_blank">{{ author.user.username }}</a></td>
+        <td><span>{{ author.fancard_set.all.count }}</span></td>
       </tr>
       {% endfor %}
       </tbody>

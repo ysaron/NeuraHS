@@ -30,7 +30,7 @@
         </div>
         <hr>
     {% endif %}
-    <table class="table" id="tRCL">
+    <table class="tablelist" id="tFCL">
       <thead class="darktable">
         <tr>
           <th style="width: 40%;">Название</th>
@@ -41,11 +41,11 @@
       </thead>
       <tbody>
         {% for card in fancards %}
-        <tr class="{{ card|cclass }} {{ card|rar }} flex-fill position-relative hl-cell">
-            <td><a class="stretched-link" href="{{ card.get_absolute_url }}">{{ card.name }}</a></td>
-            <td>{{ card.author }}</td>
-            <td>{{ card.get_card_type_display }}</td>
-            <td>{{ card.creation_date|date:"d.m.Y H:i:s" }}</td>
+        <tr class="{{ card|cclass }} {{ card|rar }} clickable-row">
+            <td><a class="" href="{{ card.get_absolute_url }}" target="_blank">{{ card.name }}</a></td>
+            <td><span>{{ card.author }}</span></td>
+            <td><span>{{ card.get_card_type_display }}</span></td>
+            <td><span>{{ card.creation_date|date:"d.m.Y H:i:s" }}</span></td>
         </tr>
         {% endfor %}
       </tbody>

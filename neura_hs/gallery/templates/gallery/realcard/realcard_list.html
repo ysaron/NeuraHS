@@ -58,7 +58,7 @@
             </div>
             <hr>
         {% endif %}
-    <table class="table" id="tRCL">
+    <table class="tablelist" id="tRCL">
       <thead class="darktable">
         <tr>
           <th style="width: 30%;">Название</th>
@@ -69,11 +69,11 @@
       </thead>
       <tbody>
       {% for card in realcards %}
-      <tr class="{{ card|cclass }} {{ card|rar }} flex-fill position-relative">
-        <td class=""><a class="stretched-link" href="{{ card.get_absolute_url }}" target="_blank" title="Детальное описание карты {{ card.name }}">{{ card.name }}</a></td>
-        <td>{{ card.get_card_type_display }}</td>
-        <td>{% for card_class in card.card_class.all %} {{ card_class }}{% if not forloop.last %} | {% endif %}{% endfor %}</td>
-        <td>{{ card.card_set }}</td>
+      <tr class="{{ card|cclass }} {{ card|rar }} clickable-row">
+        <td class=""><a class="" href="{{ card.get_absolute_url }}" target="_blank" title="Детальное описание карты {{ card.name }}">{{ card.name }}</a></td>
+        <td><span>{{ card.get_card_type_display }}</span></td>
+        <td><span>{% for card_class in card.card_class.all %} {{ card_class }}{% if not forloop.last %} | {% endif %}{% endfor %}</span></td>
+        <td><span>{{ card.card_set }}</span></td>
       </tr>
       {% endfor %}
       </tbody>

@@ -140,6 +140,28 @@ a.sub {
   background: #595959;
   padding-left: 20px;
 }
+.tablelist {
+  width: 100%;
+}
+.tablelist td {
+  border-bottom: 1px solid #ffffff;
+}
+.clickable-row {
+  overflow: hidden;
+  width: 100%;
+}
+.clickable-row a, .clickable-row span {
+  display: block;
+  padding: 8px;
+  text-decoration: none;
+}
+thead.darktable {
+  background-color: #333;
+  color: white;
+}
+thead.darktable th {
+  padding: 8px;
+}
 
 /* Центрирование баннера */
 .banner {
@@ -161,12 +183,6 @@ a.sub {
 }
 .pagination span a.page-link {
   box-shadow: none;
-}
-
-/* Таблицы */
-.table thead.darktable {
-  background-color: #333;
-  color: white;
 }
 
 /* Формы */
@@ -424,22 +440,22 @@ a.sub {
 
 
 /* Оформление редкостей */
-.legendary:hover, .legendary a:hover {
+.legendary:hover, .legendary:hover a {
   color: #ffdb4d;
   letter-spacing: 1px;
   text-shadow: -1px -1px 0 #737373, 1px -1px 0 #737373, -1px 1px 0 #737373, 1px 1px 0 #737373;
 }
-.epic:hover, .epic a:hover {
+.epic:hover, .epic:hover a {
   color: #db4dff;
   letter-spacing: 1px;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
-.rare:hover, .rare a:hover {
+.rare:hover, .rare:hover a {
   color: #668cff;
   letter-spacing: 1px;
   text-shadow: -1px -1px 0 #737373, 1px -1px 0 #737373, -1px 1px 0 #737373, 1px 1px 0 #737373;
 }
-.common:hover, .common a:hover {
+.common:hover, .common:hover a {
   color: #ffffff;
   letter-spacing: 1px;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
