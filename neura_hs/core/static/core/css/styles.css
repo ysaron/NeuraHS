@@ -67,6 +67,7 @@ a:hover, a:active {
 }
 .topmenu a {
   float: left;
+  overflow: hidden;
   display: block;
   color: #f2f2f2;
   text-align: center;
@@ -79,21 +80,11 @@ a:hover, a:active {
   background: #d3d3d3;
   color: black;
 }
-.topmenu a.logbar {
-  float: right;
-}
-.topmenu a.logbar-in {
-  color: #00b300;
-}
-.topmenu a.logbar-out {
-  color: #e60000;
-}
-.topmenu a.logbar-out:hover {
-  color: #00b300;
-}
-#logout:hover {
-  color: #e60000;
-}
+.topmenu a.logbar {float: right;}
+.topmenu a.logbar-in {color: #00b300;}
+.topmenu a.logbar-out {color: #e60000;}
+.topmenu a.logbar-out:hover {color: #00b300;}
+#logout:hover {color: #e60000;}
 
 /* Боковое меню */
 .sidemenu {

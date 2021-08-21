@@ -121,18 +121,18 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 TOP_MENU = {
     'main': {'title': "Главная", 'url_name': 'home'},
-    'about': {'title': "О сайте", 'url_name': 'about'},
-    'contact': {'title': "Обратная связь", 'url_name': 'contact'}
+    'about': {'title': "О сайте", 'url_name': 'about'},
+    'contact': {'title': "Обратная связь", 'url_name': 'contact'}
 }
 
 SIDE_MENU = {
     'main': {'title': "Галерея", 'url_name': 'gallery:index', 'popup': ''},
-    'base': {'title': "База картонок",
+    'base': {'title': "База картонок",
              'real': {'title': "Hearthstone", 'url_name': 'gallery:realcards', 'popup': ''},
              'fan': {'title': "Фан-карты", 'url_name': 'gallery:fancards', 'popup': 'Карты, созданные пользователями'},
              'neura': {'title': "Нейрокартонки", 'url_name': 'gallery:index', 'popup': 'В планах'}},
-    'create': {'title': "Создать карту", 'url_name': 'gallery:createcard', 'popup': 'Создание фан-карты'},
-    'authors': {'title': "Авторы фан-карт", 'url_name': 'gallery:authors', 'popup': ''}
+    'create': {'title': "Создать карту", 'url_name': 'gallery:createcard', 'popup': 'Создание фан-карты'},
+    'authors': {'title': "Авторы фан-карт", 'url_name': 'gallery:authors', 'popup': ''}
 }
 
 # API Hearthstone

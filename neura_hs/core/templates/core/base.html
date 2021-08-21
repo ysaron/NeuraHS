@@ -21,10 +21,6 @@
 
 <body>
   <div class="container-fluid"> <!-- Общий контейнер (на всю ширину страницы) -->
-<!--    <img class="center-fit"-->
-<!--         src="{% static 'core/images/banner_v1.png' %}"-->
-<!--         alt="Banner"-->
-<!--         border="2"/>-->
     {% block menu %}
     <div class="topmenu">
         <a href="{% url top_menu.main.url_name %}">{{ top_menu.main.title }}</a>
