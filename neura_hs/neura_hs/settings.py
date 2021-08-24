@@ -113,9 +113,15 @@ LOGIN_REDIRECT_URL = '/'
 
 LOGOUT_REDIRECT_URL = 'accounts/signin/'
 
-# Для тестирования восстановления пароля (письмо будет отправлено в консоль)
-# НЕ ДЛЯ ПРОДАКШНА
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Настройки email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'   # SMTP-сервер исходящей почты
+EMAIL_PORT = 465    # 465 (SSL) или 587 (TLS)
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
 
 # --------------------------------------------- НАСТРОЙКИ ПРОЕКТА --------------------------------------------------- #
 
