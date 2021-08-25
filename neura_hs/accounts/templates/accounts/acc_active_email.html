@@ -1,0 +1,3 @@
+<h2>{{ user.username }}: чтобы подтвердить регистрацию, перейдите по ссылке ниже.</h2>
+<p>http://{{ domain }}{% url 'accounts:activate' uidb64=uid token=token %}</p>
+<p>Если Вы не регистрировались на {{ domain }} - проигнорируйте это письмо.</p>

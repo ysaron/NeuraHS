@@ -5,9 +5,10 @@ app_name = 'accounts'   # пространство имен urlpatterns
 
 
 urlpatterns = [
-    path('signup/', views.SignUp.as_view(), name='signup'),
-    path('signin/', views.SignIn.as_view(), name='signin'),
-    path('signout/', views.signout_user, name='signout'),
+    path('signup/', views.SignUp.as_view(), name='signup'),                 # регистрация аккаунта
+    path('activate/<uidb64>_<token>/', views.activate, name='activate'),    # активация аккаунта
+    path('signin/', views.SignIn.as_view(), name='signin'),                 # авторизация
+    path('signout/', views.signout_user, name='signout'),                   # выход из аккаунта
     path('change-password/', views.ChangePassword.as_view(), name='change_password'),
     path('change-password-emailed/', views.ChangePasswordEmailed.as_view(), name='change_password_emailed'),
     path('change-password-confirm/<uidb64>_<token>/', views.ChangePasswordConfirm.as_view(),

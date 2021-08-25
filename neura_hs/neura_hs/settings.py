@@ -116,11 +116,11 @@ LOGOUT_REDIRECT_URL = 'accounts/signin/'
 # Настройки email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'   # SMTP-сервер исходящей почты
-EMAIL_PORT = 465    # 465 (SSL) или 587 (TLS)
+EMAIL_PORT = 587    # 465 (SSL) или 587 (TLS)
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = False
-EMAIL_USE_SSL = True
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
 
 # --------------------------------------------- НАСТРОЙКИ ПРОЕКТА --------------------------------------------------- #
@@ -145,3 +145,7 @@ SIDE_MENU = {
 HSAPI_BASEURL = os.environ.get('HSAPI_BASEURL')
 HSAPI_HOST = os.environ.get('HSAPI_HOST')
 X_RAPIDARI_KEY = os.environ.get('X_RAPIDARI_KEY')
+
+
+TEST_EMAIL = os.environ.get('TEST_EMAIL')
+

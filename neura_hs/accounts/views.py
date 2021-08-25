@@ -1,12 +1,19 @@
 from django.contrib.auth import views as auth_views
 from django.contrib.auth import logout, login
 from django.contrib.auth.models import User, Group
-from django.shortcuts import get_object_or_404, redirect
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage
+from django.shortcuts import get_object_or_404, redirect, render
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views import generic
+from django.conf import settings
 
 from .forms import RegisterUserForm, LoginUserForm, ChangePasswordForm
 from utils.mixins import DataMixin
+from .tokens import account_activation_token
 
 
 class SignUp(DataMixin, generic.CreateView):
@@ -21,12 +28,25 @@ class SignUp(DataMixin, generic.CreateView):
         context |= default_context
         return context
 
-    def form_valid(self, form):
-        """ Метод, вызываемый после успешной проверки формы """
+    def form_valid(self, form):     # вызывается после успешной проверки формы
+        user = form.save(commit=False)
+        user.is_active = False
+        user.save()
 
-        user = form.save()
+        site = get_current_site(self.request)
+        mail_subject = 'Активация аккаунта NeuraHS'
+        message = render_to_string(template_name='accounts/acc_active_email.html',
+                                   context={'user': user,
+                                            'domain': site.domain,
+                                            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                                            'token': account_activation_token.make_token(user)})
+        to_email = form.cleaned_data.get('email')
+        email = EmailMessage(subject=mail_subject,
+                             body=message, to=[to_email])
+        email.content_subtype = 'html'
+        email.send()
 
-        user.refresh_from_db()  # обновление объекта Юзера для захвата связанного экземпляра Автора
+        user.refresh_from_db()  # обновление объекта User для захвата связанного экземпляра Author
 
         # Ручное сохранения данных для полей расширяющей модели
         user.author.about = form.cleaned_data.get('about')
@@ -35,8 +55,35 @@ class SignUp(DataMixin, generic.CreateView):
         group = Group.objects.get(name='common')
         user.groups.add(group)
 
-        login(self.request, user)   # Автоматическая авторизация после регистрации
-        return redirect('gallery:index')
+        return render(request=self.request,
+                      context={'title': 'Проверьте электронную почту',
+                               'top_menu': settings.TOP_MENU,
+                               'side_menu': settings.SIDE_MENU},
+                      template_name='accounts/acc_active_done.html')
+
+
+def activate(request, uidb64, token):
+    """ Активация аккаунта юзера после перехода по ссылке в email """
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        login(request, user)
+        return render(request,
+                      context={'title': 'Аккаунт активирован',
+                               'top_menu': settings.TOP_MENU,
+                               'side_menu': settings.SIDE_MENU},
+                      template_name='accounts/acc_active_complete.html')
+    else:
+        return render(request,
+                      context={'title': 'Активация провалена',
+                               'top_menu': settings.TOP_MENU,
+                               'side_menu': settings.SIDE_MENU},
+                      template_name='accounts/acc_active_complete.html')
 
 
 class SignIn(DataMixin, auth_views.LoginView):
