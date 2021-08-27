@@ -28,7 +28,7 @@ def get_verbose_group(user):
 @register.filter(name='display')
 def get_display_type(fieldname):
     """ Возвращает Bootstrap-класс для сокрытия не подлежащих отображению полей """
-    non_displayable_fields = ['author', 'slug']
+    non_displayable_fields = ['author', 'slug', 'state']
     return 'd-none' if fieldname in non_displayable_fields else ''
 
 

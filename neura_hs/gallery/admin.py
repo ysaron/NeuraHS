@@ -23,13 +23,14 @@ admin.site.register(User, UserAdmin)
 @admin.register(FanCard)
 class FanCardAdmin(admin.ModelAdmin):
     """ Класс для доступа к модели Card через админку """
-    list_display = ('name', 'author', 'card_type', 'display_card_class', 'creation_date')
-    list_filter = ('author', 'card_type', 'card_class', 'cost', 'attack')
+    list_display = ('name', 'author', 'card_type', 'display_card_class', 'creation_date', 'state')
+    list_filter = ('author', 'card_type', 'card_class', 'cost', 'attack', 'state')
     fieldsets = (
         ('Общее', {'fields': (('name', 'author'), 'slug')}),
         ('Принадлежность', {'fields': (('card_type', 'card_class'), ('rarity', 'tribe'))}),
         ('Статы', {'fields': ('cost', ('attack', 'health', 'armor', 'durability'))}),
         ('Текст', {'fields': ('text', 'flavor')}),
+        ('Доступность', {'fields': ('state',)})
     )
     prepopulated_fields = {"slug": ("name",)}
 

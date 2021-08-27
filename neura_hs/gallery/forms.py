@@ -14,7 +14,7 @@ class CreateCardForm(EditCardMixin, forms.ModelForm):
         model = FanCard
         fields = ['name', 'card_type', 'card_class', 'cost', 'attack', 'health', 'durability', 'armor',
                   'text', 'flavor', 'rarity', 'tribe', 'spell_school',
-                  'slug', 'author']     # последняя строка - скрытые поля
+                  'slug', 'author', 'state']     # последняя строка - скрытые поля
 
 
 class UpdateCardForm(EditCardMixin, forms.ModelForm):

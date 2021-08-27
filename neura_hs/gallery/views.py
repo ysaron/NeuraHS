@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 from django.conf import settings
@@ -57,7 +57,7 @@ class CreateCard(LoginRequiredMixin, DataMixin, generic.CreateView):
     """ Создание нового экземпляра фан-карты """
     form_class = CreateCardForm
     template_name = 'gallery/fancard/createcard.html'
-    success_url = reverse_lazy('gallery:fancards')
+    success_url = reverse_lazy('gallery:card_changed')
 
     login_url = '/accounts/signin/'
 
@@ -71,7 +71,8 @@ class CreateCard(LoginRequiredMixin, DataMixin, generic.CreateView):
         """ Заполнение полей начальными значениями """
         slug = 'e-m-p-t-y'
         author = self.request.user.author
-        return {'slug': slug, 'author': author}
+        state = True if self.request.user.is_superuser else False
+        return {'slug': slug, 'author': author, 'state': state}
 
 
 class UpdateCard(LoginRequiredMixin, UserPassesTestMixin, DataMixin, generic.UpdateView):
@@ -94,6 +95,22 @@ class UpdateCard(LoginRequiredMixin, UserPassesTestMixin, DataMixin, generic.Upd
         obj = self.get_object()
         return any((obj.author == self.request.user.author,
                     self.request.user.has_perm('gallery.change_fancard')))
+
+    def form_valid(self, form):
+        fan_card = form.save(commit=False)
+        if not self.request.user.is_superuser:
+            fan_card.state = False
+        fan_card.save()
+        return redirect(reverse_lazy('gallery:card_changed'))
+
+
+def card_changed(request):
+    context = {'title': 'Карта была изменена',
+               'top_menu': settings.TOP_MENU,
+               'side_menu': settings.SIDE_MENU}
+    return render(request,
+                  template_name='gallery/fancard/card_changed.html',
+                  context=context)
 
 
 class DeleteCard(LoginRequiredMixin, UserPassesTestMixin, DataMixin, generic.DeleteView):
@@ -205,8 +222,9 @@ class FanCardListView(DataMixin, generic.ListView):
 
         name = self.request.GET.get('name')
 
+        object_list = self.model.objects.filter(state=True)
         # Оптимизация: вместо множества SQL-запросов - один сложный
-        object_list = self.model.objects.select_related('author__user').prefetch_related('card_class').all()
+        object_list = object_list.select_related('author__user').prefetch_related('card_class').all()
 
         if name:
             object_list = object_list.search_by_name(name)
@@ -229,6 +247,7 @@ class FanCardDetailView(DataMixin, generic.DetailView):
     slug_url_kwarg = 'card_slug'
     context_object_name = 'fan_card'
     template_name = 'gallery/fancard/fancard_detail.html'
+    queryset = FanCard.objects.filter(state=True)
 
     def get_context_data(self, **kwargs):
         """ Переопределение метода для передачи шаблону дополнительных переменных """

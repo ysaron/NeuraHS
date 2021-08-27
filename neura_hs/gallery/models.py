@@ -184,6 +184,7 @@ class Card(Model):
         BLOOD_GEM = 'blood_gem', _('Кровавые гемы')
         FRENZY = 'frenzy', _('Бешенство')
         TRADEABLE = 'tradeable', _('Можно обменять')
+        QUESTLINE = 'questline', _('Цепочка заданий')
 
     name = models.CharField(max_length=50, verbose_name='Название')
     service_name = models.CharField(max_length=50, default='')
@@ -261,6 +262,7 @@ class Card(Model):
     blood_gem = models.BooleanField(default=False, verbose_name='Кровавые гемы')
     frenzy = models.BooleanField(default=False, verbose_name='Бешенство')
     tradeable = models.BooleanField(default=False, verbose_name='Можно обменять')
+    questline = models.BooleanField(default=False, verbose_name='Цепочка заданий')
 
     objects = CardQuerySet.as_manager()
 
@@ -308,7 +310,6 @@ class RealCard(Card):
     dbf_id = models.IntegerField(null=True, unique=True, help_text='Integer ID of an existing card')
     card_set = models.ForeignKey(CardSet, on_delete=models.SET_NULL, null=True, verbose_name='Набор',
                                  related_name='cardsets')
-    # + image, вероятно
     artist = models.CharField(max_length=255, blank=True, verbose_name='Художник')
     collectible = models.BooleanField(default=True, verbose_name='Коллекционная')
 
@@ -325,6 +326,7 @@ class FanCard(Card):
     """ Модель фановой карты. Экземпляры создаются юзерами через формы """
 
     author = models.ForeignKey(Author, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Автор')
+    state = models.BooleanField(default=False, verbose_name='Отображать')
 
     class Meta(Card.Meta):
         verbose_name = 'Фан-карта'

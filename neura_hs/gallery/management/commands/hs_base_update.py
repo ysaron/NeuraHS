@@ -137,6 +137,8 @@ def populate_db():
             r_card.blood_gem = 'blood gem' in mechanics
             r_card.frenzy = 'frenzy' in mechanics
             r_card.tradeable = 'tradeable' in mechanics
+            r_card.questline = 'questline' in mechanics
+            # r_card.dormant = 'dormant' in j_card['name'].lower()
 
         try:
             base_set = CardSet.objects.get(name=j_card.get('cardSet'))
