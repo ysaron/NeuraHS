@@ -7,8 +7,13 @@ from .models import RealCard, FanCard, NeuraCard, CardClass, Tribe, CardSet, Aut
 from .forms import CreateCardForm, RealCardFilterForm, UpdateCardForm, \
     FanCardFilterForm
 from utils.mixins import DataMixin
+from utils.handlers import log_all_exceptions, LogAllExceptions
+import logging
+
+logger = logging.getLogger('django')
 
 
+@log_all_exceptions
 def index(request):
     """
     Функция отображения главной страницы сайта
@@ -17,7 +22,6 @@ def index(request):
     """
     num_fancards = FanCard.objects.count()
     num_leg_fancards = FanCard.objects.search_by_rarity(RealCard.Rarities.LEGENDARY).count()
-
     num_realcards_all = RealCard.objects.count()
     collectibles = RealCard.objects.search_collectible(True)
     num_realcards_coll = collectibles.count()
@@ -53,7 +57,7 @@ def index(request):
                   context=context)
 
 
-class CreateCard(LoginRequiredMixin, DataMixin, generic.CreateView):
+class CreateCard(LoginRequiredMixin, DataMixin, generic.CreateView, LogAllExceptions):
     """ Создание нового экземпляра фан-карты """
     form_class = CreateCardForm
     template_name = 'gallery/fancard/createcard.html'
@@ -70,12 +74,13 @@ class CreateCard(LoginRequiredMixin, DataMixin, generic.CreateView):
     def get_initial(self):
         """ Заполнение полей начальными значениями """
         slug = 'e-m-p-t-y'
+        # slug = 1/0
         author = self.request.user.author
         state = True if self.request.user.is_superuser else False
         return {'slug': slug, 'author': author, 'state': state}
 
 
-class UpdateCard(LoginRequiredMixin, UserPassesTestMixin, DataMixin, generic.UpdateView):
+class UpdateCard(LoginRequiredMixin, UserPassesTestMixin, DataMixin, generic.UpdateView, LogAllExceptions):
     """ Редактирование фан-карты """
     model = FanCard
     form_class = UpdateCardForm
@@ -104,6 +109,7 @@ class UpdateCard(LoginRequiredMixin, UserPassesTestMixin, DataMixin, generic.Upd
         return redirect(reverse_lazy('gallery:card_changed'))
 
 
+@log_all_exceptions
 def card_changed(request):
     context = {'title': 'Карта была изменена',
                'top_menu': settings.TOP_MENU,
@@ -113,7 +119,7 @@ def card_changed(request):
                   context=context)
 
 
-class DeleteCard(LoginRequiredMixin, UserPassesTestMixin, DataMixin, generic.DeleteView):
+class DeleteCard(LoginRequiredMixin, UserPassesTestMixin, DataMixin, generic.DeleteView, LogAllExceptions):
     """ Удаление фан-карты """
     model = FanCard
     slug_url_kwarg = 'card_slug'
@@ -136,7 +142,7 @@ class DeleteCard(LoginRequiredMixin, UserPassesTestMixin, DataMixin, generic.Del
                     self.request.user.has_perm('gallery.delete_fancard')))
 
 
-class RealCardListView(DataMixin, generic.ListView):
+class RealCardListView(DataMixin, generic.ListView, LogAllExceptions):
     """ Обобщенный класс отображения списка реальных карт Hearthsone """
     model = RealCard
     context_object_name = 'realcards'
@@ -196,7 +202,7 @@ class RealCardListView(DataMixin, generic.ListView):
         return object_list
 
 
-class RealCardDetailView(DataMixin, generic.DetailView):
+class RealCardDetailView(DataMixin, generic.DetailView, LogAllExceptions):
     """ Обобщенный класс отображения детальной информации о карте Hearthstone """
     model = RealCard
     slug_url_kwarg = 'card_slug'
@@ -211,7 +217,7 @@ class RealCardDetailView(DataMixin, generic.DetailView):
         return context
 
 
-class FanCardListView(DataMixin, generic.ListView):
+class FanCardListView(DataMixin, generic.ListView, LogAllExceptions):
     """ Обобщенный класс отображения списка фан-карт """
     model = FanCard
     context_object_name = 'fancards'
@@ -241,7 +247,7 @@ class FanCardListView(DataMixin, generic.ListView):
         return context
 
 
-class FanCardDetailView(DataMixin, generic.DetailView):
+class FanCardDetailView(DataMixin, generic.DetailView, LogAllExceptions):
     """ Обобщенный класс отображения детальной информации о карте """
     model = FanCard
     slug_url_kwarg = 'card_slug'
@@ -257,7 +263,7 @@ class FanCardDetailView(DataMixin, generic.DetailView):
         return context
 
 
-class NeuraCardListView(DataMixin, generic.ListView):
+class NeuraCardListView(DataMixin, generic.ListView, LogAllExceptions):
     """ Обобщенный класс отображения списка сгенерированных карт """
     model = NeuraCard
     context_object_name = 'neuracards'
@@ -269,7 +275,7 @@ class NeuraCardListView(DataMixin, generic.ListView):
         return context
 
 
-class AuthorListView(DataMixin, generic.ListView):
+class AuthorListView(DataMixin, generic.ListView, LogAllExceptions):
     """  """
     model = Author
     template_name = 'gallery/authors/author_list.html'
@@ -285,7 +291,7 @@ class AuthorListView(DataMixin, generic.ListView):
         return self.model.objects.select_related('user').prefetch_related('fancard_set')
 
 
-class AuthorDetailView(DataMixin, generic.DetailView):
+class AuthorDetailView(DataMixin, generic.DetailView, LogAllExceptions):
     """  """
     model = Author
     template_name = 'gallery/authors/author_detail.html'

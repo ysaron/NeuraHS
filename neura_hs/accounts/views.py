@@ -13,10 +13,11 @@ from django.conf import settings
 
 from .forms import RegisterUserForm, LoginUserForm, ChangePasswordForm
 from utils.mixins import DataMixin
+from utils.handlers import log_all_exceptions, LogAllExceptions
 from .tokens import account_activation_token
 
 
-class SignUp(DataMixin, generic.CreateView):
+class SignUp(DataMixin, generic.CreateView, LogAllExceptions):
     """ Создание нового пользователя """
     form_class = RegisterUserForm
     template_name = 'accounts/signup.html'
@@ -62,6 +63,7 @@ class SignUp(DataMixin, generic.CreateView):
                       template_name='accounts/acc_active_done.html')
 
 
+@log_all_exceptions
 def activate(request, uidb64, token):
     """ Активация аккаунта юзера после перехода по ссылке в email """
     try:
@@ -86,7 +88,7 @@ def activate(request, uidb64, token):
                       template_name='accounts/acc_active_complete.html')
 
 
-class SignIn(DataMixin, auth_views.LoginView):
+class SignIn(DataMixin, auth_views.LoginView, LogAllExceptions):
     """ Авторизация зарегистрированного пользователя """
     form_class = LoginUserForm
     template_name = 'accounts/signin.html'
@@ -103,13 +105,14 @@ class SignIn(DataMixin, auth_views.LoginView):
         return reverse_lazy('home')
 
 
+@log_all_exceptions
 def signout_user(request):
     """ функция отображения для выхода из учетной записи """
     logout(request)
     return redirect(reverse_lazy('accounts:signin'))
 
 
-class ChangePassword(DataMixin, auth_views.PasswordResetView):
+class ChangePassword(DataMixin, auth_views.PasswordResetView, LogAllExceptions):
     """  """
     template_name = 'accounts/password_reset_form.html'
     email_template_name = 'accounts/password_reset_email.html'
@@ -125,7 +128,7 @@ class ChangePassword(DataMixin, auth_views.PasswordResetView):
         return context
 
 
-class ChangePasswordEmailed(DataMixin, auth_views.PasswordResetDoneView):
+class ChangePasswordEmailed(DataMixin, auth_views.PasswordResetDoneView, LogAllExceptions):
     """  """
     template_name = 'accounts/password_reset_done.html'
 
@@ -136,7 +139,7 @@ class ChangePasswordEmailed(DataMixin, auth_views.PasswordResetDoneView):
         return context
 
 
-class ChangePasswordConfirm(DataMixin, auth_views.PasswordResetConfirmView):
+class ChangePasswordConfirm(DataMixin, auth_views.PasswordResetConfirmView, LogAllExceptions):
     """  """
     template_name = 'accounts/password_reset_confirm.html'
     success_url = reverse_lazy('accounts:change_password_complete')
@@ -148,7 +151,7 @@ class ChangePasswordConfirm(DataMixin, auth_views.PasswordResetConfirmView):
         return context
 
 
-class ChangePasswordComplete(DataMixin, auth_views.PasswordResetCompleteView):
+class ChangePasswordComplete(DataMixin, auth_views.PasswordResetCompleteView, LogAllExceptions):
     """  """
     template_name = 'accounts/password_reset_complete.html'
 

@@ -123,6 +123,73 @@ EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
 
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,  # не отключать встроенные в Django механизмы логирования
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'formatters': {
+        'file': {
+            '()': 'django.utils.log.ServerFormatter',
+            'format': '[{server_time}] | logger:{name} | level:{levelname} | module:{module}\n{message}\n',
+            'style': '{',
+        },
+        'file_sql': {
+            '()': 'django.utils.log.ServerFormatter',
+            'format': '[{server_time}] | Duration:{duration} Params:{params}\n\t{sql}\n',
+            'style': '{',
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+        },
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'formatter': 'file',
+            'filename': BASE_DIR / "logs/project/info.log"
+        },
+        'file_err': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'formatter': 'file',
+            'filename': BASE_DIR / "logs/project/errors.log"
+        },
+        'file_sql': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'formatter': 'file_sql',
+            'filename': BASE_DIR / "logs/project/sql.log"
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file', 'file_err'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+        # 'django.db.backends': {
+        #     'handlers': ['file_sql'],
+        #     'level': 'DEBUG',
+        # },
+    }
+}
+
 # --------------------------------------------- НАСТРОЙКИ ПРОЕКТА --------------------------------------------------- #
 
 TOP_MENU = {
