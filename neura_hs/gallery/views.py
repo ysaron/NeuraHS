@@ -74,7 +74,6 @@ class CreateCard(LoginRequiredMixin, DataMixin, generic.CreateView, LogAllExcept
     def get_initial(self):
         """ Заполнение полей начальными значениями """
         slug = 'e-m-p-t-y'
-        # slug = 1/0
         author = self.request.user.author
         state = True if self.request.user.is_superuser else False
         return {'slug': slug, 'author': author, 'state': state}

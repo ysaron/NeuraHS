@@ -138,7 +138,8 @@ LOGGING = {
     'formatters': {
         'file': {
             '()': 'django.utils.log.ServerFormatter',
-            'format': '[{server_time}] | logger:{name} | level:{levelname} | module:{module}\n{message}\n',
+            'format': '[{server_time}] | logger:{name} | level:{levelname} | module:{module}'
+                      '\n{request.META}\n{message}\n',
             'style': '{',
         },
         'file_sql': {
