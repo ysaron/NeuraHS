@@ -1,0 +1,12 @@
+<div class="topmenu">
+    <a href="{% url top_menu.main.url_name %}">{{ top_menu.main.title }}</a>
+    <a href="{% url top_menu.about.url_name %}">{{ top_menu.about.title }}</a>
+    <a href="{% url top_menu.contact.url_name %}">{{ top_menu.contact.title }}</a>
+    {% if user.is_authenticated %}
+        <a class="logbar logbar-in" id="logout" href="{% url 'accounts:signout' %}">Выйти</a>
+        <a class="logbar logbar-in"><b>{{ user.username }}</b></a>
+    {% else %}
+        <a class="logbar logbar-out" href="{% url 'accounts:signin' %}">Войти</a>
+        <a class="logbar logbar-out" href="{% url 'accounts:signup' %}">Регистрация</a>
+    {% endif %}
+</div>
