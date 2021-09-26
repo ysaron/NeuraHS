@@ -50,3 +50,7 @@ def get_rarity_style(card):
     return matches.get(card.rarity, 'common')
 
 
+@register.filter(name='coll_name_fmt')
+def get_formatted_name(card):
+    """ Возвращает название карты, отформатированное в зависимости от коллекционности """
+    return card.name if card.collectible else f'[{card.name}]'
