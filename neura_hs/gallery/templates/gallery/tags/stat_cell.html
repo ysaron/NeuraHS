@@ -2,19 +2,13 @@
 <tr>
   <td>
     {% for p in params %}
-      {% if p.name %}
-        {% with icon=p.icon %}
-          <img src="{% static icon %}" alt="{{ p.name }}" title="{{ p.name }}" width="25" height="25">
-          {% if not forloop.last %} | {% endif %}
-        {% endwith %}
-      {% endif %}
+      <img src="{% static p.icon %}" alt="{{ p.name }}" title="{{ p.name }}" width="25" height="25">
+      {% if not forloop.last %} | {% endif %}
     {% endfor %}
   </td>
   <td>
     {% for p in params %}
-      {% if p.name %}
-        {{ p.value }}{% if not forloop.last %} | {% endif %}
-      {% endif %}
+      {{ p.value }}{% if not forloop.last %} | {% endif %}
     {% endfor %}
   </td>
 </tr>
