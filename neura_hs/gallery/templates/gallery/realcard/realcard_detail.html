@@ -63,34 +63,7 @@
       <td>{{ real_card.get_spell_school_display }}</td>
     </tr>
   {% endif %}
-  <tr>
-    <td><strong>Стоимость</strong></td>
-    <td>{{ real_card.cost }}</td>
-  </tr>
-  {% if real_card.card_type == c_types.MINION or real_card.card_type == c_types.WEAPON %}
-    <tr>
-      <td><strong>Атака</strong></td>
-      <td>{{ real_card.attack }}</td>
-    </tr>
-  {% endif %}
-  {% if real_card.card_type == c_types.MINION %}
-    <tr>
-      <td><strong>Здоровье</strong></td>
-      <td>{{ real_card.health }}</td>
-    </tr>
-  {% endif %}
-  {% if real_card.card_type == c_types.HERO %}
-    <tr>
-      <td><strong>Броня</strong></td>
-      <td>{{ real_card.armor }}</td>
-    </tr>
-  {% endif %}
-  {% if real_card.card_type == c_types.WEAPON %}
-    <tr>
-      <td><strong>Прочность</strong></td>
-      <td>{{ real_card.durability }}</td>
-    </tr>
-  {% endif %}
+  {% format_stats real_card %}
   {% if real_card.mechanics_list %}
     <tr>
       <td><strong>Механики</strong></td>

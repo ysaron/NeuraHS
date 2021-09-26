@@ -1,7 +1,9 @@
 from django import template
+from collections import namedtuple
 from ..models import Card
 
 register = template.Library()
+Parameter = namedtuple('Parameter', ['name', 'icon', 'value'])
 
 
 @register.filter
@@ -54,3 +56,27 @@ def get_rarity_style(card):
 def get_formatted_name(card):
     """ Возвращает название карты, отформатированное в зависимости от коллекционности """
     return card.name if card.collectible else f'[{card.name}]'
+
+
+@register.inclusion_tag('gallery/tags/stat_cell.html', takes_context=True, name='format_stats')
+def format_stats(context, card):
+    """ Формирует строку <tr> таблицы card-detail с числовыми параметрами карты """
+
+    svg_path = 'core/images/'
+    cost = Parameter('Cost', f'{svg_path}cost.svg', card.cost)
+
+    # карты любого типа имеют, помимо стоимости, максимум 2 параметра, различающихся от типа к типу
+    first_param, seconf_param = Parameter(None, None, None), Parameter(None, None, None)
+
+    if card.card_type == Card.CardTypes.MINION:
+        first_param = Parameter('Attack', f'{svg_path}attack.svg', card.attack)
+        seconf_param = Parameter('Health', f'{svg_path}health.svg', card.health)
+    elif card.card_type == Card.CardTypes.WEAPON:
+        first_param = Parameter('Attack', f'{svg_path}attack.svg', card.attack)
+        seconf_param = Parameter('Durability', f'{svg_path}durability.svg', card.durability)
+    elif card.card_type == Card.CardTypes.HERO:
+        seconf_param = Parameter('Armor', f'{svg_path}armor.svg', card.armor)
+
+    context.update({'params': [p for p in (cost, first_param, seconf_param) if p.name]})
+
+    return context
