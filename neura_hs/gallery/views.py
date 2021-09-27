@@ -75,7 +75,7 @@ class CreateCard(LoginRequiredMixin, DataMixin, generic.CreateView, LogAllExcept
         """ Заполнение полей начальными значениями """
         slug = 'e-m-p-t-y'
         author = self.request.user.author
-        state = True if self.request.user.is_superuser else False
+        state = True if self.request.user.has_perm('gallery.change_fancard') else False
         return {'slug': slug, 'author': author, 'state': state}
 
 
@@ -102,7 +102,7 @@ class UpdateCard(LoginRequiredMixin, UserPassesTestMixin, DataMixin, generic.Upd
 
     def form_valid(self, form):
         fan_card = form.save(commit=False)
-        if not self.request.user.is_superuser:
+        if not self.request.user.has_perm('gallery.change_fancard'):
             fan_card.state = False
         fan_card.save()
         return redirect(reverse_lazy('gallery:card_changed'))
