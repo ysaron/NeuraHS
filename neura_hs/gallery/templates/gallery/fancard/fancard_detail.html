@@ -6,7 +6,7 @@
 <div class="module">
 <div class="detailhead">
   <h1 class="d-inline-block">{{ fan_card.name }}</h1>
-  {% if user.is_authenticated %}
+  {% if request.user|can_change:fan_card %}
   <p>
     <span><a role="button" class="btn btn-sm btn-outline-primary" href="{{ fan_card.get_absolute_url }}/edit/">Редактировать</a></span>
     <span><a role="button" class="btn btn-sm btn-outline-danger" href="{{ fan_card.get_absolute_url }}/delete/">Удалить</a></span>

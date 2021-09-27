@@ -1,6 +1,6 @@
 from django import template
 from collections import namedtuple
-from ..models import Card
+from ..models import Card, FanCard
 
 register = template.Library()
 Parameter = namedtuple('Parameter', ['name', 'icon', 'value'])
@@ -80,3 +80,10 @@ def format_stats(context, card):
     context.update({'params': [p for p in (cost, first_param, seconf_param) if p.name]})
 
     return context
+
+
+@register.filter(name='can_change')
+def can_change(user, card: FanCard):
+    """ Проверяет, имеет ли пользователь право удалять/редактировать фан-карту """
+    return user.is_authenticated and any((card.author == user.author,
+                                          user.has_perm('gallery.change_fancard')))
