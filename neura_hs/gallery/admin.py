@@ -33,6 +33,10 @@ class FanCardAdmin(admin.ModelAdmin):
         ('Доступность', {'fields': ('state',)})
     )
     prepopulated_fields = {"slug": ("name",)}
+    search_fields = ('name', 'author__user__username')
+    save_on_top = True
+    save_as = True
+    list_editable = ('state',)
 
 
 class FanCardInline(admin.TabularInline):
@@ -52,6 +56,8 @@ class RealCardAdmin(admin.ModelAdmin):
         (None, {'fields': ('collectible', 'artist')}),
     )
     prepopulated_fields = {"slug": ("name",)}
+    search_fields = ('name', 'card_set__name')
+    save_on_top = True
 
 
 @admin.register(CardClass)
