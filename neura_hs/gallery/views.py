@@ -105,6 +105,7 @@ class UpdateCard(LoginRequiredMixin, UserPassesTestMixin, DataMixin, generic.Upd
         if not self.request.user.has_perm('gallery.change_fancard'):
             fan_card.state = False
         fan_card.save()
+        form.save_m2m()
         return redirect(reverse_lazy('gallery:card_changed'))
 
 
