@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
+from modeltranslation.admin import TranslationAdmin
 from .models import RealCard, FanCard, NeuraCard, CardClass, Tribe, CardSet, Author
 
 
@@ -45,7 +46,7 @@ class FanCardInline(admin.TabularInline):
 
 
 @admin.register(RealCard)
-class RealCardAdmin(admin.ModelAdmin):
+class RealCardAdmin(TranslationAdmin):
     list_display = ('name', 'card_type', 'display_card_class', 'card_set', 'creation_date')
     list_filter = ('card_type', 'card_class', 'cost', 'collectible', 'card_set')
     fieldsets = (
@@ -61,16 +62,16 @@ class RealCardAdmin(admin.ModelAdmin):
 
 
 @admin.register(CardClass)
-class CardClassAdmin(admin.ModelAdmin):
+class CardClassAdmin(TranslationAdmin):
     pass
 
 
 @admin.register(Tribe)
-class TribeAdmin(admin.ModelAdmin):
+class TribeAdmin(TranslationAdmin):
     pass
 
 
 @admin.register(CardSet)
-class CardSetAdmin(admin.ModelAdmin):
+class CardSetAdmin(TranslationAdmin):
     pass
 

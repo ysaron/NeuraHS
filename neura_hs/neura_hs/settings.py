@@ -10,6 +10,7 @@ except ImportError:
     from .prod_settings import *
 
 INSTALLED_APPS = [
+    'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -26,6 +27,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -35,7 +37,7 @@ MIDDLEWARE = [
 ]
 
 INTERNAL_IPS = [
-    '127.0.0.1',    # включение/отключение Debug Toolbar здесь
+    '127.0.0.1',  # включение/отключение Debug Toolbar здесь
 ]
 
 ROOT_URLCONF = 'neura_hs.urls'
@@ -83,7 +85,7 @@ CACHES = {
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'ru'
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'Europe/Moscow'
 
@@ -92,6 +94,16 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+gettext = lambda s: s
+LANGUAGES = (
+    ('en', gettext('English')),
+    ('ru', gettext('Russian')),
+)
+
+LOCALE_PATHS = (
+    BASE_DIR / 'locale',
+)
 
 STATIC_URL = '/static/'
 
@@ -112,14 +124,13 @@ LOGOUT_REDIRECT_URL = 'accounts/signin/'
 
 # Настройки email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'   # SMTP-сервер исходящей почты
-EMAIL_PORT = 587    # 465 (SSL) или 587 (TLS)
+EMAIL_HOST = 'smtp.gmail.com'  # SMTP-сервер исходящей почты
+EMAIL_PORT = 587  # 465 (SSL) или 587 (TLS)
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
-
 
 LOGGING = {
     'version': 1,
@@ -211,6 +222,6 @@ HSAPI_BASEURL = os.environ.get('HSAPI_BASEURL')
 HSAPI_HOST = os.environ.get('HSAPI_HOST')
 X_RAPIDARI_KEY = os.environ.get('X_RAPIDARI_KEY')
 
-
 TEST_EMAIL = os.environ.get('TEST_EMAIL')
 
+MODEL_TRANSLATION_FILE = BASE_DIR / 'locale' / 'translations.json'

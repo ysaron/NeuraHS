@@ -1,6 +1,9 @@
+import json
+
 from django.core.management.base import BaseCommand
 from django.utils.text import slugify
 from django.conf import settings
+from django.db import transaction
 import jmespath
 import requests
 import re
@@ -27,35 +30,106 @@ class Command(BaseCommand):
         start = datetime.now()
 
         self.rewrite = options['rewrite']
-        if self.rewrite:
-            RealCard.objects.all().delete()
 
         api = HsApiWorker(host=settings.HSAPI_HOST, token=settings.X_RAPIDARI_KEY)
         en_cards = api.get_data(endpoint='cards', locale='enUS')
-        # ru_cards = api.get_data(endpoint='cards', locale='ruRU')
+        ru_cards = api.get_data(endpoint='cards', locale='ruRU')
 
         info = api.get_data(endpoint='info', locale='enUS')
 
         # создание списка подлежащих записи карт из JSON
         en_cards_line: list[dict] = jmespath.search(expression="*[?type!='Enchantment'][]", data=en_cards)
+        ru_cards_line: list[dict] = jmespath.search(expression="*[?type!='Enchantment'][]", data=ru_cards)
 
         card_classes: list = jmespath.search(expression='classes', data=info)
         tribes: list = jmespath.search(expression='races', data=info)
         card_sets: list = list(set(jmespath.search(expression="*[?type!='Enchantment'][].cardSet", data=en_cards)))
 
-        self.write_card_classes(card_classes)
-        self.write_tribes(tribes)
-        self.write_card_sets(card_sets)
+        base = DbWorker(en_cards=en_cards_line, ru_cards=ru_cards_line, card_classes=card_classes,
+                        tribes=tribes, card_sets=card_sets)
 
-        for index, j_card in enumerate(en_cards_line):
-            if not self.rewrite:    # только что очищенную таблицу нет смысла проверять на содержание записи
+        if self.rewrite:
+            base.clear_db()
+
+        with transaction.atomic():
+            base.write_card_classes()
+            base.write_tribes()
+            base.write_card_sets()
+
+        with transaction.atomic():
+            base.write_en_cards(self.rewrite)
+            base.add_ru_translation()
+
+        end = datetime.now() - start
+        self.stdout.write(f'Затрачено времени: {end.seconds} с')
+
+
+class DbWorker:
+    """  """
+    translations = settings.MODEL_TRANSLATION_FILE
+
+    def __init__(self, en_cards, ru_cards, card_classes, tribes, card_sets):
+        self.en_cards = en_cards
+        self.ru_cards = ru_cards
+        self.card_classes = card_classes
+        self.tribes = tribes
+        self.card_sets = card_sets
+
+    @staticmethod
+    def clear_db():
+        # RealCard.objects.all().delete()
+        for model in (RealCard, CardClass, Tribe, CardSet):
+            model.objects.all().delete()
+
+    def write_card_classes(self):
+        """  """
+        with open(DbWorker.translations, 'r', encoding='utf-8') as f:
+            translations = json.load(f)
+            for cls in self.card_classes:
+                if CardClass.objects.filter(service_name=cls).exists():
+                    continue
+                card_class = CardClass(name=cls, service_name=cls)
+                card_class.name_ru = translations['classes'][cls]
+                card_class.save()
+
+    def write_tribes(self):
+        """  """
+        with open(DbWorker.translations, 'r', encoding='utf-8') as f:
+            translations = json.load(f)
+            for t in self.tribes:
+                if Tribe.objects.filter(service_name=t).exists():
+                    continue
+                tribe = Tribe(name=t, service_name=t)
+                tribe.name_ru = translations['tribes'][t]
+                tribe.save()
+
+    def write_card_sets(self):
+        """  """
+        with open(DbWorker.translations, 'r', encoding='utf-8') as f:
+            translations = json.load(f)
+            for s in self.card_sets:
+                if CardSet.objects.filter(service_name=s).exists():
+                    continue
+                card_set = CardSet(name=s, service_name=s)
+                card_set.name_ru = translations['sets'][s]
+                card_set.save()
+
+            if not CardSet.objects.filter(service_name='unknown').exists():
+                unknown_set = CardSet(name='unknown', service_name='unknown')
+                unknown_set.name_ru = translations['sets']['unknown']
+                unknown_set.save()
+
+    def write_en_cards(self, rewrite):
+        for index, j_card in enumerate(self.en_cards):
+            if not rewrite:    # только что очищенную таблицу нет смысла проверять на содержание записи
                 if RealCard.objects.filter(card_id=j_card['cardId']).exists():
                     continue
             r_card = RealCard()
             r_card.name = j_card['name']
+            # r_card.name_ru = 'йцукен'       # работает
             r_card.service_name = r_card.name.upper()
             r_card.author = 'Blizzard'
-            r_card.card_type = self.align_card_type(j_card.get('type', ''))
+            r_card.card_type = align_card_type(j_card.get('type', ''))
             r_card.cost = int(j_card.get('cost', 0))
             r_card.attack = int(j_card.get('attack', 0))
             r_card.health = int(j_card.get('health', 0))
@@ -63,8 +137,8 @@ class Command(BaseCommand):
             r_card.armor = int(j_card.get('armor', 0))
             r_card.text = clear_unreadable(j_card.get('text', ''))
             r_card.flavor = clear_unreadable(j_card.get('flavor', ''))
-            r_card.rarity = self.align_rarity(j_card.get('rarity', ''))
-            r_card.spell_school = self.align_spellschool(j_card.get('spellSchool', ''))
+            r_card.rarity = align_rarity(j_card.get('rarity', ''))
+            r_card.spell_school = align_spellschool(j_card.get('spellSchool', ''))
 
             r_card.card_id = j_card['cardId']
             r_card.dbf_id = int(j_card['dbfId'])
@@ -74,142 +148,101 @@ class Command(BaseCommand):
 
             r_card.battlegrounds = r_card.card_set == 'Battlegrounds'
 
-            # Заполнение полей механик
-            if 'mechanics' in j_card:
-                mechanics = [m['name'].lower() for m in j_card['mechanics']]
-                r_card.silence = 'silence' in mechanics
-                r_card.battlecry = 'battlecry' in mechanics
-                r_card.divine_shield = 'divine shield' in mechanics
-                r_card.stealth = 'stealth' in mechanics
-                r_card.overload = 'overload' in mechanics
-                r_card.windfury = 'windfury' in mechanics
-                r_card.secret = 'secret' in mechanics
-                r_card.charge = 'charge' in mechanics
-                r_card.deathrattle = 'deathrattle' in mechanics
-                r_card.taunt = 'taunt' in mechanics
-                r_card.spell_damage = 'spell damage' in mechanics
-                r_card.combo = 'combo' in mechanics
-                r_card.aura = 'aura' in mechanics
-                r_card.poison = 'poisonous' in mechanics
-                r_card.freeze = 'freeze' in mechanics
-                r_card.rush = 'rush' in mechanics
-                r_card.spell_immune = 'immunetospellpower' in mechanics
-                r_card.lifesteal = 'lifesteal' in mechanics
-                r_card.casts_when_drawn = 'casts when drawn' in mechanics
-                r_card.inspire = 'inspire' in mechanics
-                r_card.spell_burst = 'spellburst' in mechanics
-                r_card.discover = 'discover' in mechanics
-                r_card.echo = 'echo' in mechanics
-                r_card.quest = 'quest' in mechanics
-                r_card.side_quest = 'sidequest' in mechanics
-                r_card.one_turn_effect = 'oneturneffect' in mechanics
-                r_card.reborn = 'reborn' in mechanics
-                r_card.outcast = 'outcast' in mechanics
-                r_card.magnetic = 'magnetic' in mechanics
-                r_card.recruit = 'recruit' in mechanics
-                r_card.corrupt = 'corrupt' in mechanics
-                r_card.twinspell = 'twinspell' in mechanics
-                r_card.jade_golem = 'jade golem' in mechanics
-                r_card.adapt = 'adapt' in mechanics
-                r_card.overkill = 'overkill' in mechanics
-                r_card.invoke = 'invoke' in mechanics
-                r_card.blood_gem = 'blood gem' in mechanics
-                r_card.frenzy = 'frenzy' in mechanics
-                r_card.tradeable = 'tradeable' in mechanics
-                r_card.questline = 'questline' in mechanics
-                # r_card.dormant = 'dormant' in j_card['name'].lower()
+            self.write_mechanics_to_card(r_card, j_card)
+            self.write_set_to_card(r_card, j_card)
 
-            try:
-                base_set = CardSet.objects.get(name=j_card.get('cardSet'))
-            except CardSet.DoesNotExist:
-                base_set = CardSet.objects.get(name='unknown')
-            r_card.card_set = base_set
             r_card.save()
 
             # Заполнение ManyToMany-полей
-            if 'classes' in j_card:
-                for cls in j_card['classes']:
-                    r_card.card_class.add(CardClass.objects.get(service_name=cls))
-            elif 'playerClass' in j_card:
-                r_card.card_class.add(CardClass.objects.get(service_name=j_card['playerClass']))
-
-            if 'race' in j_card:
-                r_card.tribe.add(Tribe.objects.get(service_name=j_card['race']))
+            self.write_classes_to_card(r_card, j_card)
+            self.write_tribe_to_card(r_card, j_card)
 
             if index % 200 == 0:
                 print(f'Записано карт: {index}')
 
-        end = datetime.now() - start
-        self.stdout.write(f'Затрачено времени: {end.seconds} с')
+    @staticmethod
+    def write_mechanics_to_card(card: RealCard, data: dict):
+        """ Заполняет поля механик карты """
+
+        if 'mechanics' not in data:
+            return
+
+        mechanics = [m['name'].lower() for m in data['mechanics']]
+        card.silence = 'silence' in mechanics
+        card.battlecry = 'battlecry' in mechanics
+        card.divine_shield = 'divine shield' in mechanics
+        card.stealth = 'stealth' in mechanics
+        card.overload = 'overload' in mechanics
+        card.windfury = 'windfury' in mechanics
+        card.secret = 'secret' in mechanics
+        card.charge = 'charge' in mechanics
+        card.deathrattle = 'deathrattle' in mechanics
+        card.taunt = 'taunt' in mechanics
+        card.spell_damage = 'spell damage' in mechanics
+        card.combo = 'combo' in mechanics
+        card.aura = 'aura' in mechanics
+        card.poison = 'poisonous' in mechanics
+        card.freeze = 'freeze' in mechanics
+        card.rush = 'rush' in mechanics
+        card.spell_immune = 'immunetospellpower' in mechanics
+        card.lifesteal = 'lifesteal' in mechanics
+        card.casts_when_drawn = 'casts when drawn' in mechanics
+        card.inspire = 'inspire' in mechanics
+        card.spell_burst = 'spellburst' in mechanics
+        card.discover = 'discover' in mechanics
+        card.echo = 'echo' in mechanics
+        card.quest = 'quest' in mechanics
+        card.side_quest = 'sidequest' in mechanics
+        card.one_turn_effect = 'oneturneffect' in mechanics
+        card.reborn = 'reborn' in mechanics
+        card.outcast = 'outcast' in mechanics
+        card.magnetic = 'magnetic' in mechanics
+        card.recruit = 'recruit' in mechanics
+        card.corrupt = 'corrupt' in mechanics
+        card.twinspell = 'twinspell' in mechanics
+        card.jade_golem = 'jade golem' in mechanics
+        card.adapt = 'adapt' in mechanics
+        card.overkill = 'overkill' in mechanics
+        card.invoke = 'invoke' in mechanics
+        card.blood_gem = 'blood gem' in mechanics
+        card.frenzy = 'frenzy' in mechanics
+        card.tradeable = 'tradeable' in mechanics
+        card.questline = 'questline' in mechanics
+        # card.dormant = 'dormant' in j_card['name'].lower()
+
+    def add_ru_translation(self):
+        """  """
+        for index, j_card in enumerate(self.ru_cards):
+            card_id = j_card['cardId']
+            r_card = RealCard.objects.get(card_id=card_id)
+            r_card.name_ru = j_card['name']
+            r_card.text_ru = clear_unreadable(j_card.get('text', ''))
+            r_card.flavor_ru = clear_unreadable(j_card.get('flavor', ''))
+            r_card.save()
 
     @staticmethod
-    def align_card_type(type_name: str) -> str:
-        """ Возвращает соответствующий тип карты, как он определен в модели """
-        d = {'minion': RealCard.CardTypes.MINION,
-             'spell': RealCard.CardTypes.SPELL,
-             'weapon': RealCard.CardTypes.WEAPON,
-             'hero': RealCard.CardTypes.HERO,
-             'hero power': RealCard.CardTypes.HEROPOWER}
-
-        return d.get(type_name.lower(), RealCard.CardTypes.UNKNOWN)
+    def write_set_to_card(card: RealCard, data: dict):
+        """ Связывает карту с набором (FK) """
+        try:
+            base_set = CardSet.objects.get(service_name=data.get('cardSet'))
+        except CardSet.DoesNotExist:
+            base_set = CardSet.objects.get(service_name='unknown')
+        card.card_set = base_set
 
     @staticmethod
-    def align_rarity(rarity_name: str) -> str:
-        """ Возвращает соответствующую редкость, как она определена в модели """
-
-        d = {'free': RealCard.Rarities.NO_RARITY,
-             'common': RealCard.Rarities.COMMON,
-             'rare': RealCard.Rarities.RARE,
-             'epic': RealCard.Rarities.EPIC,
-             'legendary': RealCard.Rarities.LEGENDARY}
-
-        return d.get(rarity_name.lower(), RealCard.Rarities.UNKNOWN)
+    def write_classes_to_card(card: RealCard, data: dict):
+        """ Связывает карту с классами (m2m) """
+        if 'classes' in data:
+            for cls in data['classes']:
+                card.card_class.add(CardClass.objects.get(service_name=cls))
+        elif 'playerClass' in data:
+            card.card_class.add(CardClass.objects.get(service_name=data['playerClass']))
 
     @staticmethod
-    def align_spellschool(spellschool: str):
-        """ Возвращает соответствующий тип заклинания, как он определен в модели """
-
-        d = {'holy': RealCard.SpellSchools.HOLY,
-             'shadow': RealCard.SpellSchools.SHADOW,
-             'nature': RealCard.SpellSchools.NATURE,
-             'fel': RealCard.SpellSchools.FEL,
-             'fire': RealCard.SpellSchools.FIRE,
-             'frost': RealCard.SpellSchools.FROST,
-             'arcane': RealCard.SpellSchools.ARCANE}
-
-        return d.get(spellschool.lower(), RealCard.SpellSchools.UNKNOWN)
-
-    def write_card_classes(self, classlist: list):
-        """  """
-        for cls in classlist:
-            if CardClass.objects.filter(name=cls).exists():
-                continue
-            card_class = CardClass(name=cls, service_name=cls)
-            card_class.save()
-
-        self.stdout.write(f'Классы записаны ({len(classlist)})')
-
-    def write_tribes(self, tribelist: list):
-        """  """
-        for t in tribelist:
-            if Tribe.objects.filter(name=t).exists():
-                continue
-            tribe = Tribe(name=t, service_name=t)
-            tribe.save()
-
-        self.stdout.write(f'Расы записаны ({len(tribelist)})')
-
-    def write_card_sets(self, setlist: list):
-        """  """
-        for s in setlist:
-            if CardSet.objects.filter(name=s).exists():
-                continue
-            card_set = CardSet(name=s)
-            card_set.save()
-
-        card_set = CardSet(name='unknown')
-        card_set.save()
-        self.stdout.write(f'Наборы карт записаны ({len(setlist) + 1})')
+    def write_tribe_to_card(card: RealCard, data: dict):
+        """ Связывает карту с расами (m2m) """
+        if 'race' in data:
+            card.tribe.add(Tribe.objects.get(service_name=data['race']))
 
 
 class HsApiWorker:
@@ -242,6 +275,42 @@ class HsApiWorker:
         r = requests.get(url=url, headers=self.headers, params={'locale': locale}, stream=True)
         r.raise_for_status()
         return r.json()
+
+
+def align_card_type(type_name: str) -> str:
+    """ Возвращает соответствующий тип карты, как он определен в модели """
+    d = {'minion': RealCard.CardTypes.MINION,
+         'spell': RealCard.CardTypes.SPELL,
+         'weapon': RealCard.CardTypes.WEAPON,
+         'hero': RealCard.CardTypes.HERO,
+         'hero power': RealCard.CardTypes.HEROPOWER}
+
+    return d.get(type_name.lower(), RealCard.CardTypes.UNKNOWN)
+
+
+def align_rarity(rarity_name: str) -> str:
+    """ Возвращает соответствующую редкость, как она определена в модели """
+
+    d = {'free': RealCard.Rarities.NO_RARITY,
+         'common': RealCard.Rarities.COMMON,
+         'rare': RealCard.Rarities.RARE,
+         'epic': RealCard.Rarities.EPIC,
+         'legendary': RealCard.Rarities.LEGENDARY}
+
+    return d.get(rarity_name.lower(), RealCard.Rarities.UNKNOWN)
+
+def align_spellschool(spellschool: str):
+    """ Возвращает соответствующий тип заклинания, как он определен в модели """
+
+    d = {'holy': RealCard.SpellSchools.HOLY,
+         'shadow': RealCard.SpellSchools.SHADOW,
+         'nature': RealCard.SpellSchools.NATURE,
+         'fel': RealCard.SpellSchools.FEL,
+         'fire': RealCard.SpellSchools.FIRE,
+         'frost': RealCard.SpellSchools.FROST,
+         'arcane': RealCard.SpellSchools.ARCANE}
+
+    return d.get(spellschool.lower(), RealCard.SpellSchools.UNKNOWN)
 
 
 def clear_unreadable(text: str) -> str:

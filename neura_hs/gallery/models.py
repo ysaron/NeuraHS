@@ -71,9 +71,9 @@ def update_profile_signal(sender, instance, created, **kwargs):
 class CardClass(Model):
     """ Модель игрового класса (Маг, Паладин и т.д.) """
 
-    name = models.CharField(max_length=20, help_text='Название игрового класса.',
+    name = models.CharField(max_length=255, help_text='Название игрового класса.',
                             verbose_name='Класс')
-    service_name = models.CharField(max_length=30, verbose_name='Service', default='', help_text='(!)',
+    service_name = models.CharField(max_length=255, verbose_name='Service', default='', help_text='(!)',
                                     unique=True)
 
     class Meta:
@@ -88,8 +88,8 @@ class CardClass(Model):
 class Tribe(Model):
     """ Модель расы (мурлок, демон и т.д.) """
 
-    name = models.CharField(max_length=20, verbose_name='Раса существа')
-    service_name = models.CharField(max_length=30, verbose_name='Service', default='', help_text='(!)',
+    name = models.CharField(max_length=255, verbose_name='Раса существа')
+    service_name = models.CharField(max_length=255, verbose_name='Service', default='', help_text='(!)',
                                     unique=True)
 
     class Meta:
@@ -103,7 +103,8 @@ class Tribe(Model):
 
 class CardSet(Model):
     """ Модель набора карт Hearthstone """
-    name = models.CharField(max_length=100, verbose_name='Название')
+    name = models.CharField(max_length=255, verbose_name='Название')
+    service_name = models.CharField(max_length=255, verbose_name='Service', default='', help_text='(!)', blank=True)
 
     class Meta:
         verbose_name = 'Набор'
@@ -119,19 +120,19 @@ class Card(Model):
 
     class CardTypes(models.TextChoices):
         UNKNOWN = '', _('---------')
-        MINION = 'M', _('Существо')
-        SPELL = 'S', _('Заклинание')
-        HERO = 'H', _('Герой')
-        WEAPON = 'W', _('Оружие')
-        HEROPOWER = 'HP', _('Сила героя')
+        MINION = 'M', _('Minion')
+        SPELL = 'S', _('Spell')
+        HERO = 'H', _('Hero')
+        WEAPON = 'W', _('Weapon')
+        HEROPOWER = 'HP', _('Hero power')
 
     class Rarities(models.TextChoices):
         UNKNOWN = '', _('---------')
-        NO_RARITY = 'NO', _('Без редкости')
-        COMMON = 'C', _('Обычная')
-        RARE = 'R', _('Редкая')
-        EPIC = 'E', _('Эпическая')
-        LEGENDARY = 'L', _('Легендарная')
+        NO_RARITY = 'NO', _('No rarity')
+        COMMON = 'C', _('Common')
+        RARE = 'R', _('Rare')
+        EPIC = 'E', _('Epic')
+        LEGENDARY = 'L', _('Legendary')
 
     class SpellSchools(models.TextChoices):
         UNKNOWN = '', _('---------')
@@ -145,49 +146,49 @@ class Card(Model):
 
     class Mechanics(models.TextChoices):
         UNKNOWN = '', _('---------')
-        SILENCE = 'silence', _('Немота')
-        BATTLECRY = 'battlecry', _('Боевой клич')
-        DIVINE_SHIELD = 'divine_shield', _('Божественный щит')
-        STEALTH = 'stealth', _('Маскировка')
-        OVERLOAD = 'overload', _('Перегрузка')
-        WINDFURY = 'windfury', _('Неистовство ветра')
-        SECRET = 'secret', _('Секрет')
-        CHARGE = 'charge', _('Рывок')
-        DEATHRATTLE = 'deathrattle', _('Предсмертный хрип')
-        TAUNT = 'taunt', _('Провокация')
-        SPELL_DAMAGE = 'spell_damage', _('Урон заклинаний')
-        COMBO = 'combo', _('Серия приемов')
-        AURA = 'aura', _('Аура')
-        POISON = 'poison', _('Яд')
-        FREEZE = 'freeze', _('Заморозка')
-        RUSH = 'rush', _('Натиск')
-        SPELL_IMMUNE = 'spell_immune', _('Спелл-иммун')
-        LIFESTEAL = 'lifesteal', _('Похищение жизни')
-        CASTS_WHEN_DRAWN = 'casts_when_drawn', _('При взятии')
-        INSPIRE = 'inspire', _('Воодушевление')
-        SPELL_BURST = 'spell_burst', _('Резонанс')
-        DISCOVER = 'discover', _('Раскопка')
-        ECHO = 'echo', _('Эхо')
-        QUEST = 'quest', _('Квест')
-        SIDE_QUEST = 'side_quest', _('Побочный квест')
-        ONE_TURN_EFFECT = 'one_turn_effect', _('Эффект на 1 ход')
-        REBORN = 'reborn', _('Перерождение')
-        OUTCAST = 'outcast', _('Изгой')
-        MAGNETIC = 'magnetic', _('Магнетизм')
-        RECRUIT = 'recruit', _('Вербовка')
-        CORRUPT = 'corrupt', _('Порча')
-        TWINSPELL = 'twinspell', _('Дуплет')
-        JADE_GOLEM = 'jade_golem', _('Нефритовые големы')
-        ADAPT = 'adapt', _('Адаптация')
-        OVERKILL = 'overkill', _('Сверхурон')
-        INVOKE = 'invoke', _('Воззвание')
-        BLOOD_GEM = 'blood_gem', _('Кровавые гемы')
-        FRENZY = 'frenzy', _('Бешенство')
-        TRADEABLE = 'tradeable', _('Можно обменять')
-        QUESTLINE = 'questline', _('Цепочка заданий')
+        SILENCE = 'silence', _('Silence')
+        BATTLECRY = 'battlecry', _('Battlecry')
+        DIVINE_SHIELD = 'divine_shield', _('Divine shield')
+        STEALTH = 'stealth', _('Stealth')
+        OVERLOAD = 'overload', _('Overload')
+        WINDFURY = 'windfury', _('Windfury')
+        SECRET = 'secret', _('Secret')
+        CHARGE = 'charge', _('Charge')
+        DEATHRATTLE = 'deathrattle', _('Deathrattle')
+        TAUNT = 'taunt', _('Taunt')
+        SPELL_DAMAGE = 'spell_damage', _('Spell damage')
+        COMBO = 'combo', _('Combo')
+        AURA = 'aura', _('Aura')
+        POISON = 'poison', _('Poison')
+        FREEZE = 'freeze', _('Freeze')
+        RUSH = 'rush', _('Rush')
+        SPELL_IMMUNE = 'spell_immune', _('Spell immune')
+        LIFESTEAL = 'lifesteal', _('Lifesteal')
+        CASTS_WHEN_DRAWN = 'casts_when_drawn', _('Casts when drawn')
+        INSPIRE = 'inspire', _('Inspire')
+        SPELL_BURST = 'spell_burst', _('Spellburst')
+        DISCOVER = 'discover', _('Discover')
+        ECHO = 'echo', _('Echo')
+        QUEST = 'quest', _('Quest')
+        SIDE_QUEST = 'side_quest', _('Side quest')
+        ONE_TURN_EFFECT = 'one_turn_effect', _('One turn effect')
+        REBORN = 'reborn', _('Reborn')
+        OUTCAST = 'outcast', _('Outcast')
+        MAGNETIC = 'magnetic', _('Magnetic')
+        RECRUIT = 'recruit', _('Recruit')
+        CORRUPT = 'corrupt', _('Corrupt')
+        TWINSPELL = 'twinspell', _('Twinspell')
+        JADE_GOLEM = 'jade_golem', _('Jade golem')
+        ADAPT = 'adapt', _('Adapt')
+        OVERKILL = 'overkill', _('Overkill')
+        INVOKE = 'invoke', _('Invoke')
+        BLOOD_GEM = 'blood_gem', _('Blood gem')
+        FRENZY = 'frenzy', _('Frenzy')
+        TRADEABLE = 'tradeable', _('Tradeable')
+        QUESTLINE = 'questline', _('Questline')
 
-    name = models.CharField(max_length=50, verbose_name='Название')
-    service_name = models.CharField(max_length=50, default='')
+    name = models.CharField(max_length=255, verbose_name='Название')
+    service_name = models.CharField(max_length=255, default='')
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
     author = models.CharField(max_length=255, default='', verbose_name='Автор')
     card_type = models.CharField(max_length=2, choices=CardTypes.choices, default=CardTypes.UNKNOWN, verbose_name='Тип')

@@ -38,7 +38,7 @@ def get_display_type(fieldname):
 def get_cardclass_style(card):
     """ Возвращает CSS-класс оформления области соответствующего Hearthstone-класса """
     if card.card_class.count() == 1:
-        return ''.join(card.card_class.all()[0].name.lower().split())
+        return ''.join(card.card_class.all()[0].service_name.lower().split())
     else:
         return 'multiclass'
 

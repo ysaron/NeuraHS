@@ -17,17 +17,23 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls.i18n import i18n_patterns
 from core.views import homepage, about, contact
 
 
 urlpatterns = [
     path('', homepage, name='home'),
     path('admin/', admin.site.urls),
-    path('gallery/', include('gallery.urls')),
+    # path('gallery/', include('gallery.urls')),
     path('accounts/', include('accounts.urls')),
     path('about/', about, name='about'),
     path('contact/', contact, name='contact'),
+    path('i18n/', include('django.conf.urls.i18n')),
 ]
+# приложения, для которых мы хотим делать перевод
+urlpatterns += i18n_patterns(
+    path('gallery/', include('gallery.urls')),
+)
 
 
 if settings.DEBUG:
