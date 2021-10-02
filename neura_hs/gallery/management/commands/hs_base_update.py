@@ -1,12 +1,12 @@
-import json
-
 from django.core.management.base import BaseCommand
 from django.utils.text import slugify
 from django.conf import settings
 from django.db import transaction
+import json
 import jmespath
 import requests
 import re
+from tqdm import tqdm
 from datetime import datetime
 
 from ...models import RealCard, CardClass, Tribe, CardSet
@@ -32,9 +32,11 @@ class Command(BaseCommand):
         self.rewrite = options['rewrite']
 
         api = HsApiWorker(host=settings.HSAPI_HOST, token=settings.X_RAPIDARI_KEY)
+        self.stdout.write('Запрос к API: карты (en)...')
         en_cards = api.get_data(endpoint='cards', locale='enUS')
+        self.stdout.write('Запрос к API: карты (ru)...')
         ru_cards = api.get_data(endpoint='cards', locale='ruRU')
-
+        self.stdout.write('Запрос к API: текущее состояние игры...')
         info = api.get_data(endpoint='info', locale='enUS')
 
         # создание списка подлежащих записи карт из JSON
@@ -49,6 +51,7 @@ class Command(BaseCommand):
                         tribes=tribes, card_sets=card_sets)
 
         if self.rewrite:
+            self.stdout.write('Удаление устаревших данных...')
             base.clear_db()
 
         with transaction.atomic():
@@ -61,11 +64,11 @@ class Command(BaseCommand):
             base.add_ru_translation()
 
         end = datetime.now() - start
-        self.stdout.write(f'Затрачено времени: {end.seconds} с')
+        self.stdout.write(f'Обновление БД заняло {end.seconds} с')
 
 
 class DbWorker:
-    """  """
+
     translations = settings.MODEL_TRANSLATION_FILE
 
     def __init__(self, en_cards, ru_cards, card_classes, tribes, card_sets):
@@ -77,15 +80,13 @@ class DbWorker:
 
     @staticmethod
     def clear_db():
-        # RealCard.objects.all().delete()
-        for model in (RealCard, CardClass, Tribe, CardSet):
-            model.objects.all().delete()
+        RealCard.objects.all().delete()
 
     def write_card_classes(self):
-        """  """
+        """ Записывает существующие игровые классы (en + ru) """
         with open(DbWorker.translations, 'r', encoding='utf-8') as f:
             translations = json.load(f)
-            for cls in self.card_classes:
+            for cls in tqdm(self.card_classes, desc='Классы', ncols=100):
                 if CardClass.objects.filter(service_name=cls).exists():
                     continue
                 card_class = CardClass(name=cls, service_name=cls)
@@ -93,10 +94,10 @@ class DbWorker:
                 card_class.save()
 
     def write_tribes(self):
-        """  """
+        """ Записывает существующие расы существ (en + ru) """
         with open(DbWorker.translations, 'r', encoding='utf-8') as f:
             translations = json.load(f)
-            for t in self.tribes:
+            for t in tqdm(self.tribes, desc='Расы', ncols=100):
                 if Tribe.objects.filter(service_name=t).exists():
                     continue
                 tribe = Tribe(name=t, service_name=t)
@@ -104,10 +105,10 @@ class DbWorker:
                 tribe.save()
 
     def write_card_sets(self):
-        """  """
+        """ Записывает существующие наборы карт (en + ru) """
         with open(DbWorker.translations, 'r', encoding='utf-8') as f:
             translations = json.load(f)
-            for s in self.card_sets:
+            for s in tqdm(self.card_sets, desc='Аддоны', ncols=100):
                 if CardSet.objects.filter(service_name=s).exists():
                     continue
                 card_set = CardSet(name=s, service_name=s)
@@ -120,13 +121,12 @@ class DbWorker:
                 unknown_set.save()
 
     def write_en_cards(self, rewrite):
-        for index, j_card in enumerate(self.en_cards):
+        for j_card in tqdm(self.en_cards, desc='Карты (en)', ncols=100):
             if not rewrite:    # только что очищенную таблицу нет смысла проверять на содержание записи
                 if RealCard.objects.filter(card_id=j_card['cardId']).exists():
                     continue
             r_card = RealCard()
             r_card.name = j_card['name']
-            # r_card.name_ru = 'йцукен'       # работает
             r_card.service_name = r_card.name.upper()
             r_card.author = 'Blizzard'
             r_card.card_type = align_card_type(j_card.get('type', ''))
@@ -156,9 +156,6 @@ class DbWorker:
             # Заполнение ManyToMany-полей
             self.write_classes_to_card(r_card, j_card)
             self.write_tribe_to_card(r_card, j_card)
-
-            if index % 200 == 0:
-                print(f'Записано карт: {index}')
 
     @staticmethod
     def write_mechanics_to_card(card: RealCard, data: dict):
@@ -211,8 +208,8 @@ class DbWorker:
         # card.dormant = 'dormant' in j_card['name'].lower()
 
     def add_ru_translation(self):
-        """  """
-        for index, j_card in enumerate(self.ru_cards):
+        """ Добавляет полям 'name', 'text' и 'flavor' карт перевод на русский """
+        for j_card in tqdm(self.ru_cards, desc='Перевод на русский', ncols=100):
             card_id = j_card['cardId']
             r_card = RealCard.objects.get(card_id=card_id)
             r_card.name_ru = j_card['name']
@@ -298,6 +295,7 @@ def align_rarity(rarity_name: str) -> str:
          'legendary': RealCard.Rarities.LEGENDARY}
 
     return d.get(rarity_name.lower(), RealCard.Rarities.UNKNOWN)
+
 
 def align_spellschool(spellschool: str):
     """ Возвращает соответствующий тип заклинания, как он определен в модели """
