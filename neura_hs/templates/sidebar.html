@@ -1,3 +1,4 @@
+{% load i18n %}
 <div class="sidemenu">
     <a href="{% url side_menu.main.url_name %}" title="{{ side_menu.main.popup }}">{{ side_menu.main.title }}</a>
     <div class="accordion" id="accordionBase">
@@ -18,4 +19,19 @@
     </div>
     <a href="{% url side_menu.create.url_name %}" title="{{ side_menu.create.popup }}">{{ side_menu.create.title }}</a>
     <a href="{% url side_menu.authors.url_name %}" title="{{ side_menu.authors.popup }}">{{ side_menu.authors.title }}</a>
+    <hr style="margin: 0px 0px;">
+    <form action="{% url 'set_language' %}" method="post" id="form-i18n">
+        {% csrf_token %}
+        <input name="next" type="hidden" value="{{ redirect_to }}">
+        <select name="language" onchange="if(this.value != 0) { this.form.submit(); }">
+            {% get_current_language as LANGUAGE_CODE %}
+            {% get_available_languages as LANGUAGES %}
+            {% get_language_info_list for LANGUAGES as languages %}
+            {% for language in languages %}
+                <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %}selected{% endif %}>
+                    {{ language.name_local }} ({{ language.code }})
+                </option>
+            {% endfor %}
+        </select>
+    </form>
 </div>
