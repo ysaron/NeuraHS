@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'utils.apps.UtilsConfig',
     'core.apps.CoreConfig',
+    'decks.apps.DecksConfig',
     'debug_toolbar',
 ]
 
