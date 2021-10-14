@@ -23,8 +23,8 @@ from core.views import homepage, about, contact
 
 urlpatterns = [
     path('', homepage, name='home'),
+    path('decks/', include('decks.urls')),
     path('admin/', admin.site.urls),
-    # path('gallery/', include('gallery.urls')),
     path('accounts/', include('accounts.urls')),
     path('about/', about, name='about'),
     path('contact/', contact, name='contact'),

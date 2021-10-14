@@ -229,6 +229,9 @@ thead.darktable th {padding: 8px;}
   margin-bottom: 8px;
   margin-top: 5px;
 }
+.form-deckstring {
+  width: 100%;
+}
 
 /* ------- Оформление классов Hearthstone ------- */
 /* Detail */

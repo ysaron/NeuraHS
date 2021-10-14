@@ -41,6 +41,13 @@ class CardQuerySet(QuerySet):
         return self.filter(**{mechanic: True}) if Card.field_exists(mechanic) else self.all()
 
 
+class IncludibleCardManager(Manager):
+    """ Доступ к картам, которые можно включить в колоду """
+
+    def get_queryset(self):
+        return super().get_queryset().filter(Q(collectible=True) & ~Q(card_set__service_name='Hero Skins'))
+
+
 class Author(Model):
     """ Модель автора фан-карт, расширяющая модель User """
     user: User = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -265,8 +272,6 @@ class Card(Model):
     tradeable = models.BooleanField(default=False, verbose_name='Можно обменять')
     questline = models.BooleanField(default=False, verbose_name='Цепочка заданий')
 
-    objects = CardQuerySet.as_manager()
-
     class Meta:
         abstract = True     # данный класс - не модель. Модели от него наследуются
         ordering = ['-creation_date', 'name']
@@ -314,6 +319,9 @@ class RealCard(Card):
     artist = models.CharField(max_length=255, blank=True, verbose_name='Художник')
     collectible = models.BooleanField(default=True, verbose_name='Коллекционная')
 
+    objects = CardQuerySet.as_manager()
+    includibles = IncludibleCardManager()
+
     class Meta(Card.Meta):
         verbose_name = 'Карта Hearthstone'
         verbose_name_plural = 'Карты Hearthstone'
@@ -328,6 +336,8 @@ class FanCard(Card):
 
     author = models.ForeignKey(Author, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Автор')
     state = models.BooleanField(default=False, verbose_name='Отображать')
+
+    objects = CardQuerySet.as_manager()
 
     class Meta(Card.Meta):
         verbose_name = 'Фан-карта'

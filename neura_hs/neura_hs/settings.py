@@ -203,7 +203,7 @@ LOGGING = {
 # --------------------------------------------- НАСТРОЙКИ ПРОЕКТА --------------------------------------------------- #
 
 TOP_MENU = {
-    'main': {'title': "Главная", 'url_name': 'home'},
+    'main': {'title': "Главная", 'url_name': 'decks:index'},
     'about': {'title': "О сайте", 'url_name': 'about'},
     'contact': {'title': "Обратная связь", 'url_name': 'contact'}
 }

@@ -1,0 +1,26 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+
+<h1>{{ title }}</h1>
+
+<form action="{% url 'decks:index' %}" method="post">
+    {% csrf_token %}
+    <div class="form-error">{{ form.non_field_errors }}</div>
+    <p>
+        <label class="form-label" for="{{ form.deckstring.id_for_label }}">{{ form.deckstring.label }} </label>
+        {{ form.deckstring }}
+    </p>
+    <div class="form-error">{{ for.deckstring.errors }}</div>
+    <button type="submit" class="">Расшифровать</button>
+</form>
+<hr>
+{% if deck %}
+    <p>{{ deck }}</p>
+    {% for card, number in deck.included_cards %}
+        <p>{{ card.cost }} {{ card.name }} {{ number }}</p>
+    {% endfor %}
+{% endif %}
+
+{% endblock %}
+
