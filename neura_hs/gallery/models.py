@@ -301,8 +301,7 @@ class Card(Model):
     @property
     def mechanics_list(self):
         """ Список механик Hearthstone, связанных с картой """
-        lst = [str(value) for key, value in Card.Mechanics.choices if Card.field_exists(key) and getattr(self, key)]
-        return ' | '.join(lst)
+        return [str(value) for key, value in Card.Mechanics.choices if Card.field_exists(key) and getattr(self, key)]
 
     def passes_vanilla(self):
         """  """

@@ -149,7 +149,7 @@ class DbWorker:
             r_card.battlegrounds = r_card.card_set == 'Battlegrounds'
 
             self.write_mechanics_to_card(r_card, j_card)
-            self.write_set_to_card(r_card, j_card)
+            self.write_set_to_card(r_card, j_card)      # if not mercenaries?
 
             r_card.save()
 

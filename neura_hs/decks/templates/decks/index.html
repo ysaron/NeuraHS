@@ -1,6 +1,7 @@
 {% extends "core/base.html" %}
 
 {% block content %}
+{% load custom_filters %}
 
 <h1>{{ title }}</h1>
 
@@ -12,14 +13,44 @@
         {{ form.deckstring }}
     </p>
     <div class="form-error">{{ for.deckstring.errors }}</div>
-    <button type="submit" class="">Расшифровать</button>
+    <span>
+        <button type="submit" class="">Расшифровать</button>
+        <button type="button" class="">Сохранить</button>
+    </span>
 </form>
 <hr>
 {% if deck %}
-    <p>{{ deck }}</p>
-    {% for card, number in deck.included_cards %}
-        <p>{{ card.cost }} {{ card.name }} {{ number }}</p>
-    {% endfor %}
+<div class="row">
+    <div class="col-4">
+        <p>{{ deck }}</p>
+        <table class="deck">
+            <tr>
+                <th colspan="3">111</th>
+            </tr>
+            {% for card, number in deck.included_cards %}
+            <tr class="{{ card|cclass }}-deck {{ card|rar }}-deck">
+                <td class="deck-number-cell" style="width:10%;"><a href="{{ card.get_absolute_url }}">{{ card.cost }}</a></td>
+                <td class="deck-card-cell" style="width:80%;"><a href="{{ card.get_absolute_url }}">{{ card.name }}</a></td>
+                <td class="deck-number-cell" style="width:10%;"><a href="{{ card.get_absolute_url }}">{{ number }}x</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="col-8">
+        <p>Используемые наборы ({{ deck.contained_sets|length }}):</p>
+        <ul>
+            {% for set in deck.contained_sets %}
+                <li>{{ set.set_name }} ({{ set.num_cards }})</li>
+            {% endfor %}
+        </ul>
+        <p>Используемые механики ({{ deck.contained_mechanics|length }}):</p>
+        <ul>
+            {% for mech in deck.contained_mechanics %}
+                <li>{{ mech.name }} ({{ mech.num_cards }})</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 {% endif %}
 
 {% endblock %}

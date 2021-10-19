@@ -8,6 +8,8 @@ class CardInline(admin.StackedInline):
     can_delete = False
     verbose_name = 'Карта'
     verbose_name_plural = 'Карты'
+    extra = 0
+    raw_id_fields = ('card',)
 
     def get_queryset(self, request):
         qs = RealCard.includibles.get_queryset()
@@ -15,6 +17,9 @@ class CardInline(admin.StackedInline):
         if ordering:
             qs = qs.order_by(*ordering)
         return qs
+
+    def has_change_permission(self, request, obj=None):
+        return False
 
 
 class CardSetInline(admin.StackedInline):
@@ -26,7 +31,7 @@ class CardSetInline(admin.StackedInline):
 
 @admin.register(Deck)
 class DeckAdmin(admin.ModelAdmin):
-    # inlines = (CardInline,)     # (!) при просмотре готовой деки ОЧЕНЬ долго прогружает все (includible * 30) карт
+    inlines = (CardInline,)
     list_display = ('id', 'name', 'author', 'deck_class', 'deck_format', 'created')
     list_filter = ('author', 'deck_class', 'deck_format')
     fieldsets = (

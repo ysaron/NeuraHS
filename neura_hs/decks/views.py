@@ -15,13 +15,14 @@ def main(request: HttpRequest):
     """ Форма для кода колоды + ее отображение """
 
     deck = None
+    title = 'Расшифровка колоды'
 
     if request.method == 'POST':    # данные с формы получены
         form = DeckstringForm(request.POST)     # наполняем форму принятыми значениями из request.POST
         if form.is_valid():
             try:
                 deck = Deck.create_from_deckstring(form.cleaned_data["deckstring"])
-
+                title = deck
             except DecodeError as de:
                 form.add_error(None, f'Ошибка: {de}')
             except Exception as e:
@@ -30,7 +31,7 @@ def main(request: HttpRequest):
     else:
         form = DeckstringForm()
 
-    context = {'title': 'Главная', 'form': form, 'deck': deck}
+    context = {'title': title, 'form': form, 'deck': deck}
     context |= {'top_menu': settings.TOP_MENU,
                 'side_menu': settings.SIDE_MENU}
 

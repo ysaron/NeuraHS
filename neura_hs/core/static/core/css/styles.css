@@ -181,6 +181,32 @@ thead.darktable {
 }
 thead.darktable th {padding: 8px;}
 
+/* Колода */
+table.deck {
+  border: 1px solid #333;
+  border-collapse: collapse;
+  width: 100%;
+}
+table.deck tr {
+  border: 1px solid #333;
+}
+table.deck td {
+  border: 1px solid #333;
+  letter-spacing: 1px;
+}
+table.deck td a {
+  display: block;
+}
+table.deck td a:hover {
+}
+td.deck-number-cell {
+  text-align: center;
+}
+td.deck-card-cell {
+  padding-left: 5px;
+}
+
+
 /* Центрирование баннера */
 .banner {
   max-width: 100%;
@@ -261,7 +287,7 @@ thead.darktable th {padding: 8px;}
 .module-wrap-multiclass {background: linear-gradient(305deg, #cc0000, #ffff00, #0033cc);}
 
 /* List */
-.mage:hover {
+.mage:hover, .mage-deck:hover {
   box-shadow: 0 0 0 1px #262626;
   background: linear-gradient(305deg, #6699ff, #e6eeff, #6699ff);
   color: #000000;
@@ -270,9 +296,10 @@ thead.darktable th {padding: 8px;}
   -moz-animation: CardLink 4s ease infinite;
   animation: CardLink 4s ease infinite;
 }
-.mage a:hover {color: #000000;}
+.mage a:hover, .mage-deck a:hover {color: #000000;}
+.mage-deck {background-color: #6699ff;}
 
-.priest:hover {
+.priest:hover, .priest-deck:hover {
   box-shadow: 0 0 0 1px #262626;
   background: linear-gradient(305deg, #ffffb3, #ffffff, #ffffb3);
   color: #000000;
@@ -281,9 +308,10 @@ thead.darktable th {padding: 8px;}
   -moz-animation: CardLink 4s ease infinite;
   animation: CardLink 4s ease infinite;
 }
-.priest a:hover {color: #000000;}
+.priest a:hover, .priest-deck a:hover {color: #000000;}
+.priest-deck {background-color: #ffffb3;}
 
-.warlock:hover {
+.warlock:hover, .warlock-deck:hover {
   box-shadow: 0 0 0 1px #262626;
   background: linear-gradient(305deg, #4d004d, #cc00cc, #4d004d);
   color: #ffffff;
@@ -292,9 +320,10 @@ thead.darktable th {padding: 8px;}
   -moz-animation: CardLink 4s ease infinite;
   animation: CardLink 4s ease infinite;
 }
-.warlock a:hover {color: #ffffff}
+.warlock a:hover, .warlock-deck a:hover {color: #ffffff}
+.warlock-deck {background-color: #4d004d;}
 
-.druid:hover {
+.druid:hover, .druid-deck:hover {
   box-shadow: 0 0 0 1px #262626;
   background: linear-gradient(305deg, #33ff99, #b3ffd9, #33ff99);
   color: #000000;
@@ -303,9 +332,10 @@ thead.darktable th {padding: 8px;}
   -moz-animation: CardLink 4s ease infinite;
   animation: CardLink 4s ease infinite;
 }
-.druid a:hover {color: #000000;}
+.druid a:hover, .druid-deck a:hover {color: #000000;}
+.druid-deck {background-color: #33ff99;}
 
-.shaman:hover {
+.shaman:hover, .shaman-deck:hover {
   box-shadow: 0 0 0 1px #262626;
   background: linear-gradient(305deg, #000066, #3333ff, #000066);
   color: #ffffff;
@@ -314,9 +344,10 @@ thead.darktable th {padding: 8px;}
   -moz-animation: CardLink 4s ease infinite;
   animation: CardLink 4s ease infinite;
 }
-.shaman a:hover {color: #ffffff;}
+.shaman a:hover, .shaman-deck a:hover {color: #ffffff;}
+.shaman-deck {background-color: #000066;}
 
-.rogue:hover {
+.rogue:hover, .rogue-deck:hover {
   box-shadow: 0 0 0 1px #262626;
   background: linear-gradient(305deg, #001d25, #b3b3b3, #001d25);
   color: #ffffff;
@@ -325,9 +356,10 @@ thead.darktable th {padding: 8px;}
   -moz-animation: CardLink 4s ease infinite;
   animation: CardLink 4s ease infinite;
 }
-.rogue a:hover {color: #ffffff;}
+.rogue a:hover, .rogue-deck a:hover {color: #ffffff;}
+.rogue-deck {background-color: #001d25;}
 
-.paladin:hover {
+.paladin:hover, .paladin-deck:hover {
   box-shadow: 0 0 0 1px #262626;
   background: linear-gradient(305deg, #ffff00, #ffffe6, #ffff00);
   color: #000000;
@@ -336,9 +368,10 @@ thead.darktable th {padding: 8px;}
   -moz-animation: CardLink 4s ease infinite;
   animation: CardLink 4s ease infinite;
 }
-.paladin a:hover {color: #000000;}
+.paladin a:hover, .paladin-deck a:hover {color: #000000;}
+.paladin-deck {background-color: #ffff00;}
 
-.warrior:hover {
+.warrior:hover, .warrior-deck:hover {
   box-shadow: 0 0 0 1px #262626;
   background: linear-gradient(305deg, #4d0000, #ff0000, #4d0000);
   color: #ffffff;
@@ -347,9 +380,10 @@ thead.darktable th {padding: 8px;}
   -moz-animation: CardLink 4s ease infinite;
   animation: CardLink 4s ease infinite;
 }
-.warrior a:hover {color: #ffffff;}
+.warrior a:hover, .warrior-deck a:hover {color: #ffffff;}
+.warrior-deck {background-color: #4d0000;}
 
-.hunter:hover {
+.hunter:hover, .hunter-deck:hover {
   box-shadow: 0 0 0 1px #262626;
   background: linear-gradient(305deg, #264d00, #73e600, #264d00);
   color: #ffffff;
@@ -358,9 +392,10 @@ thead.darktable th {padding: 8px;}
   -moz-animation: CardLink 4s ease infinite;
   animation: CardLink 4s ease infinite;
 }
-.hunter a:hover {color: #ffffff}
+.hunter a:hover, .hunter-deck a:hover {color: #ffffff}
+.hunter-deck {background-color: #264d00;}
 
-.demonhunter:hover {
+.demonhunter:hover, .demonhunter-deck:hover {
   box-shadow: 0 0 0 1px #262626;
   background: linear-gradient(305deg, #004d4d, #00cccc, #004d4d);
   color: #ffffff;
@@ -369,9 +404,10 @@ thead.darktable th {padding: 8px;}
   -moz-animation: CardLink 4s ease infinite;
   animation: CardLink 4s ease infinite;
 }
-.demonhunter a:hover {color: #ffffff;}
+.demonhunter a:hover, .demonhunter-deck a:hover {color: #ffffff;}
+.demonhunter-deck {background-color: #004d4d;}
 
-.neutral:hover {
+.neutral:hover, .neutral-deck:hover {
   box-shadow: 0 0 0 1px #262626;
   background: linear-gradient(305deg, #b3b3b3, #f2f2f2, #b3b3b3);
   color: #000000;
@@ -380,7 +416,8 @@ thead.darktable th {padding: 8px;}
   -moz-animation: CardLink 4s ease infinite;
   animation: CardLink 4s ease infinite;
 }
-.neutral a:hover {color: #000000;}
+.neutral a:hover, .neutral-deck a:hover {color: #000000;}
+.neutral-deck {background-color: #b3b3b3;}
 
 .dream:hover {
   box-shadow: 0 0 0 1px #262626;
@@ -404,7 +441,7 @@ thead.darktable th {padding: 8px;}
 }
 .deathknight a:hover {color: #ffffff;}
 
-.multiclass:hover {
+.multiclass:hover, .multiclass-deck:hover {
   box-shadow: 0 0 0 1px #262626;
   background: linear-gradient(305deg, #cc0000, #ffff00, #0033cc);
   color: #ffffff;
@@ -413,7 +450,9 @@ thead.darktable th {padding: 8px;}
   -moz-animation: CardLink 4s ease infinite;
   animation: CardLink 4s ease infinite;
 }
-.multiclass a:hover {color: #ffffff;}
+.multiclass a:hover, .multiclass-deck a:hover {color: #ffffff;}
+.multiclass-deck {background: linear-gradient(305deg, #cc0000, #ffff00, #0033cc);}
+/*.multiclass-deck {background-color: #cc33ff;}*/
 
 /* -------------------------------------------------- */
 
@@ -424,9 +463,17 @@ thead.darktable th {padding: 8px;}
   letter-spacing: 1px;
   text-shadow: -1px -1px 0 #737373, 1px -1px 0 #737373, -1px 1px 0 #737373, 1px 1px 0 #737373;
 }
+.legendary-deck, .legendary-deck a, .legendary-deck:hover a {
+  color: #ffdb4d;
+  text-shadow: -1px -1px 0 #737373, 1px -1px 0 #737373, -1px 1px 0 #737373, 1px 1px 0 #737373;
+}
 .epic:hover, .epic:hover a {
   color: #db4dff;
   letter-spacing: 1px;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+.epic-deck, .epic-deck a, .epic-deck:hover a {
+  color: #db4dff;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 .rare:hover, .rare:hover a {
@@ -434,9 +481,17 @@ thead.darktable th {padding: 8px;}
   letter-spacing: 1px;
   text-shadow: -1px -1px 0 #737373, 1px -1px 0 #737373, -1px 1px 0 #737373, 1px 1px 0 #737373;
 }
+.rare-deck, .rare-deck a, .rare-deck:hover a {
+  color: #668cff;
+  text-shadow: -1px -1px 0 #737373, 1px -1px 0 #737373, -1px 1px 0 #737373, 1px 1px 0 #737373;
+}
 .common:hover, .common:hover a {
   color: #ffffff;
   letter-spacing: 1px;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+.common-deck, .common-deck a, .common-deck:hover a {
+  color: #ffffff;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
