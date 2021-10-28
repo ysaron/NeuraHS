@@ -2,39 +2,15 @@
 
 {% block content %}
 {% load custom_filters %}
-
 <h1>{{ title }}</h1>
 
-<form action="{% url 'decks:index' %}" method="post">
-    {% csrf_token %}
-    <div class="form-error">{{ deckstring_form.non_field_errors }}</div>
-    <p>
-        <label class="form-label" for="{{ deckstring_form.deckstring.id_for_label }}">{{ deckstring_form.deckstring.label }}</label>
-        {{ deckstring_form.deckstring }}
-    </p>
-    <div class="form-error">{{ deckstring_form.deckstring.errors }}</div>
-    <span>
-        <button type="submit" class="">Расшифровать</button>
-        <button type="button" class="">Сохранить</button>
-    </span>
-</form>
-<hr>
-{% if deck %}
 <div class="row">
     <div class="col-4">
         <p>{{ deck }}</p>
         <table class="deck">
             <tr>
                 <th colspan="3">
-                    <form method="post">
-                        {% csrf_token %}
-                        <div><button type="button" id="deckSaveButton" onclick="showDeckSaveForm()">Сохранить</button></div>
-                        <span id="deckSaveForm" style="display: none;">
-                            {{ deck_save_form.deck_name }}
-                            {{ deck_save_form.string_to_save }}
-                            <button type="submit">Сохранить</button>
-                        </span>
-                    </form>
+                    aaa
                 </th>
             </tr>
             {% for card, number in deck.included_cards %}
@@ -61,7 +37,9 @@
         </ul>
     </div>
 </div>
-{% endif %}
+
 
 {% endblock %}
+
+
 

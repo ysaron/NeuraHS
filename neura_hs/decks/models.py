@@ -1,7 +1,20 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.urls.base import reverse_lazy
 from gallery.models import RealCard, Author, CardClass, CardSet
 from .decrypt import parse_deckstring
+
+
+class NamelessDeckManager(models.Manager):
+
+    def get_queryset(self):
+        return super().get_queryset().filter(name='')
+
+
+class NamedDeckManager(models.Manager):
+
+    def get_queryset(self):
+        return super().get_queryset().exclude(name='')
 
 
 class Format(models.Model):
@@ -43,20 +56,25 @@ class Deck(models.Model):
                                     help_text='Формат, для которого предназначена колода')
     created = models.DateField(auto_now_add=True, verbose_name='Дата создания')
 
+    objects = models.Manager()
+    nameless = NamelessDeckManager()
+    named = NamedDeckManager()
+
     class Meta:
         verbose_name = 'Колода'
         verbose_name_plural = 'Колоды'
+        ordering = ['-created']
 
     def __str__(self):
         return f'[{Format.Formats(str(self.deck_format)).label}] [{self.deck_class}] {self.name}'
 
     @classmethod
-    def create_from_deckstring(cls, deckstring: str):
+    def create_from_deckstring(cls, deckstring: str, *, named: bool = False):
         """ Создает экземпляр колоды из кода, сохраняет и возвращает его """
 
         # если точно такая же колода уже есть в БД - она же и возвращается вместо создания нового экземпляра
-        nameless_deck = Deck.objects.filter(string=deckstring)
-        if nameless_deck.exists():
+        nameless_deck = Deck.nameless.filter(string=deckstring)
+        if not named and nameless_deck.exists():
             return nameless_deck.first()
 
         instance = cls()
@@ -121,6 +139,9 @@ class Deck(models.Model):
 
         result.sort(key=lambda mechanic: mechanic['num_cards'], reverse=True)
         return result
+
+    def get_absolute_url(self):
+        return reverse_lazy('decks:deck-detail', kwargs={'deck_id': self.pk})
 
 
 class Inclusion(models.Model):
