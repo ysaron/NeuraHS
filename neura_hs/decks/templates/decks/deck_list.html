@@ -3,12 +3,41 @@
 {% block content %}
 <h1>{{ title }}</h1>
 
-{% for deck in decks %}
-<a href="{{ deck.get_absolute_url }}">{{ deck }}</a>
-{% empty %}
-<p>No</p>
-{% endfor %}
+<form class="form-inline" method="get">
+    <div class="row">
+        <div class="col">
+            <label class="form-label">{{ form.deck_class.label }}</label>
+            <p class="form-search">{{ form.deck_class }}</p>
+        </div>
+        <div class="col">
+            <label class="form-label">{{ form.deck_format.label }}</label>
+            <p class="form-search">{{ form.deck_format }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <button type="submit" class="btn btn-outline-dark">Поиск</button>
+        </div>
+    </div>
+</form>
+<hr>
 
+{% if not is_paginated %}
+    <div class="pagination">
+        <span class="page-item disabled"><a class="page-link">Всего результатов: {{ decks.count }}</a></span>
+    </div>
+    <hr>
+{% endif %}
+<ul>
+{% for deck in decks %}
+    <li>
+        <p><a href="{{ deck.get_absolute_url }}">{{ deck }}</a></p>
+        <p>{{ deck.string }}</p>
+    </li>
+{% empty %}
+    <li>No</li>
+{% endfor %}
+</ul>
 
 
 

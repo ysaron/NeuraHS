@@ -38,7 +38,7 @@ MIDDLEWARE = [
 ]
 
 INTERNAL_IPS = [
-    '127.0.0.1',  # включение/отключение Debug Toolbar здесь
+    # '127.0.0.1',  # включение/отключение Debug Toolbar здесь
 ]
 
 ROOT_URLCONF = 'neura_hs.urls'

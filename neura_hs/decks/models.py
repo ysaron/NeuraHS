@@ -20,13 +20,8 @@ class NamedDeckManager(models.Manager):
 class Format(models.Model):
     """ Формат обычного режима игры Hearthstone """
 
-    class Formats(models.TextChoices):
-        UNKNOWN = '0', _('---------')
-        WILD = '1', _('Wild')
-        STANDARD = '2', _('Standard')
-        CLASSIC = '3', _('Classic')
-
-    name = models.CharField(max_length=2, choices=Formats.choices, verbose_name='Название')
+    name = models.CharField(max_length=255, default=_('Unknown'), verbose_name='Название')
+    numerical_designation = models.PositiveSmallIntegerField(verbose_name='Код формата', default=0)
     available_sets = models.ManyToManyField(CardSet, blank=True, verbose_name='Доступные аддоны',
                                             help_text='Наборы карт, которые можно использовать в данном формате')
 
@@ -51,13 +46,13 @@ class Deck(models.Model):
                                    verbose_name='Карты', help_text='Карты, составляющие колоду')
     deck_class = models.ForeignKey(CardClass, on_delete=models.CASCADE, related_name='decks', verbose_name='Класс',
                                    help_text='Класс, для которого составлена колода')
-    deck_format = models.ForeignKey(Format, default=Format.Formats.UNKNOWN, on_delete=models.SET_DEFAULT,
+    deck_format = models.ForeignKey(Format, default=_('Unknown'), on_delete=models.SET_DEFAULT,
                                     related_name='decks', verbose_name='Формат',
                                     help_text='Формат, для которого предназначена колода')
     created = models.DateField(auto_now_add=True, verbose_name='Дата создания')
 
-    objects = models.Manager()
     nameless = NamelessDeckManager()
+    objects = models.Manager()
     named = NamedDeckManager()
 
     class Meta:
@@ -66,7 +61,7 @@ class Deck(models.Model):
         ordering = ['-created']
 
     def __str__(self):
-        return f'[{Format.Formats(str(self.deck_format)).label}] [{self.deck_class}] {self.name}'
+        return f'[{self.deck_format}] [{self.deck_class}] {self.name}'
 
     @classmethod
     def create_from_deckstring(cls, deckstring: str, *, named: bool = False):
@@ -80,7 +75,7 @@ class Deck(models.Model):
         instance = cls()
         cards, heroes, format_ = parse_deckstring(deckstring)
         instance.deck_class = RealCard.objects.get(dbf_id=heroes[0]).card_class.all()[0]
-        instance.deck_format = Format.objects.get(name=str(format_))
+        instance.deck_format = Format.objects.get(numerical_designation=format_)
         instance.string = deckstring
         instance.save()
         for dbf_id, number in cards:
@@ -90,6 +85,11 @@ class Deck(models.Model):
             instance.cards.add(card)
 
         return instance
+
+    @property
+    def is_named(self):
+        """ Возвращает True, если колода была сохранена пользователем """
+        return self.name != '' and self.author is not None
 
     @property
     def included_cards(self) -> list[tuple[RealCard, int]]:

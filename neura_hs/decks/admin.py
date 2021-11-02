@@ -43,6 +43,14 @@ class DeckAdmin(admin.ModelAdmin):
     search_fields = ('name',)
     save_on_top = True
 
+    def get_queryset(self, request):
+        """ Переопределение для изменения используемого менеджера Deck """
+        qs = self.model.objects.get_queryset()
+        ordering = self.get_ordering(request)
+        if ordering:
+            qs = qs.order_by(*ordering)
+        return qs
+
 
 @admin.register(Format)
 class FormatAdmin(admin.ModelAdmin):
