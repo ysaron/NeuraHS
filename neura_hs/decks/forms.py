@@ -13,7 +13,7 @@ class DeckSaveForm(forms.Form):
     string_to_save = forms.CharField(max_length=255)
 
     deck_name.widget.attrs.update({'class': 'form-deck-name', 'placeholder': 'Введите название для колоды'})
-    string_to_save.widget.attrs.update({'style': 'display: none;'})
+    string_to_save.widget.attrs.update({'style': 'display: none;', 'id': 'deckstringData'})
 
 
 class DeckFilterForm(forms.Form):

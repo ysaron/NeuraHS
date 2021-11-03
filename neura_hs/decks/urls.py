@@ -5,7 +5,7 @@ from . import views
 app_name = 'decks'
 
 urlpatterns = [
-    path('', views.main, name='index'),
+    path('', views.create_deck, name='index'),
     path('all/', views.NamelessDecksListView.as_view(), name='all_decks'),
     path('my/', views.UserDecksListView.as_view(), name='user_decks'),
     path('<int:deck_id>', views.deck_view, name='deck-detail'),

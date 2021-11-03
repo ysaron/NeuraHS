@@ -24,21 +24,22 @@
 {% if deck %}
 <div class="row">
     <div class="col-4">
-        {% if deck.is_named %}
-            <p>NAMED!!!</p>
-        {% else %}
-            <p>noname...</p>
-        {% endif %}
         <table class="deck">
             <tr>
                 <td colspan="3">{{ deck }}</td>
             </tr>
             <tr>
                 <td colspan="3">
-                    {% if deck.is_named %}
+                {% if deck.is_named %}
                     <span id="deckControlButtons">
                         <button type="button" id="deckRenameButton" onclick="showDeckRenameForm()">Переименовать</button>
                         <button type="button" id="deckDeleteButton" onclick="showDeckDeleteForm()">Удалить</button>
+                        <span class="mytooltip">
+                          <button type="button" onclick="copyToClipboard()" onmouseover="tooltipFunc()">
+                            <!-- После сборки HTML из шаблона дублирования id="copyTooltip" не будет -->
+                            <span class="tooltiptext" id="copyTooltip">Copy to clipboard</span>Copy
+                          </button>
+                        </span>
                     </span>
                     <form method="post">{% csrf_token %}
                         <span id="deckRenameForm" style="display: none;">
@@ -54,10 +55,15 @@
                             <input class="" type="submit" value="Удалить">
                         </span>
                     </form>
-                    {% else %}
+                {% else %}
                     <form method="post">{% csrf_token %}
                     <span id="deckControlButtons2">
                         <button type="button" id="deckSaveButton" onclick="showDeckSaveForm()">Сохранить</button>
+                        <span class="mytooltip">
+                          <button type="button" onclick="copyToClipboard()" onmouseover="tooltipFunc()">
+                            <span class="tooltiptext" id="copyTooltip">Copy to clipboard</span>Copy
+                          </button>
+                        </span>
                     </span>
                     <span id="deckSaveForm" style="display: none;">
                         {{ deck_save_form.deck_name }}
@@ -66,7 +72,7 @@
                         <button type="button" id="deckSaveCancel" onclick="hideDeckSaveForm()">Назад</button>
                     </span>
                     </form>
-                    {% endif %}
+                {% endif %}
                 </td>
             </tr>
             {% for card, number in deck.included_cards %}

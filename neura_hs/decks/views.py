@@ -14,7 +14,7 @@ from .forms import DeckstringForm, DeckSaveForm, DeckFilterForm
 from .decrypt import DecodeError
 
 
-def main(request: HttpRequest):
+def create_deck(request: HttpRequest):
     """ Форма для кода колоды + ее отображение """
 
     deck, deckstring_form, deck_save_form = None, None, None
@@ -38,7 +38,7 @@ def main(request: HttpRequest):
             deck.author = request.user.author
             deck.name = request.POST['deck_name']
             deck.save()
-            return redirect(reverse_lazy('decks:index'))
+            return redirect(deck)
     else:
         deckstring_form = DeckstringForm()
 

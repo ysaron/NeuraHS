@@ -51,3 +51,18 @@ function hideDeckRenameForm() {
     ctrl_buttons.style.display = "block";
   }
 }
+
+function copyToClipboard() {
+  var copyText = document.getElementById("deckstringData");
+  copyText.select();
+  copyText.setSelectionRange(0, 99999);     /* Для мобильных устройств */
+  navigator.clipboard.writeText(copyText.value);
+
+  var tooltip = document.getElementById("copyTooltip");
+  tooltip.innerHTML = "Copied!";
+}
+
+function tooltipFunc() {
+  var tooltip = document.getElementById("copyTooltip");
+  tooltip.innerHTML = "Copy to clipboard";
+}
