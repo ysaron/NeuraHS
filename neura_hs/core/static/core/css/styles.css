@@ -20,7 +20,7 @@
   --hunter-2: #73e600;
   --demonhunter-1: #004d4d;
   --demonhunter-2: #00cccc;
-  --neutral-1: #b3b3b3;
+  --neutral-1: #cccccc;
   --neutral-2: #f2f2f2;
   --deathknight-1: #1e1e2f;
   --deathknight-2: #7373a5;
@@ -30,6 +30,9 @@
   --epic: #db4dff;
   --rare: #668cff;
   --common: #ffffff;
+  --standard: rgba(0, 102, 0, 0.6);
+  --wild: #262626;
+  --classic: rgba(24, 24, 129, 0.6);
 }
 
 html, body {
@@ -215,32 +218,6 @@ thead.darktable {
 }
 thead.darktable th {padding: 8px;}
 
-/* Колода */
-table.deck {
-  border: 1px solid var(--dark);
-  border-collapse: collapse;
-  width: 100%;
-}
-table.deck tr {
-  border: 1px solid var(--dark);
-}
-table.deck td {
-  border: 1px solid var(--dark);
-  letter-spacing: 1px;
-}
-table.deck td a {
-  display: block;
-}
-table.deck td a:hover {
-}
-td.deck-number-cell {
-  text-align: center;
-}
-td.deck-card-cell {
-  padding-left: 5px;
-}
-
-
 /* Центрирование баннера */
 .banner {
   max-width: 100%;
@@ -300,17 +277,18 @@ td.deck-card-cell {
 
 .mytooltip .tooltiptext {
   visibility: hidden;
-  width: 200px;
+  width: auto;
   background-color: #555;
   color: #fff;
-  text-align: center;
   border-radius: 6px;
-  padding: 5px;
+  padding: 5px 10px;
+  text-align: center;
+  white-space: nowrap;
   position: absolute;
   z-index: 3;
-  bottom: 0%;
-  left: 305%;
-  margin-left: -100px;
+  bottom: -10%;
+  left: 105%;
+  /*margin-left: 0px;*/
   opacity: 0;
   transition: opacity 0.3s;
 }
@@ -329,6 +307,124 @@ td.deck-card-cell {
 .mytooltip:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
+}
+
+/* ------------------ Колода --------------------- */
+table.deck {
+  border-collapse: separate;
+  border-spacing: 0 0;
+  position: relative;
+  z-index: 1;
+  width: 350px;
+  max-width: 350px;
+}
+
+table.standard::before {
+  content: "";
+  border-radius: 20px;
+  position: absolute;
+  top: 0; bottom: 0; left: 0; right: 0;
+  z-index: -1;
+  box-shadow: 5px 0 25px 5px var(--standard), -5px 0 25px 5px var(--standard);
+}
+table.wild::before {
+  content: "";
+  border-radius: 20px;
+  position: absolute;
+  top: 0; bottom: 0; left: 0; right: 0;
+  z-index: -1;
+  box-shadow: 5px 0 25px 5px var(--wild), -5px 0 25px 5px var(--wild);
+}
+table.classic::before {
+  content: "";
+  border-radius: 20px;
+  position: absolute;
+  top: 0; bottom: 0; left: 0; right: 0;
+  z-index: -1;
+  box-shadow: 5px 0 25px 5px var(--classic), -5px 0 25px 5px var(--classic);
+}
+table.unknown::before {
+  content: "";
+  border-radius: 20px;
+  position: absolute;
+  top: 0; bottom: 0; left: 0; right: 0;
+  z-index: -1;
+  box-shadow: 5px 0 25px 5px rgba(0, 0, 0, 0.5), -5px 0 25px 5px rgba(0, 0, 0, 0.5);
+}
+table.deck td {
+  border: 1px solid #999999;
+  letter-spacing: 1px;
+}
+table.deck td a {
+  display: block;
+}
+table.deck td a:hover {
+}
+
+/* Шапка колоды */
+.deck-header {
+
+}
+/* Шапка */
+.deck-header td.deck-name {
+  position: relative;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding: 15px 0;
+  text-align: center;
+  font-size: 24px;
+  letter-spacing: 4px;
+}
+.deck-header td.deck-name::before {
+  content: "";
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+/* Управляющие кнопки */
+td.deck-control {
+}
+td.deck-control span {
+  display: flex;
+  width: 100%;
+}
+td.deck-control * {
+  flex: 1;
+  border: none;
+  color: inherit;
+  background: transparent;
+}
+.deck-control button:hover, .deck-control input:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+  color: white;
+}
+
+/* Карты колоды */
+.deck-cards {
+}
+.deck-cards td.deck-number-cell {
+  text-align: center;
+}
+.deck-cards td.deck-card-cell {
+  padding-left: 5px;
+}
+
+/* Footer */
+.deck-footer td {
+  text-align: center;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+.deck-footer:hover {
+}
+
+/* Список колод */
+.decks-grid {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-row-gap: 50px;
+  padding: 35px 0;
+  justify-content: space-around;
+  overflow: hidden;
 }
 
 /* ------- Оформление классов Hearthstone ------- */
@@ -359,8 +455,10 @@ td.deck-card-cell {
 .module-wrap-multiclass {background: linear-gradient(305deg, #cc0000, #ffff00, #0033cc);}
 
 /* List */
-.mage:hover, .mage-deck:hover {
+.td-bordered:hover td, .td-bordered-deck:hover td {
   box-shadow: 0 0 0 1px var(--dark);
+}
+.mage:hover, .mage-deck:hover {
   background: linear-gradient(305deg, var(--mage-1), var(--mage-2), var(--mage-1));
   color: #000000;
   background-size: 600% 600%;
@@ -369,10 +467,12 @@ td.deck-card-cell {
   animation: CardLink 4s ease infinite;
 }
 .mage a:hover, .mage-deck a:hover {color: #000000;}
-.mage-deck {background-color: var(--mage-1);}
+.mage-deck {
+  background-color: var(--mage-1);
+  color: black;
+}
 
 .priest:hover, .priest-deck:hover {
-  box-shadow: 0 0 0 1px var(--dark);
   background: linear-gradient(305deg, var(--priest-1), var(--priest-2), var(--priest-1));
   color: #000000;
   background-size: 600% 600%;
@@ -381,10 +481,12 @@ td.deck-card-cell {
   animation: CardLink 4s ease infinite;
 }
 .priest a:hover, .priest-deck a:hover {color: #000000;}
-.priest-deck {background-color: var(--priest-1);}
+.priest-deck {
+  background-color: var(--priest-1);
+  color: black;
+}
 
 .warlock:hover, .warlock-deck:hover {
-  box-shadow: 0 0 0 1px var(--dark);
   background: linear-gradient(305deg, var(--warlock-1), var(--warlock-2), var(--warlock-1));
   color: #ffffff;
   background-size: 600% 600%;
@@ -393,10 +495,12 @@ td.deck-card-cell {
   animation: CardLink 4s ease infinite;
 }
 .warlock a:hover, .warlock-deck a:hover {color: #ffffff}
-.warlock-deck {background-color: var(--warlock-1);}
+.warlock-deck {
+  background-color: var(--warlock-1);
+  color: white;
+}
 
 .druid:hover, .druid-deck:hover {
-  box-shadow: 0 0 0 1px var(--dark);
   background: linear-gradient(305deg, var(--druid-1), var(--druid-2), var(--druid-1));
   color: #000000;
   background-size: 600% 600%;
@@ -405,10 +509,12 @@ td.deck-card-cell {
   animation: CardLink 4s ease infinite;
 }
 .druid a:hover, .druid-deck a:hover {color: #000000;}
-.druid-deck {background-color: var(--druid-1);}
+.druid-deck {
+  background-color: var(--druid-1);
+  color: black;
+}
 
 .shaman:hover, .shaman-deck:hover {
-  box-shadow: 0 0 0 1px var(--dark);
   background: linear-gradient(305deg, var(--shaman-1), var(--shaman-2), var(--shaman-1));
   color: #ffffff;
   background-size: 600% 600%;
@@ -417,10 +523,12 @@ td.deck-card-cell {
   animation: CardLink 4s ease infinite;
 }
 .shaman a:hover, .shaman-deck a:hover {color: #ffffff;}
-.shaman-deck {background-color: var(--shaman-1);}
+.shaman-deck {
+  background-color: var(--shaman-1);
+  color: white;
+}
 
 .rogue:hover, .rogue-deck:hover {
-  box-shadow: 0 0 0 1px var(--dark);
   background: linear-gradient(305deg, var(--rogue-1), var(--rogue-2), var(--rogue-1));
   color: #ffffff;
   background-size: 600% 600%;
@@ -429,10 +537,12 @@ td.deck-card-cell {
   animation: CardLink 4s ease infinite;
 }
 .rogue a:hover, .rogue-deck a:hover {color: #ffffff;}
-.rogue-deck {background-color: var(--rogue-1);}
+.rogue-deck {
+  background-color: var(--rogue-1);
+  color: white;
+}
 
 .paladin:hover, .paladin-deck:hover {
-  box-shadow: 0 0 0 1px var(--dark);
   background: linear-gradient(305deg, var(--paladin-1), var(--paladin-2), var(--paladin-1));
   color: #000000;
   background-size: 600% 600%;
@@ -441,10 +551,12 @@ td.deck-card-cell {
   animation: CardLink 4s ease infinite;
 }
 .paladin a:hover, .paladin-deck a:hover {color: #000000;}
-.paladin-deck {background-color: var(--paladin-1);}
+.paladin-deck {
+  background-color: var(--paladin-1);
+  color: black;
+}
 
 .warrior:hover, .warrior-deck:hover {
-  box-shadow: 0 0 0 1px var(--dark);
   background: linear-gradient(305deg, var(--warrior-1), var(--warrior-2), var(--warrior-1));
   color: #ffffff;
   background-size: 600% 600%;
@@ -453,10 +565,12 @@ td.deck-card-cell {
   animation: CardLink 4s ease infinite;
 }
 .warrior a:hover, .warrior-deck a:hover {color: #ffffff;}
-.warrior-deck {background-color: var(--warrior-1);}
+.warrior-deck {
+  background-color: var(--warrior-1);
+  color: white;
+}
 
 .hunter:hover, .hunter-deck:hover {
-  box-shadow: 0 0 0 1px var(--dark);
   background: linear-gradient(305deg, var(--hunter-1), var(--hunter-2), var(--hunter-1));
   color: #ffffff;
   background-size: 600% 600%;
@@ -465,10 +579,12 @@ td.deck-card-cell {
   animation: CardLink 4s ease infinite;
 }
 .hunter a:hover, .hunter-deck a:hover {color: #ffffff}
-.hunter-deck {background-color: var(--hunter-1);}
+.hunter-deck {
+  background-color: var(--hunter-1);
+  color: white;
+}
 
 .demonhunter:hover, .demonhunter-deck:hover {
-  box-shadow: 0 0 0 1px var(--dark);
   background: linear-gradient(305deg, var(--demonhunter-1), var(--demonhunter-2), var(--demonhunter-1));
   color: #ffffff;
   background-size: 600% 600%;
@@ -477,10 +593,12 @@ td.deck-card-cell {
   animation: CardLink 4s ease infinite;
 }
 .demonhunter a:hover, .demonhunter-deck a:hover {color: #ffffff;}
-.demonhunter-deck {background-color: var(--demonhunter-1);}
+.demonhunter-deck {
+  background-color: var(--demonhunter-1);
+  color: white;
+}
 
 .neutral:hover, .neutral-deck:hover {
-  box-shadow: 0 0 0 1px var(--dark);
   background: linear-gradient(305deg, var(--neutral-1), var(--neutral-2), var(--neutral-1));
   color: #000000;
   background-size: 600% 600%;
@@ -492,7 +610,6 @@ td.deck-card-cell {
 .neutral-deck {background-color: var(--neutral-1);}
 
 .dream:hover {
-  box-shadow: 0 0 0 1px var(--dark);
   background: linear-gradient(305deg, var(--dream-1), var(--dream-2), var(--dream-1));
   color: #000000;
   background-size: 600% 600%;
@@ -503,7 +620,6 @@ td.deck-card-cell {
 .dream a:hover {color: #000000;}
 
 .deathknight:hover {
-  box-shadow: 0 0 0 1px var(--dark);
   background: linear-gradient(305deg, var(--deathknight-1), var(--deathknight-2), var(--deathknight-1));
   color: #ffffff;
   background-size: 600% 600%;
@@ -514,7 +630,6 @@ td.deck-card-cell {
 .deathknight a:hover {color: #ffffff;}
 
 .multiclass:hover, .multiclass-deck:hover {
-  box-shadow: 0 0 0 1px var(--dark);
   background: linear-gradient(305deg, #cc0000, #ffff00, #0033cc);
   color: #ffffff;
   background-size: 600% 600%;

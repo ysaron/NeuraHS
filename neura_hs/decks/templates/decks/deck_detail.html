@@ -24,65 +24,75 @@
 {% if deck %}
 <div class="row">
     <div class="col-4">
-        <table class="deck">
-            <tr>
-                <td colspan="3">{{ deck }}</td>
-            </tr>
-            <tr>
-                <td colspan="3">
-                {% if deck.is_named %}
-                    <span id="deckControlButtons">
-                        <button type="button" id="deckRenameButton" onclick="showDeckRenameForm()">Переименовать</button>
-                        <button type="button" id="deckDeleteButton" onclick="showDeckDeleteForm()">Удалить</button>
-                        <span class="mytooltip">
-                          <button type="button" onclick="copyToClipboard()" onmouseover="tooltipFunc()">
-                            <!-- После сборки HTML из шаблона дублирования id="copyTooltip" не будет -->
-                            <span class="tooltiptext" id="copyTooltip">Copy to clipboard</span>Copy
-                          </button>
-                        </span>
+    <table class="deck {{ deck|dformat }}">
+        <tbody class="deck-header {{ deck|dclass }}">
+        <tr>
+            <td colspan="3" class="deck-name">{% if deck.is_named %}{{ deck.name }}{% else %}{{ deck.deck_class }}-{{ deck.pk }}{% endif %}</td>
+        </tr>
+        <tr>
+            <td colspan="3" class="deck-control">
+            {% if deck.is_named %}
+                <span id="deckControlButtons">
+                    <button type="button" id="deckRenameButton" onclick="showDeckRenameForm()">Переименовать</button>
+                    <button type="button" id="deckDeleteButton" onclick="showDeckDeleteForm()">Удалить</button>
+                    <span class="mytooltip">
+                      <button type="button" onclick="copyToClipboard()" onmouseover="tooltipFunc()">
+                        <span class="tooltiptext" id="copyTooltip">Copy to clipboard!!!!</span>Copy
+                      </button>
                     </span>
-                    <form method="post">{% csrf_token %}
-                        <span id="deckRenameForm" style="display: none;">
-                            {{ deck_save_form.deck_name }}
-                            {{ deck_save_form.string_to_save }}
-                            <button type="submit">Сохранить</button>
-                            <button type="button" id="deckRenameCancel" onclick="hideDeckRenameForm()">Назад</button>
-                        </span>
-                    </form>
-                    <form action="{% url 'decks:deck-delete' deck_id=deck.pk %}" method="post">{% csrf_token %}
-                        <span id="deckDeleteForm" style="display: none;">
-                            <button type="button" id="deckDeleteCancel" onclick="hideDeckDeleteForm()">Назад</button>
-                            <input class="" type="submit" value="Удалить">
-                        </span>
-                    </form>
-                {% else %}
-                    <form method="post">{% csrf_token %}
-                    <span id="deckControlButtons2">
-                        <button type="button" id="deckSaveButton" onclick="showDeckSaveForm()">Сохранить</button>
-                        <span class="mytooltip">
-                          <button type="button" onclick="copyToClipboard()" onmouseover="tooltipFunc()">
-                            <span class="tooltiptext" id="copyTooltip">Copy to clipboard</span>Copy
-                          </button>
-                        </span>
-                    </span>
-                    <span id="deckSaveForm" style="display: none;">
+                </span>
+                <form method="post">{% csrf_token %}
+                    <span id="deckRenameForm" class="" style="display: none;">
                         {{ deck_save_form.deck_name }}
                         {{ deck_save_form.string_to_save }}
                         <button type="submit">Сохранить</button>
-                        <button type="button" id="deckSaveCancel" onclick="hideDeckSaveForm()">Назад</button>
+                        <button type="button" id="deckRenameCancel" onclick="hideDeckRenameForm()">Назад</button>
                     </span>
-                    </form>
-                {% endif %}
-                </td>
-            </tr>
-            {% for card, number in deck.included_cards %}
-            <tr class="{{ card|cclass }}-deck {{ card|rar }}-deck">
-                <td class="deck-number-cell" style="width:10%;"><a href="{{ card.get_absolute_url }}">{{ card.cost }}</a></td>
-                <td class="deck-card-cell" style="width:80%;"><a href="{{ card.get_absolute_url }}">{{ card.name }}</a></td>
-                <td class="deck-number-cell" style="width:10%;"><a href="{{ card.get_absolute_url }}">{{ number }}x</a></td>
-            </tr>
-            {% endfor %}
-        </table>
+                </form>
+                <form action="{% url 'decks:deck-delete' deck_id=deck.pk %}" method="post">{% csrf_token %}
+                    <span id="deckDeleteForm" class="" style="display: none;">
+                        <button type="button" id="deckDeleteCancel" onclick="hideDeckDeleteForm()">Назад</button>
+                        <input class="" type="submit" value="Удалить">
+                    </span>
+                </form>
+            {% else %}
+                <form method="post">{% csrf_token %}
+                <span id="deckControlButtons2" class="">
+                    <button type="button" id="deckSaveButton" onclick="showDeckSaveForm()">Сохранить</button>
+                    <span class="mytooltip">
+                      <button type="button" onclick="copyToClipboard()" onmouseover="tooltipFunc()">
+                        <span class="tooltiptext" id="copyTooltip">Copy to clipboard</span>Copy
+                      </button>
+                    </span>
+                </span>
+                <span id="deckSaveForm" style="display: none;" class="">
+                    {{ deck_save_form.deck_name }}
+                    {{ deck_save_form.string_to_save }}
+                    <button type="submit">Сохранить</button>
+                    <button type="button" id="deckSaveCancel" onclick="hideDeckSaveForm()">Назад</button>
+                </span>
+                </form>
+            {% endif %}
+            </td>
+        </tr>
+        </tbody>
+        <tbody class="deck-cards">
+        {% for card, number in deck.included_cards %}
+        <tr class="{{ card|cclass }}-deck {{ card|rar }}-deck">
+            <td class="deck-number-cell" style="width:10%;"><a href="{{ card.get_absolute_url }}">{{ card.cost }}</a></td>
+            <td class="deck-card-cell" style="width:80%;"><a href="{{ card.get_absolute_url }}">{{ card.name }}</a></td>
+            <td class="deck-number-cell" style="width:10%;"><a href="{{ card.get_absolute_url }}">{{ number }}x</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+        <tbody class="deck-footer {{ deck|dclass }}">
+        <tr>
+        {% with prices=deck.included_cards|craft_cost %}
+            <td colspan="3">Крафт: {{ prices.0 }} | {{ prices.1 }} (gold)</td>
+        {% endwith %}
+        </tr>
+        </tbody>
+    </table>
     </div>
     <div class="col-8">
         <p>Используемые наборы ({{ deck.contained_sets|length }}):</p>

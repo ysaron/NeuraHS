@@ -1,8 +1,9 @@
 {% extends "core/base.html" %}
 
-{% block content %}
-<h1>{{ title }}</h1>
+{% load custom_filters %}
+{% block page_title %}<h1>{{ title }}</h1>{% endblock %}
 
+{% block search %}
 <form class="form-inline" method="get">
     <div class="row">
         <div class="col">
@@ -21,23 +22,59 @@
     </div>
 </form>
 <hr>
+{% endblock %}
 
+{% block content %}
 {% if not is_paginated %}
     <div class="pagination">
         <span class="page-item disabled"><a class="page-link">Всего результатов: {{ decks.count }}</a></span>
     </div>
     <hr>
 {% endif %}
-<ul>
+<div class="decks-grid">
 {% for deck in decks %}
-    <li>
-        <p><a href="{{ deck.get_absolute_url }}">{{ deck }}</a></p>
-        <p>{{ deck.string }}</p>
-    </li>
+    <div class="">
+    <table class="deck {{ deck|dformat }}">
+        <tbody class="deck-header {{ deck|dclass }}">
+        <tr>
+            <td colspan="3" class="deck-name">{% if deck.is_named %}{{ deck.name }}{% else %}{{ deck.deck_class }}-{{ deck.pk }}{% endif %}</td>
+        </tr>
+        <tr>
+            <td colspan="3" class="deck-control">
+                <span id="deckControlButtons">
+                    <button><a role="button" href="{{ deck.get_absolute_url }}">Открыть</a></button>
+                    <button type="button">Разврернуть</button>
+                    <span class="mytooltip">
+                      <button type="button" onclick="copyToClipboard()" onmouseover="tooltipFunc()">
+                        <span class="tooltiptext" id="copyTooltip">Copy to clipboard!!!!</span>Copy
+                      </button>
+                    </span>
+                </span>
+            </td>
+        </tr>
+        </tbody>
+        <tbody class="deck-cards">
+        {% for card, number in deck.included_cards %}
+        <tr class="{{ card|cclass }}-deck {{ card|rar }}-deck">
+            <td class="deck-number-cell" style="width:10%;"><a href="{{ card.get_absolute_url }}">{{ card.cost }}</a></td>
+            <td class="deck-card-cell" style="width:80%;"><a href="{{ card.get_absolute_url }}">{{ card.name }}</a></td>
+            <td class="deck-number-cell" style="width:10%;"><a href="{{ card.get_absolute_url }}">{{ number }}x</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+        <tbody class="deck-footer {{ deck|dclass }}">
+        <tr>
+        {% with prices=deck.included_cards|craft_cost %}
+            <td colspan="3">Крафт: {{ prices.0 }} | {{ prices.1 }} (gold)</td>
+        {% endwith %}
+        </tr>
+        </tbody>
+    </table>
+    </div>
 {% empty %}
-    <li>No</li>
+    <p>No</p>
 {% endfor %}
-</ul>
+</div>
 
 
 

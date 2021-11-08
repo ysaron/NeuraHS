@@ -1,6 +1,6 @@
 from django import template
 from collections import namedtuple
-from ..models import Card, FanCard
+from ..models import Card, FanCard, RealCard
 
 register = template.Library()
 Parameter = namedtuple('Parameter', ['name', 'icon', 'value'])
@@ -41,6 +41,12 @@ def get_cardclass_style(card):
         return ''.join(card.card_class.all()[0].service_name.lower().split())
     else:
         return 'multiclass'
+
+
+@register.filter(name='dclass')
+def get_cardclass_style(deck):
+    """ Возвращает CSS-класс оформления области соответствующего Hearthstone-класса """
+    return ''.join(deck.deck_class.service_name.lower().split()) + '-deck'
 
 
 @register.filter(name='rar')
@@ -87,3 +93,34 @@ def can_change(user, card: FanCard):
     """ Проверяет, имеет ли пользователь право удалять/редактировать фан-карту """
     return user.is_authenticated and any((card.author == user.author,
                                           user.has_perm('gallery.change_fancard')))
+
+
+@register.filter(name='craft_cost')
+def calc_deck_craft_cost(cards: list[tuple[RealCard, int]]) -> tuple[int, int]:
+    """
+    Возвращает суммарную стоимость (во внутриигровой валюте)
+    создания карт из колоды (в обычном и золотом варианте)
+    """
+    craft_cost, craft_cost_gold = 0, 0
+    rarities = RealCard.Rarities
+    prices = {rarities.UNKNOWN: (0, 0),
+              rarities.NO_RARITY: (0, 0),
+              rarities.COMMON: (40, 400),
+              rarities.RARE: (100, 800),
+              rarities.EPIC: (100, 1600),
+              rarities.LEGENDARY: (1600, 3200)}
+    for card in cards:
+        craft_cost += prices[card[0].rarity][0] * card[1]
+        craft_cost_gold += prices[card[0].rarity][1] * card[1]
+
+    return craft_cost, craft_cost_gold
+
+
+@register.filter(name='dformat')
+def get_format_style(deck):
+    """ Возвращает соответствующий класс стиля формата колоды """
+    matching = {0: 'unknown',
+                1: 'wild',
+                2: 'standard',
+                3: 'classic'}
+    return matching[deck.deck_format.numerical_designation]
