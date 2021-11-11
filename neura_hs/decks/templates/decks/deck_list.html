@@ -41,16 +41,29 @@
     <table class="deck {{ deck|dformat }}">
         <tbody class="deck-header {{ deck|dclass }}">
         <tr>
-            <td colspan="3" class="deck-name">{% if deck.is_named %}{{ deck.name }}{% else %}{{ deck.deck_class }}-{{ deck.pk }}{% endif %}</td>
+            <td colspan="3" class="deck-name">
+                <span class="deck-name-text">{% if deck.is_named %}{{ deck.name }}{% else %}{{ deck.deck_class }}-{{ deck.pk }}{% endif %}</span>
+                <br>
+                <span class="deck-caption">{{ deck.deck_class }}, {{ deck.deck_format }}</span>
+            </td>
         </tr>
         <tr>
             <td colspan="3" class="deck-control">
                 <span id="deckControlButtons">
-                    <button><a role="button" href="{{ deck.get_absolute_url }}">Открыть</a></button>
-                    <button type="button" class="deck-accordion">Разврернуть</button>
+                    <button><a role="button" href="{{ deck.get_absolute_url }}">
+                        <span class="deck-control-icon" title="Открыть страницу с подробной информацией">
+                            <i class="fas fa-external-link-alt"></i>
+                        </span>
+                    </a></button>
+                    <button type="button" class="deck-accordion">
+                        <span class="deck-control-icon" title="Развернуть (смотреть карты)">
+                            <i class="far fa-arrow-alt-circle-down"></i>
+                        </span>
+                    </button>
                     <span class="mytooltip">
                       <button type="button" class="copy-deck" onmouseover="tooltipFunc()">
-                        <span class="tooltiptext" id="copyTooltip">Copy to clipboard!</span>Copy
+                        <span class="tooltiptext" id="copyTooltip">Copy to clipboard!</span>
+                        <span class="deck-control-icon"><i class="far fa-copy"></i></span>
                       </button>
                     </span>
                     <span style="display: none;">{{ deck.string }}</span>

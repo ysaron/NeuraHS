@@ -9,7 +9,7 @@ class DeckstringForm(forms.Form):
 
 
 class DeckSaveForm(forms.Form):
-    deck_name = forms.CharField(max_length=255, label='Name', required=False)
+    deck_name = forms.CharField(max_length=30, label='Name', required=False)
     string_to_save = forms.CharField(max_length=255)
 
     deck_name.widget.attrs.update({'class': 'deck-control-element', 'placeholder': 'Название'})

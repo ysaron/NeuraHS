@@ -371,15 +371,22 @@ table.deck td a:hover {
   position: relative;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  padding: 15px 0;
+  padding-top: 15px;
+  padding-bottom: 5px;
   text-align: center;
-  font-size: 24px;
-  letter-spacing: 4px;
 }
 .deck-header td.deck-name::before {
   content: "";
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
+}
+.deck-name-text {
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: 4px;
+}
+.deck-caption {
+  font-size: 14px;
 }
 /* Управляющие кнопки */
 td.deck-control {
@@ -397,6 +404,9 @@ td.deck-control * {
 .deck-control button:hover, .deck-control input:hover {
   background-color: rgba(0, 0, 0, 0.2);
   color: white;
+}
+.deck-control-icon {
+  font-size: 24px;
 }
 
 /* Карты колоды */
@@ -440,28 +450,8 @@ td.deck-control * {
   background-color: #eee;
   color: #444;
   cursor: pointer;
-  /*padding: 18px;
-  width: 100%;*/
   border: none;
   outline: none;
-  /*text-align: left;
-  font-size: 15px;*/
-  transition: 0.4s;
-}
-.deck-accordion-active, .deck-accordion:hover {
-  background-color: #ccc;
-}
-
-.deck-accordion:after {
-  content: '\002B';
-  color: #777;
-  font-weight: bold;
-  float: right;
-  margin-left: 5px;
-}
-
-.deck-accordion-active:after {
-  content: "\2212";
 }
 
 .panel {

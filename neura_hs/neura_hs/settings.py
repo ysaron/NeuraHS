@@ -1,4 +1,5 @@
 from pathlib import Path
+import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -8,6 +9,10 @@ try:
     from .local_settings import *   # В продакшне файл отсутствует --> загрузится файл продакшн-настроек
 except ImportError:
     from .prod_settings import *
+
+# Для исправления проблемы с неймингом пакета FontAwesome v5 для Django
+# https://github.com/FortAwesome/Font-Awesome/issues/17801
+sys.modules['fontawesome_free'] = __import__('fontawesome-free')
 
 INSTALLED_APPS = [
     'modeltranslation',
@@ -23,6 +28,7 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'decks.apps.DecksConfig',
     'debug_toolbar',
+    'fontawesome_free',
 ]
 
 MIDDLEWARE = [
