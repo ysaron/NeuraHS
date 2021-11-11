@@ -1,4 +1,8 @@
 {% extends "core/base.html" %}
+{% block scripts %}
+    {% load static %}
+    <script src="{% static 'core/js/deck_list.js' %}?v=1.0.3"></script>
+{% endblock %}
 
 {% load custom_filters %}
 {% block page_title %}<h1>{{ title }}</h1>{% endblock %}
@@ -43,22 +47,23 @@
             <td colspan="3" class="deck-control">
                 <span id="deckControlButtons">
                     <button><a role="button" href="{{ deck.get_absolute_url }}">Открыть</a></button>
-                    <button type="button">Разврернуть</button>
+                    <button type="button" class="deck-accordion">Разврернуть</button>
                     <span class="mytooltip">
-                      <button type="button" onclick="copyToClipboard()" onmouseover="tooltipFunc()">
-                        <span class="tooltiptext" id="copyTooltip">Copy to clipboard!!!!</span>Copy
+                      <button type="button" class="copy-deck" onmouseover="tooltipFunc()">
+                        <span class="tooltiptext" id="copyTooltip">Copy to clipboard!</span>Copy
                       </button>
                     </span>
+                    <span style="display: none;">{{ deck.string }}</span>
                 </span>
             </td>
         </tr>
         </tbody>
-        <tbody class="deck-cards">
+        <tbody class="deck-cards deck-cards-collapsed">
         {% for card, number in deck.included_cards %}
         <tr class="{{ card|cclass }}-deck {{ card|rar }}-deck">
-            <td class="deck-number-cell" style="width:10%;"><a href="{{ card.get_absolute_url }}">{{ card.cost }}</a></td>
-            <td class="deck-card-cell" style="width:80%;"><a href="{{ card.get_absolute_url }}">{{ card.name }}</a></td>
-            <td class="deck-number-cell" style="width:10%;"><a href="{{ card.get_absolute_url }}">{{ number }}x</a></td>
+            <td class="deck-number-cell" style=""><a href="{{ card.get_absolute_url }}">{{ card.cost }}</a></td>
+            <td class="deck-card-cell" style=""><a href="{{ card.get_absolute_url }}">{{ card.name }}</a></td>
+            <td class="deck-number-cell" style=""><a href="{{ card.get_absolute_url }}">{{ number }}x</a></td>
         </tr>
         {% endfor %}
         </tbody>
@@ -75,8 +80,6 @@
     <p>No</p>
 {% endfor %}
 </div>
-
-
 
 {% endblock %}
 

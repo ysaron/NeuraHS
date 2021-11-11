@@ -33,6 +33,7 @@
   --standard: rgba(0, 102, 0, 0.6);
   --wild: #262626;
   --classic: rgba(24, 24, 129, 0.6);
+  --deck-width: 400px;
 }
 
 html, body {
@@ -288,7 +289,6 @@ thead.darktable th {padding: 8px;}
   z-index: 3;
   bottom: -10%;
   left: 105%;
-  /*margin-left: 0px;*/
   opacity: 0;
   transition: opacity 0.3s;
 }
@@ -312,11 +312,12 @@ thead.darktable th {padding: 8px;}
 /* ------------------ Колода --------------------- */
 table.deck {
   border-collapse: separate;
+  /*border-collapse: collapse;*/
   border-spacing: 0 0;
   position: relative;
   z-index: 1;
-  width: 350px;
-  max-width: 350px;
+  width: var(--deck-width);
+  max-width: var(--deck-width);
 }
 
 table.standard::before {
@@ -403,9 +404,17 @@ td.deck-control * {
 }
 .deck-cards td.deck-number-cell {
   text-align: center;
+  width: calc(var(--deck-width) * 0.1);
 }
 .deck-cards td.deck-card-cell {
   padding-left: 5px;
+  width: calc(var(--deck-width) * 0.8);
+}
+.deck-cards-collapsed {
+  max-height: 0;
+  display: block;
+  overflow-y: hidden;
+  transition: max-height 1s ease-out;
 }
 
 /* Footer */
@@ -425,6 +434,42 @@ td.deck-control * {
   padding: 35px 0;
   justify-content: space-around;
   overflow: hidden;
+}
+
+.deck-accordion {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  /*padding: 18px;
+  width: 100%;*/
+  border: none;
+  outline: none;
+  /*text-align: left;
+  font-size: 15px;*/
+  transition: 0.4s;
+}
+.deck-accordion-active, .deck-accordion:hover {
+  background-color: #ccc;
+}
+
+.deck-accordion:after {
+  content: '\002B';
+  color: #777;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.deck-accordion-active:after {
+  content: "\2212";
+}
+
+.panel {
+  padding: 0 18px;
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
 }
 
 /* ------- Оформление классов Hearthstone ------- */

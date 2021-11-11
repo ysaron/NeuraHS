@@ -19,6 +19,8 @@
     </div>
     <a href="{% url side_menu.create.url_name %}" title="{{ side_menu.create.popup }}">{{ side_menu.create.title }}</a>
     <a href="{% url side_menu.authors.url_name %}" title="{{ side_menu.authors.popup }}">{{ side_menu.authors.title }}</a>
+    <a href="{% url side_menu.all_decks.url_name %}" title="{{ side_menu.all_decks.popup }}">{{ side_menu.all_decks.title }}</a>
+    <a href="{% url side_menu.my_decks.url_name %}" title="{{ side_menu.my_decks.popup }}">{{ side_menu.my_decks.title }}</a>
     <hr style="margin: 0px 0px;">
     <form action="{% url 'set_language' %}" method="post" id="form-i18n">
         {% csrf_token %}

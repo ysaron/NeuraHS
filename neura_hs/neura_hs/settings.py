@@ -215,7 +215,9 @@ SIDE_MENU = {
              'fan': {'title': "Фан-карты", 'url_name': 'gallery:fancards', 'popup': 'Карты, созданные пользователями'},
              'neura': {'title': "Нейрокартонки", 'url_name': 'gallery:index', 'popup': 'В планах'}},
     'create': {'title': "Создать карту", 'url_name': 'gallery:createcard', 'popup': 'Создание фан-карты'},
-    'authors': {'title': "Авторы фан-карт", 'url_name': 'gallery:authors', 'popup': ''}
+    'authors': {'title': "Авторы фан-карт", 'url_name': 'gallery:authors', 'popup': ''},
+    'all_decks': {'title': "База колод", 'url_name': 'decks:all_decks', 'popup': ''},
+    'my_decks': {'title': "Мои колоды", 'url_name': 'decks:user_decks', 'popup': ''},
 }
 
 # API Hearthstone

@@ -22,8 +22,8 @@
 {% endif %}
 
 {% if deck %}
-<div class="row">
-    <div class="col-4">
+<div class="decks-grid">
+    <div class="">
     <table class="deck {{ deck|dformat }}">
         <tbody class="deck-header {{ deck|dclass }}">
         <tr>
@@ -94,7 +94,7 @@
         </tbody>
     </table>
     </div>
-    <div class="col-8">
+    <div class="">
         <p>Используемые наборы ({{ deck.contained_sets|length }}):</p>
         <ul>
             {% for set in deck.contained_sets %}
