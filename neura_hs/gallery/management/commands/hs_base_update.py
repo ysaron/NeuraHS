@@ -9,7 +9,9 @@ import re
 from tqdm import tqdm
 from datetime import datetime
 
+from decks.decrypt import parse_deckstring
 from ...models import RealCard, CardClass, Tribe, CardSet
+from decks.models import Deck, Format, Inclusion
 
 locale_list = ['enUS', 'ruRU']
 endpoint_list = ['info', 'cards']
@@ -58,10 +60,13 @@ class Command(BaseCommand):
             base.write_card_classes()
             base.write_tribes()
             base.write_card_sets()
-
-        with transaction.atomic():
+            base.write_formats()
             base.write_en_cards(self.rewrite)
             base.add_ru_translation()
+            base.update_card_classes()
+
+        if self.rewrite:
+            base.rebuild_decks()
 
         end = datetime.now() - start
         self.stdout.write(f'Обновление БД заняло {end.seconds} с')
@@ -90,8 +95,16 @@ class DbWorker:
                 if CardClass.objects.filter(service_name=cls).exists():
                     continue
                 card_class = CardClass(name=cls, service_name=cls)
-                card_class.name_ru = translations['classes'][cls]
+                card_class.name_ru = translations['classes'].get(cls, card_class.name)
                 card_class.save()
+
+    @staticmethod
+    def update_card_classes():
+        """ Обновляет данные классов на основе записанных карт """
+        for cls in tqdm(CardClass.objects.all(), desc='Обновление данных о классах', ncols=100):
+            if RealCard.objects.filter(collectible=True, card_class=cls).exists():
+                cls.collectible = True
+                cls.save()
 
     def write_tribes(self):
         """ Записывает существующие расы существ (en + ru) """
@@ -101,7 +114,7 @@ class DbWorker:
                 if Tribe.objects.filter(service_name=t).exists():
                     continue
                 tribe = Tribe(name=t, service_name=t)
-                tribe.name_ru = translations['tribes'][t]
+                tribe.name_ru = translations['tribes'].get(t, tribe.name)
                 tribe.save()
 
     def write_card_sets(self):
@@ -112,13 +125,24 @@ class DbWorker:
                 if CardSet.objects.filter(service_name=s).exists():
                     continue
                 card_set = CardSet(name=s, service_name=s)
-                card_set.name_ru = translations['sets'][s]
+                card_set.name_ru = translations['sets'].get(s, card_set.name)
                 card_set.save()
 
             if not CardSet.objects.filter(service_name='unknown').exists():
                 unknown_set = CardSet(name='unknown', service_name='unknown')
-                unknown_set.name_ru = translations['sets']['unknown']
+                unknown_set.name_ru = translations['sets'].get('unknown', unknown_set.name)
                 unknown_set.save()
+
+    @staticmethod
+    def write_formats():
+        """  """
+        with open(DbWorker.translations, 'r', encoding='utf-8') as f:
+            translations = json.load(f)
+            for fmt in tqdm(translations['formats'], desc='Форматы', ncols=100):
+                if Format.objects.filter(numerical_designation=fmt['num']).exists():
+                    continue
+                format_ = Format(numerical_designation=fmt['num'], name=fmt['name_en'])
+                format_.save()
 
     def write_en_cards(self, rewrite):
         for j_card in tqdm(self.en_cards, desc='Карты (en)', ncols=100):
@@ -240,6 +264,20 @@ class DbWorker:
         """ Связывает карту с расами (m2m) """
         if 'race' in data:
             card.tribe.add(Tribe.objects.get(service_name=data['race']))
+
+    @staticmethod
+    def rebuild_decks():
+        """  """
+        for deck in Deck.objects.all():
+            cards, heroes, format_ = parse_deckstring(deck.string)
+            deck.deck_class = RealCard.objects.get(dbf_id=heroes[0]).card_class.all().first()
+            deck.deck_format = Format.objects.get(numerical_designation=format_)
+            deck.save()
+            for dbf_id, number in cards:
+                card = RealCard.includibles.get(dbf_id=dbf_id)
+                ci = Inclusion(deck=deck, card=card, number=number)
+                ci.save()
+                deck.cards.add(card)
 
 
 class HsApiWorker:
