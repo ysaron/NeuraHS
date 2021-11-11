@@ -65,5 +65,11 @@
     "Vanilla": "Ванилла",
     "Taverns of Time": "Таверны времени",
     "Rastakhan's Rumble": "Растахановы игрища"
-  }
+  },
+  "formats": [
+    {"num": 0, "name_en": "Unknown", "name_ru": "Неизвестно"},
+    {"num": 1, "name_en": "Wild", "name_ru": "Вольный"},
+    {"num": 2, "name_en": "Standard", "name_ru": "Стандарт"},
+    {"num": 3, "name_en": "Classic", "name_ru": "Классик"}
+  ]
 }

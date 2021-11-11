@@ -121,7 +121,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
 # Выбор в админ-панели множества записей
-DATA_UPLOAD_MAX_NUMBER_FIELDS = 13000
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 20000
 
 # Перенаправить на домашний URL после входа в систему
 # (по умолчанию перенаправляет на /accounts/profile/)

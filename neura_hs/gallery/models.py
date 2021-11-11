@@ -82,6 +82,7 @@ class CardClass(Model):
                             verbose_name='Класс')
     service_name = models.CharField(max_length=255, verbose_name='Service', default='', help_text='(!)',
                                     unique=True)
+    collectible = models.BooleanField(default=False, verbose_name='Коллекционный')
 
     class Meta:
         verbose_name = 'Игровой класс'

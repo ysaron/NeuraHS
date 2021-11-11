@@ -17,10 +17,10 @@ class DeckSaveForm(forms.Form):
 
 
 class DeckFilterForm(forms.Form):
-    CARD_CLASSES = CardClass.objects.all()
+    CARD_CLASSES = CardClass.objects.filter(collectible=True)
     deck_class = forms.ModelChoiceField(queryset=CARD_CLASSES, required=False, label='Класс')
 
-    FORMATS = Format.objects.all()
+    FORMATS = Format.objects.exclude(numerical_designation=0)
     deck_format = forms.ModelChoiceField(queryset=FORMATS, required=False, label='Формат')
 
     deck_class.widget.attrs.update({'class': 'form-select form-select-sm'})
