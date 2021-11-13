@@ -8,17 +8,12 @@
 <form action="{% url 'decks:index' %}" method="post">
     {% csrf_token %}
     <div class="form-error">{{ deckstring_form.non_field_errors }}</div>
-    <p>
-        <label class="form-label" for="{{ deckstring_form.deckstring.id_for_label }}">{{ deckstring_form.deckstring.label }}</label>
-        {{ deckstring_form.deckstring }}
-    </p>
+    <p>{{ deckstring_form.deckstring }}</p>
     <div class="form-error">{{ deckstring_form.deckstring.errors }}</div>
     <span>
-        <button type="submit" class="">Расшифровать</button>
-        <button type="button" class="">Сохранить</button>
+        <button type="submit" class="form-button">Расшифровать</button>
     </span>
 </form>
-<hr>
 {% endif %}
 
 {% if deck %}
@@ -87,11 +82,19 @@
             {% else %}
                 <form method="post">{% csrf_token %}
                 <span id="deckControlButtons2" class="">
+                    {% if request.user.is_authenticated %}
                     <button type="button" id="deckSaveButton" onclick="showDeckSaveForm()">
                         <span class="deck-control-icon" title="Сохранить себе">
                             <i class="far fa-save"></i>
                         </span>
                     </button>
+                    {% else %}
+                    <button type="button" class="disabled">
+                        <span class="deck-control-icon" title="Авторизуйтесь, чтобы сохранить себе">
+                            <i class="far fa-save"></i>
+                        </span>
+                    </button>
+                    {% endif %}
                     <span class="mytooltip">
                       <button type="button" onclick="copyToClipboard()" onmouseover="tooltipFunc()">
                         <span class="tooltiptext" id="copyTooltip">Copy to clipboard</span>
@@ -136,21 +139,27 @@
         </tbody>
     </table>
     </div>
-    <div class="">
-        <p>Используемые наборы ({{ deck.contained_sets|length }}):</p>
-        <ul>
-            {% for set in deck.contained_sets %}
-                <li>{{ set.set_name }} ({{ set.num_cards }})</li>
-            {% endfor %}
-        </ul>
-        <p>Используемые механики ({{ deck.contained_mechanics|length }}):</p>
-        <ul>
-            {% for mech in deck.contained_mechanics %}
-                <li>{{ mech.name }} ({{ mech.num_cards }})</li>
-            {% endfor %}
-        </ul>
+    <div>
+        <div class="deck-info-item">
+            <p>Используемые наборы ({{ deck.contained_sets|length }}):</p>
+            <ul>
+                {% for set in deck.contained_sets %}
+                    <li>{{ set.set_name }} ({{ set.num_cards }})</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="deck-info-item">
+            <p>Используемые механики ({{ deck.contained_mechanics|length }}):</p>
+            <ul>
+                {% for mech in deck.contained_mechanics %}
+                    <li>{{ mech.name }} ({{ mech.num_cards }})</li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 </div>
+{% else %}
+<div style="padding: 200px 0;"></div>
 {% endif %}
 
 {% endblock %}

@@ -1,5 +1,6 @@
 :root {
   --dark: #333;
+  --grey: #595959;
   --mage-1: #6699ff;
   --mage-2: #e6eeff;
   --priest-1: #ffffb3;
@@ -31,7 +32,7 @@
   --rare: #668cff;
   --common: #ffffff;
   --standard: rgba(0, 102, 0, 0.6);
-  --wild: #262626;
+  --wild: rgba(38, 38, 38, 0.7);
   --classic: rgba(24, 24, 129, 0.6);
   --deck-width: 400px;
 }
@@ -46,6 +47,10 @@ html, body {
 	width: 100%;
 
 	scroll-behavior: smooth;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
 textarea.no-resize {
@@ -146,21 +151,27 @@ a:hover, a:active {
 .sidemenu a:hover {
   background: #d3d3d3;
   color: black;
+  border-radius: 5px;
 }
 a.sub {
   background: #595959;
   padding-left: 20px;
 }
+a.sub:hover {border-radius: 0;}
+
 #form-i18n select {
   background-color: var(--dark);
   padding: 8px 5px;
   color: white;
-  border: none;
+  border: inherit;
   width: 100%;
 }
-#form-i18n select:hover {
+#form-i18n select:hover, #form-i18n select:focus {
   color: black;
   background-color: #d3d3d3;
+  border: inherit;
+  border-radius: 5px;
+  outline: none;
 }
 
 /* ------------------------------------------------------------------------------------- */
@@ -187,7 +198,7 @@ a.sub {
 .accordion-item .accordion-header button:hover {
   background: #d3d3d3;
   color: black;
-  border: none;
+  transition: none;
 }
 .accordion-body a {
   display: block;
@@ -259,8 +270,22 @@ thead.darktable th {padding: 8px;}
     color: tomato;
 }
 .form-button {
-    min-width: 200px;
-    font-size: 16px;
+  min-width: 200px;
+  font-size: 16px;
+  text-align: center;
+  padding: 5px 5px;
+  background: transparent;
+  color: var(--dark);
+  border: 2px solid var(--dark);
+  border-radius: 5px;
+}
+.form-button:hover {
+  background-color: var(--dark);
+  color: white;
+  transition: background-color 0.4s, color 0.4s;
+}
+.form-button:active {
+  background-color: var(--grey);
 }
 .form-mod {
   padding: 0px;
@@ -269,6 +294,15 @@ thead.darktable th {padding: 8px;}
 }
 .form-deckstring {
   width: 100%;
+  font-size: 16px;
+  margin: 8px 0;
+  padding: 5px 5px;
+  border: 2px solid var(--dark);
+  border-radius: 5px;
+}
+.form-deckstring:focus {
+  outline: 1px solid var(--dark);
+  box-shadow: 2px 2px 5px 0 var(--dark);
 }
 
 .mytooltip {
@@ -389,7 +423,8 @@ table.deck td a:hover {
   font-size: 14px;
 }
 /* Управляющие кнопки */
-td.deck-control {
+td.deck-control .disabled {
+  cursor: not-allowed;
 }
 td.deck-control span {
   display: flex;
@@ -454,13 +489,16 @@ td.deck-control * {
   outline: none;
 }
 
-.panel {
-  padding: 0 18px;
+.deck-info-item {
+  width: var(--deck-width);
+  padding: 20px 20px;
+  margin-bottom: 35px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   background-color: white;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.2s ease-out;
+  transition: 0.3s;
 }
+.deck-info-item:hover {box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);}
 
 /* ------- Оформление классов Hearthstone ------- */
 /* Detail */
