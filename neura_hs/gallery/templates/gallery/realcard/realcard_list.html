@@ -1,5 +1,10 @@
 {% extends "core/base.html" %}
 
+{% block scripts %}
+    {% load static %}
+    <script src="{% static 'core/js/multiclass.js' %}?v=1.0.7"></script>
+{% endblock %}
+
 {% block page_title %}
     <h1>{{ title }}</h1>
 {% endblock %}
@@ -71,9 +76,9 @@
       {% for card in realcards %}
       <tr class="{{ card|cclass }} {{ card|rar }} clickable-row">
         <td class=""><a class="" href="{{ card.get_absolute_url }}" target="_blank" title="Детальное описание карты {{ card.name }}">{{ card|coll_name_fmt }}</a></td>
-        <td><span>{{ card.get_card_type_display }}</span></td>
-        <td><span>{% for card_class in card.card_class.all %} {{ card_class }}{% if not forloop.last %} | {% endif %}{% endfor %}</span></td>
-        <td><span>{{ card.card_set }}</span></td>
+        <td>{{ card.get_card_type_display }}</td>
+        <td>{% for card_class in card.card_class.all %} {{ card_class }}{% if not forloop.last %} | {% endif %}{% endfor %}</td>
+        <td>{{ card.card_set }}</td>
       </tr>
       {% endfor %}
       </tbody>

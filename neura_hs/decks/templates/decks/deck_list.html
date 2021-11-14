@@ -1,7 +1,8 @@
 {% extends "core/base.html" %}
 {% block scripts %}
     {% load static %}
-    <script src="{% static 'core/js/deck_list.js' %}?v=1.0.3"></script>
+    <script src="{% static 'core/js/deck_list.js' %}?v=1.0.4"></script>
+    <script src="{% static 'core/js/multiclass.js' %}?v=1.0.7"></script>
 {% endblock %}
 
 {% load custom_filters %}
@@ -75,7 +76,7 @@
         </tbody>
         <tbody class="deck-cards deck-cards-collapsed">
         {% for card, number in deck.included_cards %}
-        <tr class="{{ card|cclass }}-deck {{ card|rar }}-deck">
+        <tr class="{{ card|cclass }} {{ card|rar }}">
             <td class="deck-number-cell" style=""><a href="{{ card.get_absolute_url }}">{{ card.cost }}</a></td>
             <td class="deck-card-cell" style=""><a href="{{ card.get_absolute_url }}">{{ card.name }}</a></td>
             <td class="deck-number-cell" style=""><a href="{{ card.get_absolute_url }}">{{ number }}x</a></td>

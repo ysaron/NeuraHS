@@ -528,254 +528,233 @@ td.deck-control * {
 .module-wrap-multiclass {background: linear-gradient(305deg, #cc0000, #ffff00, #0033cc);}
 
 /* List */
-.td-bordered:hover td, .td-bordered-deck:hover td {
+.td-bordered:hover td {
   box-shadow: 0 0 0 1px var(--dark);
 }
-.mage:hover, .mage-deck:hover {
+.mage:hover {
   background: linear-gradient(305deg, var(--mage-1), var(--mage-2), var(--mage-1));
-  color: #000000;
   background-size: 600% 600%;
   -webkit-animation: CardLink 4s ease infinite;
   -moz-animation: CardLink 4s ease infinite;
   animation: CardLink 4s ease infinite;
 }
-.mage a:hover, .mage-deck a:hover {color: #000000;}
-.mage-deck {
+.mage {
   background-color: var(--mage-1);
   color: black;
 }
 
-.priest:hover, .priest-deck:hover {
+.priest:hover {
   background: linear-gradient(305deg, var(--priest-1), var(--priest-2), var(--priest-1));
-  color: #000000;
   background-size: 600% 600%;
   -webkit-animation: CardLink 4s ease infinite;
   -moz-animation: CardLink 4s ease infinite;
   animation: CardLink 4s ease infinite;
 }
-.priest a:hover, .priest-deck a:hover {color: #000000;}
-.priest-deck {
+.priest {
   background-color: var(--priest-1);
   color: black;
 }
 
-.warlock:hover, .warlock-deck:hover {
+.warlock:hover {
   background: linear-gradient(305deg, var(--warlock-1), var(--warlock-2), var(--warlock-1));
-  color: #ffffff;
   background-size: 600% 600%;
   -webkit-animation: CardLink 4s ease infinite;
   -moz-animation: CardLink 4s ease infinite;
   animation: CardLink 4s ease infinite;
 }
-.warlock a:hover, .warlock-deck a:hover {color: #ffffff}
-.warlock-deck {
+.warlock {
   background-color: var(--warlock-1);
   color: white;
 }
 
-.druid:hover, .druid-deck:hover {
+.druid:hover {
   background: linear-gradient(305deg, var(--druid-1), var(--druid-2), var(--druid-1));
-  color: #000000;
   background-size: 600% 600%;
   -webkit-animation: CardLink 4s ease infinite;
   -moz-animation: CardLink 4s ease infinite;
   animation: CardLink 4s ease infinite;
 }
-.druid a:hover, .druid-deck a:hover {color: #000000;}
-.druid-deck {
+.druid {
   background-color: var(--druid-1);
   color: black;
 }
 
-.shaman:hover, .shaman-deck:hover {
+.shaman:hover {
   background: linear-gradient(305deg, var(--shaman-1), var(--shaman-2), var(--shaman-1));
-  color: #ffffff;
   background-size: 600% 600%;
   -webkit-animation: CardLink 4s ease infinite;
   -moz-animation: CardLink 4s ease infinite;
   animation: CardLink 4s ease infinite;
 }
-.shaman a:hover, .shaman-deck a:hover {color: #ffffff;}
-.shaman-deck {
+.shaman {
   background-color: var(--shaman-1);
   color: white;
 }
 
-.rogue:hover, .rogue-deck:hover {
+.rogue:hover {
   background: linear-gradient(305deg, var(--rogue-1), var(--rogue-2), var(--rogue-1));
-  color: #ffffff;
   background-size: 600% 600%;
   -webkit-animation: CardLink 4s ease infinite;
   -moz-animation: CardLink 4s ease infinite;
   animation: CardLink 4s ease infinite;
 }
-.rogue a:hover, .rogue-deck a:hover {color: #ffffff;}
-.rogue-deck {
+.rogue {
   background-color: var(--rogue-1);
   color: white;
 }
 
-.paladin:hover, .paladin-deck:hover {
+.paladin:hover {
   background: linear-gradient(305deg, var(--paladin-1), var(--paladin-2), var(--paladin-1));
-  color: #000000;
   background-size: 600% 600%;
   -webkit-animation: CardLink 4s ease infinite;
   -moz-animation: CardLink 4s ease infinite;
   animation: CardLink 4s ease infinite;
 }
-.paladin a:hover, .paladin-deck a:hover {color: #000000;}
-.paladin-deck {
+.paladin {
   background-color: var(--paladin-1);
   color: black;
 }
 
-.warrior:hover, .warrior-deck:hover {
+.warrior:hover {
   background: linear-gradient(305deg, var(--warrior-1), var(--warrior-2), var(--warrior-1));
-  color: #ffffff;
   background-size: 600% 600%;
   -webkit-animation: CardLink 4s ease infinite;
   -moz-animation: CardLink 4s ease infinite;
   animation: CardLink 4s ease infinite;
 }
-.warrior a:hover, .warrior-deck a:hover {color: #ffffff;}
-.warrior-deck {
+.warrior {
   background-color: var(--warrior-1);
   color: white;
 }
 
-.hunter:hover, .hunter-deck:hover {
+.hunter:hover {
   background: linear-gradient(305deg, var(--hunter-1), var(--hunter-2), var(--hunter-1));
-  color: #ffffff;
   background-size: 600% 600%;
   -webkit-animation: CardLink 4s ease infinite;
   -moz-animation: CardLink 4s ease infinite;
   animation: CardLink 4s ease infinite;
 }
-.hunter a:hover, .hunter-deck a:hover {color: #ffffff}
-.hunter-deck {
+.hunter {
   background-color: var(--hunter-1);
   color: white;
 }
 
-.demonhunter:hover, .demonhunter-deck:hover {
+.demonhunter:hover {
   background: linear-gradient(305deg, var(--demonhunter-1), var(--demonhunter-2), var(--demonhunter-1));
-  color: #ffffff;
   background-size: 600% 600%;
   -webkit-animation: CardLink 4s ease infinite;
   -moz-animation: CardLink 4s ease infinite;
   animation: CardLink 4s ease infinite;
 }
-.demonhunter a:hover, .demonhunter-deck a:hover {color: #ffffff;}
-.demonhunter-deck {
+.demonhunter {
   background-color: var(--demonhunter-1);
   color: white;
 }
 
 .neutral:hover, .neutral-deck:hover {
   background: linear-gradient(305deg, var(--neutral-1), var(--neutral-2), var(--neutral-1));
-  color: #000000;
   background-size: 600% 600%;
   -webkit-animation: CardLink 4s ease infinite;
   -moz-animation: CardLink 4s ease infinite;
   animation: CardLink 4s ease infinite;
 }
-.neutral a:hover, .neutral-deck a:hover {color: #000000;}
-.neutral-deck {background-color: var(--neutral-1);}
+.neutral {background-color: var(--neutral-1);}
 
 .dream:hover {
   background: linear-gradient(305deg, var(--dream-1), var(--dream-2), var(--dream-1));
-  color: #000000;
   background-size: 600% 600%;
   -webkit-animation: CardLink 4s ease infinite;
   -moz-animation: CardLink 4s ease infinite;
   animation: CardLink 4s ease infinite;
 }
-.dream a:hover {color: #000000;}
+.dream {background-color: var(--dream-1);}
 
 .deathknight:hover {
   background: linear-gradient(305deg, var(--deathknight-1), var(--deathknight-2), var(--deathknight-1));
-  color: #ffffff;
   background-size: 600% 600%;
   -webkit-animation: CardLink 4s ease infinite;
   -moz-animation: CardLink 4s ease infinite;
   animation: CardLink 4s ease infinite;
 }
-.deathknight a:hover {color: #ffffff;}
+.deathknight {background-color: var(--deathknight-1);}
 
-.multiclass:hover, .multiclass-deck:hover {
-  background: linear-gradient(305deg, #cc0000, #ffff00, #0033cc);
-  color: #ffffff;
+.multiclass:hover {
+  background: linear-gradient(305deg, tomato, yellow, black);
   background-size: 600% 600%;
   -webkit-animation: CardLink 4s ease infinite;
   -moz-animation: CardLink 4s ease infinite;
   animation: CardLink 4s ease infinite;
 }
-.multiclass a:hover, .multiclass-deck a:hover {color: #ffffff;}
-.multiclass-deck {background: linear-gradient(305deg, #cc0000, #ffff00, #0033cc);}
-/*.multiclass-deck {background-color: #cc33ff;}*/
-
-/* -------------------------------------------------- */
-
+.multiclass {background: linear-gradient(305deg, tomato, yellow, black);}
 
 /* Оформление редкостей */
-.legendary:hover, .legendary:hover a {
+.legendary, .legendary a {
   color: var(--legendary);
   letter-spacing: 1px;
   text-shadow: -1px -1px 0 #737373, 1px -1px 0 #737373, -1px 1px 0 #737373, 1px 1px 0 #737373;
 }
-.legendary-deck, .legendary-deck a, .legendary-deck:hover a {
-  color: var(--legendary);
-  text-shadow: -1px -1px 0 #737373, 1px -1px 0 #737373, -1px 1px 0 #737373, 1px 1px 0 #737373;
-}
-.epic:hover, .epic:hover a {
+.epic, .epic a {
   color: var(--epic);
   letter-spacing: 1px;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
-.epic-deck, .epic-deck a, .epic-deck:hover a {
-  color: var(--epic);
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-}
-.rare:hover, .rare:hover a {
+.rare, .rare a {
   color: var(--rare);
   letter-spacing: 1px;
   text-shadow: -1px -1px 0 #737373, 1px -1px 0 #737373, -1px 1px 0 #737373, 1px 1px 0 #737373;
 }
-.rare-deck, .rare-deck a, .rare-deck:hover a {
-  color: var(--rare);
-  text-shadow: -1px -1px 0 #737373, 1px -1px 0 #737373, -1px 1px 0 #737373, 1px 1px 0 #737373;
-}
-.common:hover, .common:hover a {
+.common, .common a {
   color: var(--common);
   letter-spacing: 1px;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-}
-.common-deck, .common-deck a, .common-deck:hover a {
-  color: var(--common);
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
 /* Анимация градиента */
 @-webkit-keyframes CardLink {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
 }
 @-moz-keyframes CardLink {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
 }
 @-o-keyframes CardLink {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
 }
 @keyframes CardLink {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
 }
+/*
+@-webkit-keyframes MultiClass {
+    0% {background-color: var(--mcl-1);}
+    33% {background-color: var(--mcl-2);}
+    66% {background-color: var(--mcl-3);}
+    100% {background-color: var(--mcl-1);}
+}
+@-moz-keyframes MultiClass {
+    0% {background-color: var(--mcl-1);}
+    33% {background-color: var(--mcl-2);}
+    66% {background-color: var(--mcl-3);}
+    100% {background-color: var(--mcl-1);}
+}
+@-o-keyframes MultiClass {
+    0% {background-color: var(--mcl-1);}
+    33% {background-color: var(--mcl-2);}
+    66% {background-color: var(--mcl-3);}
+    100% {background-color: var(--mcl-1);}
+}
+@keyframes MultiClass {
+    0% {background-color: var(--mcl-1);}
+    33% {background-color: var(--mcl-2);}
+    66% {background-color: var(--mcl-3);}
+    100% {background-color: var(--mcl-1);}
+}*/
 
 /* Псевдоэлементы */
 ::selection {               /* Выделение текста */

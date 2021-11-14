@@ -1,5 +1,10 @@
 {% extends "core/base.html" %}
 
+{% block scripts %}
+    {% load static %}
+    <script src="{% static 'core/js/multiclass.js' %}?v=1.0.7"></script>
+{% endblock %}
+
 {% block page_title %}
     <h1>{{ title }}</h1>
 {% endblock %}
