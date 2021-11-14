@@ -426,7 +426,6 @@ table.deck td a:hover {
 }
 /* Управляющие кнопки */
 td.deck-control {
-  margin: 2px 2px;
   border: 2px solid black !important;
   border-top: none !important;
 }
