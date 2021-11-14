@@ -10,10 +10,10 @@ $(document).ready(function(){
         let cssVars = getCssVars(cards[i]);
         switch(cssVars.length) {
             case 2: {
-                let cardStyle = `linear-gradient(305deg,
+                let cardStyle = `linear-gradient(90deg,
                                                  ${rs.getPropertyValue(cssVars[0].first)},
                                                  ${rs.getPropertyValue(cssVars[1].first)})`;
-                let hoverStyle = `linear-gradient(305deg,
+                let hoverStyle = `linear-gradient(90deg,
                                                   ${rs.getPropertyValue(cssVars[0].first)},
                                                   ${rs.getPropertyValue(cssVars[0].second)},
                                                   ${rs.getPropertyValue(cssVars[1].first)})`;
@@ -26,11 +26,11 @@ $(document).ready(function(){
                 });
             }; break;
             case 3: {
-                let cardStyle = `linear-gradient(305deg,
+                let cardStyle = `linear-gradient(90deg,
                                                  ${rs.getPropertyValue(cssVars[0].first)},
                                                  ${rs.getPropertyValue(cssVars[1].first)},
                                                  ${rs.getPropertyValue(cssVars[2].first)})`;
-                let hoverStyle = `linear-gradient(305deg,
+                let hoverStyle = `linear-gradient(90deg,
                                                   ${rs.getPropertyValue(cssVars[0].first)},
                                                   ${rs.getPropertyValue(cssVars[0].second)},
                                                   ${rs.getPropertyValue(cssVars[1].first)},

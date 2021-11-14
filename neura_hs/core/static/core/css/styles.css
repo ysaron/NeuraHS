@@ -730,31 +730,6 @@ td.deck-control * {
     50% {background-position: 100% 50%;}
     100% {background-position: 0% 50%;}
 }
-/*
-@-webkit-keyframes MultiClass {
-    0% {background-color: var(--mcl-1);}
-    33% {background-color: var(--mcl-2);}
-    66% {background-color: var(--mcl-3);}
-    100% {background-color: var(--mcl-1);}
-}
-@-moz-keyframes MultiClass {
-    0% {background-color: var(--mcl-1);}
-    33% {background-color: var(--mcl-2);}
-    66% {background-color: var(--mcl-3);}
-    100% {background-color: var(--mcl-1);}
-}
-@-o-keyframes MultiClass {
-    0% {background-color: var(--mcl-1);}
-    33% {background-color: var(--mcl-2);}
-    66% {background-color: var(--mcl-3);}
-    100% {background-color: var(--mcl-1);}
-}
-@keyframes MultiClass {
-    0% {background-color: var(--mcl-1);}
-    33% {background-color: var(--mcl-2);}
-    66% {background-color: var(--mcl-3);}
-    100% {background-color: var(--mcl-1);}
-}*/
 
 /* Псевдоэлементы */
 ::selection {               /* Выделение текста */
