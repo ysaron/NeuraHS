@@ -11,18 +11,7 @@ from utils.handlers import log_all_exceptions, LogAllExceptions
 import logging
 from .models import Format, Deck, Inclusion
 from .forms import DeckstringForm, DeckSaveForm, DeckFilterForm
-from .decrypt import DecodeError
-
-
-def get_clean_deckstring(deckstring: str) -> str:
-    """ Выделяет код колоды из формата, в котором колода копируется из Hearthstone """
-
-    deckstring = deckstring.strip()
-
-    if not deckstring.startswith('###'):
-        return deckstring
-
-    return deckstring.split('#')[-3].strip()
+from .decrypt import DecodeError, get_clean_deckstring
 
 
 def create_deck(request: HttpRequest):
