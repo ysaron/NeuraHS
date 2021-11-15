@@ -691,13 +691,13 @@ td.deck-control * {
 .deathknight {background-color: var(--deathknight-1);}
 
 .multiclass:hover {
-  background: linear-gradient(305deg, tomato, yellow, black);
+  background: var(--neutral-1);     /* изменяется через JS */
   background-size: 600% 600%;
   -webkit-animation: CardLink 4s ease infinite;
   -moz-animation: CardLink 4s ease infinite;
   animation: CardLink 4s ease infinite;
 }
-.multiclass {background: linear-gradient(305deg, tomato, yellow, black);}
+.multiclass {background: var(--neutral-1); /* изменяется через JS */ }
 
 /* Оформление редкостей */
 .legendary, .legendary a {

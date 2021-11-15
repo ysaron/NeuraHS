@@ -5,7 +5,7 @@ from ..models import Card, FanCard, RealCard
 register = template.Library()
 Parameter = namedtuple('Parameter', ['name', 'icon', 'value'])
 
-DeckCards = list[tuple[RealCard, int]]
+DeckCards = list[tuple[RealCard, int]]      # алиас для представления карт, составляющих колоду
 
 
 @register.filter
