@@ -40,7 +40,7 @@ class Deck(models.Model):
                             help_text='Название, устанавливаемое пользователем')
     author = models.ForeignKey(Author, on_delete=models.SET_NULL, related_name='decks', null=True, blank=True,
                                verbose_name='Автор', help_text='')
-    string = models.CharField(max_length=255, verbose_name='Код колоды',
+    string = models.TextField(max_length=1500, verbose_name='Код колоды',
                               help_text='Код, используемый для определения карт, составляющих колоду')
     cards = models.ManyToManyField(RealCard, through='Inclusion',
                                    verbose_name='Карты', help_text='Карты, составляющие колоду')

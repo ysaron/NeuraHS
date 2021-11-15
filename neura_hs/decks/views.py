@@ -14,6 +14,17 @@ from .forms import DeckstringForm, DeckSaveForm, DeckFilterForm
 from .decrypt import DecodeError
 
 
+def get_clean_deckstring(deckstring: str) -> str:
+    """ Выделяет код колоды из формата, в котором колода копируется из Hearthstone """
+
+    deckstring = deckstring.strip()
+
+    if not deckstring.startswith('###'):
+        return deckstring
+
+    return deckstring.split('#')[-3].strip()
+
+
 def create_deck(request: HttpRequest):
     """ Форма для кода колоды + ее отображение """
 
@@ -26,6 +37,7 @@ def create_deck(request: HttpRequest):
             if deckstring_form.is_valid():
                 try:
                     deckstring = deckstring_form.cleaned_data['deckstring']
+                    deckstring = get_clean_deckstring(deckstring)
                     deck = Deck.create_from_deckstring(deckstring)
                     deck_name_init = f'{deck.deck_class}-{deck.pk}'
                     deck_save_form = DeckSaveForm(initial={'string_to_save': deckstring,
