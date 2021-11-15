@@ -4,7 +4,7 @@ from .models import Deck, Format
 
 
 class DeckstringForm(forms.Form):
-    deckstring = forms.CharField(label='Deckstring', widget=forms.TextInput)
+    deckstring = forms.CharField(max_length=1500, label='Deckstring', widget=forms.TextInput)
     deckstring.widget.attrs.update({'class': 'form-deckstring',
                                     'placeholder': 'Скопируйте сюда код колоды'})
 
