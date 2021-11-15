@@ -506,6 +506,11 @@ td.deck-control * {
   transition: 0.3s;
 }
 .deck-info-item:hover {box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);}
+.deck-info-item h4 {
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+}
 
 /* ------- Оформление классов Hearthstone ------- */
 /* Detail */

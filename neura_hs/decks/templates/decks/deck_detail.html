@@ -7,7 +7,9 @@
 
 {% block content %}
 {% load custom_filters %}
-<h1>{{ title }}</h1>
+{% if not deck.is_named %}
+    <h1>{{ title }}</h1>
+{% endif %}
 
 {% if deckstring_form %}
 <form action="{% url 'decks:index' %}" method="post">
@@ -146,20 +148,44 @@
     </div>
     <div>
         <div class="deck-info-item">
-            <p>Используемые наборы ({{ deck.contained_sets|length }}):</p>
-            <ul>
-                {% for set in deck.contained_sets %}
-                    <li>{{ set.set_name }} ({{ set.num_cards }})</li>
+            <h4>Типы</h4>
+            <ol>
+                {% for ctype in deck.included_cards|dtypestat %}
+                    <li>{{ ctype.name.label }}: {{ ctype.num_cards }}</li>
+                {% empty %}
+                    <li>Нет данных</li>
                 {% endfor %}
-            </ul>
+            </ol>
         </div>
         <div class="deck-info-item">
-            <p>Используемые механики ({{ deck.contained_mechanics|length }}):</p>
-            <ul>
-                {% for mech in deck.contained_mechanics %}
-                    <li>{{ mech.name }} ({{ mech.num_cards }})</li>
+            <h4>Редкости</h4>
+            <ol>
+                {% for rar in deck.included_cards|draritystat %}
+                    <li>{{ rar.name.label }}: {{ rar.num_cards }}</li>
+                {% empty %}
+                    <li>Нет данных</li>
                 {% endfor %}
-            </ul>
+            </ol>
+        </div>
+        <div class="deck-info-item">
+            <h4>Наборы</h4>
+            <ol>
+                {% for set in deck.included_cards|dsetsstat %}
+                    <li>{{ set.name }} ({{ set.num_cards }})</li>
+                {% empty %}
+                    <li>Нет данных</li>
+                {% endfor %}
+            </ol>
+        </div>
+        <div class="deck-info-item">
+            <h4>Механики</h4>
+            <ol>
+                {% for mech in deck.included_cards|dmechstat %}
+                    <li>{{ mech.name }} ({{ mech.num_cards }})</li>
+                {% empty %}
+                    <li>Нет данных</li>
+                {% endfor %}
+            </ol>
         </div>
     </div>
 </div>
