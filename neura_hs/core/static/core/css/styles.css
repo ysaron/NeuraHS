@@ -1,19 +1,19 @@
 :root {
   --dark: #333;
   --grey: #595959;
-  --mage-1: #6699ff;
+  --mage-1: #668cff;
   --mage-2: #e6eeff;
-  --priest-1: #ffffb3;
+  --priest-1: #ffffcc;
   --priest-2: #ffffff;
   --warlock-1: #4d004d;
   --warlock-2: #cc00cc;
-  --druid-1: #33ff99;
-  --druid-2: #b3ffd9;
+  --druid-1: #00ff80;
+  --druid-2: #ccffcc;
   --rogue-1: #001d25;
   --rogue-2: #b3b3b3;
   --shaman-1: #000066;
   --shaman-2: #3333ff;
-  --paladin-1: #ffff00;
+  --paladin-1: #fadf33;
   --paladin-2: #ffffe6;
   --warrior-1: #4d0000;
   --warrior-2: #ff0000;
@@ -21,7 +21,7 @@
   --hunter-2: #73e600;
   --demonhunter-1: #004d4d;
   --demonhunter-2: #00cccc;
-  --neutral-1: #cccccc;
+  --neutral-1: #bfbfbf;
   --neutral-2: #f2f2f2;
   --deathknight-1: #1e1e2f;
   --deathknight-2: #7373a5;
@@ -700,26 +700,14 @@ td.deck-control * {
 .multiclass {background: var(--neutral-1); /* изменяется через JS */ }
 
 /* Оформление редкостей */
-.legendary, .legendary a {
-  color: var(--legendary);
+.rartext {
   letter-spacing: 1px;
-  text-shadow: -1px -1px 0 #737373, 1px -1px 0 #737373, -1px 1px 0 #737373, 1px 1px 0 #737373;
+  text-shadow: -1px -1px 1px #000, 1px -1px 1px #000, -1px 1px 1px #000, 1px 1px 1px #000;
 }
-.epic, .epic a {
-  color: var(--epic);
-  letter-spacing: 1px;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-}
-.rare, .rare a {
-  color: var(--rare);
-  letter-spacing: 1px;
-  text-shadow: -1px -1px 0 #737373, 1px -1px 0 #737373, -1px 1px 0 #737373, 1px 1px 0 #737373;
-}
-.common, .common a {
-  color: var(--common);
-  letter-spacing: 1px;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-}
+.legendary, .legendary a {color: var(--legendary);}
+.epic, .epic a {color: var(--epic);}
+.rare, .rare a {color: var(--rare);}
+.common, .common a {color: var(--common);}
 
 /* Анимация градиента */
 @-webkit-keyframes CardLink {

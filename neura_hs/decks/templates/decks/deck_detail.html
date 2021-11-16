@@ -130,7 +130,7 @@
         </tbody>
         <tbody class="deck-cards">
         {% for card, number in deck.included_cards %}
-        <tr class="{{ card|cclass }} {{ card|rar }}">
+        <tr class="{{ card|cclass }} {{ card|rar }} rartext">
             <td class="deck-number-cell" style="width:10%;"><a href="{{ card.get_absolute_url }}">{{ card.cost }}</a></td>
             <td class="deck-card-cell" style="width:80%;"><a href="{{ card.get_absolute_url }}">{{ card.name }}</a></td>
             <td class="deck-number-cell" style="width:10%;"><a href="{{ card.get_absolute_url }}">{{ number }}x</a></td>
@@ -140,7 +140,7 @@
         <tbody class="deck-footer {{ deck|dclass }}">
         <tr>
         {% with prices=deck.included_cards|craft_cost %}
-            <td colspan="3">Крафт: {{ prices.0 }} | {{ prices.1 }} (gold)</td>
+            <td colspan="3">Крафт: {{ prices.0 }} | {{ prices.1 }} (голд)</td>
         {% endwith %}
         </tr>
         </tbody>

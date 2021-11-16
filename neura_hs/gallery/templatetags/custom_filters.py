@@ -39,6 +39,8 @@ def get_display_type(fieldname):
 @register.filter(name='cclass')
 def get_cardclass_style(card):
     """ Возвращает стили оформления области соответствующего Hearthstone-класса """
+    if card.card_class.count() == 0:
+        return 'neutral'
     if card.card_class.count() == 1:
         return ''.join(card.card_class.all()[0].service_name.lower().split())
     else:
@@ -47,7 +49,7 @@ def get_cardclass_style(card):
 
 
 @register.filter(name='dclass')
-def get_cardclass_style(deck):
+def get_deckclass_style(deck):
     """ Возвращает CSS-класс оформления области соответствующего Hearthstone-класса """
     return ''.join(deck.deck_class.service_name.lower().split())
 

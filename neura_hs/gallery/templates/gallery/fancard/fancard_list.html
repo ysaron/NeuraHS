@@ -46,7 +46,7 @@
       </thead>
       <tbody>
         {% for card in fancards %}
-        <tr class="{{ card|cclass }} {{ card|rar }} clickable-row">
+        <tr class="{{ card|cclass }} {{ card|rar }} rartext clickable-row">
             <td><a class="" href="{{ card.get_absolute_url }}" target="_blank">{{ card.name }}</a></td>
             <td><span>{{ card.author }}</span></td>
             <td><span>{{ card.get_card_type_display }}</span></td>

@@ -38,7 +38,7 @@
     <tbody>
     {% for card in author.fancard_set.all %}
       {% if card.state %}
-      <tr class="{{ card|cclass }} {{ card|rar }} clickable-row">
+      <tr class="{{ card|cclass }} {{ card|rar }} rartext clickable-row">
         <td><a class="" href="{{ card.get_absolute_url }}" target="_blank" title="Детальное описание карты {{ card.name }}">{{ card.name }}</a></td>
         <td><span>{{ card.get_card_type_display }}</span></td>
         <td><span>{% for card_class in card.card_class.all %} {{ card_class }}{% if not forloop.last %} | {% endif %}{% endfor %}</span></td>
