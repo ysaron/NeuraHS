@@ -1,0 +1,17 @@
+
+@media screen and (max-width: 600px) {
+  .topmenu {
+    position: static;
+  }
+  .topmenu a {
+    float: none;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1050px) {
+  .decks-grid {
+    grid-template-columns: auto;
+  }
+}
+
