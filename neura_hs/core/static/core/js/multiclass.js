@@ -8,6 +8,8 @@ $(document).ready(function(){
 
     for (let i = 0; i < cards.length; i++) {
         let cssVars = getCssVars(cards[i]);
+
+        // обрабатываются случаи 2-х и 3-х классовых карт
         switch(cssVars.length) {
             case 2: {
                 let cardStyle = `linear-gradient(90deg,
@@ -50,6 +52,9 @@ $(document).ready(function(){
 });
 
 function getCssVars(card) {
+    /*
+    Возвращает объект с :root-переменными CSS для цвета соответствующих классов
+    */
     for (let cls of card.classList) {
         if (cls.includes('-')) {
             let classes = cls.split('-');
