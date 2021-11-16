@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Импорт разделенных настроек
 try:
-    from .local_settings import *   # В продакшне файл отсутствует --> загрузится файл продакшн-настроек
+    from .local_settings import *  # В продакшне файл отсутствует --> загрузится файл продакшн-настроек
 except ImportError:
     from .prod_settings import *
 
@@ -209,21 +209,22 @@ LOGGING = {
 # --------------------------------------------- НАСТРОЙКИ ПРОЕКТА --------------------------------------------------- #
 
 TOP_MENU = {
-    'main': {'title': "Главная", 'url_name': 'decks:index'},
+    'main': {'title': "Главная", 'url_name': 'home'},
     'about': {'title': "О сайте", 'url_name': 'about'},
     'contact': {'title': "Обратная связь", 'url_name': 'contact'}
 }
 
 SIDE_MENU = {
     'main': {'title': "Галерея", 'url_name': 'gallery:index', 'popup': ''},
-    'base': {'title': "База картонок",
-             'real': {'title': "Hearthstone", 'url_name': 'gallery:realcards', 'popup': ''},
-             'fan': {'title': "Фан-карты", 'url_name': 'gallery:fancards', 'popup': 'Карты, созданные пользователями'},
-             'neura': {'title': "Нейрокартонки", 'url_name': 'gallery:index', 'popup': 'В планах'}},
-    'create': {'title': "Создать карту", 'url_name': 'gallery:createcard', 'popup': 'Создание фан-карты'},
-    'authors': {'title': "Авторы фан-карт", 'url_name': 'gallery:authors', 'popup': ''},
-    'all_decks': {'title': "База колод", 'url_name': 'decks:all_decks', 'popup': ''},
-    'my_decks': {'title': "Мои колоды", 'url_name': 'decks:user_decks', 'popup': ''},
+    'real_cards': {'title': "Карты HS", 'url_name': 'gallery:realcards', 'popup': 'Карты Hearthstone'},
+    'fan_cards': {'title': "Фан-карты",
+                  'base': {'title': "База данных", 'url_name': 'gallery:fancards', 'popup': ''},
+                  'create': {'title': "Создать", 'url_name': 'gallery:createcard', 'popup': ''},
+                  'authors': {'title': "Авторы", 'url_name': 'gallery:authors', 'popup': ''}},
+    'decks': {'title': "Колоды",
+              'create': {'title': "Создать", 'url_name': 'decks:index', 'popup': ''},
+              'base': {'title': "База данных", 'url_name': 'decks:all_decks', 'popup': ''},
+              'mine': {'title': "Мои колоды", 'url_name': 'decks:user_decks', 'popup': ''}},
 }
 
 # API Hearthstone

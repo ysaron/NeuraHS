@@ -1,5 +1,5 @@
 <div class="topmenu">
-    <a href="{% url top_menu.main.url_name %}">{{ top_menu.main.title }}</a>
+    <a href="/">{{ top_menu.main.title }}</a>
     <a href="{% url top_menu.about.url_name %}">{{ top_menu.about.title }}</a>
     <a href="{% url top_menu.contact.url_name %}">{{ top_menu.contact.title }}</a>
     {% if user.is_authenticated %}

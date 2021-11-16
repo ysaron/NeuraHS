@@ -3,24 +3,33 @@
     <a href="{% url side_menu.main.url_name %}" title="{{ side_menu.main.popup }}">{{ side_menu.main.title }}</a>
     <div class="accordion" id="accordionBase">
       <div class="accordion-item sidemenu">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            <span>{{ side_menu.decks.title }}</span>
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionBase">
+          <div class="accordion-body">
+            <a class="sub" href="{% url side_menu.decks.create.url_name %}" title="{{ side_menu.decks.create.popup }}">{{ side_menu.decks.create.title }}</a>
+            <a class="sub" href="{% url side_menu.decks.base.url_name %}" title="{{ side_menu.decks.base.popup }}">{{ side_menu.decks.base.title }}</a>
+            <a class="sub" href="{% url side_menu.decks.mine.url_name %}" title="{{ side_menu.decks.mine.popup }}">{{ side_menu.decks.mine.title }}</a>
+          </div>
+        </div>
         <h2 class="accordion-header" id="headingOne">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-            <span>{{ side_menu.base.title }}</span>
+            <span>{{ side_menu.fan_cards.title }}</span>
           </button>
         </h2>
         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionBase">
           <div class="accordion-body">
-            <a class="sub" href="{% url side_menu.base.real.url_name %}" title="{{ side_menu.base.real.popup }}">{{ side_menu.base.real.title }}</a>
-              <a class="sub" href="{% url side_menu.base.fan.url_name %}" title="{{ side_menu.base.fan.popup }}">{{ side_menu.base.fan.title }}</a>
-              <a class="sub" href="#" title="{{ side_menu.base.neura.popup }}">{{ side_menu.base.neura.title }}</a>
+            <a class="sub" href="{% url side_menu.fan_cards.create.url_name %}" title="{{ side_menu.fan_cards.create.popup }}">{{ side_menu.fan_cards.create.title }}</a>
+            <a class="sub" href="{% url side_menu.fan_cards.base.url_name %}" title="{{ side_menu.fan_cards.base.popup }}">{{ side_menu.fan_cards.base.title }}</a>
+            <a class="sub" href="{% url side_menu.fan_cards.authors.url_name %}" title="{{ side_menu.fan_cards.authors.popup }}">{{ side_menu.fan_cards.authors.title }}</a>
           </div>
         </div>
       </div>
     </div>
-    <a href="{% url side_menu.create.url_name %}" title="{{ side_menu.create.popup }}">{{ side_menu.create.title }}</a>
-    <a href="{% url side_menu.authors.url_name %}" title="{{ side_menu.authors.popup }}">{{ side_menu.authors.title }}</a>
-    <a href="{% url side_menu.all_decks.url_name %}" title="{{ side_menu.all_decks.popup }}">{{ side_menu.all_decks.title }}</a>
-    <a href="{% url side_menu.my_decks.url_name %}" title="{{ side_menu.my_decks.popup }}">{{ side_menu.my_decks.title }}</a>
+    <a href="{% url side_menu.real_cards.url_name %}" title="{{ side_menu.real_cards.popup }}">{{ side_menu.real_cards.title }}</a>
     <hr style="margin: 0px 0px;">
     <form action="{% url 'set_language' %}" method="post" id="form-i18n">
         {% csrf_token %}
