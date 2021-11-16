@@ -2,14 +2,12 @@ import base64
 from io import BytesIO
 from typing import IO
 
+from .exceptions import DecodeError
+
 DECKSTRING_VERSION = 1
 
 CardList = list[int]
 CardIncludeList = list[tuple[int, int]]
-
-
-class DecodeError(Exception):
-    pass
 
 
 def _read_varint(stream: IO) -> int:

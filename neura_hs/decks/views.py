@@ -6,12 +6,14 @@ from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
+from django.db import transaction
 from utils.mixins import DataMixin
 from utils.handlers import log_all_exceptions, LogAllExceptions
 import logging
 from .models import Format, Deck, Inclusion
 from .forms import DeckstringForm, DeckSaveForm, DeckFilterForm
-from .decrypt import DecodeError, get_clean_deckstring
+from .decrypt import get_clean_deckstring
+from .exceptions import DecodeError, UnsupportedCards
 
 
 def create_deck(request: HttpRequest):
@@ -27,13 +29,16 @@ def create_deck(request: HttpRequest):
                 try:
                     deckstring = deckstring_form.cleaned_data['deckstring']
                     deckstring = get_clean_deckstring(deckstring)
-                    deck = Deck.create_from_deckstring(deckstring)
-                    deck_name_init = f'{deck.deck_class}-{deck.pk}'
-                    deck_save_form = DeckSaveForm(initial={'string_to_save': deckstring,
-                                                           'deck_name': deck_name_init})
-                    title = deck
+                    with transaction.atomic():
+                        deck = Deck.create_from_deckstring(deckstring)
+                        deck_name_init = f'{deck.deck_class}-{deck.pk}'
+                        deck_save_form = DeckSaveForm(initial={'string_to_save': deckstring,
+                                                               'deck_name': deck_name_init})
+                        title = deck
                 except DecodeError as de:
                     deckstring_form.add_error(None, f'Ошибка: {de}')
+                except UnsupportedCards as u:
+                    deckstring_form.add_error(None, f'{u}. База данных будет обновлена в скором времени.')
         if 'deck_name' in request.POST:         # название колоды отправлено с формы DeckSaveForm
             deck = Deck.create_from_deckstring(request.POST['string_to_save'], named=True)
             deck.author = request.user.author

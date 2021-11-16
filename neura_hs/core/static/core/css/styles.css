@@ -264,10 +264,19 @@ thead.darktable th {padding: 8px;}
     margin-right: 3px;
 }
 .form-error ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    color: tomato;
+  padding-left: 0;
+  list-style-type: none;
+}
+.form-error li {
+  display: block;
+  padding: 6px;
+  margin-right: 5px;
+  border-radius: 5px;
+  background-color: #ff471a;
+  color: white;
+  opacity: 1;
+  float: left;
+  box-shadow: 1px 1px 2px 0 black;
 }
 .form-button {
   min-width: 200px;
