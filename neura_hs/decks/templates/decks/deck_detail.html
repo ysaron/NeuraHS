@@ -3,6 +3,7 @@
 {% block scripts %}
     {% load static %}
     <script src="{% static 'core/js/multiclass.js' %}?v=1.0.7"></script>
+    <script src="{% static 'core/js/rnd_deckstring.js' %}?v=1.0.0"></script>
 {% endblock %}
 
 {% block content %}
@@ -20,7 +21,7 @@
     <span>
         <button type="submit" class="form-button">Расшифровать</button>
         <button type="button" class="form-button" onclick="clearDeckstringField()">Очистить</button>
-        <button type="button" class="form-button">Случайная колода</button>
+        <button type="button" class="form-button" id="getRandomDeckstring">Случайная колода</button>
     </span>
 </form>
 {% endif %}

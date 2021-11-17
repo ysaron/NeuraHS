@@ -1,4 +1,4 @@
-from django.http import HttpRequest, HttpResponseRedirect
+from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
@@ -11,6 +11,7 @@ from django.db import transaction
 from utils.mixins import DataMixin
 from utils.handlers import log_all_exceptions, LogAllExceptions
 import logging
+from random import choice
 from .models import Format, Deck, Inclusion
 from .forms import DeckstringForm, DeckSaveForm, DeckFilterForm
 from .decrypt import get_clean_deckstring
@@ -57,6 +58,16 @@ def create_deck(request: HttpRequest):
                 'side_menu': settings.SIDE_MENU}
 
     return render(request, template_name='decks/deck_detail.html', context=context)
+
+
+def get_random_deckstring(request: HttpRequest):
+    """ AJAX-view для получения случайного кода колоды из базы """
+    if request.GET.get('deckstring') == 'random' and request.is_ajax():
+        deck = choice(Deck.nameless.all())
+        response = {'deckstring': deck.string}
+        return JsonResponse(response)
+
+    return redirect(reverse_lazy('decks:index'))
 
 
 class NamelessDecksListView(DataMixin, generic.ListView):
