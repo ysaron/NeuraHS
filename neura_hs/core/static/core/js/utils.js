@@ -54,3 +54,7 @@ function tooltipFunc() {
   var tooltip = document.getElementById("copyTooltip");
   tooltip.innerHTML = "Copy to clipboard";
 }
+
+function clearDeckstringField() {
+    $('#form-deckstring').val('');
+}
