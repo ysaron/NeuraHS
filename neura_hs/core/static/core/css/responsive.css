@@ -13,5 +13,13 @@
   .decks-grid {
     grid-template-columns: auto;
   }
+  table.deck {
+    width: 300px;
+    max-width: 300px;
+  }
+  .info-deck {
+    width: 300px;
+    max-width: 300px;
+  }
 }
 
