@@ -5,7 +5,7 @@ from .models import Deck, Format
 
 class DeckstringForm(forms.Form):
     deckstring = forms.CharField(max_length=1500, label='Deckstring', widget=forms.TextInput)
-    deckstring.widget.attrs.update({'class': 'form-deckstring',
+    deckstring.widget.attrs.update({'class': 'form-input',
                                     'id': 'form-deckstring',
                                     'placeholder': 'Скопируйте сюда код колоды'})
 
@@ -25,5 +25,5 @@ class DeckFilterForm(forms.Form):
     FORMATS = Format.objects.exclude(numerical_designation=0)
     deck_format = forms.ModelChoiceField(queryset=FORMATS, required=False, label='Формат')
 
-    deck_class.widget.attrs.update({'class': 'form-select form-select-sm'})
-    deck_format.widget.attrs.update({'class': 'form-select form-select-sm'})
+    deck_class.widget.attrs.update({'class': 'form-input'})
+    deck_format.widget.attrs.update({'class': 'form-input'})

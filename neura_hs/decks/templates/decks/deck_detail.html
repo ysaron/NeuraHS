@@ -19,9 +19,18 @@
     <p>{{ deckstring_form.deckstring }}</p>
     <div class="form-error">{{ deckstring_form.deckstring.errors }}</div>
     <span>
-        <button type="submit" class="form-button">Расшифровать</button>
-        <button type="button" class="form-button" onclick="clearDeckstringField()">Очистить</button>
-        <button type="button" class="form-button" id="getRandomDeckstring">Случайная колода</button>
+        <button type="submit" class="form-button">
+            <span class="button-icon"><i class="far fa-check-circle"></i></span>
+            <span class="button-text">Расшифровать</span>
+        </button>
+        <button type="button" class="form-button" onclick="clearDeckstringField()">
+            <span class="button-icon"><i class="far fa-times-circle"></i></span>
+            <span class="button-text">Очистить</span>
+        </button>
+        <button type="button" class="form-button" id="getRandomDeckstring">
+            <span class="button-icon"><i class="far fa-question-circle"></i></span>
+            <span class="button-text">Случайная колода</span>
+        </button>
     </span>
 </form>
 {% endif %}
@@ -150,7 +159,7 @@
     </table>
     </div>
     <div>
-        <div class="deck-info-item">
+        <div class="info-item info-deck">
             <h4>Типы</h4>
             <ol>
                 {% for ctype in deck.included_cards|dtypestat %}
@@ -160,7 +169,7 @@
                 {% endfor %}
             </ol>
         </div>
-        <div class="deck-info-item">
+        <div class="info-item info-deck">
             <h4>Редкости</h4>
             <ol>
                 {% for rar in deck.included_cards|draritystat %}
@@ -170,7 +179,7 @@
                 {% endfor %}
             </ol>
         </div>
-        <div class="deck-info-item">
+        <div class="info-item info-deck">
             <h4>Наборы</h4>
             <ol>
                 {% for set in deck.included_cards|dsetsstat %}
@@ -180,7 +189,7 @@
                 {% endfor %}
             </ol>
         </div>
-        <div class="deck-info-item">
+        <div class="info-item info-deck">
             <h4>Механики</h4>
             <ol>
                 {% for mech in deck.included_cards|dmechstat %}

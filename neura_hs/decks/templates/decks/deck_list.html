@@ -23,7 +23,8 @@
     <div class="row">
         <div class="col">
             <button type="submit" class="form-button">
-                <i class="fas fa-search"></i> Поиск
+                <span class="button-icon"><i class="fas fa-search"></i></span>
+                <span class="button-text">Поиск</span>
             </button>
         </div>
     </div>
@@ -92,10 +93,11 @@
         </tbody>
     </table>
     </div>
-{% empty %}
-    <p>No</p>
 {% endfor %}
 </div>
+{% if not decks %}
+    <div class="info-item">У вас пока нет сохраненных колод.</div>
+{% endif %}
 
 {% endblock %}
 

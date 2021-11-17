@@ -39,6 +39,7 @@
 
 html, body {
 	font-family: "Consolas";
+	font-size: 16px;
     background-color: #d3d3d3;
 	color: var(--dark);
 	margin: 0;
@@ -251,10 +252,6 @@ thead.darktable th {padding: 8px;}
 .pagination span a.page-link {box-shadow: none;}
 
 /* Формы */
-.form-input {
-    width: 300px;
-    font-size: 16px;
-}
 .form-search {
     width: 250px;
     font-size: 18px;
@@ -279,10 +276,14 @@ thead.darktable th {padding: 8px;}
   box-shadow: 1px 1px 2px 0 black;
 }
 .form-button {
+  display: inline-flex;
+  align-items: stretch;
+  justify-content: center;
   min-width: 200px;
-  font-size: 16px;
-  text-align: center;
-  padding: 5px 5px;
+  height: 100%;
+  line-height: 100%;
+  overflow: hidden;
+  padding: 0;
   background: transparent;
   color: var(--dark);
   border: 2px solid var(--dark);
@@ -296,12 +297,23 @@ thead.darktable th {padding: 8px;}
 .form-button:active {
   background-color: var(--grey);
 }
+.button-icon {
+  width: 20%;
+  font-size: 1.5rem;
+  padding: 0.190rem 0;
+  border-right: 1px solid var(--dark);
+}
+.button-text {
+  width: 80%;
+  padding: 0.375rem 0;
+  text-align: center;
+}
 .form-mod {
   padding: 0px;
   margin-bottom: 8px;
   margin-top: 5px;
 }
-.form-deckstring {
+.form-input {
   width: 100%;
   font-size: 16px;
   margin: 8px 0;
@@ -309,7 +321,7 @@ thead.darktable th {padding: 8px;}
   border: 2px solid var(--dark);
   border-radius: 5px;
 }
-.form-deckstring:focus {
+.form-input:focus {
   outline: 1px solid var(--dark);
   box-shadow: 2px 2px 5px 0 var(--dark);
 }
@@ -505,8 +517,7 @@ td.deck-control * {
   outline: none;
 }
 
-.deck-info-item {
-  width: var(--deck-width);
+.info-item {
   padding: 20px 20px;
   margin-bottom: 35px;
   border-radius: 20px;
@@ -514,11 +525,14 @@ td.deck-control * {
   background-color: white;
   transition: 0.3s;
 }
-.deck-info-item:hover {box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);}
-.deck-info-item h4 {
+.info-item:hover {box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);}
+.info-item h4 {
   font-weight: bold;
   font-size: 20px;
   text-align: center;
+}
+.info-deck {
+  width: var(--deck-width);
 }
 
 /* ------- Оформление классов Hearthstone ------- */
