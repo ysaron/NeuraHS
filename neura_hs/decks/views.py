@@ -5,6 +5,7 @@ from django.views import generic
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.db import transaction
 from utils.mixins import DataMixin
@@ -89,13 +90,14 @@ class NamelessDecksListView(DataMixin, generic.ListView):
         return object_list
 
 
-class UserDecksListView(DataMixin, generic.ListView):
+class UserDecksListView(LoginRequiredMixin, DataMixin, generic.ListView):
     """  """
 
     model = Deck
     context_object_name = 'decks'
     template_name = 'decks/deck_list.html'
     paginate_by = 6
+    login_url = '/accounts/signin/'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
