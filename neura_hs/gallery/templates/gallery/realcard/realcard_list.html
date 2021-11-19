@@ -3,6 +3,7 @@
 {% block scripts %}
     {% load static %}
     <script src="{% static 'core/js/multiclass.js' %}?v=1.0.7"></script>
+    <script src="{% static 'core/js/clean_search.js' %}?v=1.0.1"></script>
 {% endblock %}
 
 {% block page_title %}
@@ -10,7 +11,7 @@
 {% endblock %}
 
 {% block search %}
-    <form class="form-inline" method="get">
+    <form class="form-inline" method="get" id="searchForm">
         <div class="row">
             <div class="col">
                 <label class="form-label">{{ form.name.label }}</label>
