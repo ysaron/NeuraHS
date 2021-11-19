@@ -201,7 +201,7 @@ class Card(Model):
     author = models.CharField(max_length=255, default='', verbose_name='Автор')
     card_type = models.CharField(max_length=2, choices=CardTypes.choices, default=CardTypes.UNKNOWN, verbose_name='Тип')
     card_class = models.ManyToManyField(CardClass, verbose_name='Класс',
-                                        help_text='Можно выбрать несколько классов (минимум 1) [Ctrl + ЛКМ].')
+                                        help_text='Можно выбрать от 1 до 3 классов [Ctrl + ЛКМ].')
     cost = models.SmallIntegerField(blank=True, null=True, default=0, verbose_name='Стоимость (мана)',
                                     validators=[MinValueValidator(0)])
     attack = models.SmallIntegerField(blank=True, null=True, default=0, verbose_name='Атака',
@@ -217,14 +217,13 @@ class Card(Model):
                                      help_text='Только для карт героя.',
                                      validators=[MinValueValidator(0)])
     text = models.TextField(max_length=1000, blank=True, default='', verbose_name='Текст',
-                            help_text='Текст карты, определяющий ее свойства. Позже будет добавлена возможность '
-                                      'форматирования.')
+                            help_text='Текст карты, определяющий ее свойства.')
     flavor = models.TextField(max_length=1000, blank=True, default='', verbose_name='Описание',
-                              help_text='Произвольный текст. Форматирование - в планах.')
+                              help_text='Произвольный текст.')
     rarity = models.CharField(max_length=2, choices=Rarities.choices, verbose_name='Редкость',
                               default=Rarities.UNKNOWN)
     tribe = models.ManyToManyField(Tribe, blank=True, verbose_name='Раса',
-                                   help_text='Только для существ. Можно выбрать несколько рас [Ctrl + ЛКМ].')
+                                   help_text='Только для существ. Можно выбрать от 0 до 2 рас [Ctrl + ЛКМ].')
     spell_school = models.CharField(max_length=2, choices=SpellSchools.choices, default=SpellSchools.UNKNOWN,
                                     verbose_name='Школа магии', blank=True, help_text='Только для заклинаний.')
     creation_date = models.DateTimeField(null=True, blank=True, auto_now_add=True,

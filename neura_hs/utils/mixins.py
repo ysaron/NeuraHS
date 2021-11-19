@@ -39,15 +39,25 @@ class EditCardMixin:
     def clean_card_class(self: forms.ModelForm):
         """ Валидатор, контролирующий количество выбираемых классов """
 
-        card_class = self.cleaned_data['card_class']
-        return card_class
+        card_classes = self.cleaned_data['card_class']
+        neutral = CardClass.objects.get(service_name='Neutral')
+        if neutral in card_classes:
+            return [neutral]    # нейтральный класс устанавливается независимо от прочих выбранных классов
+        if (num := len(card_classes)) > 3:
+            raise ValidationError(f'Можно выбрать не более 3 классов (выбрано: {num})')
+        return card_classes
 
     def clean_tribe(self: forms.ModelForm):
-        """ Валидатор, запрещающий выбор расы не для существа """
-        tribe = self.cleaned_data['tribe']
-        if tribe and self.cleaned_data['card_type'] != FanCard.CardTypes.MINION:
+        """ Валидатор, запрещающий выбор расы не для существа и контролирующий кол-во рас """
+        tribes = self.cleaned_data['tribe']
+        alltribe = Tribe.objects.get(service_name='All')
+        if alltribe in tribes:
+            return [alltribe]   # раса "Всё" устанавливается независимо от прочих выбранных рас
+        if tribes and self.cleaned_data['card_type'] != FanCard.CardTypes.MINION:
             raise ValidationError('Расу можно указывать только для существ. Ctrl + ЛКМ - отменить выбор расы.')
-        return tribe
+        if (num := len(tribes)) > 2:
+            raise ValidationError(f'Можно выбрать не более 2 рас (выбрано: {num})')
+        return tribes
 
     def clean_spell_school(self: forms.ModelForm):
         """ Валидатор, запрещающий выбор Spell School не для заклинания """
