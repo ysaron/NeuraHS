@@ -63,12 +63,6 @@ def get_rarity_style(card):
     return matches.get(card.rarity, 'common')
 
 
-@register.filter(name='coll_name_fmt')
-def get_formatted_name(card):
-    """ Возвращает название карты, отформатированное в зависимости от коллекционности """
-    return card.name if card.collectible else f'[{card.name}]'
-
-
 @register.inclusion_tag('gallery/tags/stat_cell.html', takes_context=True, name='format_stats')
 def format_stats(context, card):
     """ Формирует строку <tr> таблицы card-detail с числовыми параметрами карты """

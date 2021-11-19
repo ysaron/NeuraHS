@@ -5,7 +5,6 @@ from django.contrib.auth.models import Group, Permission
 editor_perms = ['gallery.add_cardclass',
                 'gallery.add_cardset',
                 'gallery.add_fancard',
-                'gallery.add_neuracard',
                 'gallery.add_tribe',
                 'gallery.change_fancard',
                 'gallery.delete_fancard',
@@ -13,7 +12,6 @@ editor_perms = ['gallery.add_cardclass',
                 'gallery.view_cardclass',
                 'gallery.view_cardset',
                 'gallery.view_fancard',
-                'gallery.view_neuracard',
                 'gallery.view_realcard',
                 'gallery.view_tribe']
 
@@ -21,7 +19,6 @@ common_perms = ['gallery.add_fancard',
                 'gallery.view_cardclass',
                 'gallery.view_cardset',
                 'gallery.view_fancard',
-                'gallery.view_neuracard',
                 'gallery.view_realcard',
                 'gallery.view_tribe']
 
