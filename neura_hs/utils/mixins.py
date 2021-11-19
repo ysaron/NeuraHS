@@ -87,7 +87,7 @@ class EditCardMixin:
     def clean_slug(self: forms.ModelForm):
         """ Перезапись слага в соответствии с введенным названием """
         name = self.cleaned_data['name']
-        slug = f'{translit_slugify(name)}-{int(time.time())}'   # унификация слага фан-карт с пом. UNIX-времени
+        slug = f'{translit_slugify(name)}-{int(time.time()):x}'   # унификация слага фан-карт с пом. UNIX-времени
         return slug
 
     class BaseMeta:
