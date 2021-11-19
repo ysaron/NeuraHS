@@ -12,6 +12,15 @@ class NamelessDeckManager(models.Manager):
         return super().get_queryset().filter(name='')
 
 
+class IncluSionManager(models.QuerySet):
+
+    def nameless(self):
+        return self.filter(deck__name='')
+
+    def named(self):
+        return self.exclude(deck__name='')
+
+
 class NamedDeckManager(models.Manager):
 
     def get_queryset(self):
@@ -122,4 +131,4 @@ class Inclusion(models.Model):
     number = models.PositiveSmallIntegerField(verbose_name='Количество',
                                               help_text='Количество вхождений карты в колоду')
 
-    objects = models.Manager()
+    objects = IncluSionManager.as_manager()

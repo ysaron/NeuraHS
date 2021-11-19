@@ -67,7 +67,7 @@
   {% if real_card.mechanics_list %}
     <tr>
       <td><strong>Механики</strong></td>
-      <td>{{ real_card.mechanics_list }}</td>
+      <td>{% for mech in real_card.mechanics_list %}{{ mech }}{% if not forloop.last %} | {% endif %}{% endfor %}</td>
     </tr>
   {% endif %}
   {% if real_card.artist %}
@@ -81,6 +81,16 @@
     <td>{{ real_card.creation_date|date:"d.m.Y H:i:s" }}</td>
   </tr>
 </table>
+{% if real_card.collectible %}
+<h4>Колоды с этой картой</h4>
+<ul>
+  {% for inclusion in real_card.inclusion_set.nameless %}
+    <li><a href="{{ inclusion.deck.get_absolute_url }}">{{ inclusion.deck }}</a></li>
+  {% empty %}
+    <li>В известных колодах карта не найдена.</li>
+  {% endfor %}
+</ul>
+{% endif %}
 </div>
 </div>
 
