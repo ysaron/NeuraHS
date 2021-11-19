@@ -1,7 +1,7 @@
 {% extends "core/base.html" %}
 {% block scripts %}
     {% load static %}
-    <script src="{% static 'core/js/deck_list.js' %}?v=1.0.8"></script>
+    <script src="{% static 'core/js/deck_list.js' %}?v=1.0.11"></script>
     <script src="{% static 'core/js/multiclass.js' %}?v=1.0.8"></script>
 {% endblock %}
 
@@ -53,7 +53,7 @@
         </tr>
         <tr>
             <td colspan="3" class="deck-control">
-                <span id="deckControlButtons">
+                <span>
                     <button><a role="button" href="{{ deck.get_absolute_url }}">
                         <span class="deck-control-icon" title="Открыть страницу с подробной информацией">
                             <i class="fas fa-external-link-alt"></i>
@@ -65,13 +65,22 @@
                         </span>
                     </button>
                     <span class="mytooltip">
-                      <button type="button" class="copy-deck" onmouseover="tooltipFunc()">
-                        <span class="tooltiptext" id="copyTooltip">Copy to clipboard!</span>
+                      <button type="button" class="copy-deck">
+                        <span class="tooltiptext">Copy to clipboard!</span>
                         <span class="deck-control-icon"><i class="far fa-copy"></i></span>
                       </button>
                     </span>
-                    <span style="display: none;">{{ deck.string }}</span>
                 </span>
+                <form>
+                    <span style="display: none;">
+                        {{ deck.get_deckstring_form.deckstring }}
+                        <button type="button">
+                            <span class="deck-control-icon" title="Назад">
+                                <i class="far fa-window-close"></i>
+                            </span>
+                        </button>
+                    </span>
+                </form>
             </td>
         </tr>
         </tbody>

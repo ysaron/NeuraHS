@@ -137,6 +137,16 @@
                 </span>
                 </form>
             {% endif %}
+            <form>
+                <span id="deckstringToCopy" style="display: none;">
+                    {{ deck.get_deckstring_form.deckstring }}
+                    <button type="button">
+                        <span class="deck-control-icon" title="Назад">
+                            <i class="far fa-window-close"></i>
+                        </span>
+                    </button>
+                </span>
+            </form>
             </td>
         </tr>
         </tbody>

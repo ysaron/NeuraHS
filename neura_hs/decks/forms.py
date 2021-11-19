@@ -4,10 +4,17 @@ from .models import Deck, Format
 
 
 class DeckstringForm(forms.Form):
+    # max_length=1500, т.к. такой длины могут быть коды колод непосредственно из клиента игры
     deckstring = forms.CharField(max_length=1500, label='Deckstring', widget=forms.TextInput)
     deckstring.widget.attrs.update({'class': 'form-input',
                                     'id': 'form-deckstring',
                                     'placeholder': 'Скопируйте сюда код колоды'})
+
+
+class DeckStringCopyForm(forms.Form):
+    """ Форма, показываемая при невозможности копирования кода через navigator.clipboard """
+    deckstring = forms.CharField(max_length=30)
+    deckstring.widget.attrs.update({'class': 'deck-control-element'})
 
 
 class DeckSaveForm(forms.Form):

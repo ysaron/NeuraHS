@@ -41,18 +41,35 @@ function hideDeckRenameForm() {
 }
 
 function copyToClipboard() {
-  var copyText = document.getElementById("deckstringData");
-  copyText.select();
-  copyText.setSelectionRange(0, 99999);     /* Для мобильных устройств */
-  navigator.clipboard.writeText(copyText.value);
-
-  var tooltip = document.getElementById("copyTooltip");
-  tooltip.innerHTML = "Copied!";
+  let copyDeckBlock = document.getElementById("deckstringToCopy");
+  let copyText = copyDeckBlock.firstElementChild;
+  if (navigator.clipboard) {    // Если Clipboard API доступно (localhost / HTTPS)
+      copyText.select();
+      copyText.setSelectionRange(0, 99999);     /* Для мобильных устройств */
+      navigator.clipboard.writeText(copyText.value);
+      let tooltip = document.getElementById("copyTooltip");
+      tooltip.innerHTML = "Copied!";
+  } else {
+      let ctrl_buttons = document.getElementById("deckControlButtons");
+      if (ctrl_buttons == undefined) ctrl_buttons = document.getElementById("deckControlButtons2");
+      ctrl_buttons.style.display = "none";
+      copyDeckBlock.style.display = "flex";
+      copyText.select();
+      copyText.setSelectionRange(0, 99999);
+      copyText.nextElementSibling.addEventListener("click", function() {
+          ctrl_buttons.style.display = "flex";
+          copyDeckBlock.style.display = "none";
+      });
+  }
 }
 
 function tooltipFunc() {
   var tooltip = document.getElementById("copyTooltip");
-  tooltip.innerHTML = "Copy to clipboard";
+  if (navigator.clipboard) {
+        tooltip.innerHTML = "Copy deck code";
+    } else {
+        tooltip.innerHTML = "Show deck code";
+    }
 }
 
 function clearDeckstringField() {

@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function addAccordionListeners() {
     let accs = document.getElementsByClassName("deck-accordion");
-    console.log(accs);
     for (let i = 0; i < accs.length; i++) {
         accs[i].addEventListener("click", showCards);
     }
@@ -16,8 +15,6 @@ function addAccordionListeners() {
 function showCards() {
     this.classList.toggle("deck-accordion-active");
     let cards = this.parentNode.parentNode.parentNode.parentNode.nextElementSibling;
-    console.log(this);
-    console.log(cards);
     (cards.style.maxHeight) ?
         cards.style.maxHeight = null :
         cards.style.maxHeight = cards.scrollHeight + "px";
@@ -32,19 +29,35 @@ function addCopyDeckstringListeners() {
 }
 
 function copyDeckstring() {
-    let deckString = this.parentNode.nextElementSibling;
-    let input = document.createElement("textarea");
-    input.value = deckString.textContent;
-    document.body.appendChild(input);
-    input.select();
-    input.setSelectionRange(0, 99999);
-    navigator.clipboard.writeText(input.value);
-    input.remove();
-    let tooltip = this.firstElementChild;
-    tooltip.innerHTML = "Copied!";
+    let deckstringInput = this.parentNode.parentNode.nextElementSibling.firstElementChild.firstElementChild;
+    if (navigator.clipboard) {    // Если Clipboard API доступно (localhost / HTTPS)
+        deckstringInput.select();
+        deckstringInput.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(deckstringInput.value);
+        let tooltip = this.firstElementChild;
+        tooltip.innerHTML = "Copied!";
+    } else {
+        let controlButtons = this.parentNode.parentNode;
+        let copyDeckstringBlock = deckstringInput.parentNode;
+        controlButtons.style.display = "none";
+        copyDeckstringBlock.style.display = "flex";
+        deckstringInput.select();
+        deckstringInput.setSelectionRange(0, 99999);
+        deckstringInput.nextElementSibling.addEventListener("click", function() {
+            controlButtons.style.display = "flex";
+            copyDeckstringBlock.style.display = "none";
+        });
+    }
+
+
 }
 
 function showCopyTooltip() {
     let tooltip = this.firstElementChild;
-    tooltip.innerHTML = "Copy to clipboard";
+    if (navigator.clipboard) {
+        tooltip.innerHTML = "Copy deck code";
+    } else {
+        tooltip.innerHTML = "Show deck code";
+    }
+
 }

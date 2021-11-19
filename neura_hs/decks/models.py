@@ -106,6 +106,11 @@ class Deck(models.Model):
 
         return sorted(list(set(grouped)), key=lambda card: (card[0].cost, card[0].name))
 
+    def get_deckstring_form(self):
+        """  """
+        from .forms import DeckStringCopyForm
+        return DeckStringCopyForm(initial={'deckstring': self.string})
+
     def get_absolute_url(self):
         return reverse_lazy('decks:deck-detail', kwargs={'deck_id': self.pk})
 
