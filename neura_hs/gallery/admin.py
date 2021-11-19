@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 from modeltranslation.admin import TranslationAdmin
-from .models import RealCard, FanCard, NeuraCard, CardClass, Tribe, CardSet, Author
+from .models import RealCard, FanCard, CardClass, Tribe, CardSet, Author
 
 
 class AuthorInline(admin.StackedInline):

@@ -90,7 +90,7 @@ class CardClass(Model):
 
     def __str__(self):
         """ Строковое представление объекта модели """
-        return self.name
+        return self.name if self.collectible else f'[{self.name}]'
 
 
 class Tribe(Model):
@@ -275,11 +275,6 @@ class Card(Model):
 
     class Meta:
         abstract = True     # данный класс - не модель. Модели от него наследуются
-        ordering = ['-creation_date', 'name']
-
-    def __str__(self):
-        """ Строковое представление объекта модели """
-        return f'{self.name} [автор: {self.author}]'
 
     # Для отображения в админ-панели
     def display_card_class(self):
@@ -304,10 +299,6 @@ class Card(Model):
         """ Список механик Hearthstone, связанных с картой """
         return [str(value) for key, value in Card.Mechanics.choices if Card.field_exists(key) and getattr(self, key)]
 
-    def passes_vanilla(self):
-        """  """
-        pass
-
 
 class RealCard(Card):
     """ Модель существующей карты. Экземпляры создаются скриптом """
@@ -325,6 +316,11 @@ class RealCard(Card):
     class Meta(Card.Meta):
         verbose_name = 'Карта Hearthstone'
         verbose_name_plural = 'Карты Hearthstone'
+        ordering = ['-cost']
+
+    def __str__(self):
+        """ Строковое представление объекта модели """
+        return self.name if self.collectible else f'[{self.name}]'
 
     def get_absolute_url(self):
         """ Возвращает URL для доступа к подробной странице карты """
@@ -342,21 +338,12 @@ class FanCard(Card):
     class Meta(Card.Meta):
         verbose_name = 'Фан-карта'
         verbose_name_plural = 'Фан-карты'
+        ordering = ['-creation_date', 'name']
+
+    def __str__(self):
+        """ Строковое представление объекта модели """
+        return self.name
 
     def get_absolute_url(self):
         """ Возвращает URL для доступа к подробной странице карты """
         return reverse('gallery:fan_card', kwargs={'card_slug': self.slug})
-
-
-class NeuraCard(Card):
-    """ Модель сгенерированной нейросетью карты """
-
-    class Meta(Card.Meta):
-        verbose_name = 'Нейрокарта'
-        verbose_name_plural = 'Нейрокарты'
-
-    def get_absolute_url(self):
-        """ Возвращает URL для доступа к подробной странице карты """
-        return reverse('gallery:neura_card', args=[str(self.id)])
-
-

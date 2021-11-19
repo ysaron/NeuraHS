@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from slugify import slugify as translit_slugify
-from gallery.models import RealCard, FanCard, NeuraCard, CardClass, Tribe
+from gallery.models import RealCard, FanCard, CardClass, Tribe
 from django.conf import settings
 import time
 

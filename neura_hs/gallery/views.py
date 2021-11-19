@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 from django.conf import settings
-from .models import RealCard, FanCard, NeuraCard, CardClass, Tribe, CardSet, Author
+from .models import RealCard, FanCard, CardClass, Tribe, CardSet, Author
 from .forms import CreateCardForm, RealCardFilterForm, UpdateCardForm, \
     FanCardFilterForm
 from utils.mixins import DataMixin
@@ -259,18 +259,6 @@ class FanCardDetailView(DataMixin, generic.DetailView, LogAllExceptions):
         """ Переопределение метода для передачи шаблону дополнительных переменных """
         context = super().get_context_data(**kwargs)
         default_context = self.get_custom_context(title=context['object'], c_types=FanCard.CardTypes)
-        context |= default_context
-        return context
-
-
-class NeuraCardListView(DataMixin, generic.ListView, LogAllExceptions):
-    """ Обобщенный класс отображения списка сгенерированных карт """
-    model = NeuraCard
-    context_object_name = 'neuracards'
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        default_context = self.get_custom_context(title='Нейрокарты')
         context |= default_context
         return context
 

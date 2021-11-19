@@ -76,7 +76,7 @@
       <tbody>
       {% for card in realcards %}
       <tr class="{{ card|cclass }} {{ card|rar }} rartext clickable-row">
-        <td class=""><a class="" href="{{ card.get_absolute_url }}" target="_blank" title="Детальное описание карты {{ card.name }}">{{ card|coll_name_fmt }}</a></td>
+        <td class=""><a class="" href="{{ card.get_absolute_url }}" target="_blank" title="Детальное описание карты {{ card.name }}">{{ card }}</a></td>
         <td>{{ card.get_card_type_display }}</td>
         <td>{% for card_class in card.card_class.all %} {{ card_class }}{% if not forloop.last %} | {% endif %}{% endfor %}</td>
         <td>{{ card.card_set }}</td>
