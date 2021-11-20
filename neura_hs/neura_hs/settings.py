@@ -41,6 +41,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'neura_hs.middleware.LoggingMiddleware',
 ]
 
 INTERNAL_IPS = [
@@ -153,8 +154,7 @@ LOGGING = {
     'formatters': {
         'file': {
             '()': 'django.utils.log.ServerFormatter',
-            'format': '[{server_time}] | logger:{name} | level:{levelname} | module:{module}'
-                      '\n{request.META}\n{message}\n',
+            'format': '\n\n\n[{server_time}]\nlogger:{name} | level:{levelname}\nMsg:\n{message}\n',
             'style': '{',
         },
         'file_sql': {
@@ -197,12 +197,13 @@ LOGGING = {
         'django': {
             'handlers': ['file', 'file_err'],
             'level': 'WARNING',
+            'propagate': True,
+        },
+        'neura_hs.custom': {
+            'handlers': ['file_err'],
+            'level': 'ERROR',
             'propagate': False,
         },
-        # 'django.db.backends': {
-        #     'handlers': ['file_sql'],
-        #     'level': 'DEBUG',
-        # },
     }
 }
 

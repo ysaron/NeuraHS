@@ -9,8 +9,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.db import transaction
 from utils.mixins import DataMixin
-from utils.handlers import log_all_exceptions, LogAllExceptions
-import logging
 from random import choice
 from .models import Format, Deck, Inclusion
 from .forms import DeckstringForm, DeckSaveForm, DeckFilterForm

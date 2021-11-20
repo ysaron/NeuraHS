@@ -1,9 +1,7 @@
 from django.shortcuts import render
 from django.conf import settings
-from utils.handlers import log_all_exceptions
 
 
-@log_all_exceptions
 def about(request):
     context = {'top_menu': settings.TOP_MENU,
                'side_menu': settings.SIDE_MENU,
@@ -11,7 +9,6 @@ def about(request):
     return render(request, 'core/about.html', context=context)
 
 
-@log_all_exceptions
 def homepage(request):
     context = {'top_menu': settings.TOP_MENU,
                'side_menu': settings.SIDE_MENU,
@@ -19,7 +16,6 @@ def homepage(request):
     return render(request, 'core/home.html', context=context)
 
 
-@log_all_exceptions
 def contact(request):
     context = {'top_menu': settings.TOP_MENU,
                'side_menu': settings.SIDE_MENU,
