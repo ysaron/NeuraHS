@@ -4,35 +4,42 @@
 <h1>{{ title }}</h1>
 
 {% if next %}
+<div class="center-wrapper">
+    <div class="info-item">
     {% if user.is_authenticated %}
-      <p>Ваш аккаунт не имеет прав доступа к этой странице.</p>
+      <div>Ваш аккаунт не имеет прав доступа к этой странице</div>
     {% else %}
-      <p>Войдите в систему, чтобы узреть сию страницу.</p>
+      <div>Авторизуйтесь для доступа к этой странице</div>
     {% endif %}
+    </div>
+</div>
 {% endif %}
 
-<form method="post">
-    {% csrf_token %}
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="form-error">{{ form.non_field_errors }}</div>
-                <table class="table table-borderless align-middle">
-                    {% for f in form %}
-                    <tr>
-                        <td><label class="">{{ f.label }}</label></td>
-                        <td>{{ f }}</td>
-                        <td class="form-error">{{ f.errors }}</td>
-                    </tr>
-                    {% endfor %}
-                    <tr>
-                        <td><button type="submit" class="btn btn-outline-success">Войти</button></td>
-                        <td><a role="button" class="btn btn-outline-danger" href="{% url 'accounts:change_password' %}">Забыли пароль?</a></td>
-                    </tr>
-                </table>
+<div class="center-wrapper">
+    <form method="post">
+        {% csrf_token %}
+        <div class="info-item common-form-item">
+            {% for f in form %}
+                <div class="common-form-field">
+                    <label class="common-form-label">{{ f.label }}</label>{{ f }}
+                </div>
+                <div class="form-error common-form-field">{{ f.errors }}</div>
+            {% endfor %}
+            <div class="common-form-field">
+            <button type="submit" class="form-button form-button-green">
+                <span class="button-icon"><i class="fas fa-sign-in-alt"></i></span>
+                <span class="button-text">Войти</span>
+            </button>
+            <a role="button" class="form-button" href="{% url 'accounts:change_password' %}">
+                <span class="button-icon"><i class="fas fa-key"></i></span>
+                <span class="button-text">Забыли пароль?</span>
+            </a>
             </div>
         </div>
-    </div>
-    <input type="hidden" name="next" value="{{ next }}">
-</form>
+    </form>
+
+</div>
+<div class="center-wrapper">
+    <div class="form-error">{{ form.non_field_errors }}</div>
+</div>
 {% endblock %}

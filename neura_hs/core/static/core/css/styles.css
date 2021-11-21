@@ -1,6 +1,7 @@
 :root {
   --dark: #333;
   --grey: #595959;
+  --green: #29a329;
   --mage-1: #668cff;
   --mage-2: #e6eeff;
   --priest-1: #ffffcc;
@@ -84,7 +85,12 @@ h1:hover {
   padding-right: 30px;
   text-align: right;
   height: auto;
+  max-height: 80px;
   box-shadow: 0 50vh 6px 50vh var(--dark);
+}
+
+.main-row {
+  min-height: 580px;
 }
 
 /* Гиперссылки */
@@ -253,12 +259,11 @@ thead.darktable th {padding: 8px;}
 
 /* Формы */
 .form-search {
-    width: 250px;
-    font-size: 18px;
+  width: 250px;
+  font-size: 18px;
 }
 .form-label {
-    padding-left: 3px;
-    margin-right: 3px;
+  width: 30%;
 }
 .form-error ul {
   padding-left: 0;
@@ -274,6 +279,7 @@ thead.darktable th {padding: 8px;}
   opacity: 1;
   float: left;
   box-shadow: 1px 1px 2px 0 black;
+  max-width: 450px;
 }
 .form-button {
   display: inline-flex;
@@ -284,6 +290,7 @@ thead.darktable th {padding: 8px;}
   line-height: 100%;
   overflow: hidden;
   padding: 0;
+  margin: 0;
   background: transparent;
   color: var(--dark);
   border: 2px solid var(--dark);
@@ -297,11 +304,21 @@ thead.darktable th {padding: 8px;}
 .form-button:active {
   background-color: var(--grey);
 }
+.form-button-green {
+  color: var(--green);
+  border: 2px solid var(--green);
+}
+.form-button-green:hover {
+  color: white;
+  background-color: var(--green);
+}
 .button-icon {
   width: 20%;
   font-size: 1.5rem;
   padding: 0.190rem 0;
+  text-align: center;
   border-right: 1px solid var(--dark);
+  border-right-color: inherit;
 }
 .button-text {
   width: 80%;
@@ -315,6 +332,7 @@ thead.darktable th {padding: 8px;}
 }
 .form-input {
   width: 100%;
+  max-width: 300px;
   font-size: 16px;
   margin: 8px 0;
   padding: 5px 5px;
@@ -517,9 +535,18 @@ td.deck-control * {
   outline: none;
 }
 
+.center-wrapper {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+}
+
 .info-item {
   padding: 20px 20px;
-  margin-bottom: 35px;
+  margin-bottom: 10px;
   border-radius: 20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   background-color: white;
@@ -531,8 +558,21 @@ td.deck-control * {
   font-size: 20px;
   text-align: center;
 }
-.info-deck {
-  width: var(--deck-width);
+.info-deck {width: var(--deck-width);}
+.common-form-item {
+  display: flex;
+  width: 450px;
+  flex-direction: column;
+}
+.common-form-field {
+  display: flex;
+  max-height: 50px;
+  justify-content: space-between;
+  align-content: center;
+}
+.common-form-label {
+  min-width: 30%;
+  margin: 0.7rem 0;
 }
 
 /* ------- Оформление классов Hearthstone ------- */

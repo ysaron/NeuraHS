@@ -7,6 +7,18 @@
     float: none;
     width: 100%;
   }
+  .common-form-item {
+    max-width: 300px;
+  }
+  .common-form-field {
+    max-height: 1000px;
+    flex-direction: column;
+  }
+  .common-form-field button, .common-form-field a {margin: 2px 0;}
+  .common-form-label {
+    min-width: 0;
+    margin: 0 0;
+  }
 }
 
 @media screen and (max-width: 1050px) {
