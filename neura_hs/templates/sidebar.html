@@ -1,6 +1,5 @@
 {% load i18n %}
 <div class="sidemenu">
-    <a href="{% url side_menu.main.url_name %}" title="{{ side_menu.main.popup }}">{{ side_menu.main.title }}</a>
     <div class="accordion" id="accordionBase">
       <div class="accordion-item sidemenu">
         <h2 class="accordion-header" id="headingTwo">
@@ -30,6 +29,7 @@
       </div>
     </div>
     <a href="{% url side_menu.real_cards.url_name %}" title="{{ side_menu.real_cards.popup }}">{{ side_menu.real_cards.title }}</a>
+    <a href="{% url side_menu.main.url_name %}" title="{{ side_menu.main.popup }}">{{ side_menu.main.title }}</a>
     <hr style="margin: 0px 0px;">
     <form action="{% url 'set_language' %}" method="post" id="form-i18n">
         {% csrf_token %}

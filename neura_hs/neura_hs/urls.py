@@ -18,7 +18,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
-from core.views import homepage, about, contact
+from core.views import homepage, about, contact, statistics
 
 
 urlpatterns = [
@@ -28,6 +28,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('about/', about, name='about'),
     path('contact/', contact, name='contact'),
+    path('statistics/', statistics, name='statistics'),
     path('i18n/', include('django.conf.urls.i18n')),
 ]
 # приложения, для которых мы хотим делать перевод

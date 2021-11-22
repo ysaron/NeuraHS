@@ -216,7 +216,7 @@ TOP_MENU = {
 }
 
 SIDE_MENU = {
-    'main': {'title': "Галерея", 'url_name': 'gallery:index', 'popup': ''},
+    'main': {'title': "Статистика", 'url_name': 'statistics', 'popup': ''},
     'real_cards': {'title': "Карты HS", 'url_name': 'gallery:realcards', 'popup': 'Карты Hearthstone'},
     'fan_cards': {'title': "Фан-карты",
                   'base': {'title': "База данных", 'url_name': 'gallery:fancards', 'popup': ''},

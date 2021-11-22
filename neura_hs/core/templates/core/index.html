@@ -1,0 +1,18 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+
+<div class="decks-grid">
+  {% for key, stat in statistics.items %}
+    <div class="info-item info-deck">
+      <h4>{{ stat.label }}</h4>
+      <ul>
+        {% for stat_item in stat.lst %}
+          <li><span>{{ stat_item.label }}:</span> <span>{{ stat_item.value }}</span></li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

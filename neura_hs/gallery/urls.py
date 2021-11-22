@@ -5,7 +5,6 @@ from . import views
 app_name = 'gallery'    # пространство имен urlpatterns
 
 urlpatterns = [
-    path('', views.index, name='index'),
     path('fan_cards/', views.FanCardListView.as_view(), name='fancards'),
     path('fan_card/<slug:card_slug>', views.FanCardDetailView.as_view(), name='fan_card'),
     # path('real_cards/', cache_page(60)(views.RealCardListView.as_view()), name='realcards'),

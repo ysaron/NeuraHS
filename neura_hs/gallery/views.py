@@ -12,49 +12,6 @@ import logging
 logger = logging.getLogger('django')
 
 
-def index(request):
-    """
-    Функция отображения главной страницы сайта
-    :param request: ссылка на экземпляр класса HttpRequest, содержащий информацию о запросе, сессии, куки и т.д.
-    :return: экземпляр HttpResponse (страница HTML)
-    """
-    num_fancards = FanCard.objects.count()
-    num_leg_fancards = FanCard.objects.search_by_rarity(RealCard.Rarities.LEGENDARY).count()
-    num_realcards_all = RealCard.objects.count()
-    collectibles = RealCard.objects.search_collectible(True)
-    num_realcards_coll = collectibles.count()
-    num_realcards_leg = collectibles.search_by_rarity(RealCard.Rarities.LEGENDARY).count()
-    num_realcards_epic = collectibles.search_by_rarity(RealCard.Rarities.EPIC).count()
-    num_realcards_rare = collectibles.search_by_rarity(RealCard.Rarities.RARE).count()
-    num_realcards_common = collectibles.search_by_rarity(RealCard.Rarities.COMMON).count()
-    num_realcards_bc = collectibles.search_by_mechanic(RealCard.Mechanics.BATTLECRY).count()
-    num_realcards_dr = collectibles.search_by_mechanic(RealCard.Mechanics.DEATHRATTLE).count()
-    num_realcards_lf = collectibles.search_by_mechanic(RealCard.Mechanics.LIFESTEAL).count()
-    num_realcards_spells = collectibles.search_by_type(RealCard.CardTypes.SPELL).count()
-
-    card_types = RealCard.CardTypes
-
-    context = {'num_fancards': num_fancards,
-               'num_leg_fancards': num_leg_fancards,
-               'num_realcards_all': num_realcards_all,
-               'num_realcards_coll': num_realcards_coll,
-               'num_realcards_leg': num_realcards_leg,
-               'num_realcards_epic': num_realcards_epic,
-               'num_realcards_rare': num_realcards_rare,
-               'num_realcards_common': num_realcards_common,
-               'num_realcards_bc': num_realcards_bc,
-               'num_realcards_dr': num_realcards_dr,
-               'num_realcards_lf': num_realcards_lf,
-               'num_realcards_spells': num_realcards_spells,
-               'card_types': card_types,
-               'top_menu': settings.TOP_MENU,
-               'side_menu': settings.SIDE_MENU}
-
-    return render(request=request,
-                  template_name='gallery/index.html',
-                  context=context)
-
-
 class CreateCard(LoginRequiredMixin, DataMixin, generic.CreateView):
     """ Создание нового экземпляра фан-карты """
     form_class = CreateCardForm
