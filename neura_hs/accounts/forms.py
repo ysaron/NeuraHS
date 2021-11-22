@@ -31,14 +31,3 @@ class LoginUserForm(auth_forms.AuthenticationForm):
 
     username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={'class': 'form-input'}))
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
-
-
-class ChangePasswordForm(auth_forms.PasswordResetForm):
-    """  """
-
-    email = forms.EmailField(label="Email", max_length=254,
-                             widget=forms.EmailInput(attrs={'autocomplete': 'email', 'class': 'form-control'}))
-
-
-
-

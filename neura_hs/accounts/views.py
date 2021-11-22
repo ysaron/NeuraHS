@@ -11,7 +11,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views import generic
 from django.conf import settings
 
-from .forms import RegisterUserForm, LoginUserForm, ChangePasswordForm
+from .forms import RegisterUserForm, LoginUserForm
 from utils.mixins import DataMixin
 from .tokens import account_activation_token
 
@@ -115,8 +115,6 @@ class ChangePassword(DataMixin, auth_views.PasswordResetView):
     email_template_name = 'accounts/password_reset_email.html'
     subject_template_name = 'accounts/password_reset_subject.txt'
     success_url = reverse_lazy('accounts:change_password_emailed')
-
-    form_class = ChangePasswordForm
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)

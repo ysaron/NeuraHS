@@ -76,6 +76,7 @@ h1:hover {
   text-align: center;
   padding: px;
 }
+div.centered {text-align: center;}
 
 #footer {
   background-color: var(--dark);
@@ -286,7 +287,7 @@ thead.darktable th {padding: 8px;}
   align-items: stretch;
   justify-content: center;
   min-width: 200px;
-  height: 100%;
+  height: 34px;
   line-height: 100%;
   overflow: hidden;
   padding: 0;
@@ -577,6 +578,7 @@ td.deck-control * {
   justify-content: space-between;
   align-content: center;
 }
+.common-form-item .centered {justify-content: center;}
 .common-form-label {
   min-width: 40%;
   margin: 0.7rem 0;

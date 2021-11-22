@@ -194,3 +194,8 @@ def get_deckcards_mechanics_stat(cards: DeckCards):
 
     result.sort(key=lambda mech_: mech_['num_cards'], reverse=True)
     return result
+
+
+@register.filter(name='setcls')
+def set_class_to_form_field(field, css_class: str):
+    return field.as_widget(attrs={'class': css_class})
