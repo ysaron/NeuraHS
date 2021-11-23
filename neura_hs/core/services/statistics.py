@@ -1,4 +1,5 @@
 from collections import namedtuple
+from django.db.models import Count
 
 from gallery.models import RealCard, FanCard
 from decks.models import Deck, Format
@@ -41,8 +42,19 @@ def get_realcard_statistics() -> list[StatisticsItem]:
 
 
 def get_deck_statistics() -> list[StatisticsItem]:
-    return [StatisticsItem('...', '......'),
-            StatisticsItem('...', '......')]
+
+    decks = Deck.nameless.annotate(num_unique_cards=Count('cards'))
+    num_all = decks.count()
+    num_standard = decks.filter(deck_format__numerical_designation=2).count()
+    num_wild = decks.filter(deck_format__numerical_designation=1).count()
+    num_classic = decks.filter(deck_format__numerical_designation=3).count()
+    num_highlander = decks.filter(num_unique_cards=30).count()
+
+    return [StatisticsItem('Всего', num_all),
+            StatisticsItem('Стандарт', num_standard),
+            StatisticsItem('Вольный', num_wild),
+            StatisticsItem('Классик', num_classic),
+            StatisticsItem('Хайлендер', num_highlander)]
 
 
 def get_statistics_context() -> dict:
