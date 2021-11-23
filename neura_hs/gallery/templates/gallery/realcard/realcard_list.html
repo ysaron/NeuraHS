@@ -11,48 +11,48 @@
 {% endblock %}
 
 {% block search %}
-    <form class="form-inline" method="get" id="searchForm">
-        <div class="row">
-            <div class="col">
-                <label class="form-label">{{ form.name.label }}</label>
-                <p class="form-search">{{ form.name }}</p>
-            </div>
-            <div class="col">
-                <label class="form-label">{{ form.rarity.label }}</label>
-                <p class="form-search">{{ form.rarity }}</p>
-            </div>
-            <div class="col">
-                <label class="form-label">{{ form.collectible.label }}</label>
-                <p class="form-search">{{ form.collectible }}</p>
-            </div>
-            <div class="col">
-                <label class="form-label">{{ form.card_type.label }}</label>
-                <p class="form-search">{{ form.card_type }}</p>
-            </div>
-            <div class="col">
-                <label class="form-label">{{ form.tribe.label }}</label>
-                <p class="form-search">{{ form.tribe }}</p>
-            </div>
-            <div class="col">
-                <label class="form-label">{{ form.card_class.label }}</label>
-                <p class="form-search">{{ form.card_class }}</p>
-            </div>
-            <div class="col">
-                <label class="form-label">{{ form.card_set.label }}</label>
-                <p class="form-search">{{ form.card_set }}</p>
-            </div>
-            <div class="col">
-                <label class="form-label">{{ form.mechanic.label }}</label>
-                <p class="form-search">{{ form.mechanic }}</p>
-            </div>
+<form class="form-inline" method="get" id="searchForm">
+    <div class="row">
+        <div class="col">
+            <label class="form-label">{{ form.name.label }}</label>
+            <p class="form-search">{{ form.name }}</p>
         </div>
-        <div class="row">
-            <div class="col">
-                <button type="submit" class="btn btn-outline-dark">Поиск</button>
-            </div>
+        <div class="col">
+            <label class="form-label">{{ form.rarity.label }}</label>
+            <p class="form-search">{{ form.rarity }}</p>
         </div>
-    </form>
-    <hr>
+        <div class="col">
+            <label class="form-label">{{ form.collectible.label }}</label>
+            <p class="form-search">{{ form.collectible }}</p>
+        </div>
+        <div class="col">
+            <label class="form-label">{{ form.card_type.label }}</label>
+            <p class="form-search">{{ form.card_type }}</p>
+        </div>
+        <div class="col">
+            <label class="form-label">{{ form.tribe.label }}</label>
+            <p class="form-search">{{ form.tribe }}</p>
+        </div>
+        <div class="col">
+            <label class="form-label">{{ form.card_class.label }}</label>
+            <p class="form-search">{{ form.card_class }}</p>
+        </div>
+        <div class="col">
+            <label class="form-label">{{ form.card_set.label }}</label>
+            <p class="form-search">{{ form.card_set }}</p>
+        </div>
+        <div class="col">
+            <label class="form-label">{{ form.mechanic.label }}</label>
+            <p class="form-search">{{ form.mechanic }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <button type="submit" class="btn btn-outline-dark">Поиск</button>
+        </div>
+    </div>
+</form>
+<hr>
 {% endblock %}
 
 {% block content %}

@@ -90,7 +90,10 @@ div.centered {text-align: center;}
   box-shadow: 0 50vh 6px 50vh var(--dark);
 }
 #footer .footer-disclaimer {text-align: right;}
-#footer .footer-contact {text-align: center;}
+#footer .footer-contact {
+  text-align: center;
+  height: 34px;
+}
 
 .main-row {
   min-height: 580px;
@@ -561,11 +564,14 @@ td.deck-control * {
   padding: 20px 20px;
   margin-bottom: 10px;
   border-radius: 20px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   background-color: white;
   transition: 0.3s;
 }
-.info-item:hover {box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);}
+.info-item:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  outline: 1px solid black;
+}
 .info-item h4 {
   font-weight: bold;
   font-size: 20px;
