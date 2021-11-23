@@ -7,7 +7,7 @@ from .services.statistics import get_statistics_context
 def about(request):
     context = {'top_menu': settings.TOP_MENU,
                'side_menu': settings.SIDE_MENU,
-               'title': 'О сайте'}
+               'title': 'Функционал сайта'}
     return render(request, 'core/about.html', context=context)
 
 

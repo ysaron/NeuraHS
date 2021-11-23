@@ -1,12 +1,32 @@
 {% extends "core/base.html" %}
 
 {% block content %}
-<h1>О сайте</h1>
-  <p><b>NeuraHS</b> — сервис для создания фан-карт Hearthstone. <span style="color:red;">|ДЕМОВЕРСИЯ|</span></p>
-  <p>Ниже перечислены его безграничные возможности.</p>
-  <ul>
-    <li>Хранилище существующих в игре карт</li>
-    <li>Просмотр фан-карт, созданных пользователями сайта</li>
-    <li>Создание собственных фан-карт (только для зарегистрированных пользователей)</li>
-  </ul>
+<h1>{{ title }}</h1>
+<div class="center-wrapper">
+  <div class="info-item">
+    <ul>
+      <li>Колоды
+        <ul>
+          <li><a href="{% url 'decks:index' %}">Расшифровка</a> кодов колод Hearthstone</li>
+          <li><a href="{% url 'decks:all_decks' %}">Хранилище колод</a></li>
+          <li>
+            <a href="{% url 'decks:user_decks' %}">Личное хранилище колод</a> (!)
+            <p>Для тех, кому не хватает 27 внутриигровых слотов.</p>
+          </li>
+        </ul>
+      </li>
+      <li>Карты
+        <ul>
+          <li>Хранилище <a href="{% url 'gallery:realcards' %}">карт Hearthstone</a></li>
+          <li><a href="{% url 'gallery:fancards' %}">Фан-карты</a>, созданные пользователями сайта</li>
+          <li><a href="{% url 'gallery:createcard' %}">Создание фан-карт</a> (!)</li>
+        </ul>
+      </li>
+    </ul>
+    <div class="note">
+      <div>Весь функционал полностью <b>бесплатный</b>.</div>
+      <div>Для использования функций, отмеченных <b>(!)</b>, необходима <a href="{% url 'accounts:signup' %}">регистрация</a>.</div>
+    </div>
+  </div>
+</div>
 {% endblock %}

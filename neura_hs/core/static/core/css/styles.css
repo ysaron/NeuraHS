@@ -98,12 +98,11 @@ div.centered {text-align: center;}
 a:link, a:visited {
   color: #000000;
   background-color: transparent;
-  text-decoration: none;
+  text-decoration: underscore;
 }
 a:hover, a:active {
   color: tomato;
   background-color: transparent;
-  text-decoration: none;
 }
 
 /* Верхнее меню */
@@ -333,7 +332,6 @@ thead.darktable th {padding: 8px;}
 }
 .form-input {
   width: 100%;
-  max-width: 300px;
   font-size: 16px;
   margin: 8px 0;
   padding: 5px 5px;
