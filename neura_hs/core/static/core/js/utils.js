@@ -75,3 +75,14 @@ function tooltipFunc() {
 function clearDeckstringField() {
     $('#form-deckstring').val('');
 }
+
+function mail() {
+    let btn = $('#contactBtn');
+    let endpoint = btn.attr("data-url");
+    $.ajax({
+        data: {email: true},
+        url: endpoint,
+        success: function(response) {btn.empty().text(response.email);},
+        error: function(response) {console.log(response.responseJSON.errors);}
+    });
+}

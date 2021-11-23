@@ -1,3 +1,10 @@
 <div id="footer">
-  <p>Данный веб-сайт не связан с Blizzard Entertainment.</p>
+  <div class="footer-disclaimer">Данный веб-сайт не связан с Blizzard Entertainment.</div>
+  <div class="footer-contact" id="contactBtn" data-url="{% url 'contact' %}">
+      <button type="button" id="mailBtn" class="form-button form-button-white form-button-wide" onclick="mail()">
+          <span class="button-icon"><i class="far fa-envelope"></i></span>
+          <span class="button-text">Show contacts</span>
+      </button>
+  </div>
+  <div class="footer-contact" id="contact" style="display: none;"></div>
 </div>

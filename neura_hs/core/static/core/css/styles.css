@@ -84,11 +84,12 @@ div.centered {text-align: center;}
   padding-top: 10px;
   padding-bottom: 10px;
   padding-right: 30px;
-  text-align: right;
   height: auto;
   max-height: 80px;
   box-shadow: 0 50vh 6px 50vh var(--dark);
 }
+#footer .footer-disclaimer {text-align: right;}
+#footer .footer-contact {text-align: center;}
 
 .main-row {
   min-height: 580px;
@@ -312,6 +313,16 @@ thead.darktable th {padding: 8px;}
   color: white;
   background-color: var(--green);
 }
+.form-button-white {
+  color: white;
+  border: 2px solid white;
+}
+.form-button-white:hover {
+  color: var(--dark);
+  border: 2px solid var(--dark);
+  background-color: white;
+}
+.form-button-wide {min-width: 300px;}
 .button-icon {
   width: 20%;
   font-size: 1.5rem;

@@ -212,7 +212,7 @@ LOGGING = {
 TOP_MENU = {
     'main': {'title': "Главная", 'url_name': 'home'},
     'about': {'title': "О сайте", 'url_name': 'about'},
-    'contact': {'title': "Обратная связь", 'url_name': 'contact'}
+    'api': {'title': "coming soon", 'url_name': ''}
 }
 
 SIDE_MENU = {
