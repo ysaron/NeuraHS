@@ -97,14 +97,16 @@ div.centered {text-align: center;}
 
 /* Гиперссылки */
 a:link, a:visited {
-  color: #000000;
+  color: #B22222;
   background-color: transparent;
-  text-decoration: underscore;
+  text-decoration: none;
 }
 a:hover, a:active {
   color: tomato;
   background-color: transparent;
+  text-decoration: none;
 }
+a[role="button"] {color: inherit;}
 
 /* Верхнее меню */
 .topmenu {
