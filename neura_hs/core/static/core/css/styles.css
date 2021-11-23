@@ -84,6 +84,7 @@ div.centered {text-align: center;}
   padding-top: 10px;
   padding-bottom: 10px;
   padding-right: 30px;
+  margin-top: 10px;
   height: auto;
   max-height: 80px;
   box-shadow: 0 50vh 6px 50vh var(--dark);
