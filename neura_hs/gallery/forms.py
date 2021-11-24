@@ -50,18 +50,18 @@ class RealCardFilterForm(forms.Form):
     card_set = forms.ModelChoiceField(queryset=CARD_SETS, required=False, label='Набор')
 
     # update() в данном случае лаконичнее, чем |
-    name.widget.attrs.update({'class': 'form-control form-control-sm', 'placeholder': 'Введите название карты'})
-    rarity.widget.attrs.update({'class': 'form-select form-select-sm', 'placeholder': 'Выберите редкость'})
-    collectible.widget.attrs.update({'class': 'form-select form-select-sm', 'placeholder': 'Коллекционная ли карта'})
-    card_type.widget.attrs.update({'class': 'form-select form-select-sm', 'placeholder': 'Выберите тип карты'})
-    tribe.widget.attrs.update({'class': 'form-select form-select-sm', 'placeholder': 'Выберите расу существа'})
-    card_class.widget.attrs.update({'class': 'form-select form-select-sm', 'placeholder': 'Выберите класс карты'})
-    card_set.widget.attrs.update({'class': 'form-select form-select-sm', 'placeholder': 'Выберите набор'})
-    mechanic.widget.attrs.update({'class': 'form-select form-select-sm', 'placeholder': 'Выберите набор'})
+    name.widget.attrs.update({'class': 'form-input', 'placeholder': 'Введите название карты'})
+    rarity.widget.attrs.update({'class': 'form-input'})
+    collectible.widget.attrs.update({'class': 'form-input'})
+    card_type.widget.attrs.update({'class': 'form-input'})
+    tribe.widget.attrs.update({'class': 'form-input'})
+    card_class.widget.attrs.update({'class': 'form-input'})
+    card_set.widget.attrs.update({'class': 'form-input'})
+    mechanic.widget.attrs.update({'class': 'form-input'})
 
 
 class FanCardFilterForm(forms.Form):
     """ Форма фильтрации и поиска фан-карт """
     name = forms.CharField(required=False, label='Название')
 
-    name.widget.attrs.update({'class': 'form-control', 'placeholder': 'Введите название карты'})
+    name.widget.attrs.update({'class': 'form-input', 'placeholder': 'Введите название карты'})

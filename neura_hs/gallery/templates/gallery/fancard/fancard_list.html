@@ -10,20 +10,21 @@
 {% endblock %}
 
 {% block search %}
-    <form class="form-inline" method="get">
-        <div class="row">
-            <div class="col">
-                <label class="form-label">{{ form.name.label }}</label>
-                <p>{{ form.name }}</p>
-            </div>
+<form method="get">
+    <div class="row">
+        <div class="col">
+            <div>{{ form.name }}</div>
         </div>
-        <div class="row">
-            <div class="col">
-                <button type="submit" class="btn btn-outline-dark">Поиск</button>
-            </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <button type="submit" class="form-button">
+                <span class="button-icon"><i class="fas fa-search"></i></span>
+                <span class="button-text">Поиск</span>
+            </button>
         </div>
-    </form>
-    <hr>
+    </div>
+</form>
 {% endblock %}
 
 {% block content %}
@@ -38,10 +39,10 @@
     <table class="tablelist" id="tFCL">
       <thead class="darktable">
         <tr>
-          <th style="width: 40%;">Название</th>
-          <th style="width: 20%;">Автор</th>
-          <th style="width: 15%;">Тип</th>
-          <th style="width: 25%;">Дата создания</th>
+          <th style="min-width: 40%;">Название</th>
+          <th style="min-width: 20%;">Автор</th>
+          <th style="min-width: 15%;">Тип</th>
+          <th style="min-width: 25%;">Дата создания</th>
         </tr>
       </thead>
       <tbody>

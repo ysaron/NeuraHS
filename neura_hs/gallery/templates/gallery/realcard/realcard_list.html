@@ -14,77 +14,82 @@
 <form class="form-inline" method="get" id="searchForm">
     <div class="row">
         <div class="col">
-            <label class="form-label">{{ form.name.label }}</label>
-            <p class="form-search">{{ form.name }}</p>
+            <label class="search-form-label">{{ form.name.label }}</label>
+            <div class="form-search">{{ form.name }}</div>
         </div>
         <div class="col">
-            <label class="form-label">{{ form.rarity.label }}</label>
-            <p class="form-search">{{ form.rarity }}</p>
+            <label class="search-form-label">{{ form.rarity.label }}</label>
+            <div class="form-search">{{ form.rarity }}</div>
         </div>
         <div class="col">
-            <label class="form-label">{{ form.collectible.label }}</label>
-            <p class="form-search">{{ form.collectible }}</p>
+            <label class="search-form-label">{{ form.collectible.label }}</label>
+            <div class="form-search">{{ form.collectible }}</div>
         </div>
         <div class="col">
-            <label class="form-label">{{ form.card_type.label }}</label>
-            <p class="form-search">{{ form.card_type }}</p>
+            <label class="search-form-label">{{ form.card_type.label }}</label>
+            <div class="form-search">{{ form.card_type }}</div>
         </div>
         <div class="col">
-            <label class="form-label">{{ form.tribe.label }}</label>
-            <p class="form-search">{{ form.tribe }}</p>
+            <label class="search-form-label">{{ form.tribe.label }}</label>
+            <div class="form-search">{{ form.tribe }}</div>
         </div>
         <div class="col">
-            <label class="form-label">{{ form.card_class.label }}</label>
-            <p class="form-search">{{ form.card_class }}</p>
+            <label class="search-form-label">{{ form.card_class.label }}</label>
+            <div class="form-search">{{ form.card_class }}</div>
         </div>
         <div class="col">
-            <label class="form-label">{{ form.card_set.label }}</label>
-            <p class="form-search">{{ form.card_set }}</p>
+            <label class="search-form-label">{{ form.card_set.label }}</label>
+            <div class="form-search">{{ form.card_set }}</div>
         </div>
         <div class="col">
-            <label class="form-label">{{ form.mechanic.label }}</label>
-            <p class="form-search">{{ form.mechanic }}</p>
+            <label class="search-form-label">{{ form.mechanic.label }}</label>
+            <div class="form-search">{{ form.mechanic }}</div>
         </div>
     </div>
     <div class="row">
         <div class="col">
-            <button type="submit" class="btn btn-outline-dark">Поиск</button>
+            <button type="submit" class="form-button">
+                <span class="button-icon"><i class="fas fa-search"></i></span>
+                <span class="button-text">Поиск</span>
+            </button>
         </div>
     </div>
 </form>
-<hr>
 {% endblock %}
 
 {% block content %}
 {% load custom_filters %}
-    {% if realcards %}
-        {% if not is_paginated %}   <!-- Подсчет результатов на единственной странице -->
-            <div class="pagination">
-                <span class="page-item disabled"><a class="page-link">Всего результатов: {{ realcards.count }}</a></span>
-            </div>
-            <hr>
-        {% endif %}
-    <table class="tablelist" id="tRCL">
-      <thead class="darktable">
-        <tr>
-          <th style="width: 30%;">Название</th>
-          <th style="width: 15%;">Тип</th>
-          <th style="width: 25%;">Класс</th>
-          <th style="width: 35%;">Сет</th>
-        </tr>
-      </thead>
-      <tbody>
-      {% for card in realcards %}
-      <tr class="{{ card|cclass }} {{ card|rar }} rartext clickable-row">
-        <td class=""><a class="" href="{{ card.get_absolute_url }}" target="_blank" title="Детальное описание карты {{ card.name }}">{{ card }}</a></td>
-        <td>{{ card.get_card_type_display }}</td>
-        <td>{% for card_class in card.card_class.all %} {{ card_class }}{% if not forloop.last %} | {% endif %}{% endfor %}</td>
-        <td>{{ card.card_set }}</td>
-      </tr>
-      {% endfor %}
-      </tbody>
-    </table>
-    {% else %}
-      <p>Не обнаружено ни одной карты...</p>
-    {% endif %}
+
+{% if realcards %}
+{% if not is_paginated %}   <!-- Подсчет результатов на единственной странице -->
+    <div class="pagination">
+        <span class="page-item disabled"><a class="page-link">Всего результатов: {{ realcards.count }}</a></span>
+    </div>
+    <hr>
+{% endif %}
+<div class="table-wrapper">
+<table class="tablelist" id="tRCL">
+  <thead class="darktable">
+    <tr>
+      <th style="min-width: 30%;">Название</th>
+      <th style="min-width: 15%;">Тип</th>
+      <th style="min-width: 25%;">Класс</th>
+      <th style="min-width: 35%;">Сет</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for card in realcards %}
+  <tr class="{{ card|cclass }} {{ card|rar }} rartext clickable-row">
+    <td class=""><a class="" href="{{ card.get_absolute_url }}" target="_blank" title="Детальное описание карты {{ card.name }}">{{ card }}</a></td>
+    <td>{{ card.get_card_type_display }}</td>
+    <td>{% for card_class in card.card_class.all %} {{ card_class }}{% if not forloop.last %} | {% endif %}{% endfor %}</td>
+    <td>{{ card.card_set }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% else %}
+  <p>Не обнаружено ни одной карты...</p>
+{% endif %}
 {% endblock %}

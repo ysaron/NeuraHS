@@ -1,6 +1,7 @@
 :root {
   --dark: #333;
   --grey: #595959;
+  --bcgrnd: #d3d3d3;
   --green: #29a329;
   --mage-1: #668cff;
   --mage-2: #e6eeff;
@@ -41,7 +42,7 @@
 html, body {
 	font-family: "Consolas";
 	font-size: 16px;
-    background-color: #d3d3d3;
+    background-color: var(--bcgrnd);
 	color: var(--dark);
 	margin: 0;
 	padding: 0;
@@ -134,7 +135,7 @@ a[role="button"] {color: inherit;}
   width: 20%;
 }
 .topmenu a:hover {
-  background: #d3d3d3;
+  background: var(--bcgrnd);
   color: black;
 }
 .topmenu a.logbar {float: right;}
@@ -163,7 +164,7 @@ a[role="button"] {color: inherit;}
   text-decoration: none;
 }
 .sidemenu a:hover {
-  background: #d3d3d3;
+  background: var(--bcgrnd);
   color: black;
   border-radius: 5px;
 }
@@ -182,7 +183,7 @@ a.sub:hover {border-radius: 0;}
 }
 #form-i18n select:hover, #form-i18n select:focus {
   color: black;
-  background-color: #d3d3d3;
+  background-color: var(--bcgrnd);
   border: inherit;
   border-radius: 5px;
   outline: none;
@@ -210,7 +211,7 @@ a.sub:hover {border-radius: 0;}
 
 .accordion-body {padding: 0;}
 .accordion-item .accordion-header button:hover {
-  background: #d3d3d3;
+  background: var(--bcgrnd);
   color: black;
   transition: none;
 }
@@ -221,14 +222,17 @@ a.sub:hover {border-radius: 0;}
   text-decoration: none;
 }
 .accordion-body a:hover {
-  background: #d3d3d3;
+  background: var(--bcgrnd);
   color: black;
 }
 /* ------------------------------------------------------------------------------------- */
 
 /* Таблицы со списками */
+.table-wrapper {
+  overflow-x: auto;
+}
 .tablelist {width: 100%;}
-.tablelist td {border-bottom: 1px solid #ffffff;}
+.tablelist td {border-bottom: 1px solid var(--bcgrnd);}
 .clickable-row {
   overflow: hidden;
   width: 100%;
@@ -268,9 +272,6 @@ thead.darktable th {padding: 8px;}
 .form-search {
   width: 250px;
   font-size: 18px;
-}
-.form-label {
-  width: 30%;
 }
 .form-error ul {
   padding-left: 0;
@@ -601,12 +602,15 @@ td.deck-control * {
   min-width: 40%;
   margin: 0.7rem 0;
 }
+.search-form-label {
+  width: 100%;
+}
 
 /* ------- Оформление классов Hearthstone ------- */
 /* Detail */
 .module {
   padding: 6px;
-  background-color: #d3d3d3;
+  background-color: var(--bcgrnd);
   border: 1px solid black;
 }
 .module-wrap {
