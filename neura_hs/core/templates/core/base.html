@@ -16,7 +16,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- Добавление дополнительной статики -->
     {% load static %}
-    <link rel="stylesheet" href="{% static 'core/css/styles.css' %}?v=1.2.22">
+    <link rel="stylesheet" href="{% static 'core/css/styles.css' %}?v=1.2.25">
     <link rel="stylesheet" href="{% static 'core/css/responsive.css' %}?v=1.0.3">
     <script src="{% static 'core/js/utils.js' %}?v=1.0.23"></script>
     <!-- FontAwesome -->
@@ -41,13 +41,11 @@
             {% if is_paginated %}
                 {% load page_tags %}
                 {% formatted_pages 4 %}
-                <hr>
             {% endif %}
 
             {% block content %}{% endblock %} <!-- Данный блок будет переопределяться в шаблонах-наследниках -->
 
             {% if is_paginated %}
-                <hr>
                 {% load page_tags %}
                 {% formatted_pages 4 %}
             {% endif %}

@@ -117,11 +117,13 @@ a[role="button"] {color: inherit;}
 .topmenu {
   overflow: hidden;
   background-color: var(--dark);
-  position: sticky;
   z-index: 4;
   top: 0;
   width: 100%;
   border: 2px solid var(--dark);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
 }
 .topmenu a {
   float: left;
@@ -131,11 +133,12 @@ a[role="button"] {color: inherit;}
   text-align: center;
   padding: 5px 5px;
   text-decoration: none;
-  font-size: 20px;
   width: 20%;
 }
 .topmenu a:hover {
   background: var(--bcgrnd);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
   color: black;
 }
 .topmenu a.logbar {float: right;}
@@ -151,12 +154,14 @@ a[role="button"] {color: inherit;}
   color: #f2f2f2;
   position: sticky;
   z-index: 3;
-  top: 46.5px;
+  top: 3px;
   width: 100%;
   border: 2px solid var(--dark);
+  border-radius: 5px;
   margin-top: 3px;
   margin-bottom: 20px;
 }
+.sidemenu-shadow {box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);}
 .sidemenu a {
   display: block;
   color: #f2f2f2;
@@ -257,6 +262,7 @@ thead.darktable th {padding: 8px;}
   margin-bottom: 10px;
 }
 /* Пагинация */
+.pagination {margin: 15px 0;}
 .pagination span.active a.page-link {
   background-color: var(--dark);
   color: white;
@@ -266,7 +272,10 @@ thead.darktable th {padding: 8px;}
 .pagination span:hover a.page-link {
   color: var(--dark);
 }
-.pagination span a.page-link {box-shadow: none;}
+.pagination span a.page-link {
+  box-shadow: none;
+  color: black;
+}
 
 /* Формы */
 .form-search {
