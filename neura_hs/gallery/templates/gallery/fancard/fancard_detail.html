@@ -1,8 +1,13 @@
 {% extends "core/base.html" %}
 
+{% block scripts %}
+    {% load static %}
+    <script src="{% static 'core/js/multiclass.js' %}?v=1.0.8"></script>
+{% endblock %}
+
 {% block content %}
 {% load custom_filters %}
-<div class="module-wrap module-wrap-{{ fan_card|cclass }}">
+<div class="modulewrap {{ fan_card|cclass }}">
 <div class="module">
 <div class="detailhead">
   <h1 class="d-inline-block">{{ fan_card.name }}</h1>
@@ -13,11 +18,8 @@
   </p>
   {% endif %}
 </div>
-<hr>
-<p><i>Где-то здесь однажды будет и изображение</i></p>
-<hr>
 
-<table class="table table-hover table-bordered" id="tFCD">
+<table class="table table-bordered" id="tFCD">
   <tbody>
   <tr>
     <td style="width:15%;"><strong>Автор</strong></td>

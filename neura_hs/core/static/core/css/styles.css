@@ -3,6 +3,7 @@
   --grey: #595959;
   --bcgrnd: #d3d3d3;
   --green: #29a329;
+  --red: #B22222;
   --mage-1: #668cff;
   --mage-2: #e6eeff;
   --priest-1: #ffffcc;
@@ -102,7 +103,7 @@ div.centered {text-align: center;}
 
 /* Гиперссылки */
 a:link, a:visited {
-  color: #B22222;
+  color: var(--red);
   background-color: transparent;
   text-decoration: none;
 }
@@ -338,6 +339,14 @@ thead.darktable th {padding: 8px;}
   color: var(--dark);
   border: 2px solid var(--dark);
   background-color: white;
+}
+.form-button-red {
+  color: var(--red);
+  border: 2px solid var(--red);
+}
+.form-button-red:hover {
+  color: white;
+  background-color: var(--red);
 }
 .form-button-wide {min-width: 300px;}
 .button-icon {
@@ -622,26 +631,15 @@ td.deck-control * {
   padding: 6px;
   background-color: var(--bcgrnd);
   border: 1px solid black;
+  border-radius: 25px;
 }
-.module-wrap {
+.modulewrap {
   margin-top: 3.5px;
-  padding: 8px;
+  padding: 25px;
   border: 1px solid black;
+  border-radius: 50px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
-.module-wrap-mage {background: linear-gradient(305deg, var(--mage-1), var(--mage-2), var(--mage-1));}
-.module-wrap-priest {background: linear-gradient(305deg, var(--priest-1), var(--priest-2), var(--priest-1));}
-.module-wrap-warlock {background: linear-gradient(305deg, var(--warlock-1), var(--warlock-2), var(--warlock-1));}
-.module-wrap-druid {background: linear-gradient(305deg, var(--druid-1), var(--druid-2), var(--druid-1));}
-.module-wrap-rogue {background: linear-gradient(305deg, var(--rogue-1), var(--rogue-2), var(--rogue-1));}
-.module-wrap-shaman {background: linear-gradient(305deg, var(--shaman-1), var(--shaman-2), var(--shaman-1));}
-.module-wrap-paladin {background: linear-gradient(305deg, var(--paladin-1), var(--paladin-2), var(--paladin-1));}
-.module-wrap-warrior {background: linear-gradient(305deg, var(--warrior-1), var(--warrior-2), var(--warrior-1));}
-.module-wrap-hunter {background: linear-gradient(305deg, var(--hunter-1), var(--hunter-2), var(--hunter-1));}
-.module-wrap-demonhunter {background: linear-gradient(305deg, var(--demonhunter-1), var(--demonhunter-2), var(--demonhunter-1));}
-.module-wrap-neutral {background: linear-gradient(305deg, var(--neutral-1), var(--neutral-2), var(--neutral-1));}
-.module-wrap-deathknight {background: linear-gradient(305deg, var(--deathknight-1), var(--deathknight-2), var(--deathknight-1));}
-.module-wrap-dream {background: linear-gradient(305deg, var(--dream-1), var(--dream-2), var(--dream-1));}
-.module-wrap-multiclass {background: linear-gradient(305deg, #cc0000, #ffff00, #0033cc);}
 
 /* List */
 .td-bordered:hover td {

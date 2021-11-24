@@ -1,8 +1,13 @@
 {% extends "core/base.html" %}
 
+{% block scripts %}
+    {% load static %}
+    <script src="{% static 'core/js/multiclass.js' %}?v=1.0.8"></script>
+{% endblock %}
+
 {% block content %}
 {% load custom_filters %}
-<div class="module-wrap module-wrap-{{ real_card|cclass }}">
+<div class="modulewrap {{ real_card|cclass }}">
 <div class="module">
 <div class="detailhead">
   <h1 class="d-inline-block">{{ real_card.name }}</h1>
@@ -14,18 +19,11 @@
     <span class="badge rounded-pill bg-warning align-top">Неколлекционная</span>
   {% endif %}
 </div>
-<hr>
-<p><i>Где-то здесь однажды будет и изображение</i></p>
-<hr>
 
-<table class="table table-hover table-bordered" id="tRCD">
+<table class="table table-bordered" id="tRCD">
   <tr>
-    <td style="width:15%;"><strong>Автор</strong></td>
-    <td style="width:85%;"><a href="#">Blizzard Entertainment<sup>®</sup></a></td>
-  </tr>
-  <tr>
-    <td><strong>Класс</strong></td>
-    <td>{% for card_class in real_card.card_class.all %} {{ card_class }}{% if not forloop.last %} | {% endif %}{% endfor %}</td>
+    <td style="width:15%;"><strong>Класс</strong></td>
+    <td style="width:85%;">{% for card_class in real_card.card_class.all %} {{ card_class }}{% if not forloop.last %} | {% endif %}{% endfor %}</td>
   </tr>
   {% if real_card.text %}
     <tr>
@@ -76,10 +74,6 @@
       <td>{{ real_card.artist }}</td>
     </tr>
   {% endif %}
-  <tr>
-    <td><strong>Дата создания</strong></td>
-    <td>{{ real_card.creation_date|date:"d.m.Y H:i:s" }}</td>
-  </tr>
 </table>
 {% if real_card.collectible %}
 <h4>Колоды с этой картой</h4>
