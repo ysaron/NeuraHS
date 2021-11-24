@@ -18,15 +18,15 @@ def get_item(dictionary, key):
 def get_verbose_group(user):
     """ Возвращает имя и стиль отображения группы автора """
     if user.is_superuser:
-        return {'group': 'Владелец', 'bg-color': 'bg-success'}
+        return {'group': 'Админ', 'bg-color': 'bg-success', 'background': 'rgba(0, 77, 0, 0.2)'}
 
     if user.groups.all()[0].name == 'editor':
-        return {'group': 'Редактор', 'bg-color': 'bg-dark'}
+        return {'group': 'Редактор', 'bg-color': 'bg-dark', 'background': 'rgba(102, 26, 0, 0.2)'}
 
     if user.groups.all()[0].name == 'common':
-        return {'group': 'Пользователь', 'bg-color': 'bg-primary'}
+        return {'group': 'Пользователь', 'bg-color': 'bg-primary', 'background': 'rgba(0, 0, 102, 0.2)'}
 
-    return {'group': '', 'bg-color': ''}
+    return {'group': '', 'bg-color': '', 'background': ''}
 
 
 @register.filter(name='display')

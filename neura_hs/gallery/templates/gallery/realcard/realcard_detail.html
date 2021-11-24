@@ -76,14 +76,18 @@
   {% endif %}
 </table>
 {% if real_card.collectible %}
-<h4>Колоды с этой картой</h4>
-<ul>
-  {% for inclusion in real_card.inclusion_set.nameless %}
-    <li><a href="{{ inclusion.deck.get_absolute_url }}">{{ inclusion.deck }}</a></li>
-  {% empty %}
-    <li>В известных колодах карта не найдена.</li>
-  {% endfor %}
-</ul>
+<div class="center-wrapper">
+  <div class="info-item info-deck">
+    <h4>Колоды с этой картой</h4>
+    <ul>
+      {% for inclusion in real_card.inclusion_set.nameless %}
+        <li><a href="{{ inclusion.deck.get_absolute_url }}">{{ inclusion.deck }}</a></li>
+      {% empty %}
+        <li>В известных колодах карта не найдена.</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
 {% endif %}
 </div>
 </div>

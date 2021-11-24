@@ -605,6 +605,17 @@ td.deck-control * {
   border-top: 1px solid var(--grey);
 }
 .info-deck {width: var(--deck-width);}
+.info-author {
+  padding: 0;
+  width: var(--deck-width);
+}
+a.author-link {
+  display: block;
+  padding: 10px;
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
 .common-form-item {
   display: flex;
   width: 450px;
