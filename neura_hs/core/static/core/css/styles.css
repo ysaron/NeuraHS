@@ -235,6 +235,7 @@ a.sub:hover {border-radius: 0;}
 /* Таблицы со списками */
 .table-wrapper {
   overflow-x: auto;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 .tablelist {width: 100%;}
 .tablelist td {border-bottom: 1px solid var(--bcgrnd);}
