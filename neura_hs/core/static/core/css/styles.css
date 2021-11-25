@@ -236,17 +236,17 @@ a.sub:hover {border-radius: 0;}
 /* Таблицы со списками */
 .table-wrapper {
   overflow-x: auto;
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 .tablelist {width: 100%;}
 .tablelist td {border-bottom: 1px solid var(--bcgrnd);}
+.tablelist .rartext {font-size: 1.2rem;}
 .clickable-row {
   overflow: hidden;
   width: 100%;
 }
 .clickable-row a, .clickable-row span {
   display: block;
-  padding: 8px;
+  padding: 5px;
   text-decoration: none;
 }
 thead.darktable {
@@ -582,9 +582,10 @@ td.deck-control * {
 
 .info-item {
   padding: 20px 20px;
-  margin-bottom: 10px;
+  margin: 5px 0;
   border-radius: 20px;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  color: black;
   background-color: white;
   transition: 0.3s;
 }

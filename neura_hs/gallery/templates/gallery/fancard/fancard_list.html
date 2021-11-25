@@ -34,8 +34,8 @@
         <div class="pagination">
             <span class="page-item disabled"><a class="page-link">Всего результатов: {{ fancards.count }}</a></span>
         </div>
-        <hr>
     {% endif %}
+<div class="info-item">
     <div class="table-wrapper">
     <table class="tablelist" id="tFCL">
       <thead class="darktable">
@@ -52,12 +52,13 @@
             <td><a class="" href="{{ card.get_absolute_url }}" target="_blank">{{ card.name }}</a></td>
             <td><span>{{ card.author }}</span></td>
             <td><span>{{ card.get_card_type_display }}</span></td>
-            <td><span>{{ card.creation_date|date:"d.m.Y H:i:s" }}</span></td>
+            <td><span>{{ card.creation_date|date:"d.m.Y" }}</span></td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
     </div>
+</div>
 {% else %}
 <div class="center-wrapper">
     <div class="info-item">Не обнаружено ни одной карты...</div>
