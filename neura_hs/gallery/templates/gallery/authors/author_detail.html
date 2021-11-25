@@ -10,7 +10,7 @@
 <hr>
 <div class="detailhead">
   <h1 class="h1 d-inline-block">{{ author.user.get_username }}</h1>
-  <span class="badge rounded-pill {{ author.user|verbose_group|get_item:'bg-color' }} align-top">{{ author.user|verbose_group|get_item:'group' }}</span>
+  <span class="badge rounded-pill {{ author.user|style_group|get_item:'bg-color' }} align-top">{{ author.user|style_group|get_item:'group' }}</span>
   <p>{{ author.about }}</p>
 </div>
 <hr>

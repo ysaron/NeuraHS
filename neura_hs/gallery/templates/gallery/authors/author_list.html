@@ -15,8 +15,8 @@
 
 <div class="decks-grid">
     {% for author in authors %}
-    <div class="info-item info-author" style="background: {{ author.user|verbose_group|get_item:'background' }}">
-        <div><a class="author-link" href="{{ author.get_absolute_url }}">{{ author.user.username }} ({{ author.fancard_set.all.count }})</a></div>
+    <div class="info-item info-author" style="background: {{ author.user|style_group|get_item:'background' }}">
+        <div><a class="author-link" href="{{ author.get_absolute_url }}">{{ author.user.username }} ({{ author.fancard_set.confirmed.count }})</a></div>
     </div>
     {% empty %}
     <div class="info-item info-deck">

@@ -223,6 +223,8 @@ class AuthorListView(DataMixin, generic.ListView):
     template_name = 'gallery/authors/author_list.html'
     context_object_name = 'authors'
 
+    paginate_by = 50
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         default_context = self.get_custom_context(title='Авторы фан-карт')
@@ -230,7 +232,7 @@ class AuthorListView(DataMixin, generic.ListView):
         return context
 
     def get_queryset(self):
-        return self.model.objects.select_related('user').prefetch_related('fancard_set')
+        return self.model.objects.active().select_related('user').prefetch_related('fancard_set')
 
 
 class AuthorDetailView(DataMixin, generic.DetailView):

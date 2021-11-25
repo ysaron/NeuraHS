@@ -1,6 +1,6 @@
 from django.core.exceptions import FieldDoesNotExist
 from django.db import models
-from django.db.models import Model, Manager, QuerySet, Q
+from django.db.models import Model, Manager, QuerySet, Q, Count
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.urls import reverse
@@ -40,6 +40,9 @@ class CardQuerySet(QuerySet):
         """ Поиск записей с установленным в True полем mechanic """
         return self.filter(**{mechanic: True}) if Card.field_exists(mechanic) else self.all()
 
+    def confirmed(self):
+        return self.filter(state=True)
+
 
 class IncludibleCardManager(Manager):
     """ Доступ к картам, которые можно включить в колоду """
@@ -48,12 +51,20 @@ class IncludibleCardManager(Manager):
         return super().get_queryset().filter(Q(collectible=True) & ~Q(card_set__service_name='Hero Skins'))
 
 
+class AuthorManager(Manager):
+
+    def active(self):
+        """ Возвращает QuerySet с авторами, имеющими хотя бы 1 прошедшую премодерацию карту """
+        authors = self.get_queryset().annotate(num_fancards=Count('fancard', filter=Q(fancard__state=True)))
+        return authors.exclude(num_fancards=0)
+
+
 class Author(Model):
     """ Модель автора фан-карт, расширяющая модель User """
     user: User = models.OneToOneField(User, on_delete=models.CASCADE)
     about = models.TextField(blank=True, default='')
 
-    objects = Manager()
+    objects = AuthorManager()
 
     class Meta:
         ordering = ['user']

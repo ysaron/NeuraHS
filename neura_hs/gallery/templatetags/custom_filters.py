@@ -14,17 +14,17 @@ def get_item(dictionary, key):
     return dictionary.get(key)
 
 
-@register.filter(name='verbose_group')
+@register.filter(name='style_group')
 def get_verbose_group(user):
     """ Возвращает имя и стиль отображения группы автора """
     if user.is_superuser:
         return {'group': 'Админ', 'bg-color': 'bg-success', 'background': 'rgba(0, 77, 0, 0.2)'}
 
     if user.groups.all()[0].name == 'editor':
-        return {'group': 'Редактор', 'bg-color': 'bg-dark', 'background': 'rgba(102, 26, 0, 0.2)'}
+        return {'group': 'Редактор', 'bg-color': 'bg-dark', 'background': 'rgba(0, 0, 102, 0.2)'}
 
     if user.groups.all()[0].name == 'common':
-        return {'group': 'Пользователь', 'bg-color': 'bg-primary', 'background': 'rgba(0, 0, 102, 0.2)'}
+        return {'group': 'Пользователь', 'bg-color': 'bg-primary', 'background': ''}
 
     return {'group': '', 'bg-color': '', 'background': ''}
 
