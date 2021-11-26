@@ -22,7 +22,7 @@ class CreateCard(LoginRequiredMixin, DataMixin, generic.CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(CreateCard, self).get_context_data(**kwargs)
-        default_context = self.get_custom_context(title='Создание новой карты')
+        default_context = self.get_custom_context(title='Создание новой карты', update=False)
         context |= default_context
         return context
 
@@ -39,14 +39,14 @@ class UpdateCard(LoginRequiredMixin, UserPassesTestMixin, DataMixin, generic.Upd
     model = FanCard
     form_class = UpdateCardForm
     slug_url_kwarg = 'card_slug'
-    template_name = 'gallery/fancard/updatecard.html'
+    template_name = 'gallery/fancard/createcard.html'
 
     login_url = '/accounts/signin/'
 
     def get_context_data(self, **kwargs):
         context = super(UpdateCard, self).get_context_data(**kwargs)
         default_context = self.get_custom_context(title=f'Редактирование карты "{self.object.name}"',
-                                                  slug=self.object.slug)
+                                                  slug=self.object.slug, update=True)
         context |= default_context
         return context
 

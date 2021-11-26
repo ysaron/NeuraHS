@@ -362,10 +362,10 @@ thead.darktable th {padding: 8px;}
   padding: 0.375rem 0;
   text-align: center;
 }
-.form-mod {
-  padding: 0px;
-  margin-bottom: 8px;
-  margin-top: 5px;
+hr.form-separator {
+  margin: 1px 0;
+  color: var(--dark);
+  height: 0.5px;
 }
 .form-input {
   width: 100%;
@@ -619,18 +619,24 @@ a.author-link {
 }
 .common-form-item {
   display: flex;
-  width: 450px;
+  width: 650px;
   flex-direction: column;
 }
 .common-form-field {
   display: flex;
-  max-height: 50px;
+  max-height: 100px;
   justify-content: space-between;
   align-content: center;
 }
+.help-text {
+  font-size: 0.8rem;
+  font-style: italic;
+}
 .common-form-item .centered {justify-content: center;}
+.common-form-item .form-error li {max-width: 100%;}
 .common-form-label {
   min-width: 40%;
+  font-weight: bold;
   margin: 0.7rem 0;
 }
 .search-form-label {
@@ -850,5 +856,7 @@ a.author-link {
   color: white;
   background: var(--dark);
 }
+
+::placeholder {opacity: 0.5;}
 
 

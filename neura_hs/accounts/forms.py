@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.conf import settings
 
+about_placeholder = 'A couple of words (optional); will be displayed next to your nickname'
+
 
 class RegisterUserForm(auth_forms.UserCreationForm):
 
@@ -13,7 +15,8 @@ class RegisterUserForm(auth_forms.UserCreationForm):
     password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
     password2 = forms.CharField(label='Повтор пароля', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
     about = forms.CharField(label='О себе', required=False,
-                            widget=forms.Textarea(attrs={'cols': 30, 'rows': 6, 'class': 'form-input no-resize'}))
+                            widget=forms.Textarea(attrs={'cols': 30, 'rows': 6, 'class': 'form-input no-resize',
+                                                         'placeholder': about_placeholder}))
 
     class Meta:
         model = User

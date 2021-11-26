@@ -5,16 +5,12 @@ from utils.mixins import EditCardMixin
 
 class CreateCardForm(EditCardMixin, forms.ModelForm):
 
-    # для установки свойств отдельных полей
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        # self.fields['tribe'].help_text = 'Раса существа'
-
     class Meta(EditCardMixin.BaseMeta):
         model = FanCard
         fields = ['name', 'card_type', 'card_class', 'cost', 'attack', 'health', 'durability', 'armor',
                   'text', 'flavor', 'rarity', 'tribe', 'spell_school',
-                  'slug', 'author', 'state']     # последняя строка - скрытые поля
+                  'slug', 'author', 'state',        # скрытые поля
+                  'spell_school']
 
 
 class UpdateCardForm(EditCardMixin, forms.ModelForm):

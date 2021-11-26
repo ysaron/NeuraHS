@@ -103,18 +103,18 @@ class EditCardMixin:
     class BaseMeta:
         """ Содержит общие мета-атрибуты форм создания и редактирования карт """
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control'}),
-            'card_type': forms.Select(attrs={'class': 'form-select form-select-sm'}),
-            'card_class': forms.SelectMultiple(attrs={'class': 'form-select'}),
-            'cost': forms.NumberInput(attrs={'class': 'form-control'}),
-            'attack': forms.NumberInput(attrs={'class': 'form-control'}),
-            'health': forms.NumberInput(attrs={'class': 'form-control'}),
-            'durability': forms.NumberInput(attrs={'class': 'form-control'}),
-            'armor': forms.NumberInput(attrs={'class': 'form-control'}),
-            'text': forms.Textarea(attrs={'cols': 30, 'rows': 5, 'class': 'no-resize form-control'}),
-            'flavor': forms.Textarea(attrs={'cols': 30, 'rows': 6, 'class': 'no-resize form-control'}),
-            'rarity': forms.Select(attrs={'class': 'form-select form-select-sm'}),
-            'tribe': forms.SelectMultiple(attrs={'class': 'form-select'}),
-            'spell_school': forms.Select(attrs={'class': 'form-select form-select-sm'})
+            'name': forms.TextInput(attrs={'class': 'form-input'}),
+            'card_type': forms.Select(attrs={'class': 'form-input'}),
+            'card_class': forms.SelectMultiple(attrs={'class': 'form-input'}),
+            'cost': forms.NumberInput(attrs={'class': 'form-input'}),
+            'attack': forms.NumberInput(attrs={'class': 'form-input'}),
+            'health': forms.NumberInput(attrs={'class': 'form-input'}),
+            'durability': forms.NumberInput(attrs={'class': 'form-input'}),
+            'armor': forms.NumberInput(attrs={'class': 'form-input'}),
+            'text': forms.Textarea(attrs={'cols': 30, 'rows': 5, 'class': 'no-resize form-input'}),
+            'flavor': forms.Textarea(attrs={'cols': 30, 'rows': 6, 'class': 'no-resize form-input'}),
+            'rarity': forms.Select(attrs={'class': 'form-input'}),
+            'tribe': forms.SelectMultiple(attrs={'class': 'form-input'}),
+            'spell_school': forms.Select(attrs={'class': 'form-input'}),
         }
 
