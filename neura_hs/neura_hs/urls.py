@@ -18,11 +18,13 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
+from django.views.generic import RedirectView
+
 from core.views import homepage, about, contact, statistics
 
 
 urlpatterns = [
-    path('', homepage, name='home'),
+    path('', RedirectView.as_view(url='decks/', permanent=True), name='home'),
     path('decks/', include('decks.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
