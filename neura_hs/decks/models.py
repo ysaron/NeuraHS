@@ -71,7 +71,8 @@ class Deck(models.Model):
         ordering = ['-created']
 
     def __str__(self):
-        return f'[{self.deck_format}] [{self.deck_class}] {self.name}'
+        kinda_name = self.name if self.name else f'id_{self.pk}'
+        return f'{kinda_name} ({self.deck_format}, {self.deck_class})'
 
     @classmethod
     def create_from_deckstring(cls, deckstring: str, *, named: bool = False):
