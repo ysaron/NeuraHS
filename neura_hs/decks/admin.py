@@ -1,4 +1,5 @@
 from django.contrib import admin
+from modeltranslation.admin import TranslationAdmin
 from .models import Deck, Format
 from gallery.models import RealCard, CardSet
 
@@ -53,5 +54,5 @@ class DeckAdmin(admin.ModelAdmin):
 
 
 @admin.register(Format)
-class FormatAdmin(admin.ModelAdmin):
+class FormatAdmin(TranslationAdmin):
     inlines = (CardSetInline,)

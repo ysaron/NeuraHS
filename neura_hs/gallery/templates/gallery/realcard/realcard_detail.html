@@ -1,4 +1,7 @@
 {% extends "core/base.html" %}
+{% load custom_filters %}
+{% block title %}{{ title|mktitle }}{% endblock %}
+{% load i18n %}
 
 {% block scripts %}
     {% load static %}
@@ -6,71 +9,70 @@
 {% endblock %}
 
 {% block content %}
-{% load custom_filters %}
 <div class="modulewrap {{ real_card|cclass }}">
 <div class="module">
 <div class="detailhead">
   <h1 class="d-inline-block">{{ real_card.name }}</h1>
   {% if real_card.collectible %}
-    <span class="badge rounded-pill bg-success align-top">Коллекционная</span>
+    <span class="badge rounded-pill bg-success align-top">{% trans "Collectible" %}</span>
   {% elif real_card.battlegrounds %}
-    <span class="badge rounded-pill bg-primary align-top">BattleGrounds</span>
+    <span class="badge rounded-pill bg-primary align-top">{% trans "Battlegrounds" %}</span>
   {% elif not real_card.collectible %}
-    <span class="badge rounded-pill bg-warning align-top">Неколлекционная</span>
+    <span class="badge rounded-pill bg-warning align-top">{% trans "Non-collectible" %}</span>
   {% endif %}
 </div>
 
 <table class="table table-bordered" id="tRCD">
   <tr>
-    <td style="width:15%;"><strong>Класс</strong></td>
+    <td style="width:15%;"><strong>{% trans "Class" %}</strong></td>
     <td style="width:85%;">{% for card_class in real_card.card_class.all %} {{ card_class }}{% if not forloop.last %} | {% endif %}{% endfor %}</td>
   </tr>
   {% if real_card.text %}
     <tr>
-      <td><strong>Текст</strong></td>
+      <td><strong>{% trans "Text" %}</strong></td>
       <td>{{ real_card.text|safe }}</td>
     </tr>
   {% endif %}
   {% if real_card.flavor %}
     <tr>
-      <td><strong>Описание</strong></td>
+      <td><strong>{% trans "Flavor" %}</strong></td>
       <td>{{ real_card.flavor|safe }}</td>
     </tr>
   {% endif %}
   <tr>
-    <td><strong>Тип</strong></td>
+    <td><strong>{% trans "Type" %}</strong></td>
     <td>{{ real_card.get_card_type_display }}</td>
   </tr>
   <tr>
-    <td><strong>Сет</strong></td>
+    <td><strong>{% trans "Set" %}</strong></td>
     <td>{{ real_card.card_set }}</td>
   </tr>
   <tr>
-    <td><strong>Редкость</strong></td>
+    <td><strong>{% trans "Rarity" %}</strong></td>
     <td>{{ real_card.get_rarity_display }}</td>
   </tr>
   {% if real_card.card_type == c_types.MINION %}
     <tr>
-      <td><strong>Раса</strong></td>
+      <td><strong>{% trans "Tribe" %}</strong></td>
       <td>{% for tribe in real_card.tribe.all %} {{ tribe }}{% if not forloop.last %} | {% endif %}{% endfor %}</td>
     </tr>
   {% endif %}
   {% if real_card.card_type == c_types.SPELL %}
     <tr>
-      <td><strong>Тип заклинания</strong></td>
+      <td><strong>{% trans "Spell type" %}</strong></td>
       <td>{{ real_card.get_spell_school_display }}</td>
     </tr>
   {% endif %}
   {% format_stats real_card %}
   {% if real_card.mechanics_list %}
     <tr>
-      <td><strong>Механики</strong></td>
+      <td><strong>{% trans "Mechanics" context "list" %}</strong></td>
       <td>{% for mech in real_card.mechanics_list %}{{ mech }}{% if not forloop.last %} | {% endif %}{% endfor %}</td>
     </tr>
   {% endif %}
   {% if real_card.artist %}
     <tr>
-      <td><strong>Художник</strong></td>
+      <td><strong>{% trans "Artist" %}</strong></td>
       <td>{{ real_card.artist }}</td>
     </tr>
   {% endif %}
@@ -78,12 +80,12 @@
 {% if real_card.collectible %}
 <div class="center-wrapper">
   <div class="info-item info-deck">
-    <h4>Колоды с этой картой</h4>
+    <h4>{% trans "Decks with this card" %}</h4>
     <ul>
       {% for inclusion in real_card.inclusion_set.nameless %}
         <li><a href="{{ inclusion.deck.get_absolute_url }}">{{ inclusion.deck }}</a></li>
       {% empty %}
-        <li>В известных колодах карта не найдена.</li>
+        <li>{% trans "This card hasn't been found in known decks." %}</li>
       {% endfor %}
     </ul>
   </div>

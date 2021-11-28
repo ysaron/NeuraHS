@@ -2,15 +2,15 @@ from django.shortcuts import render, redirect
 from django.http import HttpRequest, JsonResponse
 from django.conf import settings
 from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
 
-from gallery.models import RealCard, FanCard
 from .services.statistics import get_statistics_context
 
 
 def about(request: HttpRequest):
     context = {'top_menu': settings.TOP_MENU,
                'side_menu': settings.SIDE_MENU,
-               'title': 'Функционал сайта'}
+               'title': _('Site functionality')}
     return render(request, 'core/about.html', context=context)
 
 
@@ -32,7 +32,7 @@ def contact(request: HttpRequest):
 def statistics(request: HttpRequest):
     context = {'top_menu': settings.TOP_MENU,
                'side_menu': settings.SIDE_MENU,
-               'title': 'Статистика'}
+               'title': _('Statistics')}
     context |= {'statistics': get_statistics_context()}
 
     return render(request=request, template_name='core/index.html', context=context)

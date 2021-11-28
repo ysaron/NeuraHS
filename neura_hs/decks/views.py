@@ -7,6 +7,7 @@ from django.core.exceptions import PermissionDenied
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
+from django.utils.translation import gettext_lazy as _
 from django.db import transaction
 from utils.mixins import DataMixin
 from random import choice
@@ -20,7 +21,7 @@ def create_deck(request: HttpRequest):
     """ Форма для кода колоды + ее отображение """
 
     deck, deckstring_form, deck_save_form = None, None, None
-    title = 'Расшифровка колоды'
+    title = _('Hearthstone | Deciphering the deck code')
 
     if request.method == 'POST':
         if 'deckstring' in request.POST:        # код колоды отправлен с формы DeckstringForm
@@ -36,9 +37,11 @@ def create_deck(request: HttpRequest):
                                                                'deck_name': deck_name_init})
                         title = deck
                 except DecodeError as de:
-                    deckstring_form.add_error(None, f'Ошибка: {de}')
+                    msg = _('Error: %(error)s') % {'error': de}
+                    deckstring_form.add_error(None, msg)
                 except UnsupportedCards as u:
-                    deckstring_form.add_error(None, f'{u}. База данных будет обновлена в скором времени.')
+                    msg = _('%(error)s. The database will be updated shortly.') % {'error': u}
+                    deckstring_form.add_error(None, msg)
         if 'deck_name' in request.POST:         # название колоды отправлено с формы DeckSaveForm
             deck = Deck.create_from_deckstring(request.POST['string_to_save'], named=True)
             deck.author = request.user.author
@@ -81,7 +84,7 @@ class NamelessDecksListView(DataMixin, generic.ListView):
         search_initial_values = {'deck_class': self.request.GET.get('deck_class', ''),
                                  'deck_format': self.request.GET.get('deck_format', '')}
 
-        default_context = self.get_custom_context(title='Деки',
+        default_context = self.get_custom_context(title=_('Decks'),
                                                   form=DeckFilterForm(initial=search_initial_values))
         context |= default_context
         return context
@@ -114,7 +117,7 @@ class UserDecksListView(LoginRequiredMixin, DataMixin, generic.ListView):
         search_initial_values = {'deck_class': self.request.GET.get('deck_class', ''),
                                  'deck_format': self.request.GET.get('deck_format', '')}
 
-        default_context = self.get_custom_context(title='Деки',
+        default_context = self.get_custom_context(title=_('Decks'),
                                                   form=DeckFilterForm(initial=search_initial_values))
         context |= default_context
         return context
@@ -187,7 +190,7 @@ class DeckDelete(SuccessMessageMixin, generic.DeleteView):
     model = Deck
     pk_url_kwarg = 'deck_id'
     success_url = reverse_lazy('decks:user_decks')
-    success_message = 'Колода %(name)s была удалена'
+    success_message = _('Deck has been removed')
 
     def get_queryset(self):
         return self.model.named.all()

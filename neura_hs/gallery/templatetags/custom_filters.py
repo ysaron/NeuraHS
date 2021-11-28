@@ -1,4 +1,5 @@
 from django import template
+from django.utils.translation import gettext_lazy as _
 from collections import namedtuple
 from ..models import Card, FanCard, RealCard
 
@@ -18,13 +19,13 @@ def get_item(dictionary, key):
 def get_verbose_group(user):
     """ Возвращает имя и стиль отображения группы автора """
     if user.is_superuser:
-        return {'group': 'Админ', 'bg-color': 'bg-success', 'background': 'rgba(0, 77, 0, 0.2)'}
+        return {'group': _('Admin'), 'bg-color': 'bg-success', 'background': 'rgba(0, 77, 0, 0.2)'}
 
     if user.groups.all()[0].name == 'editor':
-        return {'group': 'Редактор', 'bg-color': 'bg-dark', 'background': 'rgba(0, 0, 102, 0.2)'}
+        return {'group': _('Editor'), 'bg-color': 'bg-dark', 'background': 'rgba(0, 0, 102, 0.2)'}
 
     if user.groups.all()[0].name == 'common':
-        return {'group': 'Пользователь', 'bg-color': 'bg-primary', 'background': ''}
+        return {'group': _('User'), 'bg-color': 'bg-primary', 'background': ''}
 
     return {'group': '', 'bg-color': '', 'background': ''}
 
@@ -68,19 +69,19 @@ def format_stats(context, card):
     """ Формирует строку <tr> таблицы card-detail с числовыми параметрами карты """
 
     svg_path = 'core/images/'
-    cost = Parameter('Cost', f'{svg_path}cost.svg', card.cost)
+    cost = Parameter(_('Cost'), f'{svg_path}cost.svg', card.cost)
 
     # карты любого типа имеют, помимо стоимости, максимум 2 параметра, различающихся от типа к типу
     first_param, seconf_param = Parameter(None, None, None), Parameter(None, None, None)
 
     if card.card_type == Card.CardTypes.MINION:
-        first_param = Parameter('Attack', f'{svg_path}attack.svg', card.attack)
-        seconf_param = Parameter('Health', f'{svg_path}health.svg', card.health)
+        first_param = Parameter(_('Attack'), f'{svg_path}attack.svg', card.attack)
+        seconf_param = Parameter(_('Health'), f'{svg_path}health.svg', card.health)
     elif card.card_type == Card.CardTypes.WEAPON:
-        first_param = Parameter('Attack', f'{svg_path}attack.svg', card.attack)
-        seconf_param = Parameter('Durability', f'{svg_path}durability.svg', card.durability)
+        first_param = Parameter(_('Attack'), f'{svg_path}attack.svg', card.attack)
+        seconf_param = Parameter(_('Durability'), f'{svg_path}durability.svg', card.durability)
     elif card.card_type == Card.CardTypes.HERO:
-        seconf_param = Parameter('Armor', f'{svg_path}armor.svg', card.armor)
+        seconf_param = Parameter(_('Armor'), f'{svg_path}armor.svg', card.armor)
 
     context.update({'params': [p for p in (cost, first_param, seconf_param) if p.name]})
 
@@ -199,3 +200,9 @@ def get_deckcards_mechanics_stat(cards: DeckCards):
 @register.filter(name='setcls')
 def set_class_to_form_field(field, css_class: str):
     return field.as_widget(attrs={'class': css_class})
+
+
+@register.filter(name='mktitle')
+def get_page_title(title: str):
+    """ Возвращает заголовок, отображаемый на вкладках """
+    return f'{title} | NeuraHS'

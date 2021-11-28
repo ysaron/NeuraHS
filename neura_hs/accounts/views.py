@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes, force_text
+from django.utils.translation import gettext_lazy as _
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views import generic
 from django.conf import settings
@@ -24,7 +25,7 @@ class SignUp(DataMixin, generic.CreateView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        default_context = self.get_custom_context(title="Регистрация")
+        default_context = self.get_custom_context(title=_('Registration'))
         context |= default_context
         return context
 
@@ -34,7 +35,7 @@ class SignUp(DataMixin, generic.CreateView):
         user.save()
 
         site = get_current_site(self.request)
-        mail_subject = 'Активация аккаунта NeuraHS'
+        mail_subject = _('NeuraHS account activation')
         message = render_to_string(template_name='accounts/acc_active_email.html',
                                    context={'user': user,
                                             'domain': site.domain,
@@ -50,13 +51,14 @@ class SignUp(DataMixin, generic.CreateView):
 
         # Ручное сохранения данных для полей расширяющей модели
         user.author.about = form.cleaned_data.get('about')
+        user.save()
 
         # Присваивание групп и разрешений по умолчанию
         group = Group.objects.get(name='common')
         user.groups.add(group)
 
         return render(request=self.request,
-                      context={'title': 'Проверьте электронную почту',
+                      context={'title': _('Check your email'),
                                'top_menu': settings.TOP_MENU,
                                'side_menu': settings.SIDE_MENU},
                       template_name='accounts/acc_active_done.html')
@@ -74,13 +76,13 @@ def activate(request, uidb64, token):
         user.save()
         login(request, user)
         return render(request,
-                      context={'title': 'Аккаунт активирован',
+                      context={'title': _('The account is activated'),
                                'top_menu': settings.TOP_MENU,
                                'side_menu': settings.SIDE_MENU},
                       template_name='accounts/acc_active_complete.html')
     else:
         return render(request,
-                      context={'title': 'Активация провалена',
+                      context={'title': _('Activation has failed.'),
                                'top_menu': settings.TOP_MENU,
                                'side_menu': settings.SIDE_MENU},
                       template_name='accounts/acc_active_complete.html')
@@ -93,7 +95,7 @@ class SignIn(DataMixin, auth_views.LoginView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        default_context = self.get_custom_context(title='Авторизация')
+        default_context = self.get_custom_context(title=_('Authorization'))
         context |= default_context
         return context
 
@@ -118,7 +120,7 @@ class ChangePassword(DataMixin, auth_views.PasswordResetView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        default_context = self.get_custom_context(title='Смена пароля', label='Адрес электронной почты:')
+        default_context = self.get_custom_context(title=_('Change password'), label=_('Email'))
         context |= default_context
         return context
 
@@ -129,7 +131,7 @@ class ChangePasswordEmailed(DataMixin, auth_views.PasswordResetDoneView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        default_context = self.get_custom_context(title='Проверьте электронную почту')
+        default_context = self.get_custom_context(title=_('Check your email'))
         context |= default_context
         return context
 
@@ -141,7 +143,7 @@ class ChangePasswordConfirm(DataMixin, auth_views.PasswordResetConfirmView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        default_context = self.get_custom_context(title='Новый пароль')
+        default_context = self.get_custom_context(title=_('New password'))
         context |= default_context
         return context
 
@@ -152,7 +154,7 @@ class ChangePasswordComplete(DataMixin, auth_views.PasswordResetCompleteView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        default_context = self.get_custom_context(title='Пароль изменен')
+        default_context = self.get_custom_context(title=_('The password has been changed.'))
         context |= default_context
         return context
 

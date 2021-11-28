@@ -1,5 +1,8 @@
 {% extends 'core/base.html' %}
- 
+{% load custom_filters %}
+{% block title %}{{ title|mktitle }}{% endblock %}
+{% load i18n %}
+
 {% block content %}
 <h1>{{ title }}</h1>
 
@@ -7,9 +10,9 @@
 <div class="center-wrapper">
     <div class="info-item">
     {% if user.is_authenticated %}
-      <div>Ваш аккаунт не имеет прав доступа к этой странице</div>
+      <div>{% trans "Your account does not have permission to access this page." %}</div>
     {% else %}
-      <div>Авторизуйтесь для доступа к этой странице</div>
+      <div>{% trans "Log in to access this page" %}</div>
     {% endif %}
     </div>
 </div>
@@ -28,11 +31,11 @@
             <div class="common-form-field">
             <button type="submit" class="form-button form-button-green">
                 <span class="button-icon"><i class="fas fa-sign-in-alt"></i></span>
-                <span class="button-text">Войти</span>
+                <span class="button-text">{% trans "Sign in" %}</span>
             </button>
             <a role="button" class="form-button" href="{% url 'accounts:change_password' %}">
                 <span class="button-icon"><i class="fas fa-key"></i></span>
-                <span class="button-text">Forgot password?</span>
+                <span class="button-text">{% trans "Forgot password?" %}</span>
             </a>
             </div>
         </div>

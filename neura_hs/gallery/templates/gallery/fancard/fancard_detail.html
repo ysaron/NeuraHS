@@ -1,4 +1,7 @@
 {% extends "core/base.html" %}
+{% load custom_filters %}
+{% block title %}{{ title|mktitle }}{% endblock %}
+{% load i18n %}
 
 {% block scripts %}
     {% load static %}
@@ -6,7 +9,6 @@
 {% endblock %}
 
 {% block content %}
-{% load custom_filters %}
 <div class="modulewrap {{ fan_card|cclass }}">
 <div class="module">
 <div class="detailhead">
@@ -16,13 +18,13 @@
     <span>
       <a role="button" class="form-button" href="{{ fan_card.get_absolute_url }}/edit/">
           <span class="button-icon"><i class="far fa-edit"></i></span>
-          <span class="button-text">Edit</span>
+          <span class="button-text">{% trans "Edit" %}</span>
       </a>
     </span>
     <span>
       <a role="button" class="form-button form-button-red" href="{{ fan_card.get_absolute_url }}/delete/">
           <span class="button-icon"><i class="far fa-trash-alt"></i></span>
-          <span class="button-text">Delete</span>
+          <span class="button-text">{% trans "Remove" %}</span>
       </a>
     </span>
   </p>
@@ -32,48 +34,48 @@
 <table class="table table-bordered" id="tFCD">
   <tbody>
   <tr>
-    <td style="width:15%;"><strong>Автор</strong></td>
+    <td style="width:15%;"><strong>{% trans "Author" %}</strong></td>
     <td style="width:85%;"><a href="{{ fan_card.author.get_absolute_url }}">{{ fan_card.author }}</a></td>
   </tr>
   <tr>
-    <td><strong>Класс</strong></td>
+    <td><strong>{% trans "Class" %}</strong></td>
     <td>{% for card_class in fan_card.card_class.all %} {{ card_class }}{% if not forloop.last %} | {% endif %}{% endfor %}</td>
   </tr>
   {% if fan_card.text %}
   <tr>
-    <td><strong>Текст</strong></td>
+    <td><strong>{% trans "Text" %}</strong></td>
     <td>{{ fan_card.text }}</td>
   </tr>
   {% endif %}
   {% if fan_card.flavor %}
   <tr>
-    <td><strong>Описание</strong></td>
+    <td><strong>{% trans "Flavor" %}</strong></td>
     <td>{{ fan_card.flavor }}</td>
   </tr>
   {% endif %}
   <tr>
-    <td><strong>Тип</strong></td>
+    <td><strong>{% trans "Type" %}</strong></td>
     <td>{{ fan_card.get_card_type_display }}</td>   <!-- если есть choises: get_FOO_display, где FOO = имя поля -->
   </tr>
   <tr>
-    <td><strong>Редкость</strong></td>
+    <td><strong>{% trans "Rarity" %}</strong></td>
     <td>{{ fan_card.get_rarity_display }}</td>
   </tr>
   {% if fan_card.card_type == c_types.MINION %}
   <tr>
-    <td><strong>Раса</strong></td>
+    <td><strong>{% trans "Tribe" %}</strong></td>
     <td>{% for tribe in fan_card.tribe.all %} {{ tribe }}{% if not forloop.last %} | {% endif %}{% endfor %}</td>
   </tr>
   {% endif %}
   {% if fan_card.card_type == c_types.SPELL %}
   <tr>
-    <td><strong>Тип заклинания</strong></td>
+    <td><strong>{% trans "Spell type" %}</strong></td>
     <td>{{ fan_card.get_spell_school_display }}</td>
   </tr>
   {% endif %}
   {% format_stats fan_card %}
   <tr>
-    <td><strong>Дата создания</strong></td>
+    <td><strong>{% trans "Creation date" %}</strong></td>
     <td>{{ fan_card.creation_date|date:"d.m.Y H:i:s" }}</td>
   </tr>
   </tbody>

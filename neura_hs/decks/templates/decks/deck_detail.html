@@ -1,4 +1,7 @@
 {% extends "core/base.html" %}
+{% load custom_filters %}
+{% block title %}{{ title|mktitle }}{% endblock %}
+{% load i18n %}
 
 {% block scripts %}
     {% load static %}
@@ -7,7 +10,6 @@
 {% endblock %}
 
 {% block content %}
-{% load custom_filters %}
 {% if not deck.is_named %}
     <h1>{{ title }}</h1>
 {% endif %}
@@ -21,15 +23,15 @@
     <span>
         <button type="submit" class="form-button">
             <span class="button-icon"><i class="far fa-check-circle"></i></span>
-            <span class="button-text">Расшифровать</span>
-        </button>
-        <button type="button" class="form-button" onclick="clearDeckstringField()">
-            <span class="button-icon"><i class="far fa-times-circle"></i></span>
-            <span class="button-text">Очистить</span>
+            <span class="button-text">{% trans "Decipher" %}</span>
         </button>
         <button type="button" class="form-button" id="getRandomDeckstring">
             <span class="button-icon"><i class="far fa-question-circle"></i></span>
-            <span class="button-text">Случайная колода</span>
+            <span class="button-text">{% trans "Random deck" %}</span>
+        </button>
+        <button type="button" class="form-button" onclick="clearDeckstringField()">
+            <span class="button-icon"><i class="far fa-times-circle"></i></span>
+            <span class="button-text">{% trans "Clear" %}</span>
         </button>
     </span>
 </form>
@@ -52,18 +54,18 @@
             {% if deck.is_named %}
                 <span id="deckControlButtons">
                     <button type="button" id="deckRenameButton" onclick="showDeckRenameForm()">
-                        <span class="deck-control-icon" title="Переименовать колоду">
+                        <span class="deck-control-icon" title="{% trans 'Rename the deck' %}">
                             <i class="far fa-edit"></i>
                         </span>
                     </button>
                     <button type="button" id="deckDeleteButton" onclick="showDeckDeleteForm()">
-                        <span class="deck-control-icon" title="Удалить колоду">
+                        <span class="deck-control-icon" title="{% trans 'Remove the deck' %}">
                             <i class="far fa-trash-alt"></i>
                         </span>
                     </button>
                     <span class="mytooltip">
                       <button type="button" onclick="copyToClipboard()" onmouseover="tooltipFunc()">
-                        <span class="tooltiptext" id="copyTooltip">Copy to clipboard!!!!</span>
+                        <span class="tooltiptext" id="copyTooltip">Copy to clipboard</span>
                         <span class="deck-control-icon"><i class="far fa-copy"></i></span>
                       </button>
                     </span>
@@ -73,12 +75,12 @@
                         {{ deck_save_form.deck_name }}
                         {{ deck_save_form.string_to_save }}
                         <button type="submit">
-                            <span class="deck-control-icon" title="Принять новое название">
+                            <span class="deck-control-icon" title="{% trans 'Accept the new name' %}">
                                 <i class="far fa-check-square"></i>
                             </span>
                         </button>
                         <button type="button" id="deckRenameCancel" onclick="hideDeckRenameForm()">
-                            <span class="deck-control-icon" title="Назад">
+                            <span class="deck-control-icon" title="{% trans 'Back' %}">
                                 <i class="far fa-window-close"></i>
                             </span>
                         </button>
@@ -87,12 +89,12 @@
                 <form action="{% url 'decks:deck-delete' deck_id=deck.pk %}" method="post">{% csrf_token %}
                     <span id="deckDeleteForm" class="" style="display: none;">
                         <button class="" type="submit">
-                            <span class="deck-control-icon" title="Подтвердить удаление">
+                            <span class="deck-control-icon" title="{% trans 'Confirm deletion' %}">
                                 <i class="far fa-trash-alt"></i>
                             </span>
                         </button>
                         <button type="button" id="deckDeleteCancel" onclick="hideDeckDeleteForm()">
-                            <span class="deck-control-icon" title="Отмена">
+                            <span class="deck-control-icon" title="{% trans 'Cancel' %}">
                                 <i class="far fa-window-close"></i>
                             </span>
                         </button>
@@ -103,13 +105,13 @@
                 <span id="deckControlButtons2" class="">
                     {% if request.user.is_authenticated %}
                     <button type="button" id="deckSaveButton" onclick="showDeckSaveForm()">
-                        <span class="deck-control-icon" title="Сохранить себе">
+                        <span class="deck-control-icon" title="{% trans 'Save the deck' %}">
                             <i class="far fa-save"></i>
                         </span>
                     </button>
                     {% else %}
                     <button type="button" class="disabled">
-                        <span class="deck-control-icon" title="Авторизуйтесь, чтобы сохранить себе">
+                        <span class="deck-control-icon" title="{% trans 'Log in to save the deck' %}">
                             <i class="far fa-save"></i>
                         </span>
                     </button>
@@ -125,12 +127,12 @@
                     {{ deck_save_form.deck_name }}
                     {{ deck_save_form.string_to_save }}
                     <button type="submit">
-                        <span class="deck-control-icon" title="Сохранить с этим названием">
+                        <span class="deck-control-icon" title="{% trans 'Save with this name' %}">
                             <i class="far fa-check-square"></i>
                         </span>
                     </button>
                     <button type="button" id="deckSaveCancel" onclick="hideDeckSaveForm()">
-                        <span class="deck-control-icon" title="Отмена">
+                        <span class="deck-control-icon" title="{% trans 'Cancel' %}">
                             <i class="far fa-window-close"></i>
                         </span>
                     </button>
@@ -141,7 +143,7 @@
                 <span id="deckstringToCopy" style="display: none;">
                     {{ deck.get_deckstring_form.deckstring }}
                     <button type="button">
-                        <span class="deck-control-icon" title="Назад">
+                        <span class="deck-control-icon" title="{% trans 'Back' %}">
                             <i class="far fa-window-close"></i>
                         </span>
                     </button>
@@ -162,7 +164,7 @@
         <tbody class="deck-footer {{ deck|dclass }}">
         <tr>
         {% with prices=deck.included_cards|craft_cost %}
-            <td colspan="3">Крафт: {{ prices.0 }} | {{ prices.1 }} (голд)</td>
+            <td colspan="3">{% trans 'Craft' %}: {{ prices.0 }} | {{ prices.1 }} ({% trans 'gold' %})</td>
         {% endwith %}
         </tr>
         </tbody>
@@ -170,42 +172,42 @@
     </div>
     <div>
         <div class="info-item info-deck">
-            <h4>Типы</h4>
+            <h4>{% trans 'Types' %}</h4>
             <ol>
                 {% for ctype in deck.included_cards|dtypestat %}
                     <li>{{ ctype.name.label }}: {{ ctype.num_cards }}</li>
                 {% empty %}
-                    <li>Нет данных</li>
+                    <li>{% trans 'No data' %}</li>
                 {% endfor %}
             </ol>
         </div>
         <div class="info-item info-deck">
-            <h4>Редкости</h4>
+            <h4>{% trans 'Rarities' %}</h4>
             <ol>
                 {% for rar in deck.included_cards|draritystat %}
                     <li>{{ rar.name.label }}: {{ rar.num_cards }}</li>
                 {% empty %}
-                    <li>Нет данных</li>
+                    <li>{% trans 'No data' %}</li>
                 {% endfor %}
             </ol>
         </div>
         <div class="info-item info-deck">
-            <h4>Наборы</h4>
+            <h4>{% trans 'Sets' %}</h4>
             <ol>
                 {% for set in deck.included_cards|dsetsstat %}
                     <li>{{ set.name }} ({{ set.num_cards }})</li>
                 {% empty %}
-                    <li>Нет данных</li>
+                    <li>{% trans 'No data' %}</li>
                 {% endfor %}
             </ol>
         </div>
         <div class="info-item info-deck">
-            <h4>Механики</h4>
+            <h4>{% trans 'Mechanics' %}</h4>
             <ol>
                 {% for mech in deck.included_cards|dmechstat %}
                     <li>{{ mech.name }} ({{ mech.num_cards }})</li>
                 {% empty %}
-                    <li>Нет данных</li>
+                    <li>{% trans 'No data' %}</li>
                 {% endfor %}
             </ol>
         </div>

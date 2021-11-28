@@ -1,6 +1,7 @@
 import base64
 from io import BytesIO
 from typing import IO
+from django.utils.translation import gettext_lazy as _
 
 from .exceptions import DecodeError
 
@@ -16,7 +17,7 @@ def _read_varint(stream: IO) -> int:
     while True:
         c = stream.read(1)      # считываем по 1 байту в строку (1 символ)
         if c == "":
-            raise EOFError("Неожиданный EOF")
+            raise EOFError("Unexpected EOF")
         i = ord(c)
 
         result |= (i & 0x7f) << shift   # 0x7f = 0b01111111
@@ -48,17 +49,17 @@ def parse_deckstring(deckstring) -> tuple[CardIncludeList, CardList, int]:
         decoded = base64.b64decode(deckstring)      # декстринг в байты
     except Exception as e:
         # логировать e и deckstring?
-        raise DecodeError('Некорректный код колоды')
+        raise DecodeError(_('Invalid deck code'))
     data = BytesIO(decoded)                     # байты в поток байтов в оперативной памяти
 
     # первый байт: должен быть \0
     if data.read(1) != b"\0":
-        raise DecodeError('Некорректный код колоды')
+        raise DecodeError(_('Invalid deck code'))
 
     # второй байт: версия шифрования кодов колод
     version = _read_varint(data)
     if version != DECKSTRING_VERSION:
-        raise DecodeError(f'Версия кода "{version}" не поддерживается')
+        raise DecodeError(_('Unsupported deckstring version'))
 
     # третий байт: формат (режим игры)
     format_ = _read_varint(data)

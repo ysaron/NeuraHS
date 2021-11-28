@@ -1,4 +1,8 @@
 {% extends "core/base.html" %}
+{% load custom_filters %}
+{% block title %}{{ title|mktitle }}{% endblock %}
+{% load i18n %}
+
 {% block scripts %}
     {% load static %}
     <script src="{% static 'core/js/deck_list.js' %}?v=1.0.11"></script>
@@ -6,7 +10,6 @@
     <script src="{% static 'core/js/clean_search.js' %}?v=1.0.1"></script>
 {% endblock %}
 
-{% load custom_filters %}
 {% block page_title %}<h1>{{ title }}</h1>{% endblock %}
 
 {% block search %}
@@ -25,7 +28,7 @@
         <div class="col">
             <button type="submit" class="form-button">
                 <span class="button-icon"><i class="fas fa-search"></i></span>
-                <span class="button-text">Поиск</span>
+                <span class="button-text">{% trans "Search" %}</span>
             </button>
         </div>
     </div>
@@ -36,7 +39,7 @@
 {% block content %}
 {% if not is_paginated %}
     <div class="pagination">
-        <span class="page-item disabled"><a class="page-link">Всего результатов: {{ decks.count }}</a></span>
+        <span class="page-item disabled"><a class="page-link">{% trans "Total results:" %}: {{ decks.count }}</a></span>
     </div>
     <hr>
 {% endif %}
@@ -56,18 +59,18 @@
             <td colspan="3" class="deck-control">
                 <span>
                     <button><a role="button" href="{{ deck.get_absolute_url }}">
-                        <span class="deck-control-icon" title="Открыть страницу с подробной информацией">
+                        <span class="deck-control-icon" title="{% trans 'Open the detail page' %}">
                             <i class="fas fa-external-link-alt"></i>
                         </span>
                     </a></button>
                     <button type="button" class="deck-accordion">
-                        <span class="deck-control-icon" title="Развернуть (смотреть карты)">
+                        <span class="deck-control-icon" title="{% trans 'Expand (see cards)' %}">
                             <i class="far fa-caret-square-down"></i>
                         </span>
                     </button>
                     <span class="mytooltip">
                       <button type="button" class="copy-deck">
-                        <span class="tooltiptext">Copy to clipboard!</span>
+                        <span class="tooltiptext">Copy to clipboard</span>
                         <span class="deck-control-icon"><i class="far fa-copy"></i></span>
                       </button>
                     </span>
@@ -76,7 +79,7 @@
                     <span style="display: none;">
                         {{ deck.get_deckstring_form.deckstring }}
                         <button type="button">
-                            <span class="deck-control-icon" title="Назад">
+                            <span class="deck-control-icon" title="{% trans 'Back' %}">
                                 <i class="far fa-window-close"></i>
                             </span>
                         </button>
@@ -97,7 +100,7 @@
         <tbody class="deck-footer {{ deck|dclass }}">
         <tr>
         {% with prices=deck.included_cards|craft_cost %}
-            <td colspan="3">Крафт: {{ prices.0 }} | {{ prices.1 }} (голд)</td>
+            <td colspan="3">{% trans 'Craft' %}: {{ prices.0 }} | {{ prices.1 }} ({% trans 'gold' %})</td>
         {% endwith %}
         </tr>
         </tbody>
@@ -106,7 +109,7 @@
 {% endfor %}
 </div>
 {% if not decks %}
-    <div class="info-item">У вас пока нет сохраненных колод.</div>
+    <div class="info-item">{% trans "You don't have any saved decks yet." %}</div>
 {% endif %}
 
 {% endblock %}

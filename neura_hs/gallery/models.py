@@ -89,15 +89,15 @@ def update_profile_signal(sender, instance, created, **kwargs):
 class CardClass(Model):
     """ Модель игрового класса (Маг, Паладин и т.д.) """
 
-    name = models.CharField(max_length=255, help_text='Название игрового класса.',
-                            verbose_name='Класс')
+    name = models.CharField(max_length=255, help_text=_('The name of the in-game class.'),
+                            verbose_name=_('Class'))
     service_name = models.CharField(max_length=255, verbose_name='Service', default='', help_text='(!)',
                                     unique=True)
-    collectible = models.BooleanField(default=False, verbose_name='Коллекционный')
+    collectible = models.BooleanField(default=False, verbose_name=_('Collectible'))
 
     class Meta:
-        verbose_name = 'Игровой класс'
-        verbose_name_plural = 'Игровые классы'
+        verbose_name = _('In-game class')
+        verbose_name_plural = _('In-game classes')
 
     def __str__(self):
         """ Строковое представление объекта модели """
@@ -107,13 +107,13 @@ class CardClass(Model):
 class Tribe(Model):
     """ Модель расы (мурлок, демон и т.д.) """
 
-    name = models.CharField(max_length=255, verbose_name='Раса существа')
+    name = models.CharField(max_length=255, verbose_name=_('The tribe of the minion.'))
     service_name = models.CharField(max_length=255, verbose_name='Service', default='', help_text='(!)',
                                     unique=True)
 
     class Meta:
-        verbose_name = 'Раса существа'
-        verbose_name_plural = 'Расы существ'
+        verbose_name = _('The tribe of the minion.')
+        verbose_name_plural = _('The tribes of the minion.')
 
     def __str__(self):
         """ Строковое представление объекта модели """
@@ -122,12 +122,12 @@ class Tribe(Model):
 
 class CardSet(Model):
     """ Модель набора карт Hearthstone """
-    name = models.CharField(max_length=255, verbose_name='Название')
+    name = models.CharField(max_length=255, verbose_name=_('Name'))
     service_name = models.CharField(max_length=255, verbose_name='Service', default='', help_text='(!)', blank=True)
 
     class Meta:
-        verbose_name = 'Набор'
-        verbose_name_plural = 'Наборы карт'
+        verbose_name = _('Set')
+        verbose_name_plural = _('Sets')
 
     def __str__(self):
         """ Строковое представление объекта модели """
@@ -206,82 +206,83 @@ class Card(Model):
         TRADEABLE = 'tradeable', _('Tradeable')
         QUESTLINE = 'questline', _('Questline')
 
-    name = models.CharField(max_length=255, verbose_name='Название')
+    name = models.CharField(max_length=255, verbose_name=_('Name'))
     service_name = models.CharField(max_length=255, default='')
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='URL')
-    author = models.CharField(max_length=255, default='', verbose_name='Автор')
-    card_type = models.CharField(max_length=2, choices=CardTypes.choices, default=CardTypes.UNKNOWN, verbose_name='Тип')
-    card_class = models.ManyToManyField(CardClass, verbose_name='Класс',
-                                        help_text='Можно выбрать от 1 до 3 классов [Ctrl + ЛКМ].')
-    cost = models.SmallIntegerField(blank=True, null=True, default=0, verbose_name='Стоимость (мана)',
+    author = models.CharField(max_length=255, default='', verbose_name=_('Author'))
+    card_type = models.CharField(max_length=2, choices=CardTypes.choices, default=CardTypes.UNKNOWN,
+                                 verbose_name=_('Type'))
+    card_class = models.ManyToManyField(CardClass, verbose_name=_('Class'),
+                                        help_text=_('You can select from 1 to 3 classes [Ctrl + LMB].'))
+    cost = models.SmallIntegerField(blank=True, null=True, default=0, verbose_name=_('Cost (mana)'),
                                     validators=[MinValueValidator(0)])
-    attack = models.SmallIntegerField(blank=True, null=True, default=0, verbose_name='Атака',
-                                      help_text='Только для существ и оружия.',
+    attack = models.SmallIntegerField(blank=True, null=True, default=0, verbose_name=_('Attack'),
+                                      help_text=_('For minions and weapons only.'),
                                       validators=[MinValueValidator(0)])
-    health = models.SmallIntegerField(blank=True, null=True, default=0, verbose_name='Здоровье',
-                                      help_text='Только для существ.',
+    health = models.SmallIntegerField(blank=True, null=True, default=0, verbose_name=_('Health'),
+                                      help_text=_('For minions only.'),
                                       validators=[MinValueValidator(0)])
-    durability = models.SmallIntegerField(blank=True, null=True, default=0, verbose_name='Прочность',
-                                          help_text='Только для оружия.',
+    durability = models.SmallIntegerField(blank=True, null=True, default=0, verbose_name=_('Durability'),
+                                          help_text=_('For weapons only.'),
                                           validators=[MinValueValidator(0)])
-    armor = models.SmallIntegerField(blank=True, null=True, default=0, verbose_name='Броня',
-                                     help_text='Только для карт героя.',
+    armor = models.SmallIntegerField(blank=True, null=True, default=0, verbose_name=_('Armor'),
+                                     help_text=_('For hero cards only.'),
                                      validators=[MinValueValidator(0)])
-    text = models.TextField(max_length=1000, blank=True, default='', verbose_name='Текст',
-                            help_text='Текст карты, определяющий ее свойства.')
-    flavor = models.TextField(max_length=1000, blank=True, default='', verbose_name='Описание',
-                              help_text='Произвольный текст.')
-    rarity = models.CharField(max_length=2, choices=Rarities.choices, verbose_name='Редкость',
+    text = models.TextField(max_length=1000, blank=True, default='', verbose_name=_('Text'),
+                            help_text=_('The text of the card that defines its properties.'))
+    flavor = models.TextField(max_length=1000, blank=True, default='', verbose_name=_('Flavor'),
+                              help_text=_('Free text.'))
+    rarity = models.CharField(max_length=2, choices=Rarities.choices, verbose_name=_('Rarity'),
                               default=Rarities.UNKNOWN)
-    tribe = models.ManyToManyField(Tribe, blank=True, verbose_name='Раса',
-                                   help_text='Только для существ. Можно выбрать от 0 до 2 рас [Ctrl + ЛКМ].')
+    tribe = models.ManyToManyField(Tribe, blank=True, verbose_name=_('Tribe'),
+                                   help_text=_('For creatures only. You can select from 0 to 2 races [Ctrl + LMB].'))
     spell_school = models.CharField(max_length=2, choices=SpellSchools.choices, default=SpellSchools.UNKNOWN,
-                                    verbose_name='Школа магии', blank=True, help_text='Только для заклинаний.')
+                                    verbose_name=_('Spell school'), blank=True, help_text=_('For spells only.'))
     creation_date = models.DateTimeField(null=True, blank=True, auto_now_add=True,
-                                         verbose_name='Дата создания')
-    battlegrounds = models.BooleanField(default=False, verbose_name='Карта БГ')
+                                         verbose_name=_('Date of creation'))
+    battlegrounds = models.BooleanField(default=False, verbose_name=_('Battlegrounds card'))
 
     # поля, отражающие механики Hearthstone, используемые картой
-    silence = models.BooleanField(default=False, verbose_name='Немота')
-    battlecry = models.BooleanField(default=False, verbose_name='Боевой клич')
-    divine_shield = models.BooleanField(default=False, verbose_name='Божественный щит')
-    stealth = models.BooleanField(default=False, verbose_name='Маскировка')
-    overload = models.BooleanField(default=False, verbose_name='Перегрузка')
-    windfury = models.BooleanField(default=False, verbose_name='Неистовство ветра')
-    secret = models.BooleanField(default=False, verbose_name='Секрет')
-    charge = models.BooleanField(default=False, verbose_name='Рывок')
-    deathrattle = models.BooleanField(default=False, verbose_name='Предсмертный хрип')
-    taunt = models.BooleanField(default=False, verbose_name='Провокация')
-    spell_damage = models.BooleanField(default=False, verbose_name='Урон заклинаний')
-    combo = models.BooleanField(default=False, verbose_name='Серия приемов')
-    aura = models.BooleanField(default=False, verbose_name='Аура')
-    poison = models.BooleanField(default=False, verbose_name='Яд')
-    freeze = models.BooleanField(default=False, verbose_name='Заморозка')
-    rush = models.BooleanField(default=False, verbose_name='Натиск')
-    spell_immune = models.BooleanField(default=False, verbose_name='Иммунитет к таргетным заклинаниям')
-    lifesteal = models.BooleanField(default=False, verbose_name='Похищение жизни')
-    casts_when_drawn = models.BooleanField(default=False, verbose_name='При взятии')
-    inspire = models.BooleanField(default=False, verbose_name='Воодушевление')
-    spell_burst = models.BooleanField(default=False, verbose_name='Резонанс')
-    discover = models.BooleanField(default=False, verbose_name='Раскопка')
-    echo = models.BooleanField(default=False, verbose_name='Эхо')
-    quest = models.BooleanField(default=False, verbose_name='Квест')
-    side_quest = models.BooleanField(default=False, verbose_name='Побочный квест')
-    one_turn_effect = models.BooleanField(default=False, verbose_name='Эффект на один ход')
-    reborn = models.BooleanField(default=False, verbose_name='Перерождение')
-    outcast = models.BooleanField(default=False, verbose_name='Изгой')
-    magnetic = models.BooleanField(default=False, verbose_name='Магнетизм')
-    recruit = models.BooleanField(default=False, verbose_name='Вербовка')
-    corrupt = models.BooleanField(default=False, verbose_name='Порча')
-    twinspell = models.BooleanField(default=False, verbose_name='Дуплет')
-    jade_golem = models.BooleanField(default=False, verbose_name='Нефритовые големы')
-    adapt = models.BooleanField(default=False, verbose_name='Адаптация')
-    overkill = models.BooleanField(default=False, verbose_name='Сверхурон')
-    invoke = models.BooleanField(default=False, verbose_name='Воззвание')
-    blood_gem = models.BooleanField(default=False, verbose_name='Кровавые гемы')
-    frenzy = models.BooleanField(default=False, verbose_name='Бешенство')
-    tradeable = models.BooleanField(default=False, verbose_name='Можно обменять')
-    questline = models.BooleanField(default=False, verbose_name='Цепочка заданий')
+    silence = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    battlecry = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    divine_shield = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    stealth = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    overload = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    windfury = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    secret = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    charge = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    deathrattle = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    taunt = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    spell_damage = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    combo = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    aura = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    poison = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    freeze = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    rush = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    spell_immune = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    lifesteal = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    casts_when_drawn = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    inspire = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    spell_burst = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    discover = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    echo = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    quest = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    side_quest = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    one_turn_effect = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    reborn = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    outcast = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    magnetic = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    recruit = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    corrupt = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    twinspell = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    jade_golem = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    adapt = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    overkill = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    invoke = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    blood_gem = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    frenzy = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    tradeable = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
+    questline = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
 
     class Meta:
         abstract = True     # данный класс - не модель. Модели от него наследуются
@@ -293,7 +294,7 @@ class Card(Model):
         """
         return ', '.join([cardclass.name for cardclass in self.card_class.all()])
 
-    display_card_class.short_description = 'Класс'
+    display_card_class.short_description = _('Class')
 
     @classmethod
     def field_exists(cls, field):
@@ -313,19 +314,19 @@ class Card(Model):
 class RealCard(Card):
     """ Модель существующей карты. Экземпляры создаются скриптом """
 
-    card_id = models.CharField(max_length=255, default='', help_text='String ID of an existing card')
-    dbf_id = models.IntegerField(null=True, unique=True, help_text='Integer ID of an existing card')
-    card_set = models.ForeignKey(CardSet, on_delete=models.SET_NULL, null=True, verbose_name='Набор',
+    card_id = models.CharField(max_length=255, default='', help_text=_('String ID of an existing card'))
+    dbf_id = models.IntegerField(null=True, unique=True, help_text=_('Integer ID of an existing card'))
+    card_set = models.ForeignKey(CardSet, on_delete=models.SET_NULL, null=True, verbose_name=_('Set'),
                                  related_name='cardsets')
-    artist = models.CharField(max_length=255, blank=True, verbose_name='Художник')
-    collectible = models.BooleanField(default=True, verbose_name='Коллекционная')
+    artist = models.CharField(max_length=255, blank=True, verbose_name=_('Artist'))
+    collectible = models.BooleanField(default=True, verbose_name=_('Collectible'))
 
     objects = CardQuerySet.as_manager()
     includibles = IncludibleCardManager()
 
     class Meta(Card.Meta):
-        verbose_name = 'Карта Hearthstone'
-        verbose_name_plural = 'Карты Hearthstone'
+        verbose_name = _('Hearthstone card')
+        verbose_name_plural = _('Hearthstone cards')
         ordering = ['-cost']
 
     def __str__(self):
@@ -340,14 +341,14 @@ class RealCard(Card):
 class FanCard(Card):
     """ Модель фановой карты. Экземпляры создаются юзерами через формы """
 
-    author = models.ForeignKey(Author, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Автор')
-    state = models.BooleanField(default=False, verbose_name='Отображать')
+    author = models.ForeignKey(Author, on_delete=models.SET_NULL, blank=True, null=True, verbose_name=_('Author'))
+    state = models.BooleanField(default=False, verbose_name=_('Display'))
 
     objects = CardQuerySet.as_manager()
 
     class Meta(Card.Meta):
-        verbose_name = 'Фан-карта'
-        verbose_name_plural = 'Фан-карты'
+        verbose_name = _('Fan card')
+        verbose_name_plural = _('Fan cards')
         ordering = ['-creation_date', 'name']
 
     def __str__(self):

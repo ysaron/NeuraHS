@@ -2,6 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
+from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from .models import RealCard, FanCard, CardClass, Tribe, CardSet, Author
 from .forms import CreateCardForm, RealCardFilterForm, UpdateCardForm, \
@@ -22,7 +23,7 @@ class CreateCard(LoginRequiredMixin, DataMixin, generic.CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(CreateCard, self).get_context_data(**kwargs)
-        default_context = self.get_custom_context(title='Создание новой карты', update=False)
+        default_context = self.get_custom_context(title=_('Creation of a new card'), update=False)
         context |= default_context
         return context
 
@@ -45,8 +46,8 @@ class UpdateCard(LoginRequiredMixin, UserPassesTestMixin, DataMixin, generic.Upd
 
     def get_context_data(self, **kwargs):
         context = super(UpdateCard, self).get_context_data(**kwargs)
-        default_context = self.get_custom_context(title=f'Редактирование карты "{self.object.name}"',
-                                                  slug=self.object.slug, update=True)
+        title = _('Editing card %(card)s') % {'card': self.object.name}
+        default_context = self.get_custom_context(title=title, slug=self.object.slug, update=True)
         context |= default_context
         return context
 
@@ -65,7 +66,7 @@ class UpdateCard(LoginRequiredMixin, UserPassesTestMixin, DataMixin, generic.Upd
 
 
 def card_changed(request):
-    context = {'title': 'Карта была изменена',
+    context = {'title': _('The card has been changed'),
                'top_menu': settings.TOP_MENU,
                'side_menu': settings.SIDE_MENU}
     return render(request,
@@ -84,7 +85,8 @@ class DeleteCard(LoginRequiredMixin, UserPassesTestMixin, DataMixin, generic.Del
 
     def get_context_data(self, **kwargs):
         context = super(DeleteCard, self).get_context_data(**kwargs)
-        default_context = self.get_custom_context(title=f'Удаление карты "{self.object.name}"',
+        title = _('Removing card %(card)s') % {'card': self.object.name}
+        default_context = self.get_custom_context(title=title,
                                                   slug=self.object.slug,
                                                   name=self.object.name)
         context |= default_context
@@ -105,8 +107,6 @@ class RealCardListView(DataMixin, generic.ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        # переменная form, ссылающаяся на форму фильтрации, будет доступна в шаблоне
-        # форма по умолчанию заполняется данными из словаря GET объекта HTTPRequest (форма сохранит предыдущие значения)
         prev_values = {'name': self.request.GET.get('name', ''),
                        'rarity': self.request.GET.get('rarity', ''),
                        'collectible': self.request.GET.get('collectible', ''),
@@ -115,7 +115,7 @@ class RealCardListView(DataMixin, generic.ListView):
                        'card_class': self.request.GET.get('card_class', ''),
                        'card_set': self.request.GET.get('card_set', ''),
                        'mechanic': self.request.GET.get('mechanic')}
-        default_context = self.get_custom_context(title='Карты Hearthstone',
+        default_context = self.get_custom_context(title=_('Hearthstone cards'),
                                                   form=RealCardFilterForm(initial=prev_values))
         context |= default_context
         return context
@@ -195,7 +195,7 @@ class FanCardListView(DataMixin, generic.ListView):
         """ Переопределение метода для передачи шаблону дополнительных переменных """
         context = super().get_context_data(**kwargs)
         prev_values = {'name': self.request.GET.get('name')}
-        default_context = self.get_custom_context(title='Фан-карты',
+        default_context = self.get_custom_context(title=_('Fan cards'),
                                                   form=FanCardFilterForm(initial=prev_values))
         context |= default_context
         return context
@@ -227,7 +227,7 @@ class AuthorListView(DataMixin, generic.ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        default_context = self.get_custom_context(title='Авторы фан-карт')
+        default_context = self.get_custom_context(title=_('Fan-card authors'))
         context |= default_context
         return context
 
@@ -243,7 +243,7 @@ class AuthorDetailView(DataMixin, generic.DetailView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        default_context = self.get_custom_context(title='Авторы фан-карт')
+        default_context = self.get_custom_context(title=self.object.user.username)
         context |= default_context
         return context
 

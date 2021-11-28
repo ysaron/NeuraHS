@@ -22,22 +22,20 @@ from django.views.generic import RedirectView
 
 from core.views import homepage, about, contact, statistics
 
-
 urlpatterns = [
     path('', RedirectView.as_view(url='decks/', permanent=True), name='home'),
-    path('decks/', include('decks.urls')),
     path('admin/', admin.site.urls),
-    path('accounts/', include('accounts.urls')),
-    path('about/', about, name='about'),
-    path('contact/', contact, name='contact'),
-    path('statistics/', statistics, name='statistics'),
     path('i18n/', include('django.conf.urls.i18n')),
 ]
 # приложения, для которых мы хотим делать перевод
 urlpatterns += i18n_patterns(
     path('gallery/', include('gallery.urls')),
+    path('decks/', include('decks.urls')),
+    path('accounts/', include('accounts.urls')),
+    path('about/', about, name='about'),
+    path('contact/', contact, name='contact'),
+    path('statistics/', statistics, name='statistics'),
 )
-
 
 if settings.DEBUG:
     # Подключение статических файлов (локально)
@@ -45,4 +43,5 @@ if settings.DEBUG:
 
     # Django Debug Toolbar
     import debug_toolbar
+
     urlpatterns += [path('__debug__/', include(debug_toolbar.urls))]

@@ -1,4 +1,7 @@
 {% extends "core/base.html" %}
+{% load custom_filters %}
+{% block title %}{{ title|mktitle }}{% endblock %}
+{% load i18n %}
 
 {% block scripts %}
     {% load static %}
@@ -50,7 +53,7 @@
         <div class="col">
             <button type="submit" class="form-button">
                 <span class="button-icon"><i class="fas fa-search"></i></span>
-                <span class="button-text">Поиск</span>
+                <span class="button-text">{% trans "Search" %}</span>
             </button>
         </div>
     </div>
@@ -58,12 +61,11 @@
 {% endblock %}
 
 {% block content %}
-{% load custom_filters %}
 
 {% if realcards %}
-{% if not is_paginated %}   <!-- Подсчет результатов на единственной странице -->
+{% if not is_paginated %}
     <div class="pagination">
-        <span class="page-item disabled"><a class="page-link">Всего результатов: {{ realcards.count }}</a></span>
+        <span class="page-item disabled"><a class="page-link">{% trans "Total results" %}: {{ realcards.count }}</a></span>
     </div>
     <hr>
 {% endif %}
@@ -72,16 +74,16 @@
 <table class="tablelist" id="tRCL">
   <thead class="darktable">
     <tr>
-      <th style="min-width: 30%;">Название</th>
-      <th style="min-width: 15%;">Тип</th>
-      <th style="min-width: 25%;">Класс</th>
-      <th style="min-width: 35%;">Сет</th>
+      <th style="min-width: 30%;">{% trans "Name" %}</th>
+      <th style="min-width: 15%;">{% trans "Type" %}</th>
+      <th style="min-width: 25%;">{% trans "Class" %}</th>
+      <th style="min-width: 35%;">{% trans "Set" %}</th>
     </tr>
   </thead>
   <tbody>
   {% for card in realcards %}
   <tr class="{{ card|cclass }} {{ card|rar }} rartext clickable-row">
-    <td class=""><a class="" href="{{ card.get_absolute_url }}" target="_blank" title="Детальное описание карты {{ card.name }}">{{ card }}</a></td>
+    <td class=""><a class="" href="{{ card.get_absolute_url }}" target="_blank" title="{% trans 'Detailed description of' %} {{ card.name }}">{{ card }}</a></td>
     <td>{{ card.get_card_type_display }}</td>
     <td>{% for card_class in card.card_class.all %} {{ card_class }}{% if not forloop.last %} | {% endif %}{% endfor %}</td>
     <td>{{ card.card_set }}</td>
@@ -93,7 +95,7 @@
 </div>
 {% else %}
 <div class="center-wrapper">
-    <div class="info-item">Не обнаружено ни одной карты...</div>
+    <div class="info-item">{% trans "No cards found..." %}</div>
 </div>
 {% endif %}
 {% endblock %}

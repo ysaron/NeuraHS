@@ -30,14 +30,14 @@ class NamedDeckManager(models.Manager):
 class Format(models.Model):
     """ Формат обычного режима игры Hearthstone """
 
-    name = models.CharField(max_length=255, default=_('Unknown'), verbose_name='Название')
-    numerical_designation = models.PositiveSmallIntegerField(verbose_name='Код формата', default=0)
-    available_sets = models.ManyToManyField(CardSet, blank=True, verbose_name='Доступные аддоны',
-                                            help_text='Наборы карт, которые можно использовать в данном формате')
+    name = models.CharField(max_length=255, default=_('Unknown'), verbose_name=_('Name'))
+    numerical_designation = models.PositiveSmallIntegerField(verbose_name=_('Format code'), default=0)
+    available_sets = models.ManyToManyField(CardSet, blank=True, verbose_name=_('Available sets'),
+                                            help_text=_('Card sets that can be used in this format'))
 
     class Meta:
-        verbose_name = 'Формат'
-        verbose_name_plural = 'Форматы'
+        verbose_name = _('Format')
+        verbose_name_plural = _('Formats')
 
     def __str__(self):
         return self.name
@@ -46,28 +46,28 @@ class Format(models.Model):
 class Deck(models.Model):
     """ Колода Hearthstone """
 
-    name = models.CharField(max_length=255, default='', blank=True, verbose_name='Название',
-                            help_text='Название, устанавливаемое пользователем')
+    name = models.CharField(max_length=255, default='', blank=True, verbose_name=_('Name'),
+                            help_text=_('User-definable name'))
     author = models.ForeignKey(Author, on_delete=models.SET_NULL, related_name='decks', null=True, blank=True,
-                               verbose_name='Автор', help_text='')
-    string = models.TextField(max_length=1500, verbose_name='Код колоды',
-                              help_text='Код, используемый для определения карт, составляющих колоду')
+                               verbose_name=_('Author'))
+    string = models.TextField(max_length=1500, verbose_name=_('Deck code'),
+                              help_text=_('The string used to identify the cards that make up the deck.'))
     cards = models.ManyToManyField(RealCard, through='Inclusion',
-                                   verbose_name='Карты', help_text='Карты, составляющие колоду')
-    deck_class = models.ForeignKey(CardClass, on_delete=models.CASCADE, related_name='decks', verbose_name='Класс',
-                                   help_text='Класс, для которого составлена колода')
+                                   verbose_name=_('Cards'), help_text=_('The cards that make up the deck.'))
+    deck_class = models.ForeignKey(CardClass, on_delete=models.CASCADE, related_name='decks', verbose_name=_('Class'),
+                                   help_text=_('The class for which the deck is built.'))
     deck_format = models.ForeignKey(Format, on_delete=models.CASCADE,
-                                    related_name='decks', verbose_name='Формат',
-                                    help_text='Формат, для которого предназначена колода')
-    created = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
+                                    related_name='decks', verbose_name=_('Formats'),
+                                    help_text=_('The format for which the deck is intended.'))
+    created = models.DateTimeField(auto_now_add=True, verbose_name=_('Time of creation.'))
 
     nameless = NamelessDeckManager()
     objects = models.Manager()
     named = NamedDeckManager()
 
     class Meta:
-        verbose_name = 'Колода'
-        verbose_name_plural = 'Колоды'
+        verbose_name = _('Deck')
+        verbose_name_plural = _('Decks')
         ordering = ['-created']
 
     def __str__(self):
@@ -93,7 +93,8 @@ class Deck(models.Model):
             try:
                 card = RealCard.includibles.get(dbf_id=dbf_id)
             except RealCard.DoesNotExist:
-                raise UnsupportedCards(f'Нет данных о карте {dbf_id}')
+                msg = _('No card data (id %(id)s)') % {'id': dbf_id}
+                raise UnsupportedCards(msg)
             ci = Inclusion(deck=instance, card=card, number=number)
             ci.save()
             instance.cards.add(card)
@@ -129,7 +130,7 @@ class Inclusion(models.Model):
     """ Параметры вхождения карты в колоду (Intermediate Model) """
     card = models.ForeignKey(RealCard, on_delete=models.CASCADE)
     deck = models.ForeignKey(Deck, on_delete=models.CASCADE)
-    number = models.PositiveSmallIntegerField(verbose_name='Количество',
-                                              help_text='Количество вхождений карты в колоду')
+    number = models.PositiveSmallIntegerField(verbose_name=_('Amount'),
+                                              help_text=_('The number of card inclusions in the deck.'))
 
     objects = IncluSionManager.as_manager()

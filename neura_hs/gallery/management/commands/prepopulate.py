@@ -28,24 +28,23 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         self.add_user_groups()
-        self.stdout.write('Готово')
+        self.stdout.write('Ready')
 
     def add_user_groups(self):
         editor, created = Group.objects.get_or_create(name='editor')
-        msg = 'Создана группа "editor"' if created else 'Группа "editor" уже существует'
+        msg = 'Created the "editor" group' if created else 'The "editor" group already exists'
         self.stdout.write(msg)
         set_permissions_to_group(editor, editor_perms)
-        self.stdout.write('Обновлены разрешения для группы "editor"')
+        self.stdout.write('Updated permissions for the "editor" group')
 
         common, created = Group.objects.get_or_create(name='common')
-        msg = 'Создана группа "common"' if created else 'Группа "common" уже существует'
+        msg = 'Created the "common" group' if created else 'The "common" group already exists'
         self.stdout.write(msg)
         set_permissions_to_group(common, common_perms)
-        self.stdout.write('Обновлены разрешения для группы "common"')
+        self.stdout.write('Updated permissions for the "common" group')
 
 
 def set_permissions_to_group(group: Group, permissions: list[str]):
-    """  """
     for perm in permissions:
         app, codename = perm.split('.')
         group.permissions.add(Permission.objects.get(content_type__app_label=app, codename=codename))

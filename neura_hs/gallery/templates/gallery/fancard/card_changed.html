@@ -1,13 +1,16 @@
 {% extends "core/base.html" %}
+{% load custom_filters %}
+{% block title %}{{ title|mktitle }}{% endblock %}
+{% load i18n %}
 
 {% block content %}
 <h1>{{ title }}</h1>
 
 <div class="center-wrapper">
     <div class="info-item">
-        <b>На сайте применяется премодерация.</b>
-        После проверки карта станет доступна в <a href="{% url 'gallery:fancards' %}">хранилище</a>.
-        <div class="note"><a href="{% url 'gallery:createcard' %}">Создать еще одну карту</a></div>
+        <b>{% trans "This site uses pre-moderation." %}</b>
+        {% trans 'After verification, the card will be available in' %} <a href="{% url 'gallery:fancards' %}">{% trans 'the storage' %}</a>.
+        <div class="note"><a href="{% url 'gallery:createcard' %}">{% trans "Create another card" %}</a></div>
     </div>
 </div>
 <p></p>

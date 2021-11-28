@@ -1,5 +1,6 @@
+{% load i18n %}
 <div class="pagination">
-  <span class="page-item disabled"><a class="page-link">Всего результатов: {{ paginator.count }}</a></span>
+  <span class="page-item disabled"><a class="page-link">{% trans "Total results" %}: {{ paginator.count }}</a></span>
   <!-- Предыдущий GET-запрос сохраняется при постраничном переходе -->
   {% if page_obj.has_previous %}
     <span class="page-item"><a class="page-link" href="?{% for key, value in request.GET.items %}{% if key != 'page' and value != '' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ page_obj.previous_page_number }}">&lt;</a></span>

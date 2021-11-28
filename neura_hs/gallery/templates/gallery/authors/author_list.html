@@ -1,15 +1,17 @@
 {% extends "core/base.html" %}
+{% load custom_filters %}
+{% block title %}{{ title|mktitle }}{% endblock %}
+{% load i18n %}
 
 {% block page_title %}
     <h1>{{ title }}</h1>
 {% endblock %}
 
 {% block content %}
-{% load custom_filters %}
 
 {% if not is_paginated %}
 <div class="pagination">
-    <span class="page-item disabled"><a class="page-link">Всего авторов: {{ authors.count }}</a></span>
+    <span class="page-item disabled"><a class="page-link">{% trans "Total authors" %}: {{ authors.count }}</a></span>
 </div>
 {% endif %}
 
@@ -20,7 +22,7 @@
     </div>
     {% empty %}
     <div class="info-item info-deck">
-        <div>Никто пока не создавал фан-карт...</div>
+        <div>{% trans "Nobody has created fan cards yet..." %}</div>
     </div>
     {% endfor %}
 </div>

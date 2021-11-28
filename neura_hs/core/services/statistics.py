@@ -1,5 +1,6 @@
 from collections import namedtuple
 from django.db.models import Count
+from django.utils.translation import gettext_lazy as _
 
 from gallery.models import RealCard, FanCard
 from decks.models import Deck, Format
@@ -12,8 +13,8 @@ def get_fancard_statistics() -> list[StatisticsItem]:
     num_fancards = FanCard.objects.count()
     num_leg_fancards = FanCard.objects.search_by_rarity(RealCard.Rarities.LEGENDARY).count()
 
-    return [StatisticsItem('Всего', num_fancards),
-            StatisticsItem('Легендарные', num_leg_fancards)]
+    return [StatisticsItem(_('Total'), num_fancards),
+            StatisticsItem(_('Legendary'), num_leg_fancards)]
 
 
 def get_realcard_statistics() -> list[StatisticsItem]:
@@ -29,16 +30,16 @@ def get_realcard_statistics() -> list[StatisticsItem]:
     num_realcards_lf = collectibles.search_by_mechanic(RealCard.Mechanics.LIFESTEAL).count()
     num_realcards_spells = collectibles.search_by_type(RealCard.CardTypes.SPELL).count()
 
-    return [StatisticsItem('Всего', num_realcards),
-            StatisticsItem('Коллекционные', num_realcards_coll),
-            StatisticsItem('Легендарные', num_realcards_leg),
-            StatisticsItem('Эпические', num_realcards_epic),
-            StatisticsItem('Редкие', num_realcards_rare),
-            StatisticsItem('Обычные', num_realcards_common),
-            StatisticsItem('С "Боевым кличем"', num_realcards_bc),
-            StatisticsItem('С "Предсмертным хрипом"', num_realcards_dr),
-            StatisticsItem('С "Похищением жизни"', num_realcards_lf),
-            StatisticsItem('Заклинания', num_realcards_spells)]
+    return [StatisticsItem(_('Total'), num_realcards),
+            StatisticsItem(_('Collectible'), num_realcards_coll),
+            StatisticsItem(_('Legendary'), num_realcards_leg),
+            StatisticsItem(_('Epic'), num_realcards_epic),
+            StatisticsItem(_('Rare'), num_realcards_rare),
+            StatisticsItem(_('Common'), num_realcards_common),
+            StatisticsItem(_('Has BattleCry'), num_realcards_bc),
+            StatisticsItem(_('Has DeathRattle'), num_realcards_dr),
+            StatisticsItem(_('Has LifeSteal'), num_realcards_lf),
+            StatisticsItem(_('Spells'), num_realcards_spells)]
 
 
 def get_deck_statistics() -> list[StatisticsItem]:
@@ -50,17 +51,17 @@ def get_deck_statistics() -> list[StatisticsItem]:
     num_classic = decks.filter(deck_format__numerical_designation=3).count()
     num_highlander = decks.filter(num_unique_cards=30).count()
 
-    return [StatisticsItem('Всего', num_all),
-            StatisticsItem('Стандарт', num_standard),
-            StatisticsItem('Вольный', num_wild),
-            StatisticsItem('Классик', num_classic),
-            StatisticsItem('Хайлендер', num_highlander)]
+    return [StatisticsItem(_('Total'), num_all),
+            StatisticsItem(_('Standard'), num_standard),
+            StatisticsItem(_('Wild'), num_wild),
+            StatisticsItem(_('Classic'), num_classic),
+            StatisticsItem(_('Highlander'), num_highlander)]
 
 
 def get_statistics_context() -> dict:
     context = {}
-    context |= {'fancards': StatisticsList('Фан-карты', get_fancard_statistics())}
-    context |= {'realcards': StatisticsList('Карты Hearthstone', get_realcard_statistics())}
-    context |= {'decks': StatisticsList('Колоды', get_deck_statistics())}
+    context |= {'fancards': StatisticsList(_('Fan cards'), get_fancard_statistics())}
+    context |= {'realcards': StatisticsList(_('HS cards'), get_realcard_statistics())}
+    context |= {'decks': StatisticsList(_('Decks'), get_deck_statistics())}
 
     return context

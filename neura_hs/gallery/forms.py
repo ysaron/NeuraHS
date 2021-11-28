@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 from .models import RealCard, FanCard, CardClass, Tribe, CardSet, User
 from utils.mixins import EditCardMixin
 
@@ -23,30 +24,30 @@ class UpdateCardForm(EditCardMixin, forms.ModelForm):
 
 class RealCardFilterForm(forms.Form):
     """ Форма фильтрации и поиска карт Hearthstone """
-    name = forms.CharField(required=False, label='Название')
+    name = forms.CharField(required=False, label=_('Name'))
 
     RARITIES = RealCard.Rarities.choices
-    rarity = forms.ChoiceField(choices=RARITIES, required=False, label='Редкость')
+    rarity = forms.ChoiceField(choices=RARITIES, required=False, label=_('Rarity'))
 
-    collectible = forms.NullBooleanField(required=False, label='Коллекционная')
+    collectible = forms.NullBooleanField(required=False, label=_('Collectible'))
 
     MECHANICS = RealCard.Mechanics.choices
-    mechanic = forms.ChoiceField(choices=MECHANICS, required=False, label='Механика')
+    mechanic = forms.ChoiceField(choices=MECHANICS, required=False, label=_('Mechanics'))
 
     CARD_TYPES = RealCard.CardTypes.choices
-    card_type = forms.ChoiceField(choices=CARD_TYPES, required=False, label='Тип')
+    card_type = forms.ChoiceField(choices=CARD_TYPES, required=False, label=_('Type'))
 
     TRIBES = Tribe.objects.all()
-    tribe = forms.ModelChoiceField(queryset=TRIBES, required=False, label='Раса существа')
+    tribe = forms.ModelChoiceField(queryset=TRIBES, required=False, label=_('Tribe'))
 
     CARD_CLASSES = CardClass.objects.all()
-    card_class = forms.ModelChoiceField(queryset=CARD_CLASSES, required=False, label='Класс')
+    card_class = forms.ModelChoiceField(queryset=CARD_CLASSES, required=False, label=_('Class'))
 
     CARD_SETS = CardSet.objects.all()
-    card_set = forms.ModelChoiceField(queryset=CARD_SETS, required=False, label='Набор')
+    card_set = forms.ModelChoiceField(queryset=CARD_SETS, required=False, label=_('Set'))
 
     # update() в данном случае лаконичнее, чем |
-    name.widget.attrs.update({'class': 'form-input', 'placeholder': 'Введите название карты'})
+    name.widget.attrs.update({'class': 'form-input', 'placeholder': _('Enter card name')})
     rarity.widget.attrs.update({'class': 'form-input'})
     collectible.widget.attrs.update({'class': 'form-input'})
     card_type.widget.attrs.update({'class': 'form-input'})
@@ -58,6 +59,6 @@ class RealCardFilterForm(forms.Form):
 
 class FanCardFilterForm(forms.Form):
     """ Форма фильтрации и поиска фан-карт """
-    name = forms.CharField(required=False, label='Название')
+    name = forms.CharField(required=False, label=_('Name'))
 
-    name.widget.attrs.update({'class': 'form-input', 'placeholder': 'Введите название карты'})
+    name.widget.attrs.update({'class': 'form-input', 'placeholder': _('Enter card name')})

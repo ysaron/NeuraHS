@@ -15,6 +15,7 @@ from decks.models import Deck, Format, Inclusion
 
 locale_list = ['enUS', 'ruRU']
 endpoint_list = ['info', 'cards']
+rewrite_help_msg = 'Rewrite cards and rebuild decks. Use in case of changing existing cards'
 
 
 class Command(BaseCommand):
@@ -25,7 +26,7 @@ class Command(BaseCommand):
         self.rewrite: bool = False
 
     def add_arguments(self, parser):
-        parser.add_argument('-r', '--rewrite', action='store_true', help='rewrite the entire table')
+        parser.add_argument('-r', '--rewrite', action='store_true', help=rewrite_help_msg)
 
     def handle(self, *args, **options):
 
@@ -34,11 +35,11 @@ class Command(BaseCommand):
         self.rewrite = options['rewrite']
 
         api = HsApiWorker(host=settings.HSAPI_HOST, token=settings.X_RAPIDARI_KEY)
-        self.stdout.write('Запрос к API: карты (en)...')
+        self.stdout.write('API request: enUS cards...')
         en_cards = api.get_data(endpoint='cards', locale='enUS')
-        self.stdout.write('Запрос к API: карты (ru)...')
+        self.stdout.write('API request: ruRU cards...')
         ru_cards = api.get_data(endpoint='cards', locale='ruRU')
-        self.stdout.write('Запрос к API: текущее состояние игры...')
+        self.stdout.write('API request: current Hearthstone state...')
         info = api.get_data(endpoint='info', locale='enUS')
 
         # создание списка подлежащих записи карт из JSON
@@ -53,7 +54,7 @@ class Command(BaseCommand):
                         tribes=tribes, card_sets=card_sets)
 
         if self.rewrite:
-            self.stdout.write('Удаление устаревших данных...')
+            self.stdout.write('Removing obsolete data...')
             base.clear_db()
 
         with transaction.atomic():
@@ -69,7 +70,7 @@ class Command(BaseCommand):
             base.rebuild_decks()
 
         end = datetime.now() - start
-        self.stdout.write(f'Обновление БД заняло {end.seconds} с')
+        self.stdout.write(f'Database update took {end.seconds}s')
 
 
 class DbWorker:
@@ -91,7 +92,7 @@ class DbWorker:
         """ Записывает существующие игровые классы (en + ru) """
         with open(DbWorker.translations, 'r', encoding='utf-8') as f:
             translations = json.load(f)
-            for cls in tqdm(self.card_classes, desc='Классы', ncols=100):
+            for cls in tqdm(self.card_classes, desc='Classes', ncols=100):
                 if CardClass.objects.filter(service_name=cls).exists():
                     continue
                 card_class = CardClass(name=cls, service_name=cls)
@@ -101,7 +102,7 @@ class DbWorker:
     @staticmethod
     def update_card_classes():
         """ Обновляет данные классов на основе записанных карт """
-        for cls in tqdm(CardClass.objects.all(), desc='Обновление данных о классах', ncols=100):
+        for cls in tqdm(CardClass.objects.all(), desc='Updating class data...', ncols=100):
             if RealCard.objects.filter(collectible=True, card_class=cls).exists():
                 cls.collectible = True
                 cls.save()
@@ -110,7 +111,7 @@ class DbWorker:
         """ Записывает существующие расы существ (en + ru) """
         with open(DbWorker.translations, 'r', encoding='utf-8') as f:
             translations = json.load(f)
-            for t in tqdm(self.tribes, desc='Расы', ncols=100):
+            for t in tqdm(self.tribes, desc='Tribes', ncols=100):
                 if Tribe.objects.filter(service_name=t).exists():
                     continue
                 tribe = Tribe(name=t, service_name=t)
@@ -121,7 +122,7 @@ class DbWorker:
         """ Записывает существующие наборы карт (en + ru) """
         with open(DbWorker.translations, 'r', encoding='utf-8') as f:
             translations = json.load(f)
-            for s in tqdm(self.card_sets, desc='Аддоны', ncols=100):
+            for s in tqdm(self.card_sets, desc='Addons', ncols=100):
                 if CardSet.objects.filter(service_name=s).exists():
                     continue
                 card_set = CardSet(name=s, service_name=s)
@@ -138,14 +139,15 @@ class DbWorker:
         """  """
         with open(DbWorker.translations, 'r', encoding='utf-8') as f:
             translations = json.load(f)
-            for fmt in tqdm(translations['formats'], desc='Форматы', ncols=100):
+            for fmt in tqdm(translations['formats'], desc='Formats', ncols=100):
                 if Format.objects.filter(numerical_designation=fmt['num']).exists():
                     continue
                 format_ = Format(numerical_designation=fmt['num'], name=fmt['name_en'])
+                format_.name_ru = fmt['name_ru']
                 format_.save()
 
     def write_en_cards(self, rewrite):
-        for j_card in tqdm(self.en_cards, desc='Карты (en)', ncols=100):
+        for j_card in tqdm(self.en_cards, desc='Cards (enUS)', ncols=100):
             if not rewrite:    # только что очищенную таблицу нет смысла проверять на содержание записи
                 if RealCard.objects.filter(card_id=j_card['cardId']).exists():
                     continue
@@ -173,7 +175,7 @@ class DbWorker:
             r_card.battlegrounds = r_card.card_set == 'Battlegrounds'
 
             self.write_mechanics_to_card(r_card, j_card)
-            self.write_set_to_card(r_card, j_card)      # if not mercenaries?
+            self.write_set_to_card(r_card, j_card)
 
             r_card.save()
 
@@ -233,7 +235,7 @@ class DbWorker:
 
     def add_ru_translation(self):
         """ Добавляет полям 'name', 'text' и 'flavor' карт перевод на русский """
-        for j_card in tqdm(self.ru_cards, desc='Перевод на русский', ncols=100):
+        for j_card in tqdm(self.ru_cards, desc='ruRU translation', ncols=100):
             card_id = j_card['cardId']
             r_card = RealCard.objects.get(card_id=card_id)
             r_card.name_ru = j_card['name']
@@ -290,12 +292,12 @@ class HsApiWorker:
     @staticmethod
     def check_endpoint(endpoint: str) -> None:
         if endpoint not in endpoint_list:
-            raise ValueError(f'endpoint must be one of {endpoint_list}')
+            raise ValueError(f'Endpoint must be one of {endpoint_list}')
 
     @staticmethod
     def check_locale(loc: str) -> None:
         if loc not in locale_list:
-            raise ValueError(f'locale must be one of {locale_list}')
+            raise ValueError(f'Locale must be one of {locale_list}')
 
     def get_data(self, endpoint: str, locale: str = 'enUS'):
         """

@@ -1,5 +1,6 @@
 from pathlib import Path
 import sys
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -210,22 +211,26 @@ LOGGING = {
 # --------------------------------------------- НАСТРОЙКИ ПРОЕКТА --------------------------------------------------- #
 
 TOP_MENU = {
-    'main': {'title': "Главная", 'url_name': 'home'},
-    'about': {'title': "О сайте", 'url_name': 'about'},
-    'api': {'title': "coming soon", 'url_name': ''}
+    'main': {'title': _('Main page'), 'url_name': 'home'},
+    'about': {'title': _('About'), 'url_name': 'about'},
+    'api': {'title': 'coming soon', 'url_name': ''}
 }
 
 SIDE_MENU = {
-    'main': {'title': "Статистика", 'url_name': 'statistics', 'popup': ''},
-    'real_cards': {'title': "Карты HS", 'url_name': 'gallery:realcards', 'popup': 'Карты Hearthstone'},
-    'fan_cards': {'title': "Фан-карты",
-                  'base': {'title': "База данных", 'url_name': 'gallery:fancards', 'popup': ''},
-                  'create': {'title': "Создать", 'url_name': 'gallery:createcard', 'popup': ''},
-                  'authors': {'title': "Авторы", 'url_name': 'gallery:authors', 'popup': ''}},
-    'decks': {'title': "Колоды",
-              'create': {'title': "Создать", 'url_name': 'decks:index', 'popup': ''},
-              'base': {'title': "База данных", 'url_name': 'decks:all_decks', 'popup': ''},
-              'mine': {'title': "Мои колоды", 'url_name': 'decks:user_decks', 'popup': ''}},
+    'main': {'title': _('Statistics'),
+             'url_name': 'statistics',
+             'popup': ''},
+    'real_cards': {'title': _('HS cards'),
+                   'url_name': 'gallery:realcards',
+                   'popup': _('Hearthstone cards')},
+    'fan_cards': {'title': _('Fan cards'),
+                  'base': {'title': _('Database'), 'url_name': 'gallery:fancards', 'popup': ''},
+                  'create': {'title': _('Create'), 'url_name': 'gallery:createcard', 'popup': ''},
+                  'authors': {'title': _('Authors'), 'url_name': 'gallery:authors', 'popup': ''}},
+    'decks': {'title': _('Decks'),
+              'create': {'title': _('Create'), 'url_name': 'decks:index', 'popup': ''},
+              'base': {'title': _('Database'), 'url_name': 'decks:all_decks', 'popup': ''},
+              'mine': {'title': _('My decks'), 'url_name': 'decks:user_decks', 'popup': ''}},
 }
 
 # API Hearthstone

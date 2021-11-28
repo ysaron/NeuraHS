@@ -1,4 +1,7 @@
 {% extends "core/base.html" %}
+{% load custom_filters %}
+{% block title %}{{ title|mktitle }}{% endblock %}
+{% load i18n %}
 
 {% block scripts %}
     {% load static %}
@@ -20,7 +23,7 @@
         <div class="col">
             <button type="submit" class="form-button">
                 <span class="button-icon"><i class="fas fa-search"></i></span>
-                <span class="button-text">Поиск</span>
+                <span class="button-text">{% trans "Search" %}</span>
             </button>
         </div>
     </div>
@@ -28,11 +31,10 @@
 {% endblock %}
 
 {% block content %}
-{% load custom_filters %}
 {% if fancards %}
     {% if not is_paginated %}
         <div class="pagination">
-            <span class="page-item disabled"><a class="page-link">Всего результатов: {{ fancards.count }}</a></span>
+            <span class="page-item disabled"><a class="page-link">{% trans "Total results" %}: {{ fancards.count }}</a></span>
         </div>
     {% endif %}
 <div class="info-item">
@@ -40,10 +42,10 @@
     <table class="tablelist" id="tFCL">
       <thead class="darktable">
         <tr>
-          <th style="min-width: 40%;">Название</th>
-          <th style="min-width: 20%;">Автор</th>
-          <th style="min-width: 15%;">Тип</th>
-          <th style="min-width: 25%;">Дата создания</th>
+          <th style="min-width: 40%;">{% trans "Name" %}</th>
+          <th style="min-width: 20%;">{% trans "Author" %}</th>
+          <th style="min-width: 15%;">{% trans "Type" %}</th>
+          <th style="min-width: 25%;">{% trans "Creation date" %}</th>
         </tr>
       </thead>
       <tbody>
@@ -61,7 +63,7 @@
 </div>
 {% else %}
 <div class="center-wrapper">
-    <div class="info-item">Не обнаружено ни одной карты...</div>
+    <div class="info-item">{% trans "No cards found..." %}</div>
 </div>
 {% endif %}
 {% endblock %}

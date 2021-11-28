@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 from slugify import slugify as translit_slugify
 from gallery.models import RealCard, FanCard, CardClass, Tribe
@@ -15,7 +16,7 @@ class DataMixin:
         :param kwargs: именованные аргументы, помещаемые в контекст из views
         :return: переменная контекста
         """
-        # Сюда можно выносить повторяющийся контекст (меню и т.д.)
+        # повторяющийся контекст (меню и т.д.)
 
         context = kwargs
 
@@ -33,7 +34,8 @@ class EditCardMixin:
         name = self.cleaned_data['name']
         max_symbols = 30
         if len(name) > max_symbols:
-            raise ValidationError(f'Длина имени "{name}" превышает {max_symbols} символов.')
+            msg = _('"%(name)s" is longer than %(num)s characters') % {'name': name, 'num': max_symbols}
+            raise ValidationError(msg)
         return name
 
     def clean_card_class(self: forms.ModelForm):
@@ -44,7 +46,8 @@ class EditCardMixin:
         if neutral in card_classes:
             return [neutral]    # нейтральный класс устанавливается независимо от прочих выбранных классов
         if (num := len(card_classes)) > 3:
-            raise ValidationError(f'Можно выбрать не более 3 классов (выбрано: {num})')
+            msg = _('A maximum of 3 classes can be selected (selected: %(num)s)') % {'num': num}
+            raise ValidationError(msg)
         return card_classes
 
     def clean_tribe(self: forms.ModelForm):
@@ -54,44 +57,45 @@ class EditCardMixin:
         if alltribe in tribes:
             return [alltribe]   # раса "Всё" устанавливается независимо от прочих выбранных рас
         if tribes and self.cleaned_data['card_type'] != FanCard.CardTypes.MINION:
-            raise ValidationError('Расу можно указывать только для существ. Ctrl + ЛКМ - отменить выбор расы.')
+            raise ValidationError(_('Tribe can only be specified for minions. Ctrl + LMB - deselect the tribe.'))
         if (num := len(tribes)) > 2:
-            raise ValidationError(f'Можно выбрать не более 2 рас (выбрано: {num})')
+            msg = _('You can select up to 2 races (selected: %(num)s)') % {'num': num}
+            raise ValidationError(msg)
         return tribes
 
     def clean_spell_school(self: forms.ModelForm):
         """ Валидатор, запрещающий выбор Spell School не для заклинания """
         spell_school = self.cleaned_data['spell_school']
         if spell_school and self.cleaned_data['card_type'] != FanCard.CardTypes.SPELL:
-            raise ValidationError('Тип заклинания можно указать только у... ну да, заклинания.')
+            raise ValidationError(_('The spell type can only be specified for... well, spells.'))
         return spell_school
 
     def clean_attack(self: forms.ModelForm):
         """ Валидатор, запрещающий установку показателя атаки не для существа/оружия """
         attack = self.cleaned_data['attack']
         if attack and self.cleaned_data['card_type'] not in [FanCard.CardTypes.MINION, FanCard.CardTypes.WEAPON]:
-            raise ValidationError('Атака может быть указана только для существа и оружия.')
+            raise ValidationError(_('Attack can only be specified for minion or weapon.'))
         return attack
 
     def clean_health(self: forms.ModelForm):
         """ Валидатор, запрещающий установку показателя здоровья не для существа """
         health = self.cleaned_data['health']
         if health and self.cleaned_data['card_type'] != FanCard.CardTypes.MINION:
-            raise ValidationError('Только существо может иметь показатель здоровья.')
+            raise ValidationError(_('Only minions can have a health.'))
         return health
 
     def clean_durability(self: forms.ModelForm):
         """ Валидатор, запрещающий установку показателя прочности не для оружия """
         durability = self.cleaned_data['durability']
         if durability and self.cleaned_data['card_type'] != FanCard.CardTypes.WEAPON:
-            raise ValidationError('Только оружие может иметь показатель прочности.')
+            raise ValidationError(_('Only weapons can have a durability.'))
         return durability
 
     def clean_armor(self: forms.ModelForm):
         """ Вадидатор, запрещающий установку показателя брони не для карты героя """
         armor = self.cleaned_data['armor']
         if armor and self.cleaned_data['card_type'] != FanCard.CardTypes.HERO:
-            raise ValidationError('Только карта героя может иметь показатель брони.')
+            raise ValidationError(_('Only hero cards can have an armor.'))
         return armor
 
     def clean_slug(self: forms.ModelForm):
