@@ -30,6 +30,8 @@ INSTALLED_APPS = [
     'decks.apps.DecksConfig',
     'debug_toolbar',
     'fontawesome_free',
+    'rest_framework',
+    'api.apps.ApiConfig',
 ]
 
 MIDDLEWARE = [

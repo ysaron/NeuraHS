@@ -26,6 +26,8 @@ urlpatterns = [
     path('', RedirectView.as_view(url='decks/', permanent=True), name='home'),
     path('admin/', admin.site.urls),
     path('i18n/', include('django.conf.urls.i18n')),
+    path('api-auth/', include('rest_framework.urls')),      # для тестирования API через веб-интерфейс
+    path('api/v1/', include('api.urls')),
 ]
 # приложения, для которых мы хотим делать перевод
 urlpatterns += i18n_patterns(

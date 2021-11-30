@@ -17,6 +17,3 @@ urlpatterns = [
     path('authors/', views.AuthorListView.as_view(), name='authors'),
     path('author/<int:author_id>', views.AuthorDetailView.as_view(), name='author-detail'),
 ]
-
-
-

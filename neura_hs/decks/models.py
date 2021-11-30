@@ -128,8 +128,8 @@ class Deck(models.Model):
 
 class Inclusion(models.Model):
     """ Параметры вхождения карты в колоду (Intermediate Model) """
-    card = models.ForeignKey(RealCard, on_delete=models.CASCADE)
-    deck = models.ForeignKey(Deck, on_delete=models.CASCADE)
+    card = models.ForeignKey(RealCard, on_delete=models.CASCADE, related_name='inclusions')
+    deck = models.ForeignKey(Deck, on_delete=models.CASCADE, related_name='inclusions')
     number = models.PositiveSmallIntegerField(verbose_name=_('Amount'),
                                               help_text=_('The number of card inclusions in the deck.'))
 
