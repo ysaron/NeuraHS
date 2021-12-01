@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'fontawesome_free',
     'rest_framework',
+    'django_filters',
     'api.apps.ApiConfig',
 ]
 
@@ -126,6 +127,12 @@ MEDIA_URL = '/media/'
 
 # Выбор в админ-панели множества записей
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 20000
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
+}
 
 # Перенаправить на домашний URL после входа в систему
 # (по умолчанию перенаправляет на /accounts/profile/)

@@ -1,4 +1,5 @@
 from rest_framework import generics
+from django_filters.rest_framework import DjangoFilterBackend
 
 from .serializers import (
     RealCardListSerializer,
@@ -6,6 +7,7 @@ from .serializers import (
     DeckSerializer,
     UserDeckSerializer
 )
+from .services.filters import RealCardFilter, DeckFilter
 from gallery.models import RealCard, CardClass, CardSet, Tribe
 from decks.models import Deck, Format, Inclusion
 
@@ -15,6 +17,8 @@ class RealCardListAPIView(generics.ListAPIView):
 
     queryset = RealCard.objects.all()
     serializer_class = RealCardListSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = RealCardFilter
 
 
 class RealCardDetailAPIView(generics.RetrieveAPIView):
@@ -30,6 +34,8 @@ class DeckListAPIView(generics.ListAPIView):
 
     queryset = Deck.nameless.all()
     serializer_class = DeckSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = DeckFilter
 
 
 class UserDeckListAPIView(generics.ListAPIView):

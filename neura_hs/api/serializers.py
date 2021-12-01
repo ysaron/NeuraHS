@@ -7,7 +7,7 @@ from decks.models import Deck, Format, Inclusion
 class FilterCardListSerializer(serializers.ListSerializer):
 
     def to_representation(self, data):
-        data = data.filter(collectible=True, attack=9)
+        data = data.filter(collectible=True)
         return super().to_representation(data)
 
     def update(self, instance, validated_data):
