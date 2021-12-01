@@ -3,7 +3,7 @@ from io import BytesIO
 from typing import IO
 from django.utils.translation import gettext_lazy as _
 
-from .exceptions import DecodeError
+from core.exceptions import DecodeError
 
 DECKSTRING_VERSION = 1
 
@@ -26,17 +26,6 @@ def _read_varint(stream: IO) -> int:
             break
 
     return result
-
-
-def get_clean_deckstring(deckstring: str) -> str:
-    """ Выделяет код колоды из формата, в котором колода копируется из Hearthstone """
-
-    deckstring = deckstring.strip()
-
-    if not deckstring.startswith('###'):
-        return deckstring
-
-    return deckstring.split('#')[-3].strip()
 
 
 def parse_deckstring(deckstring) -> tuple[CardIncludeList, CardList, int]:

@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from django.urls.base import reverse_lazy
 from gallery.models import RealCard, Author, CardClass, CardSet
 from .decrypt import parse_deckstring
-from .exceptions import UnsupportedCards
+from core.exceptions import UnsupportedCards
 
 
 class NamelessDeckManager(models.Manager):
