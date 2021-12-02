@@ -58,41 +58,19 @@ class DeckDetailAPIView(generics.RetrieveAPIView):
     serializer_class = DeckSerializer
 
 
-# class ViewDeckAPIView(APIView):
-#     """  """
-#
-#     def get(self, request):
-#         if deckstring := request.GET.get('d'):
-#             try:
-#                 deckstring = get_clean_deckstring(deckstring)
-#                 print(deckstring)
-#                 deckstring = deckstring.replace(' ', '+')
-#                 print(deckstring)
-#                 deck = Deck.create_from_deckstring(deckstring)
-#                 serializer = DeckSerializer(deck)
-#                 return Response(serializer.data)
-#             except DecodeError as de:
-#                 raise de
-#             except UnsupportedCards as u:
-#                 raise u
-#
-#         return Response()
-#
-#     def post(self, request):
-#         print(request.POST)
-#         if deckstring := request.POST.get('d'):
-#             try:
-#                 deckstring = get_clean_deckstring(deckstring)
-#                 print(deckstring)
-#                 deckstring = deckstring.replace(' ', '+')
-#                 print(deckstring)
-#                 deck = Deck.create_from_deckstring(deckstring)
-#                 serializer = DeckSerializer(deck)
-#                 return Response(serializer.data)
-#             except DecodeError as de:
-#                 raise de
-#             except UnsupportedCards as u:
-#                 raise u
-#
-#         return Response()
+class ViewDeckAPIView(APIView):
+    """ Расшифровка колоды из кода """
 
+    def post(self, request):
+        if deckstring := request.data.get('d'):
+            try:
+                deckstring = get_clean_deckstring(deckstring)
+                deck = Deck.create_from_deckstring(deckstring)
+                serializer = DeckSerializer(deck)
+                return Response(serializer.data)
+            except DecodeError as de:
+                return Response({'error': str(de)})
+            except UnsupportedCards as u:
+                return Response({'error': str(u)})
+
+        return Response()

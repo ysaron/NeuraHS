@@ -47,6 +47,7 @@ class DeckFilter(filters.FilterSet):
         fields = ('dformat', 'dclass', 'date', 'cards')
 
     def filter_decks_by_cards(self, queryset, name, value):
+        """ Позволяет фильтровать колоды по картам, указывая их dbf_id через запятую """
 
         for dbf_id in value.split(","):
             queryset = queryset.filter(cards__dbf_id=dbf_id)

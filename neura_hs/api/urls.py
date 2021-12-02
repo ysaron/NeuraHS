@@ -10,5 +10,5 @@ urlpatterns = [
     path('decks/', views.DeckListAPIView.as_view()),
     path('decks/<int:pk>/', views.DeckDetailAPIView.as_view()),
     path('my_decks/', views.UserDeckListAPIView.as_view()),
-    # path('get_deck/', views.ViewDeckAPIView.as_view()),
+    path('get_deck/', views.ViewDeckAPIView.as_view()),
 ]
