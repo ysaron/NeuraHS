@@ -20,7 +20,7 @@ from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 from django.views.generic import RedirectView
 
-from core.views import homepage, about, contact, statistics
+from core.views import homepage, about, contact, statistics, api_greeting
 from .yasg import urlpatterns as doc_urls
 
 urlpatterns = [
@@ -38,6 +38,7 @@ urlpatterns += i18n_patterns(
     path('about/', about, name='about'),
     path('contact/', contact, name='contact'),
     path('statistics/', statistics, name='statistics'),
+    path('api/', api_greeting, name='api_greeting'),
 )
 
 urlpatterns += doc_urls

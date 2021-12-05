@@ -2,7 +2,7 @@
 <div class="topmenu">
     <a href="{% url top_menu.main.url_name %}">{{ top_menu.main.title }}</a>
     <a href="{% url top_menu.about.url_name %}">{{ top_menu.about.title }}</a>
-    <a href="#">{{ top_menu.api.title }}</a>
+    <a href="{% url top_menu.api.url_name %}">{{ top_menu.api.title }}</a>
     {% if user.is_authenticated %}
         <a class="logbar logbar-in" id="logout" href="{% url 'accounts:signout' %}">{% trans "Log out" %}</a>
         <a class="logbar logbar-in"><b>{{ user.username }}</b></a>

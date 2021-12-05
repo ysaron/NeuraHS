@@ -6,7 +6,7 @@ from drf_yasg import openapi
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="NeuraHS API documentation",
+        title="API documentation | NeuraHS",
         default_version='v1',
         description='',
         license=openapi.License(name="BSD License"),

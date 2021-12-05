@@ -223,7 +223,7 @@ LOGGING = {
 TOP_MENU = {
     'main': {'title': _('Main page'), 'url_name': 'home'},
     'about': {'title': _('About'), 'url_name': 'about'},
-    'api': {'title': 'coming soon', 'url_name': ''}
+    'api': {'title': 'API', 'url_name': 'api_greeting'}
 }
 
 SIDE_MENU = {

@@ -36,3 +36,10 @@ def statistics(request: HttpRequest):
     context |= {'statistics': get_statistics_context()}
 
     return render(request=request, template_name='core/index.html', context=context)
+
+
+def api_greeting(request: HttpRequest):
+    context = {'top_menu': settings.TOP_MENU,
+               'side_menu': settings.SIDE_MENU,
+               'title': 'API'}
+    return render(request, template_name='core/api.html', context=context)

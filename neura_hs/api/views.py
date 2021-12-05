@@ -16,7 +16,7 @@ from decks.models import Deck, Format, Inclusion
 
 
 class RealCardListAPIView(generics.ListAPIView):
-    """ Вывод списка карт Hearthstone """
+    """ Getting a list of Hearthstone cards """
 
     queryset = RealCard.objects.all()
     serializer_class = RealCardListSerializer
@@ -25,7 +25,7 @@ class RealCardListAPIView(generics.ListAPIView):
 
 
 class RealCardDetailAPIView(generics.RetrieveAPIView):
-    """ Вывод карты Hearthstone """
+    """ Getting one Hearthstone card. """
 
     queryset = RealCard.objects.all()
     serializer_class = RealCardDetailSerializer
@@ -33,7 +33,7 @@ class RealCardDetailAPIView(generics.RetrieveAPIView):
 
 
 class DeckListAPIView(generics.ListAPIView):
-    """ Вывод списка колод """
+    """ Getting a list of decks """
 
     queryset = Deck.nameless.all()
     serializer_class = DeckSerializer
@@ -42,13 +42,13 @@ class DeckListAPIView(generics.ListAPIView):
 
 
 class DeckDetailAPIView(generics.RetrieveAPIView):
-    """ Вывод колоды """
+    """ Getting a specific deck """
     queryset = Deck.nameless.all()
     serializer_class = DeckSerializer
 
 
 class ViewDeckAPIView(APIView):
-    """ Расшифровка колоды из кода """
+    """ Decoding the deck from code """
 
     def post(self, request):
         if deckstring := request.data.get('d'):

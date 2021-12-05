@@ -15,7 +15,7 @@ class FilterCardListSerializer(serializers.ListSerializer):
 
 
 class RealCardSerializer(serializers.ModelSerializer):
-    """  """
+    """ Base Card serializer """
     card_type = serializers.CharField(source='get_card_type_display')
     card_set = serializers.SlugRelatedField(slug_field='name', read_only=True)
     card_class = serializers.SlugRelatedField(slug_field='name', read_only=True, many=True)
@@ -25,7 +25,6 @@ class RealCardSerializer(serializers.ModelSerializer):
 
 
 class RealCardListSerializer(RealCardSerializer):
-    """  """
 
     class Meta:
         list_serializer_class = FilterCardListSerializer
@@ -36,7 +35,6 @@ class RealCardListSerializer(RealCardSerializer):
 
 
 class RealCardDetailSerializer(RealCardSerializer):
-    """  """
 
     class Meta:
         model = RealCard
@@ -46,7 +44,6 @@ class RealCardDetailSerializer(RealCardSerializer):
 
 
 class RealCardInDeckSerializer(RealCardSerializer):
-    """  """
 
     class Meta:
         model = RealCard
