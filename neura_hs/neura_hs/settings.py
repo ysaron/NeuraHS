@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'fontawesome_free',
     'rest_framework',
     'django_filters',
+    'drf_yasg',
     'api.apps.ApiConfig',
 ]
 

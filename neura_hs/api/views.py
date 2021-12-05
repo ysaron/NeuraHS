@@ -7,7 +7,6 @@ from .serializers import (
     RealCardListSerializer,
     RealCardDetailSerializer,
     DeckSerializer,
-    UserDeckSerializer
 )
 from .services.filters import RealCardFilter, DeckFilter
 from core.services.utils import get_clean_deckstring
@@ -40,16 +39,6 @@ class DeckListAPIView(generics.ListAPIView):
     serializer_class = DeckSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = DeckFilter
-
-
-class UserDeckListAPIView(generics.ListAPIView):
-    """ Вывод списка сохраненных колод текущего пользователя """
-
-    serializer_class = UserDeckSerializer
-
-    def get_queryset(self):
-        decks = Deck.named.filter(author=self.request.user.author)
-        return decks
 
 
 class DeckDetailAPIView(generics.RetrieveAPIView):

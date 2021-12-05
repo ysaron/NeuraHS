@@ -21,6 +21,7 @@ from django.conf.urls.i18n import i18n_patterns
 from django.views.generic import RedirectView
 
 from core.views import homepage, about, contact, statistics
+from .yasg import urlpatterns as doc_urls
 
 urlpatterns = [
     path('', RedirectView.as_view(url='decks/', permanent=True), name='home'),
@@ -38,6 +39,8 @@ urlpatterns += i18n_patterns(
     path('contact/', contact, name='contact'),
     path('statistics/', statistics, name='statistics'),
 )
+
+urlpatterns += doc_urls
 
 if settings.DEBUG:
     # Подключение статических файлов (локально)

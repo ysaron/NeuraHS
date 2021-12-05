@@ -32,6 +32,7 @@ class RealCardListSerializer(RealCardSerializer):
         model = RealCard
         fields = ('dbf_id', 'card_id', 'name', 'collectible', 'card_type', 'cost', 'attack', 'health', 'durability',
                   'armor', 'card_class', 'card_set', 'text', 'rarity')
+        ref_name = 'CardList'
 
 
 class RealCardDetailSerializer(RealCardSerializer):
@@ -41,6 +42,7 @@ class RealCardDetailSerializer(RealCardSerializer):
         model = RealCard
         fields = ('dbf_id', 'card_id', 'name', 'collectible', 'battlegrounds', 'card_type', 'cost', 'attack', 'health',
                   'durability', 'armor', 'card_class', 'card_set', 'text', 'flavor', 'rarity', 'tribe', 'spell_school')
+        ref_name = 'Card'
 
 
 class RealCardInDeckSerializer(RealCardSerializer):
@@ -50,6 +52,7 @@ class RealCardInDeckSerializer(RealCardSerializer):
         model = RealCard
         fields = ('dbf_id', 'card_id', 'name', 'card_type', 'cost', 'attack', 'health', 'durability', 'armor',
                   'card_class', 'card_set', 'text', 'flavor', 'rarity', 'tribe', 'spell_school')
+        ref_name = 'CardInDeck'
 
 
 class InclusionSerializer(serializers.ModelSerializer):
@@ -60,6 +63,7 @@ class InclusionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Inclusion
         fields = ('card', 'number')
+        ref_name = 'CardInclusion'
 
 
 class DeckSerializer(serializers.ModelSerializer):
@@ -72,10 +76,3 @@ class DeckSerializer(serializers.ModelSerializer):
     class Meta:
         model = Deck
         fields = ('id', 'deck_format', 'deck_class', 'string', 'created', 'cards')
-
-
-class UserDeckSerializer(DeckSerializer):
-
-    class Meta:
-        model = Deck
-        fields = ('id', 'name', 'deck_format', 'deck_class', 'string', 'created', 'cards')
