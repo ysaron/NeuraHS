@@ -2,6 +2,7 @@ from django_filters import rest_framework as filters
 
 from gallery.models import RealCard, CardClass, CardSet
 from decks.models import Deck, Format
+from .utils import generate_choicefield_description as gcd
 
 
 class CharInFilter(filters.BaseInFilter, filters.CharFilter):
@@ -18,9 +19,10 @@ class RealCardFilter(filters.FilterSet):
     dbf_id = filters.NumberFilter()
     name = filters.CharFilter(field_name='name', lookup_expr='icontains')
     classes = CharInFilter(field_name='card_class__name', lookup_expr='in')
-    ctype = filters.ChoiceFilter(field_name='card_type', choices=RealCard.CardTypes.choices)
+    ctype = filters.ChoiceFilter(field_name='card_type', choices=RealCard.CardTypes.choices,
+                                 help_text=gcd(RealCard, 'CardTypes'))
     cset = filters.ModelChoiceFilter(queryset=CardSet.objects.all(), field_name='card_set', to_field_name='name')
-    rarity = filters.ChoiceFilter(choices=RealCard.Rarities.choices)
+    rarity = filters.ChoiceFilter(choices=RealCard.Rarities.choices, help_text=gcd(RealCard, 'Rarities'))
     cost = filters.RangeFilter()
     attack = filters.RangeFilter()
     health = filters.RangeFilter()
