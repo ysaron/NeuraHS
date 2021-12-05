@@ -19,6 +19,9 @@
     min-width: 0;
     margin: 0 0;
   }
+  .form-button {
+    margin-bottom: 2px;
+  }
 }
 
 @media screen and (max-width: 1050px) {

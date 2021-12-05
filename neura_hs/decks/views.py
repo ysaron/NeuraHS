@@ -21,7 +21,7 @@ def create_deck(request: HttpRequest):
     """ Форма для кода колоды + ее отображение """
 
     deck, deckstring_form, deck_save_form = None, None, None
-    title = _('Hearthstone | Deciphering the deck code')
+    title = _('Hearthstone | Decoding the deck code')
 
     if request.method == 'POST':
         if 'deckstring' in request.POST:        # код колоды отправлен с формы DeckstringForm

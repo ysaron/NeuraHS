@@ -73,7 +73,7 @@ function tooltipFunc() {
 }
 
 function clearDeckstringField() {
-    $('#form-deckstring').val('');
+    $('#form-deckstring').val('').focus();
 }
 
 function mail() {
