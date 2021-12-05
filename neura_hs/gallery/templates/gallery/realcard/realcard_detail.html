@@ -82,7 +82,7 @@
   <div class="info-item info-deck">
     <h4>{% trans "Decks with this card" %}</h4>
     <ul>
-      {% for inclusion in real_card.inclusion_set.nameless %}
+      {% for inclusion in real_card.inclusions.nameless %}
         <li><a href="{{ inclusion.deck.get_absolute_url }}">{{ inclusion.deck }}</a></li>
       {% empty %}
         <li>{% trans "This card hasn't been found in known decks." %}</li>
