@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import generics, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django_filters.rest_framework import DjangoFilterBackend
@@ -15,6 +15,20 @@ from gallery.models import RealCard, CardClass, CardSet, Tribe
 from decks.models import Deck, Format, Inclusion
 
 
+class RealCardViewSet(viewsets.ReadOnlyModelViewSet):
+    """ Getting Hearthstone cards """
+    queryset = RealCard.objects.all()
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = RealCardFilter
+    lookup_field = 'dbf_id'
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return RealCardListSerializer
+        elif self.action == 'retrieve':
+            return RealCardDetailSerializer
+
+
 class RealCardListAPIView(generics.ListAPIView):
     """ Getting a list of Hearthstone cards """
 
@@ -25,7 +39,7 @@ class RealCardListAPIView(generics.ListAPIView):
 
 
 class RealCardDetailAPIView(generics.RetrieveAPIView):
-    """ Getting one Hearthstone card. """
+    """ Getting one Hearthstone card """
 
     queryset = RealCard.objects.all()
     serializer_class = RealCardDetailSerializer
