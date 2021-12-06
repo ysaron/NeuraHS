@@ -269,20 +269,37 @@ thead.darktable th {padding: 8px;}
   margin-bottom: 10px;
 }
 /* Пагинация */
-.pagination {margin: 15px 0;}
-.pagination span.active a.page-link {
+.my-pagination-block {
+  background-color: white;
+  border-radius: 5px;
+  border: 0.5px solid var(--grey);
+  margin: 10px 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.my-pagination-item.info .my-page-item {
+  width: 100%;
+  text-align: center;
+}
+.my-pagination-item.pages .my-page-item {float: left;}
+.my-page-item {
+  display: inline-block;
+  text-align: center;
+}
+.my-page-item a {
+  color: var(--dark);
+  display: block;
+  padding: 5px 12px;
+  text-decoration: none;
+}
+.my-page-item.active, .my-page-item.active a {
   background-color: var(--dark);
   color: white;
-  border-color: #ffffff;
 }
-.pagination span.active a.page-link:hover {color: #ffffff;}
-.pagination span:hover a.page-link {
-  color: var(--dark);
-}
-.pagination span a.page-link {
-  box-shadow: none;
-  color: black;
-}
+.my-page-item:not(.active):not(.disabled) {background-color: var(--bcgrnd);}
+.my-page-item:hover:not(.active):not(.disabled) {background-color: #ddd;}
 
 /* Формы */
 .form-search {

@@ -36,5 +36,9 @@
     width: 300px;
     max-width: 300px;
   }
+  .my-pagination-block {
+    display: inline-flex;
+    flex-direction: column;
+  }
 }
 
