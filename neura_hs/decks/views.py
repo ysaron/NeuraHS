@@ -9,9 +9,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 from django.db import transaction
-from utils.mixins import DataMixin
+from core.mixins import DataMixin
 from random import choice
-from .models import Format, Deck, Inclusion
+from .models import Deck
 from .forms import DeckstringForm, DeckSaveForm, DeckFilterForm
 from core.services.utils import get_clean_deckstring
 from core.exceptions import DecodeError, UnsupportedCards

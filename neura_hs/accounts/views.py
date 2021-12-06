@@ -3,7 +3,7 @@ from django.contrib.auth import logout, login
 from django.contrib.auth.models import User, Group
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes, force_text
@@ -13,7 +13,7 @@ from django.views import generic
 from django.conf import settings
 
 from .forms import RegisterUserForm, LoginUserForm
-from utils.mixins import DataMixin
+from core.mixins import DataMixin
 from .tokens import account_activation_token
 
 

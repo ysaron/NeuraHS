@@ -25,7 +25,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'gallery.apps.GalleryConfig',
     'accounts.apps.AccountsConfig',
-    'utils.apps.UtilsConfig',
     'core.apps.CoreConfig',
     'decks.apps.DecksConfig',
     'debug_toolbar',

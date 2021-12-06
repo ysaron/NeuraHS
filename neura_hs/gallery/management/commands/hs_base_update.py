@@ -53,11 +53,10 @@ class Command(BaseCommand):
         base = DbWorker(en_cards=en_cards_line, ru_cards=ru_cards_line, card_classes=card_classes,
                         tribes=tribes, card_sets=card_sets)
 
-        if self.rewrite:
-            self.stdout.write('Removing obsolete data...')
-            base.clear_db()
-
         with transaction.atomic():
+            if self.rewrite:
+                self.stdout.write('Removing obsolete data...')
+                base.clear_db()
             base.write_card_classes()
             base.write_tribes()
             base.write_card_sets()
@@ -65,9 +64,8 @@ class Command(BaseCommand):
             base.write_en_cards(self.rewrite)
             base.add_ru_translation()
             base.update_card_classes()
-
-        if self.rewrite:
-            base.rebuild_decks()
+            if self.rewrite:
+                base.rebuild_decks()
 
         end = datetime.now() - start
         self.stdout.write(f'Database update took {end.seconds}s')
@@ -270,7 +268,7 @@ class DbWorker:
     @staticmethod
     def rebuild_decks():
         """  """
-        for deck in Deck.objects.all():
+        for deck in tqdm(Deck.objects.all(), desc='Rebuilding decks', ncols=100):
             cards, heroes, format_ = parse_deckstring(deck.string)
             deck.deck_class = RealCard.objects.get(dbf_id=heroes[0]).card_class.all().first()
             deck.deck_format = Format.objects.get(numerical_designation=format_)

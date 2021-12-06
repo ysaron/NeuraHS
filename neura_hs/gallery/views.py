@@ -1,13 +1,13 @@
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
-from .models import RealCard, FanCard, CardClass, Tribe, CardSet, Author
+from .models import RealCard, FanCard, Author
 from .forms import CreateCardForm, RealCardFilterForm, UpdateCardForm, \
     FanCardFilterForm
-from utils.mixins import DataMixin
+from core.mixins import DataMixin
 import logging
 
 logger = logging.getLogger('django')
