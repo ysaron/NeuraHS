@@ -29,23 +29,6 @@ class RealCardViewSet(viewsets.ReadOnlyModelViewSet):
             return RealCardDetailSerializer
 
 
-class RealCardListAPIView(generics.ListAPIView):
-    """ Getting a list of Hearthstone cards """
-
-    queryset = RealCard.objects.all()
-    serializer_class = RealCardListSerializer
-    filter_backends = (DjangoFilterBackend,)
-    filterset_class = RealCardFilter
-
-
-class RealCardDetailAPIView(generics.RetrieveAPIView):
-    """ Getting one Hearthstone card """
-
-    queryset = RealCard.objects.all()
-    serializer_class = RealCardDetailSerializer
-    lookup_field = 'dbf_id'
-
-
 class DeckListAPIView(generics.ListAPIView):
     """ Getting a list of decks """
 
