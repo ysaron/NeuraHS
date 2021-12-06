@@ -37,7 +37,6 @@ def parse_deckstring(deckstring) -> tuple[CardIncludeList, CardList, int]:
     try:
         decoded = base64.b64decode(deckstring)      # декстринг в байты
     except Exception as e:
-        # логировать e и deckstring?
         raise DecodeError(_('Invalid deck code'))
     data = BytesIO(decoded)                     # байты в поток байтов в оперативной памяти
 

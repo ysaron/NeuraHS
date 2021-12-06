@@ -2,8 +2,8 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.urls.base import reverse_lazy
 from gallery.models import RealCard, Author, CardClass, CardSet
-from .decrypt import parse_deckstring
 from core.exceptions import UnsupportedCards
+from .services.deck_codes import parse_deckstring
 
 
 class NamelessDeckManager(models.Manager):

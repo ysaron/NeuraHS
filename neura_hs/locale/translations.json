@@ -64,7 +64,9 @@
     "Knights of the Frozen Throne": "Рыцари Ледяного Трона",
     "Vanilla": "Ванилла",
     "Taverns of Time": "Таверны времени",
-    "Rastakhan's Rumble": "Растахановы игрища"
+    "Rastakhan's Rumble": "Растахановы игрища",
+    "Mercenaries": "Наёмники",
+    "Fractured in Alterac Valley": "Разделённые Альтераком"
   },
   "formats": [
     {"num": 0, "name_en": "Unknown", "name_ru": "Неизвестно"},

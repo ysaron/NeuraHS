@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-05 20:02+0700\n"
+"POT-Creation-Date: 2021-12-06 15:04+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -185,6 +185,46 @@ msgstr "Новый пароль"
 msgid "The password has been changed."
 msgstr "Пароль был изменен"
 
+#: .\core\mixins.py:37
+#, python-format
+msgid "\"%(name)s\" is longer than %(num)s characters"
+msgstr "\"%(name)s\" превышает лимит в %(num)s символов"
+
+#: .\core\mixins.py:49
+#, python-format
+msgid "A maximum of 3 classes can be selected (selected: %(num)s)"
+msgstr "Можно выбрать максимум 3 класса (выбрано: %(num)s)"
+
+#: .\core\mixins.py:60
+msgid ""
+"Tribe can only be specified for minions. Ctrl + LMB - deselect the tribe."
+msgstr "Расу можно выбрать только для существ. Ctrl + ЛКМ - отменить выбор."
+
+#: .\core\mixins.py:62
+#, python-format
+msgid "You can select up to 2 races (selected: %(num)s)"
+msgstr "Можно выбрать максимум 2 расы (выбрано: %(num)s)"
+
+#: .\core\mixins.py:70
+msgid "The spell type can only be specified for... well, spells."
+msgstr "Тип заклинания можно указать только для... ну, заклинаний."
+
+#: .\core\mixins.py:77
+msgid "Attack can only be specified for minion or weapon."
+msgstr "Атака может быть указана только для существа или оружия."
+
+#: .\core\mixins.py:84
+msgid "Only minions can have a health."
+msgstr "Только существа могут иметь здоровье."
+
+#: .\core\mixins.py:91
+msgid "Only weapons can have a durability."
+msgstr "Только оружие может иметь прочность."
+
+#: .\core\mixins.py:98
+msgid "Only hero cards can have an armor."
+msgstr "Только карты героя могут иметь броню."
+
 #: .\core\services\statistics.py:16 .\core\services\statistics.py:33
 #: .\core\services\statistics.py:54
 msgid "Total"
@@ -246,17 +286,17 @@ msgid "Highlander"
 msgstr "Хайлендер"
 
 #: .\core\services\statistics.py:63 .\gallery\models.py:351
-#: .\gallery\views.py:198 .\neura_hs\settings.py:236
+#: .\gallery\views.py:198 .\neura_hs\settings.py:235
 msgid "Fan cards"
 msgstr "Фан-карты"
 
-#: .\core\services\statistics.py:64 .\neura_hs\settings.py:233
+#: .\core\services\statistics.py:64 .\neura_hs\settings.py:232
 msgid "HS cards"
 msgstr "Карты HS"
 
 #: .\core\services\statistics.py:65 .\core\templates\core\about.html:11
 #: .\decks\models.py:70 .\decks\views.py:87 .\decks\views.py:120
-#: .\neura_hs\settings.py:240
+#: .\neura_hs\settings.py:239
 msgid "Decks"
 msgstr "Колоды"
 
@@ -304,17 +344,9 @@ msgstr "необходима регистрация"
 msgid "Site functionality"
 msgstr "Функционал сайта"
 
-#: .\core\views.py:35 .\neura_hs\settings.py:230
+#: .\core\views.py:35 .\neura_hs\settings.py:229
 msgid "Statistics"
 msgstr "Статистика"
-
-#: .\decks\decrypt.py:41 .\decks\decrypt.py:46
-msgid "Invalid deck code"
-msgstr "Некорректный код колоды"
-
-#: .\decks\decrypt.py:51
-msgid "Unsupported deckstring version"
-msgstr "Версия кода колоды не поддерживается"
 
 #: .\decks\forms.py:9
 msgid "Deckstring"
@@ -416,6 +448,14 @@ msgstr "Количество"
 #: .\decks\models.py:134
 msgid "The number of card inclusions in the deck."
 msgstr "Число вхождений карты в колоду."
+
+#: .\decks\services\deck_codes.py:40 .\decks\services\deck_codes.py:45
+msgid "Invalid deck code"
+msgstr "Некорректный код колоды"
+
+#: .\decks\services\deck_codes.py:50
+msgid "Unsupported deckstring version"
+msgstr "Версия кода колоды не поддерживается"
 
 #: .\decks\templates\decks\deck_detail.html:26
 msgid "Decode"
@@ -907,7 +947,7 @@ msgstr "Художник"
 msgid "Hearthstone card"
 msgstr "Карта Hearthstone"
 
-#: .\gallery\models.py:329 .\gallery\views.py:118 .\neura_hs\settings.py:235
+#: .\gallery\models.py:329 .\gallery\views.py:118 .\neura_hs\settings.py:234
 msgid "Hearthstone cards"
 msgstr "Карты Hearthstone"
 
@@ -977,7 +1017,7 @@ msgid "Update"
 msgstr "Обновить"
 
 #: .\gallery\templates\gallery\fancard\createcard.html:27
-#: .\neura_hs\settings.py:238 .\neura_hs\settings.py:241
+#: .\neura_hs\settings.py:237 .\neura_hs\settings.py:240
 msgid "Create"
 msgstr "Создать"
 
@@ -1067,31 +1107,31 @@ msgstr "Удаление карты %(card)s"
 msgid "Fan-card authors"
 msgstr "Авторы фан-карт"
 
-#: .\neura_hs\settings.py:113
+#: .\neura_hs\settings.py:112
 msgid "English"
 msgstr "Английский"
 
-#: .\neura_hs\settings.py:114
+#: .\neura_hs\settings.py:113
 msgid "Russian"
 msgstr "Русский"
 
-#: .\neura_hs\settings.py:224
+#: .\neura_hs\settings.py:223
 msgid "Main page"
 msgstr "Главная"
 
-#: .\neura_hs\settings.py:225
+#: .\neura_hs\settings.py:224
 msgid "About"
 msgstr "О сайте"
 
-#: .\neura_hs\settings.py:237 .\neura_hs\settings.py:242
+#: .\neura_hs\settings.py:236 .\neura_hs\settings.py:241
 msgid "Database"
 msgstr "База данных"
 
-#: .\neura_hs\settings.py:239
+#: .\neura_hs\settings.py:238
 msgid "Authors"
 msgstr "Авторы"
 
-#: .\neura_hs\settings.py:243
+#: .\neura_hs\settings.py:242
 msgid "My decks"
 msgstr "Мои колоды"
 
@@ -1110,46 +1150,6 @@ msgstr "Выйти"
 #: .\templates\header.html:10
 msgid "Sign In"
 msgstr "Войти"
-
-#: .\utils\mixins.py:37
-#, python-format
-msgid "\"%(name)s\" is longer than %(num)s characters"
-msgstr "\"%(name)s\" превышает лимит в %(num)s символов"
-
-#: .\utils\mixins.py:49
-#, python-format
-msgid "A maximum of 3 classes can be selected (selected: %(num)s)"
-msgstr "Можно выбрать максимум 3 класса (выбрано: %(num)s)"
-
-#: .\utils\mixins.py:60
-msgid ""
-"Tribe can only be specified for minions. Ctrl + LMB - deselect the tribe."
-msgstr "Расу можно выбрать только для существ. Ctrl + ЛКМ - отменить выбор."
-
-#: .\utils\mixins.py:62
-#, python-format
-msgid "You can select up to 2 races (selected: %(num)s)"
-msgstr "Можно выбрать максимум 2 расы (выбрано: %(num)s)"
-
-#: .\utils\mixins.py:70
-msgid "The spell type can only be specified for... well, spells."
-msgstr "Тип заклинания можно указать только для... ну, заклинаний."
-
-#: .\utils\mixins.py:77
-msgid "Attack can only be specified for minion or weapon."
-msgstr "Атака может быть указана только для существа или оружия."
-
-#: .\utils\mixins.py:84
-msgid "Only minions can have a health."
-msgstr "Только существа могут иметь здоровье."
-
-#: .\utils\mixins.py:91
-msgid "Only weapons can have a durability."
-msgstr "Только оружие может иметь прочность."
-
-#: .\utils\mixins.py:98
-msgid "Only hero cards can have an armor."
-msgstr "Только карты героя могут иметь броню."
 
 #~ msgid "Decipher"
 #~ msgstr "Расшифровать"
