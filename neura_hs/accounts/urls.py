@@ -15,10 +15,3 @@ urlpatterns = [
          name='change_password_confirm'),
     path('change-password-complete/', views.ChangePasswordComplete.as_view(), name='change_password_complete'),
 ]
-
-
-
-
-
-
-

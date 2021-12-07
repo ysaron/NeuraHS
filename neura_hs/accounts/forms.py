@@ -10,7 +10,6 @@ about_placeholder = _('A couple of words (optional); will be displayed next to y
 
 class RegisterUserForm(auth_forms.UserCreationForm):
 
-    # Переопределение стандартных полей для назначения стилей оформления
     email = forms.EmailField(label=_('Email'), widget=forms.EmailInput(attrs={'class': 'form-input'}))
     username = forms.CharField(label=_('Nickname'), widget=forms.TextInput(attrs={'class': 'form-input'}))
     password1 = forms.CharField(label=_('Password'), widget=forms.PasswordInput(attrs={'class': 'form-input'}))
@@ -32,7 +31,6 @@ class RegisterUserForm(auth_forms.UserCreationForm):
 
 
 class LoginUserForm(auth_forms.AuthenticationForm):
-    """ Изменение дефолтной формы авторизации для улучшения ее отображения """
 
     username = forms.CharField(label=_('Nickname'), widget=forms.TextInput(attrs={'class': 'form-input'}))
     password = forms.CharField(label=_('Password'), widget=forms.PasswordInput(attrs={'class': 'form-input'}))

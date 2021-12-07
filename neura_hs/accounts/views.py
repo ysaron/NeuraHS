@@ -29,7 +29,7 @@ class SignUp(DataMixin, generic.CreateView):
         context |= default_context
         return context
 
-    def form_valid(self, form):     # вызывается после успешной проверки формы
+    def form_valid(self, form):
         user = form.save(commit=False)
         user.is_active = False
         user.save()
@@ -106,13 +106,13 @@ class SignIn(DataMixin, auth_views.LoginView):
 
 
 def signout_user(request):
-    """ функция отображения для выхода из учетной записи """
+    """ Выход из учетной записи """
     logout(request)
     return redirect(reverse_lazy('accounts:signin'))
 
 
 class ChangePassword(DataMixin, auth_views.PasswordResetView):
-    """  """
+    """ Запрос email для отправки инструкций по смене пароля """
     template_name = 'accounts/password_reset_form.html'
     email_template_name = 'accounts/password_reset_email.html'
     subject_template_name = 'accounts/password_reset_subject.txt'
@@ -126,7 +126,7 @@ class ChangePassword(DataMixin, auth_views.PasswordResetView):
 
 
 class ChangePasswordEmailed(DataMixin, auth_views.PasswordResetDoneView):
-    """  """
+    """ Уведомление об отправке инструкций """
     template_name = 'accounts/password_reset_done.html'
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -137,7 +137,7 @@ class ChangePasswordEmailed(DataMixin, auth_views.PasswordResetDoneView):
 
 
 class ChangePasswordConfirm(DataMixin, auth_views.PasswordResetConfirmView):
-    """  """
+    """ Задание нового пароля """
     template_name = 'accounts/password_reset_confirm.html'
     success_url = reverse_lazy('accounts:change_password_complete')
 
@@ -149,7 +149,7 @@ class ChangePasswordConfirm(DataMixin, auth_views.PasswordResetConfirmView):
 
 
 class ChangePasswordComplete(DataMixin, auth_views.PasswordResetCompleteView):
-    """  """
+    """ Уведомление о смене пароля """
     template_name = 'accounts/password_reset_complete.html'
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -157,7 +157,3 @@ class ChangePasswordComplete(DataMixin, auth_views.PasswordResetCompleteView):
         default_context = self.get_custom_context(title=_('The password has been changed.'))
         context |= default_context
         return context
-
-
-
-
