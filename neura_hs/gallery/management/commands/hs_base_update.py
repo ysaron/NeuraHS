@@ -9,7 +9,7 @@ import re
 from tqdm import tqdm
 from datetime import datetime
 
-from decks.services.deck_codes import parse_deckstring
+from core.services.deck_codes import parse_deckstring
 from ...models import RealCard, CardClass, Tribe, CardSet
 from decks.models import Deck, Format, Inclusion
 

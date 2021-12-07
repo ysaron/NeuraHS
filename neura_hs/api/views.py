@@ -9,7 +9,7 @@ from .serializers import (
     DeckSerializer,
 )
 from .services.filters import RealCardFilter, DeckFilter
-from core.services.utils import get_clean_deckstring
+from core.services.deck_codes import get_clean_deckstring
 from core.exceptions import DecodeError, UnsupportedCards
 from gallery.models import RealCard
 from decks.models import Deck

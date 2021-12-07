@@ -13,7 +13,7 @@ from core.mixins import DataMixin
 from random import choice
 from .models import Deck
 from .forms import DeckstringForm, DeckSaveForm, DeckFilterForm
-from core.services.utils import get_clean_deckstring
+from core.services.deck_codes import get_clean_deckstring
 from core.exceptions import DecodeError, UnsupportedCards
 
 
