@@ -29,7 +29,8 @@ class CreateCard(LoginRequiredMixin, DataMixin, generic.CreateView):
 
     def get_initial(self):
         """ Заполнение полей начальными значениями """
-        slug = 'e-m-p-t-y'
+        # Данные поля - скрытые
+        slug = 'e-m-p-t-y'      # переопределяется в момент создания карты в соотв. с ее названием
         author = self.request.user.author
         state = True if self.request.user.has_perm('gallery.change_fancard') else False
         return {'slug': slug, 'author': author, 'state': state}
@@ -52,12 +53,16 @@ class UpdateCard(LoginRequiredMixin, UserPassesTestMixin, DataMixin, generic.Upd
         return context
 
     def test_func(self):
+        # Фан-карту могут изменять только пользователи с особыми полномочиями
+        # и ее непосредственный создатель
         obj = self.get_object()
         return any((obj.author == self.request.user.author,
                     self.request.user.has_perm('gallery.change_fancard')))
 
     def form_valid(self, form):
         fan_card = form.save(commit=False)
+        # Карты, созданные пользователем без ососбых полномочий, не будут отображаться на сайте
+        # до тех пор, пока не будут одобрены через админку
         if not self.request.user.has_perm('gallery.change_fancard'):
             fan_card.state = False
         fan_card.save()
@@ -66,6 +71,7 @@ class UpdateCard(LoginRequiredMixin, UserPassesTestMixin, DataMixin, generic.Upd
 
 
 def card_changed(request):
+    """ Уведомление о создании/изменении карты и наличии премодерации на сайте """
     context = {'title': _('The card has been changed'),
                'top_menu': settings.TOP_MENU,
                'side_menu': settings.SIDE_MENU}
@@ -99,7 +105,7 @@ class DeleteCard(LoginRequiredMixin, UserPassesTestMixin, DataMixin, generic.Del
 
 
 class RealCardListView(DataMixin, generic.ListView):
-    """ Обобщенный класс отображения списка реальных карт Hearthsone """
+    """ Список существующих карт Hearthsone """
     model = RealCard
     context_object_name = 'realcards'
     template_name = 'gallery/realcard/realcard_list.html'
@@ -121,7 +127,7 @@ class RealCardListView(DataMixin, generic.ListView):
         return context
 
     def get_queryset(self):
-        """ Метод переопределен для возможности динамического поиска по картам """
+        """ Реализация динамического поиска по картам """
         name = self.request.GET.get('name')
         rarity = self.request.GET.get('rarity')
         collectible_raw = self.request.GET.get('collectible', 'unknown')
@@ -157,14 +163,13 @@ class RealCardListView(DataMixin, generic.ListView):
 
 
 class RealCardDetailView(DataMixin, generic.DetailView):
-    """ Обобщенный класс отображения детальной информации о карте Hearthstone """
+    """ Детальная информация о существующей карте Hearthstone """
     model = RealCard
     slug_url_kwarg = 'card_slug'
     context_object_name = 'real_card'
     template_name = 'gallery/realcard/realcard_detail.html'
 
     def get_context_data(self, **kwargs):
-        """ Переопределение метода для передачи шаблону дополнительных переменных """
         context = super().get_context_data(**kwargs)
         default_context = self.get_custom_context(title=context['object'], c_types=RealCard.CardTypes)
         context |= default_context
@@ -172,7 +177,7 @@ class RealCardDetailView(DataMixin, generic.DetailView):
 
 
 class FanCardListView(DataMixin, generic.ListView):
-    """ Обобщенный класс отображения списка фан-карт """
+    """ Список фан-карт """
     model = FanCard
     context_object_name = 'fancards'
     template_name = 'gallery/fancard/fancard_list.html'
@@ -192,7 +197,6 @@ class FanCardListView(DataMixin, generic.ListView):
         return object_list
 
     def get_context_data(self, **kwargs):
-        """ Переопределение метода для передачи шаблону дополнительных переменных """
         context = super().get_context_data(**kwargs)
         prev_values = {'name': self.request.GET.get('name')}
         default_context = self.get_custom_context(title=_('Fan cards'),
@@ -202,7 +206,7 @@ class FanCardListView(DataMixin, generic.ListView):
 
 
 class FanCardDetailView(DataMixin, generic.DetailView):
-    """ Обобщенный класс отображения детальной информации о карте """
+    """ Детальная информация о фан-карте """
     model = FanCard
     slug_url_kwarg = 'card_slug'
     context_object_name = 'fan_card'
@@ -210,7 +214,6 @@ class FanCardDetailView(DataMixin, generic.DetailView):
     queryset = FanCard.objects.filter(state=True)
 
     def get_context_data(self, **kwargs):
-        """ Переопределение метода для передачи шаблону дополнительных переменных """
         context = super().get_context_data(**kwargs)
         default_context = self.get_custom_context(title=context['object'], c_types=FanCard.CardTypes)
         context |= default_context
@@ -218,7 +221,7 @@ class FanCardDetailView(DataMixin, generic.DetailView):
 
 
 class AuthorListView(DataMixin, generic.ListView):
-    """  """
+    """ Список авторов фан-карт """
     model = Author
     template_name = 'gallery/authors/author_list.html'
     context_object_name = 'authors'
@@ -236,7 +239,7 @@ class AuthorListView(DataMixin, generic.ListView):
 
 
 class AuthorDetailView(DataMixin, generic.DetailView):
-    """  """
+    """ Страница с автором и списком созданных им фан-карт """
     model = Author
     template_name = 'gallery/authors/author_detail.html'
     pk_url_kwarg = 'author_id'

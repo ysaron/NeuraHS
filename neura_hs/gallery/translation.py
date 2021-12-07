@@ -20,4 +20,3 @@ class TribeTranslationOptions(TranslationOptions):
 @register(CardSet)
 class CardSetTranslationOptions(TranslationOptions):
     fields = ('name',)
-

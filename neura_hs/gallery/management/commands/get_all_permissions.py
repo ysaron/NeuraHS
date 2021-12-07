@@ -22,6 +22,3 @@ class Command(BaseCommand):
 
         # Вывод списка в командной строке
         self.stdout.write('\n'.join(permission_list))
-
-
-

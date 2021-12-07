@@ -134,7 +134,7 @@ class DbWorker:
 
     @staticmethod
     def write_formats():
-        """  """
+        """ Записывает данные об игровых форматах """
         with open(DbWorker.translations, 'r', encoding='utf-8') as f:
             translations = json.load(f)
             for fmt in tqdm(translations['formats'], desc='Formats', ncols=100):
@@ -267,7 +267,7 @@ class DbWorker:
 
     @staticmethod
     def rebuild_decks():
-        """  """
+        """ Пересборка существующих колод после обновления данных о картах """
         for deck in tqdm(Deck.objects.all(), desc='Rebuilding decks', ncols=100):
             cards, heroes, format_ = parse_deckstring(deck.string)
             deck.deck_class = RealCard.objects.get(dbf_id=heroes[0]).card_class.all().first()

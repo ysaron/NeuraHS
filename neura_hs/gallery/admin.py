@@ -74,4 +74,3 @@ class TribeAdmin(TranslationAdmin):
 @admin.register(CardSet)
 class CardSetAdmin(TranslationAdmin):
     pass
-
