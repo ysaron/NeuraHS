@@ -38,10 +38,13 @@
 
 {% block content %}
 {% if not is_paginated %}
-    <div class="pagination">
-        <span class="page-item disabled"><a class="page-link">{% trans "Total results:" %}: {{ decks.count }}</a></span>
-    </div>
-    <hr>
+<div class="my-pagination">
+<div class="my-pagination-block">
+  <div class="my-pagination-item info">
+    <div class="my-page-item disabled"><a>{% trans "Total results:" %} {{ decks.count }}</a></div>
+  </div>
+</div>
+</div>
 {% endif %}
 <div class="decks-grid">
 {% for deck in decks %}

@@ -21,8 +21,12 @@
   <div><i>(!) {% trans "Only pre-moderated cards are displayed" %}.</i></div>
 </div>
   {% if not is_paginated %}
-  <div class="pagination">
-    <span class="page-item disabled"><a class="page-link">{% trans "Total results" %}: {{ author.fancard_set.confirmed.count }}</a></span>
+  <div class="my-pagination">
+  <div class="my-pagination-block">
+    <div class="my-pagination-item info">
+      <div class="my-page-item disabled"><a>{% trans "Total results" %}: {{ author.fancard_set.confirmed.count }}</a></div>
+    </div>
+  </div>
   </div>
   {% endif %}
 <div class="info-item">
