@@ -118,8 +118,8 @@ class Deck(models.Model):
         return sorted(list(set(grouped)), key=lambda card: (card[0].cost, card[0].name))
 
     def get_deckstring_form(self):
-        """  """
-        from .forms import DeckStringCopyForm
+        """ Возвращает форму, используемую для копирования кода колоды """
+        from .forms import DeckStringCopyForm   # импорт здесь во избежание перекрестного импорта
         return DeckStringCopyForm(initial={'deckstring': self.string})
 
     def get_absolute_url(self):

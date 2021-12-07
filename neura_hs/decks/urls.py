@@ -12,6 +12,3 @@ urlpatterns = [
     path('<int:deck_id>/delete', views.DeckDelete.as_view(), name='deck-delete'),
     path('random_deckstring/', views.get_random_deckstring, name='get_random_deckstring'),
 ]
-
-
-

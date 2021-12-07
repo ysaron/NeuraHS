@@ -72,7 +72,7 @@ def get_random_deckstring(request: HttpRequest):
 
 
 class NamelessDecksListView(DataMixin, generic.ListView):
-    """  """
+    """ Вывод списка всех имеющихся в базе уникальных колод """
     model = Deck
     context_object_name = 'decks'
     template_name = 'decks/deck_list.html'
@@ -103,7 +103,7 @@ class NamelessDecksListView(DataMixin, generic.ListView):
 
 
 class UserDecksListView(LoginRequiredMixin, DataMixin, generic.ListView):
-    """  """
+    """ Вывод списка сохраненных текущим пользователем колод """
 
     model = Deck
     context_object_name = 'decks'
@@ -136,21 +136,8 @@ class UserDecksListView(LoginRequiredMixin, DataMixin, generic.ListView):
         return object_list
 
 
-class NamelessDeckDetailView(DataMixin, generic.DetailView):
-    """ Просмотр безымянной колоды """
-    model = Deck
-    template_name = 'decks/deck_detail.html'
-    pk_url_kwarg = 'deck_id'
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        default_context = self.get_custom_context(title=context['object'])
-        context |= default_context
-        return context
-
-
 def deck_view(request, deck_id):
-    """  """
+    """ Просмотр конкретной колоды """
 
     deck = Deck.objects.get(id=deck_id)
     deck_name_init = '' if deck.is_named else f'{deck.deck_class}-{deck.pk}'
@@ -185,7 +172,6 @@ def deck_view(request, deck_id):
 
 
 class DeckDelete(SuccessMessageMixin, generic.DeleteView):
-    """  """
 
     model = Deck
     pk_url_kwarg = 'deck_id'
@@ -199,4 +185,3 @@ class DeckDelete(SuccessMessageMixin, generic.DeleteView):
         obj = self.get_object()
         messages.success(self.request, self.success_message % obj.__dict__)
         return super(DeckDelete, self).delete(request, *args, **kwargs)
-
