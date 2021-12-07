@@ -14,7 +14,7 @@ class CharInFilter(filters.BaseInFilter, filters.CharFilter):
 
 
 class RealCardFilter(filters.FilterSet):
-    """  """
+
     card_id = filters.CharFilter()
     dbf_id = filters.NumberFilter()
     name = filters.CharFilter(field_name='name', lookup_expr='icontains')
@@ -36,7 +36,7 @@ class RealCardFilter(filters.FilterSet):
 
 
 class DeckFilter(filters.FilterSet):
-    """  """
+
     dclass = filters.ModelChoiceFilter(queryset=CardClass.objects.filter(collectible=True),
                                        field_name='deck_class', to_field_name='name')
     dformat = filters.ModelChoiceFilter(queryset=Format.objects.all(),

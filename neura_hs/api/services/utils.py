@@ -11,4 +11,3 @@ def generate_choicefield_description(model, enum_choice: str) -> str:
     choices = enum_choices.choices
     choices = '\n'.join([f'value: {val}, description: {desc}' for val, desc in choices if val])
     return choices
-
