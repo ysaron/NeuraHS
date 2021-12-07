@@ -30,7 +30,7 @@ class EditCardMixin:
     """ Объединяет пользовательские валидаторы для форм создания и редактирования карт """
 
     def clean_name(self: forms.ModelForm):
-        """ Пользовательский валидатор. Обязательно имеет форму "clean_<имя_поля>" """
+        """ Валидатор длины названия """
         name = self.cleaned_data['name']
         max_symbols = 30
         if len(name) > max_symbols:
@@ -121,4 +121,3 @@ class EditCardMixin:
             'tribe': forms.SelectMultiple(attrs={'class': 'form-input'}),
             'spell_school': forms.Select(attrs={'class': 'form-input'}),
         }
-
