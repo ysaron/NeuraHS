@@ -18,13 +18,13 @@ class IncluSionManager(models.QuerySet):
 class NamelessDeckManager(models.Manager):
 
     def get_queryset(self):
-        return super().get_queryset().filter(name='')
+        return super().get_queryset().filter(name='').prefetch_related('deck_class', 'deck_format')
 
 
 class NamedDeckManager(models.Manager):
 
     def get_queryset(self):
-        return super().get_queryset().exclude(name='')
+        return super().get_queryset().exclude(name='').prefetch_related('deck_class', 'deck_format')
 
 
 class Format(models.Model):
@@ -107,15 +107,12 @@ class Deck(models.Model):
         return self.name != '' and self.author is not None
 
     @property
-    def included_cards(self) -> list[tuple[RealCard, int]]:
-        """ Список карт, дополненный данными о количестве экземпляров в колоде """
+    def included_cards(self):
+        """ Queryset 'cards', дополненный данными о количестве экземпляров в колоде """
 
-        decklist = self.cards.all()
-        dbf_ids = [card.dbf_id for card in decklist]
-        inclusions = Inclusion.objects.filter(card__dbf_id__in=dbf_ids, deck=self)
-        grouped = [(card, inc.number) for card in decklist for inc in inclusions if card.dbf_id == inc.card.dbf_id]
-
-        return sorted(list(set(grouped)), key=lambda card: (card[0].cost, card[0].name))
+        decklist = self.cards.all().prefetch_related('card_class', 'tribe').select_related('card_set')\
+            .annotate(number=models.F('inclusions__number'))
+        return decklist.order_by('cost', 'name')
 
     def get_deckstring_form(self):
         """ Возвращает форму, используемую для копирования кода колоды """

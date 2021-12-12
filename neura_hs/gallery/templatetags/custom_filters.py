@@ -6,8 +6,6 @@ from ..models import Card, FanCard, RealCard
 register = template.Library()
 Parameter = namedtuple('Parameter', ['name', 'icon', 'value'])
 
-DeckCards = list[tuple[RealCard, int]]      # алиас для представления карт, составляющих колоду
-
 
 @register.filter
 def get_item(dictionary, key):
@@ -96,7 +94,7 @@ def can_change(user, card: FanCard):
 
 
 @register.filter(name='craft_cost')
-def calc_deck_craft_cost(cards: DeckCards) -> tuple[int, int]:
+def calc_deck_craft_cost(cards) -> tuple[int, int]:
     """
     Возвращает суммарную стоимость (во внутриигровой валюте)
     создания карт из колоды (в обычном и золотом варианте)
@@ -110,8 +108,8 @@ def calc_deck_craft_cost(cards: DeckCards) -> tuple[int, int]:
               rarities.EPIC: (100, 1600),
               rarities.LEGENDARY: (1600, 3200)}
     for card in cards:
-        craft_cost += prices[card[0].rarity][0] * card[1]
-        craft_cost_gold += prices[card[0].rarity][1] * card[1]
+        craft_cost += prices[card.rarity][0] * card.number
+        craft_cost_gold += prices[card.rarity][1] * card.number
 
     return craft_cost, craft_cost_gold
 
@@ -126,7 +124,7 @@ def get_format_style(deck) -> str:
     return matching[deck.deck_format.numerical_designation]
 
 
-def get_deckcards_stat(cards: DeckCards, field: str) -> list[dict]:
+def get_deckcards_stat(cards, field: str) -> list[dict]:
     """
     Возвращает данные о количестве карт в колоде,
     соответствующих различным значением поля field
@@ -135,7 +133,7 @@ def get_deckcards_stat(cards: DeckCards, field: str) -> list[dict]:
     result = []
     for card in cards:
         try:
-            data = getattr(card[0], field)
+            data = getattr(card, field)
         except AttributeError:
             return []   # отразится в шаблоне как отсутствие данных
 
@@ -146,16 +144,16 @@ def get_deckcards_stat(cards: DeckCards, field: str) -> list[dict]:
 
         if data not in lst:
             lst.append(data)
-            result.append({'name': data, 'num_cards': card[1]})
+            result.append({'name': data, 'num_cards': card.number})
         else:
             d = next(stat for stat in result if stat['name'] == data)
-            d['num_cards'] += card[1]
+            d['num_cards'] += card.number
 
     return sorted(result, key=lambda stat: stat['num_cards'], reverse=True)
 
 
 @register.filter(name='dsetsstat')
-def get_deckcards_sets_stat(cards: DeckCards):
+def get_deckcards_sets_stat(cards):
     """
     Возвращает данные о наборах карт, используемых в колоде,
     и о кол-ве карт каждого набора
@@ -164,19 +162,19 @@ def get_deckcards_sets_stat(cards: DeckCards):
 
 
 @register.filter(name='dtypestat')
-def get_deckcards_type_stat(cards: DeckCards):
+def get_deckcards_type_stat(cards):
     """ Возвращает данные о типах карт в колоде и кол-ве карт каждого типа """
     return get_deckcards_stat(cards, 'card_type')
 
 
 @register.filter(name='draritystat')
-def get_deckcards_rarity_stat(cards: DeckCards):
+def get_deckcards_rarity_stat(cards):
     """ Возвращает данные о редкостях карт в колоде и кол-ве карт каждой редкости """
     return get_deckcards_stat(cards, 'rarity')
 
 
 @register.filter(name='dmechstat')
-def get_deckcards_mechanics_stat(cards: DeckCards):
+def get_deckcards_mechanics_stat(cards):
     """
     Возвращает данные о механиках Hearthstone, использующихся
     картами колоды, и о кол-ве этих карт на каждую механику
@@ -185,13 +183,13 @@ def get_deckcards_mechanics_stat(cards: DeckCards):
     mechanics = []
     result: list[dict] = []
     for card in cards:
-        for mech in card[0].mechanics_list:
+        for mech in card.mechanics_list:
             if mech not in mechanics:
                 mechanics.append(mech)
-                result.append({'name': mech, 'num_cards': card[1]})
+                result.append({'name': mech, 'num_cards': card.number})
             else:
                 m = next(m for m in result if m['name'] == mech)
-                m['num_cards'] += card[1]
+                m['num_cards'] += card.number
 
     result.sort(key=lambda mech_: mech_['num_cards'], reverse=True)
     return result
