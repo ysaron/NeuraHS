@@ -6,12 +6,6 @@ from core.exceptions import UnsupportedCards
 from core.services.deck_codes import parse_deckstring
 
 
-class NamelessDeckManager(models.Manager):
-
-    def get_queryset(self):
-        return super().get_queryset().filter(name='')
-
-
 class IncluSionManager(models.QuerySet):
 
     def nameless(self):
@@ -19,6 +13,12 @@ class IncluSionManager(models.QuerySet):
 
     def named(self):
         return self.exclude(deck__name='')
+
+
+class NamelessDeckManager(models.Manager):
+
+    def get_queryset(self):
+        return super().get_queryset().filter(name='')
 
 
 class NamedDeckManager(models.Manager):
