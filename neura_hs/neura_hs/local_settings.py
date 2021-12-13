@@ -1,3 +1,4 @@
+from django.core.management.utils import get_random_secret_key
 from pathlib import Path
 import os
 from dotenv import load_dotenv, find_dotenv
@@ -6,7 +7,7 @@ load_dotenv(find_dotenv(filename='.env.dev'))
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY', default=get_random_secret_key())
 
 DEBUG = {'True': True, 'False': False}[os.environ.get('DEBUG')]
 
