@@ -241,10 +241,10 @@ SIDE_MENU = {
 }
 
 # API Hearthstone
-HSAPI_BASEURL = os.environ.get('HSAPI_BASEURL')
-HSAPI_HOST = os.environ.get('HSAPI_HOST')
+HSAPI_BASEURL = 'https://omgvamp-hearthstone-v1.p.rapidapi.com/'
+HSAPI_HOST = 'omgvamp-hearthstone-v1.p.rapidapi.com'
 X_RAPIDARI_KEY = os.environ.get('X_RAPIDARI_KEY')
 
-TEST_EMAIL = os.environ.get('TEST_EMAIL')
+TEST_EMAIL = os.environ.get('TEST_EMAIL', default=EMAIL_HOST_USER)
 
 MODEL_TRANSLATION_FILE = BASE_DIR / 'locale' / 'translations.json'
