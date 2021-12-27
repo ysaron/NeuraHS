@@ -12,10 +12,11 @@ def test_cardlist_view(client):
 
 @pytest.mark.django_db
 def test_realcard_create(real_card):
+    real_card('New Test Minion', 'TEST01_TEST', 9999999)
     assert RealCard.objects.count() == 1
     assert RealCard.objects.filter(name='New Test Minion',
                                    card_set__name='Scholomance Academy',
-                                   card_class__name='Druid',
+                                   card_class__name='Rogue',
                                    tribe__name='Beast').exists()
 
 

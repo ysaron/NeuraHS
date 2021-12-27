@@ -1,6 +1,8 @@
 import pytest
+from decks.models import Deck
 from gallery.models import CardClass, CardSet, Tribe, RealCard, FanCard
 from gallery.management.commands.hs_base_update import DbWorker
+from slugify import slugify
 
 
 @pytest.fixture
@@ -81,22 +83,27 @@ def card_sets():
 
 @pytest.fixture
 def real_card(db, card_class, tribe, card_set):
-    card = RealCard.objects.create(name='New Test Minion',
-                                   slug='new-test-minion-9999999',
-                                   card_type=RealCard.CardTypes.MINION,
-                                   cost=7,
-                                   attack=9,
-                                   health=6,
-                                   text='Battlecry: does nothing',
-                                   flavor='Some test flavor',
-                                   rarity=RealCard.Rarities.EPIC,
-                                   card_set=CardSet.objects.create(**card_set(name='Scholomance Academy')),
-                                   card_id='TEST01_CARDID',
-                                   dbf_id=9999999,
-                                   collectible=True)
-    card.card_class.add(CardClass.objects.create(**card_class(name='Druid')))
-    card.tribe.add(Tribe.objects.create(**tribe(name='Beast')))
-    return card
+    def get_real_card(name: str, card_id: str, dbf_id: int):
+        card = RealCard.objects.create(
+            name=name,
+            slug=f'{slugify(name)}-{dbf_id}',
+            card_type=RealCard.CardTypes.MINION,
+            cost=7,
+            attack=9,
+            health=6,
+            text='Battlecry: does nothing',
+            flavor='Some test flavor',
+            rarity=RealCard.Rarities.EPIC,
+            card_set=CardSet.objects.get_or_create(**card_set(name='Scholomance Academy'))[0],
+            card_id=card_id,
+            dbf_id=dbf_id,
+            collectible=True
+        )
+        card.card_class.add(CardClass.objects.get_or_create(**card_class(name='Rogue'))[0])
+        card.tribe.add(Tribe.objects.get_or_create(**tribe(name='Beast'))[0])
+        return card
+
+    return get_real_card
 
 
 @pytest.fixture
@@ -115,6 +122,11 @@ def deckstring():
 
 
 @pytest.fixture
+def deckstring2():
+    return 'AAEBAaIHBq8QmxSRvAKA0wL+mgOs6wMMm8gC5dEC6vMC+5oDragDqssDiNADpNED99QDkp8E7qAE+6UEAA=='
+
+
+@pytest.fixture
 def deck_data():
     return (
         [(59253, 1), (59555, 1), (60445, 1), (61503, 1), (61967, 1), (66953, 1),
@@ -123,3 +135,31 @@ def deck_data():
         [57761],
         2
     )
+
+
+@pytest.fixture
+def deck(db, hs_db_worker, real_card):
+    data = [
+        ('Deadly Poison', 'CORE_CS2_074', 69522),
+        ('Hallucination', 'UNG_856', 42011),
+        ('Paralytic Poison', 'BAR_321', 62892),
+        ('Patches the Pirate', 'CFM_637', 40465),
+        ('Secret Passage', 'SCH_305', 58794),
+        ('Swashburglar', 'CORE_KAR_069', 69742),
+        ('Wand Thief', 'SCH_350', 59556),
+        ('Cavern Shinyfinder', 'LOOT_033', 43237),
+        ('Clever Disguise', 'ULD_328', 54317),
+        ('Underbelly Fence', 'DAL_714', 52603),
+        ('Beneath the Grounds', 'AT_035', 2587),
+        ('Vulpera Toxinblade', 'SCH_519', 59400),
+        ('Spectral Cutlass', 'GIL_672', 47594),
+        ("Tinker's Sharpsword Oil", 'GVG_022', 2095),
+        ('Vendetta', 'DAL_716', 52606),
+        ('Cutting Class', 'SCH_623', 60023),
+        ('Wildpaw Gnoll', 'AV_298', 70395),
+        ('Valeera the Hollow', 'ICC_827', 43392),
+        ('Valeera Sanguinar', 'HERO_03', 930),
+    ]
+    hs_db_worker.write_formats()
+    for name, card_id, dbf_id in data:
+        real_card(name, card_id, dbf_id)
