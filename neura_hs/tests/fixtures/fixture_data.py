@@ -9,6 +9,7 @@ def card_class(db):
         kwargs['service_name'] = kwargs['name']
         kwargs['collectible'] = True
         return kwargs
+
     return make_card_class
 
 
@@ -17,6 +18,7 @@ def tribe(db):
     def make_tribe(**kwargs):
         kwargs['service_name'] = kwargs['name']
         return kwargs
+
     return make_tribe
 
 
@@ -25,6 +27,7 @@ def card_set(db):
     def make_card_set(**kwargs):
         kwargs['service_name'] = kwargs['name']
         return kwargs
+
     return make_card_set
 
 
@@ -104,3 +107,19 @@ def fan_card():
 @pytest.fixture
 def hs_db_worker(en_cards, ru_cards, card_classes, tribes, card_sets):
     return DbWorker(en_cards, ru_cards, card_classes, tribes, card_sets)
+
+
+@pytest.fixture
+def deckstring():
+    return 'AAECAaHDAwb1zgOj0QOd2AO/4AOP5AOJiwQM5boD6LoD77oDm84D8NQDieADiuADpOED0eEDiuQDjOQDr4AEAA=='
+
+
+@pytest.fixture
+def deck_data():
+    return (
+        [(59253, 1), (59555, 1), (60445, 1), (61503, 1), (61967, 1), (66953, 1),
+         (56677, 2), (56680, 2), (56687, 2), (59163, 2), (60016, 2), (61449, 2),
+         (61450, 2), (61604, 2), (61649, 2), (61962, 2), (61964, 2), (65583, 2)],
+        [57761],
+        2
+    )
