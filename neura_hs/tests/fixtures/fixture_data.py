@@ -3,6 +3,7 @@ from decks.models import Deck
 from gallery.models import CardClass, CardSet, Tribe, RealCard, FanCard
 from gallery.management.commands.hs_base_update import DbWorker
 from slugify import slugify
+import time
 
 
 @pytest.fixture
@@ -107,8 +108,25 @@ def real_card(db, card_class, tribe, card_set):
 
 
 @pytest.fixture
-def fan_card():
-    pass
+def fan_card(db, card_class, tribe):
+    def get_fan_card(name: str, author=None, approved: bool = False):
+        card = FanCard.objects.create(
+            name=name,
+            slug=f'{slugify(name)}-{int(time.time()):x}',
+            author=author,
+            card_type=FanCard.CardTypes.WEAPON,
+            cost=5,
+            attack=4,
+            durability=3,
+            text='Some random text',
+            flavor='Some random flavor',
+            rarity=FanCard.Rarities.LEGENDARY,
+            state=approved,
+        )
+        card.card_class.add(CardClass.objects.get_or_create(**card_class(name='Mage'))[0])
+        return card
+
+    return get_fan_card
 
 
 @pytest.fixture
