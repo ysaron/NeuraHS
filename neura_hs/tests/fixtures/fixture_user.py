@@ -16,3 +16,9 @@ def user_client(user, client):
 @pytest.fixture
 def limited_access_url():
     return reverse_lazy('gallery:createcard')
+
+
+@pytest.fixture
+def api_client():
+    from rest_framework.test import APIClient
+    return APIClient()
