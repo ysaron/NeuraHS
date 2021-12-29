@@ -1,5 +1,4 @@
 import pytest
-from django.urls import reverse_lazy
 from gallery.models import RealCard, FanCard, CardClass, Tribe, CardSet
 
 
@@ -60,5 +59,3 @@ class TestDBUpdateCommand:
         assert cards.count() == 2
         assert cards.filter(name='Aya Blackpaw').exists(), 'Карта не была записана в БД'
         assert cards.filter(name_ru='Айя Черная Лапа').exists(), 'Карта не была переведена'
-
-

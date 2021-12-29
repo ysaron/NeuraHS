@@ -1,6 +1,5 @@
 import pytest
 from decks.models import Deck, Format
-from gallery.models import CardClass
 from core.services.deck_codes import parse_deckstring
 from core.exceptions import DecodeError
 
@@ -42,4 +41,3 @@ def test_deck_from_deckstring(deckstring2, deck, hs_db_worker):
     cards = decks.first().included_cards
     amount = sum(card.number for card in cards)
     assert amount == 30, 'В колоде должно быть ровно 30 карт'
-
