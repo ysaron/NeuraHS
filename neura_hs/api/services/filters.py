@@ -18,10 +18,11 @@ class RealCardFilter(filters.FilterSet):
     card_id = filters.CharFilter()
     dbf_id = filters.NumberFilter()
     name = filters.CharFilter(field_name='name', lookup_expr='icontains')
-    classes = CharInFilter(field_name='card_class__name', lookup_expr='in')
+    classes = CharInFilter(field_name='card_class__name', lookup_expr='in', help_text='Comma-separated class names')
     ctype = filters.ChoiceFilter(field_name='card_type', choices=RealCard.CardTypes.choices,
                                  help_text=gcd(RealCard, 'CardTypes'))
-    cset = filters.ModelChoiceFilter(queryset=CardSet.objects.all(), field_name='card_set', to_field_name='name')
+    cset = filters.ModelChoiceFilter(queryset=CardSet.objects.all(), field_name='card_set', to_field_name='name',
+                                     help_text='Card Set name')
     rarity = filters.ChoiceFilter(choices=RealCard.Rarities.choices, help_text=gcd(RealCard, 'Rarities'))
     cost = filters.RangeFilter()
     attack = filters.RangeFilter()
@@ -38,11 +39,12 @@ class RealCardFilter(filters.FilterSet):
 class DeckFilter(filters.FilterSet):
 
     dclass = filters.ModelChoiceFilter(queryset=CardClass.objects.filter(collectible=True),
-                                       field_name='deck_class', to_field_name='name')
-    dformat = filters.ModelChoiceFilter(queryset=Format.objects.all(),
-                                        field_name='deck_format', to_field_name='name')
-    date = filters.DateTimeFromToRangeFilter(field_name='created')
-    cards = filters.CharFilter(field_name='cards', method='filter_decks_by_cards')
+                                       field_name='deck_class', to_field_name='name', help_text='Class name')
+    dformat = filters.ModelChoiceFilter(queryset=Format.objects.all(), field_name='deck_format', to_field_name='name',
+                                        help_text='Format name')
+    date = filters.DateTimeFromToRangeFilter(field_name='created', help_text='Creation date')
+    cards = filters.CharFilter(field_name='cards', method='filter_decks_by_cards',
+                               help_text='Comma-separated "dbf_id" values')
 
     class Meta:
         model = Deck
