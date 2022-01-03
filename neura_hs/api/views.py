@@ -1,7 +1,6 @@
 from rest_framework import generics, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django_filters.rest_framework import DjangoFilterBackend
 
 from .serializers import (
     RealCardListSerializer,
@@ -9,6 +8,7 @@ from .serializers import (
     DeckSerializer,
 )
 from .services.filters import RealCardFilter, DeckFilter
+from .services.utils import DjangoFilterBackendPlus
 from core.services.deck_codes import get_clean_deckstring
 from core.exceptions import DecodeError, UnsupportedCards
 from gallery.models import RealCard
@@ -18,7 +18,7 @@ from decks.models import Deck
 class RealCardViewSet(viewsets.ReadOnlyModelViewSet):
     """ Getting Hearthstone cards """
     queryset = RealCard.objects.all()
-    filter_backends = (DjangoFilterBackend,)
+    filter_backends = (DjangoFilterBackendPlus,)
     filterset_class = RealCardFilter
     lookup_field = 'dbf_id'
 
@@ -34,7 +34,7 @@ class DeckListAPIView(generics.ListAPIView):
 
     queryset = Deck.nameless.all()
     serializer_class = DeckSerializer
-    filter_backends = (DjangoFilterBackend,)
+    filter_backends = (DjangoFilterBackendPlus,)
     filterset_class = DeckFilter
 
 

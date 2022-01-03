@@ -42,7 +42,7 @@ class DeckFilter(filters.FilterSet):
                                        field_name='deck_class', to_field_name='name', help_text='Class name')
     dformat = filters.ModelChoiceFilter(queryset=Format.objects.all(), field_name='deck_format', to_field_name='name',
                                         help_text='Format name')
-    date = filters.DateTimeFromToRangeFilter(field_name='created', help_text='Creation date')
+    date = filters.DateTimeFromToRangeFilter(field_name='created', help_text='Creation date (dd.mm.yyyy)')
     cards = filters.CharFilter(field_name='cards', method='filter_decks_by_cards',
                                help_text='Comma-separated "dbf_id" values')
 
