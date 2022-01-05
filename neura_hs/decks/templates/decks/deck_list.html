@@ -48,67 +48,7 @@
 {% endif %}
 <div class="decks-grid">
 {% for deck in decks %}
-    <div class="">
-    <table class="deck {{ deck|dformat }}">
-        <tbody class="deck-header {{ deck|dclass }}">
-        <tr>
-            <td colspan="3" class="deck-name">
-                <span class="deck-name-text">{% if deck.is_named %}{{ deck.name }}{% else %}{{ deck.deck_class }}-{{ deck.pk }}{% endif %}</span>
-                <br>
-                <span class="deck-caption">{{ deck.deck_class }}, {{ deck.deck_format }}, {{ deck.created|date:"d.m.Y" }}</span>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="3" class="deck-control">
-                <span>
-                    <button><a role="button" href="{{ deck.get_absolute_url }}">
-                        <span class="deck-control-icon" title="{% trans 'Open the detail page' %}">
-                            <i class="fas fa-external-link-alt"></i>
-                        </span>
-                    </a></button>
-                    <button type="button" class="deck-accordion">
-                        <span class="deck-control-icon" title="{% trans 'Expand (see cards)' %}">
-                            <i class="far fa-caret-square-down"></i>
-                        </span>
-                    </button>
-                    <span class="mytooltip">
-                      <button type="button" class="copy-deck">
-                        <span class="tooltiptext">Copy to clipboard</span>
-                        <span class="deck-control-icon"><i class="far fa-copy"></i></span>
-                      </button>
-                    </span>
-                </span>
-                <form>
-                    <span style="display: none;">
-                        {{ deck.get_deckstring_form.deckstring }}
-                        <button type="button">
-                            <span class="deck-control-icon" title="{% trans 'Back' %}">
-                                <i class="far fa-window-close"></i>
-                            </span>
-                        </button>
-                    </span>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-        <tbody class="deck-cards deck-cards-collapsed">
-        {% for card in deck.included_cards %}
-        <tr class="{{ card|cclass }} {{ card|rar }} rartext">
-            <td class="deck-number-cell" style=""><a href="{{ card.get_absolute_url }}">{{ card.cost }}</a></td>
-            <td class="deck-card-cell" style=""><a href="{{ card.get_absolute_url }}">{{ card.name }}</a></td>
-            <td class="deck-number-cell" style=""><a href="{{ card.get_absolute_url }}">{{ card.number }}x</a></td>
-        </tr>
-        {% endfor %}
-        </tbody>
-        <tbody class="deck-footer {{ deck|dclass }}">
-        <tr>
-        {% with prices=deck.included_cards|craft_cost %}
-            <td colspan="3">{% trans 'Craft' %}: {{ prices.0 }} | {{ prices.1 }} ({% trans 'gold' %})</td>
-        {% endwith %}
-        </tr>
-        </tbody>
-    </table>
-    </div>
+    {% include "decks/deck-accordion.html" %}
 {% endfor %}
 </div>
 {% if not decks %}
