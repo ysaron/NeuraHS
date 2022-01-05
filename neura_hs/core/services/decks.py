@@ -5,6 +5,10 @@ from decks.models import Deck
 
 def find_similar_decks(target_deck: Deck):
     """ Возвращает список колод того же формата и класса с большим числом совпадений карт """
+
+    if not target_deck:
+        return
+
     # первичная фильтрация (без учета кол-ва вхождений карт в колоду) на уровне БД
     similar_raw = Deck.nameless.filter(
         deck_format=target_deck.deck_format,

@@ -56,7 +56,7 @@ def create_deck(request: HttpRequest):
                'deckstring_form': deckstring_form,
                'deck_save_form': deck_save_form,
                'deck': deck,
-               'similar': find_similar_decks(deck) if deck else None}
+               'similar': find_similar_decks(deck)}
     context |= {'top_menu': settings.TOP_MENU,
                 'side_menu': settings.SIDE_MENU}
 
@@ -167,7 +167,7 @@ def deck_view(request, deck_id):
     context = {'title': deck,
                'deck': deck,
                'deck_save_form': deck_save_form,
-               'similar': find_similar_decks(deck) if deck else None}
+               'similar': find_similar_decks(deck)}
     context |= {'top_menu': settings.TOP_MENU,
                 'side_menu': settings.SIDE_MENU}
 
