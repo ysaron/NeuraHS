@@ -14,6 +14,7 @@ from random import choice
 from .models import Deck
 from .forms import DeckstringForm, DeckSaveForm, DeckFilterForm
 from core.services.deck_codes import get_clean_deckstring
+from core.services.decks import find_similar_decks
 from core.exceptions import DecodeError, UnsupportedCards
 
 
@@ -54,7 +55,8 @@ def create_deck(request: HttpRequest):
     context = {'title': title,
                'deckstring_form': deckstring_form,
                'deck_save_form': deck_save_form,
-               'deck': deck}
+               'deck': deck,
+               'similar': find_similar_decks(deck) if deck else None}
     context |= {'top_menu': settings.TOP_MENU,
                 'side_menu': settings.SIDE_MENU}
 
@@ -164,7 +166,8 @@ def deck_view(request, deck_id):
 
     context = {'title': deck,
                'deck': deck,
-               'deck_save_form': deck_save_form}
+               'deck_save_form': deck_save_form,
+               'similar': find_similar_decks(deck) if deck else None}
     context |= {'top_menu': settings.TOP_MENU,
                 'side_menu': settings.SIDE_MENU}
 

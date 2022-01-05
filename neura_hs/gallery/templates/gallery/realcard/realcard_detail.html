@@ -80,6 +80,7 @@
   {% endif %}
 </table>
 {% if real_card.collectible %}
+  <h1>{% trans 'Related decks' %}</h1>
   <div class="decks-grid">
   {% for inclusion in real_card.inclusions.nameless %}
       {% deck_obj inclusion.deck %}
