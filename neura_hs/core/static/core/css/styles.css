@@ -34,9 +34,9 @@
   --epic: #db4dff;
   --rare: #668cff;
   --common: #ffffff;
-  --standard: rgba(0, 102, 0, 0.6);
+  --standard: rgba(24, 24, 129, 0.6);
   --wild: rgba(38, 38, 38, 0.7);
-  --classic: rgba(24, 24, 129, 0.6);
+  --classic: rgba(0, 102, 0, 0.6);
   --deck-width: 400px;
 }
 
