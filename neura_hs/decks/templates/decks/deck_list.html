@@ -1,5 +1,6 @@
 {% extends "core/base.html" %}
 {% load custom_filters %}
+{% load decks %}
 {% block title %}{{ title|mktitle }}{% endblock %}
 {% load i18n %}
 
@@ -48,7 +49,7 @@
 {% endif %}
 <div class="decks-grid">
 {% for deck in decks %}
-    {% include "decks/deck-accordion.html" %}
+    {% deck_obj deck %}
 {% endfor %}
 </div>
 {% if not decks %}
