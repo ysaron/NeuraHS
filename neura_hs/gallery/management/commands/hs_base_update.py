@@ -57,10 +57,10 @@ class Command(BaseCommand):
             if self.rewrite:
                 self.stdout.write('Removing obsolete data...')
                 base.clear_db()
-            base.write_card_classes(self.rewrite)
-            base.write_tribes(self.rewrite)
-            base.write_card_sets(self.rewrite)
-            base.write_formats(self.rewrite)
+            base.write_card_classes()
+            base.write_tribes()
+            base.write_card_sets()
+            base.write_formats()
             base.write_en_cards(self.rewrite)
             base.add_ru_translation()
             base.update_card_classes()
@@ -83,18 +83,14 @@ class DbWorker:
 
     @staticmethod
     def clear_db():
-        for model in (RealCard,
-                      CardClass,
-                      Tribe,
-                      CardSet):
-            model.objects.all().delete()
+        RealCard.objects.all().delete()
 
-    def write_card_classes(self, rewrite: bool = False):
+    def write_card_classes(self):
         """ Записывает существующие игровые классы (en + ru) """
         with open(DbWorker.translations, 'r', encoding='utf-8') as f:
             translations = json.load(f)
             for cls in tqdm(self.card_classes, desc='Classes', ncols=100):
-                if not rewrite and CardClass.objects.filter(service_name=cls).exists():
+                if CardClass.objects.filter(service_name=cls).exists():
                     continue
                 card_class = CardClass(name=cls, service_name=cls)
                 card_class.name_ru = translations['classes'].get(cls, card_class.name)
@@ -108,23 +104,23 @@ class DbWorker:
                 cls.collectible = True
                 cls.save()
 
-    def write_tribes(self, rewrite: bool = False):
+    def write_tribes(self):
         """ Записывает существующие расы существ (en + ru) """
         with open(DbWorker.translations, 'r', encoding='utf-8') as f:
             translations = json.load(f)
             for t in tqdm(self.tribes, desc='Tribes', ncols=100):
-                if not rewrite and Tribe.objects.filter(service_name=t).exists():
+                if Tribe.objects.filter(service_name=t).exists():
                     continue
                 tribe = Tribe(name=t, service_name=t)
                 tribe.name_ru = translations['tribes'].get(t, tribe.name)
                 tribe.save()
 
-    def write_card_sets(self, rewrite: bool = False):
+    def write_card_sets(self):
         """ Записывает существующие наборы карт (en + ru) """
         with open(DbWorker.translations, 'r', encoding='utf-8') as f:
             translations = json.load(f)
             for s in tqdm(self.card_sets, desc='Addons', ncols=100):
-                if not rewrite and CardSet.objects.filter(service_name=s).exists():
+                if CardSet.objects.filter(service_name=s).exists():
                     continue
                 card_set = CardSet(name=s, service_name=s)
                 card_set.name_ru = translations['sets'].get(s, card_set.name)
@@ -147,10 +143,11 @@ class DbWorker:
                 format_.name_ru = fmt['name_ru']
                 format_.save()
 
-    def write_en_cards(self, rewrite: bool = False):
+    def write_en_cards(self, rewrite):
         for j_card in tqdm(self.en_cards, desc='Cards (enUS)', ncols=100):
-            if not rewrite and RealCard.objects.filter(card_id=j_card['cardId']).exists():
-                continue
+            if not rewrite:  # только что очищенную таблицу нет смысла проверять на содержание записи
+                if RealCard.objects.filter(card_id=j_card['cardId']).exists():
+                    continue
             r_card = RealCard()
             r_card.name = j_card['name']
             r_card.service_name = r_card.name.upper()
