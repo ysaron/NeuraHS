@@ -1,6 +1,6 @@
 # NeuraHS
 
-[![Python](https://img.shields.io/badge/python-v3.9.1-blueviolet.svg?logo=python&logoColor=white)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/python-v3.9.9-blueviolet.svg?logo=python&logoColor=white)](https://www.python.org/)
 [![Django](https://img.shields.io/badge/django-v3.2.7-blue.svg?logo=django)](https://www.djangoproject.com/)
 [![DRF](https://img.shields.io/badge/django--rest--framework-v3.12.4-blue.svg)](https://www.django-rest-framework.org/)
 [![License](https://img.shields.io/badge/license-MIT-9cf.svg)](https://opensource.org/licenses/MIT)
