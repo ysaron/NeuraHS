@@ -4,26 +4,26 @@
   --bcgrnd: #f2f2f2;
   --green: #29a329;
   --red: #B22222;
-  --mage-1: #668cff;
-  --mage-2: #e6eeff;
-  --priest-1: #ffffcc;
+  --mage-1: #3377ff;
+  --mage-2: #ccddff;
+  --priest-1: #ffffb3;
   --priest-2: #ffffff;
-  --warlock-1: #4d004d;
+  --warlock-1: #660066;
   --warlock-2: #cc00cc;
-  --druid-1: #00ff80;
-  --druid-2: #ccffcc;
+  --druid-1: #604020;
+  --druid-2: #bf8040;
   --rogue-1: #001d25;
   --rogue-2: #b3b3b3;
   --shaman-1: #000066;
   --shaman-2: #3333ff;
-  --paladin-1: #fadf33;
-  --paladin-2: #ffffe6;
-  --warrior-1: #4d0000;
-  --warrior-2: #ff0000;
-  --hunter-1: #264d00;
-  --hunter-2: #73e600;
-  --demonhunter-1: #004d4d;
-  --demonhunter-2: #00cccc;
+  --paladin-1: #ffcc00;
+  --paladin-2: #ffeb99;
+  --warrior-1: #660000;
+  --warrior-2: #cc0000;
+  --hunter-1: #008000;
+  --hunter-2: #47d147;
+  --demonhunter-1: #00664d;
+  --demonhunter-2: #00cc99;
   --neutral-1: #bfbfbf;
   --neutral-2: #f2f2f2;
   --deathknight-1: #1e1e2f;
@@ -32,7 +32,7 @@
   --dream-2: #f9e6ff;
   --legendary: #ffdb4d;
   --epic: #db4dff;
-  --rare: #668cff;
+  --rare: #3366ff;
   --common: #ffffff;
   --standard: rgba(24, 24, 129, 0.6);
   --wild: rgba(38, 38, 38, 0.7);
@@ -725,6 +725,7 @@ a.author-link {
   background-color: var(--warlock-1);
   color: white;
 }
+tbody.warlock td {border-color: white !important;}
 
 .druid:hover {
   background: linear-gradient(305deg, var(--druid-1), var(--druid-2), var(--druid-1));
@@ -735,8 +736,9 @@ a.author-link {
 }
 .druid {
   background-color: var(--druid-1);
-  color: black;
+  color: white;
 }
+tbody.druid td {border-color: white !important;}
 
 .shaman:hover {
   background: linear-gradient(305deg, var(--shaman-1), var(--shaman-2), var(--shaman-1));
@@ -749,6 +751,7 @@ a.author-link {
   background-color: var(--shaman-1);
   color: white;
 }
+tbody.shaman td {border-color: white !important;}
 
 .rogue:hover {
   background: linear-gradient(305deg, var(--rogue-1), var(--rogue-2), var(--rogue-1));
@@ -761,6 +764,7 @@ a.author-link {
   background-color: var(--rogue-1);
   color: white;
 }
+tbody.rogue td {border-color: white !important;}
 
 .paladin:hover {
   background: linear-gradient(305deg, var(--paladin-1), var(--paladin-2), var(--paladin-1));
@@ -785,6 +789,7 @@ a.author-link {
   background-color: var(--warrior-1);
   color: white;
 }
+tbody.warrior td {border-color: white !important;}
 
 .hunter:hover {
   background: linear-gradient(305deg, var(--hunter-1), var(--hunter-2), var(--hunter-1));
@@ -797,6 +802,7 @@ a.author-link {
   background-color: var(--hunter-1);
   color: white;
 }
+tbody.hunter td {border-color: white !important;}
 
 .demonhunter:hover {
   background: linear-gradient(305deg, var(--demonhunter-1), var(--demonhunter-2), var(--demonhunter-1));
@@ -809,6 +815,7 @@ a.author-link {
   background-color: var(--demonhunter-1);
   color: white;
 }
+tbody.demonhunter td {border-color: white !important;}
 
 .neutral:hover, .neutral-deck:hover {
   background: linear-gradient(305deg, var(--neutral-1), var(--neutral-2), var(--neutral-1));
