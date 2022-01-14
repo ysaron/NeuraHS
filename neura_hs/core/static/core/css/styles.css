@@ -67,12 +67,14 @@ hr {
 
 h1 {
   margin-top: 10px;
-  color: #ffffff;
+  color: var(--bcgrnd);
   text-align: center;
   text-shadow: -2px -2px 2px #000, 1px -2px 2px #000, -2px 1px 2px #000, 1px 1px 2px #000;
+  transition: 0.3s;
 }
 h1:hover {
-  color: var(--dark);
+  color: white;
+  text-shadow: -2px -2px 5px #000, 1px -2px 5px #000, -2px 1px 5px #000, 1px 1px 5px #000;
 }
 .detailhead {
   text-align: center;
@@ -567,7 +569,7 @@ td.deck-control * {
   max-height: 0;
   display: block;
   overflow-y: hidden;
-  transition: max-height 1s ease-out;
+  transition: max-height 1s ease-in-out;
 }
 
 /* Footer */
