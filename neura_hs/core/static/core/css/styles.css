@@ -688,6 +688,13 @@ a.author-link {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
+.card-detail {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
 /* List */
 .td-bordered:hover td {
   box-shadow: 0 0 0 1px var(--dark);

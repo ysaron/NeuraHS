@@ -204,3 +204,10 @@ def set_class_to_form_field(field, css_class: str):
 def get_page_title(title: str):
     """ Возвращает заголовок, отображаемый на вкладках """
     return f'{title} | NeuraHS'
+
+
+@register.filter(name='locale')
+def get_locale_name(language_code):
+    matches = {'en': 'enUS',
+               'ru': 'ruRU'}
+    return matches.get(language_code, 'enUS')

@@ -23,8 +23,11 @@
     <span class="badge rounded-pill bg-warning align-top">{% trans "Non-collectible" %}</span>
   {% endif %}
 </div>
-
-<table class="table table-bordered" id="tRCD">
+<div class="card-detail">
+  {% get_current_language as LANGUAGE_CODE %}
+  <div><img src="https://art.hearthstonejson.com/v1/render/latest/{{ LANGUAGE_CODE|locale }}/256x/{{ real_card.card_id }}.png" alt="{{ real_card.name }}" width="300px" height="456px"></div>
+<div>
+<table class="table">
   <tr>
     <td style="width:15%;"><strong>{% trans "Class" %}</strong></td>
     <td style="width:85%;">{% for card_class in real_card.card_class.all %} {{ card_class }}{% if not forloop.last %} | {% endif %}{% endfor %}</td>
@@ -79,6 +82,8 @@
     </tr>
   {% endif %}
 </table>
+</div>
+</div>
 {% if real_card.collectible %}
   <h1>{% trans 'Related decks' %}</h1>
   <div class="decks-grid">
