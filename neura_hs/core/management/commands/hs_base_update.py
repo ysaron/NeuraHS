@@ -10,7 +10,7 @@ from tqdm import tqdm
 from datetime import datetime
 
 from core.services.deck_codes import parse_deckstring
-from ...models import RealCard, CardClass, Tribe, CardSet
+from gallery.models import RealCard, CardClass, Tribe, CardSet
 from decks.models import Deck, Format, Inclusion
 
 locale_list = ['enUS', 'ruRU']
