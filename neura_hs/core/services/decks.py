@@ -33,7 +33,7 @@ def find_similar_decks(target_deck: Deck):
 
 class DumpDeckListSerializer(serializers.ModelSerializer):
 
-    created = serializers.DateTimeField(format='%d.%m.%Y')
+    created = serializers.DateTimeField(format='%d.%m.%Y %H:%M:%S')
 
     class Meta:
         model = Deck
