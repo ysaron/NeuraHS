@@ -1,7 +1,6 @@
 import pytest
-from decks.models import Deck
 from gallery.models import CardClass, CardSet, Tribe, RealCard, FanCard
-from gallery.management.commands.hs_base_update import DbWorker
+from core.management.commands.hs_base_update import DbWorker
 from slugify import slugify
 import time
 
