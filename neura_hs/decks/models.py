@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.utils.timezone import now
 from django.urls.base import reverse_lazy
 from gallery.models import RealCard, Author, CardClass, CardSet
 from core.exceptions import UnsupportedCards
@@ -59,7 +60,7 @@ class Deck(models.Model):
     deck_format = models.ForeignKey(Format, on_delete=models.CASCADE,
                                     related_name='decks', verbose_name=_('Formats'),
                                     help_text=_('The format for which the deck is intended.'))
-    created = models.DateTimeField(auto_now_add=True, verbose_name=_('Time of creation.'))
+    created = models.DateTimeField(default=now, verbose_name=_('Time of creation.'))
 
     nameless = NamelessDeckManager()
     objects = models.Manager()
