@@ -1,4 +1,5 @@
 from django.db.models import Q, Count
+from rest_framework import serializers
 
 from decks.models import Deck
 
@@ -28,3 +29,12 @@ def find_similar_decks(target_deck: Deck):
     ).filter(
         num_matches__gt=19
     ).order_by('-num_matches')
+
+
+class DumpDeckListSerializer(serializers.ModelSerializer):
+
+    created = serializers.DateTimeField(format='%d.%m.%Y')
+
+    class Meta:
+        model = Deck
+        fields = ('id', 'string', 'created', 'name', 'author')
