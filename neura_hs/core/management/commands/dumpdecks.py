@@ -8,8 +8,13 @@ from decks.models import Deck
 class Command(BaseCommand):
     help = 'Dumps deck data to JSON file'
 
+    def add_arguments(self, parser):
+        parser.add_argument('tempfile', nargs='?', default=None, help='Use temporary dump file')
+
     def handle(self, *args, **options):
-        with open('core/management/commands/decks.json', 'w', encoding='utf-8') as f:
+        temp = options['tempfile']
+        path = temp if temp else 'core/management/commands/decks.json'
+        with open(path, 'w', encoding='utf-8') as f:
             json.dump(get_deck_data(), f, indent=2)
 
 

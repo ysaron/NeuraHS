@@ -16,3 +16,5 @@ neura_hs/nhs_cache
 neura_hs/static
 neura_hs/logs
 neura_hs/config
+
+neura_hs/tests/temp

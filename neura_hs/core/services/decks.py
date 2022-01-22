@@ -1,7 +1,9 @@
 from django.db.models import Q, Count
 from rest_framework import serializers
 
-from decks.models import Deck
+from decks.models import Deck, Format, Inclusion
+from gallery.models import RealCard
+from .deck_codes import parse_deckstring
 
 
 def find_similar_decks(target_deck: Deck):
@@ -33,8 +35,29 @@ def find_similar_decks(target_deck: Deck):
 
 class DumpDeckListSerializer(serializers.ModelSerializer):
 
-    created = serializers.DateTimeField(format='%d.%m.%Y %H:%M:%S')
+    created = serializers.DateTimeField()
 
     class Meta:
         model = Deck
         fields = ('id', 'string', 'created', 'name', 'author')
+
+    def create(self, validated_data) -> None:
+        string, author, created = validated_data['string'], validated_data['author'], validated_data['created']
+        if Deck.objects.filter(string=string, author=author, created=created).exists():
+            return
+        deck = Deck()
+        deck.name = validated_data['name']
+        deck.author = author
+        deck.string = string
+        deck.created = created
+
+        cards, heroes, format_ = parse_deckstring(deck.string)
+        deck.deck_class = RealCard.objects.get(dbf_id=heroes[0]).card_class.all().first()
+        deck.deck_format = Format.objects.get(numerical_designation=format_)
+        deck.save()
+
+        for dbf_id, number in cards:
+            card = RealCard.includibles.get(dbf_id=dbf_id)
+            ci = Inclusion(deck=deck, card=card, number=number)
+            ci.save()
+            deck.cards.add(card)

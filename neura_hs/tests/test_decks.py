@@ -1,3 +1,4 @@
+from django.core.management import call_command
 import pytest
 from decks.models import Deck, Format
 from core.services.deck_codes import parse_deckstring
@@ -37,6 +38,19 @@ def test_deck_from_deckstring(deckstring2, deck, hs_db_worker):
 
     Deck.create_from_deckstring(deckstring2)
     decks = Deck.nameless.all()
+    assert decks.count() == 1
+    cards = decks.first().included_cards
+    amount = sum(card.number for card in cards)
+    assert amount == 30, 'В колоде должно быть ровно 30 карт'
+
+
+@pytest.mark.django_db
+def test_backup_decks(deckstring2, deck, tmp_path):
+    Deck.create_from_deckstring(deckstring2)
+    call_command('dumpdecks', tmp_path / 'decks.json')
+    Deck.objects.all().delete()
+    call_command('loaddecks', tmp_path / 'decks.json')
+    decks = Deck.objects.all()
     assert decks.count() == 1
     cards = decks.first().included_cards
     amount = sum(card.number for card in cards)
