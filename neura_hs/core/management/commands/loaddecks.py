@@ -8,12 +8,16 @@ class Command(BaseCommand):
     help = 'Loads deck data from JSON file'
 
     def add_arguments(self, parser):
-        parser.add_argument('tempfile', nargs='?', default=None, help='Use temporary dump file')
+        parser.add_argument('tempfile', nargs='?', default=None, help='Use temporary dump file for tests')
 
     def handle(self, *args, **options):
         temp = options['tempfile']
         path = temp if temp else 'core/management/commands/decks.json'
-        data = load_deck_data(path)
+        try:
+            data = load_deck_data(path)
+        except FileNotFoundError:
+            self.stdout.write('(!) Error: Cannot find decks.json')
+            return
         serializer = DumpDeckListSerializer(data=data, many=True)
         if serializer.is_valid():
             serializer.save()

@@ -9,7 +9,7 @@ class Command(BaseCommand):
     help = 'Dumps deck data to JSON file'
 
     def add_arguments(self, parser):
-        parser.add_argument('tempfile', nargs='?', default=None, help='Use temporary dump file')
+        parser.add_argument('tempfile', nargs='?', default=None, help='Use temporary dump file for tests')
 
     def handle(self, *args, **options):
         temp = options['tempfile']
