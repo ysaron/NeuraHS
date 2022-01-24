@@ -94,6 +94,8 @@ class CardClass(Model):
     service_name = models.CharField(max_length=255, verbose_name='Service', default='', help_text='(!)',
                                     unique=True)
     collectible = models.BooleanField(default=False, verbose_name=_('Collectible'))
+    image = models.ImageField(verbose_name=_('Image'), help_text=_('Class image to display in deck header'),
+                              upload_to='classes/', null=True, blank=True)
 
     class Meta:
         verbose_name = _('In-game class')
@@ -285,7 +287,7 @@ class Card(Model):
     questline = models.BooleanField(default=False, verbose_name=Mechanics.SILENCE.label)
 
     class Meta:
-        abstract = True     # данный класс - не модель. Модели от него наследуются
+        abstract = True  # данный класс - не модель. Модели от него наследуются
 
     # Для отображения в админ-панели
     def display_card_class(self):
@@ -320,6 +322,13 @@ class RealCard(Card):
                                  related_name='cardsets')
     artist = models.CharField(max_length=255, blank=True, verbose_name=_('Artist'))
     collectible = models.BooleanField(default=True, verbose_name=_('Collectible'))
+
+    image_en = models.ImageField(verbose_name=_('Image (enUS)'), help_text=_('Rendered card image (en)'),
+                                 upload_to='cards/en/', null=True, blank=True)
+    image_ru = models.ImageField(verbose_name=_('Image (ruRU)'), help_text=_('Rendered card image (ru)'),
+                                 upload_to='cards/ru/', null=True, blank=True)
+    thumbnail = models.ImageField(verbose_name=_('Thumbnail'), help_text=_('Card thumbnail to display in the deck'),
+                                  upload_to='cards/thumbnails/', null=True, blank=True)
 
     objects = CardQuerySet.as_manager()
     includibles = IncludibleCardManager()

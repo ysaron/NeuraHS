@@ -62,6 +62,11 @@ class Deck(models.Model):
                                     help_text=_('The format for which the deck is intended.'))
     created = models.DateTimeField(default=now, verbose_name=_('Time of creation.'))
 
+    render_en = models.ImageField(verbose_name=_('Render (enUS)'), help_text=_('Rendered deck (en)'),
+                                  upload_to='decks/en/', null=True, blank=True)
+    render_ru = models.ImageField(verbose_name=_('Render (ruRU)'), help_text=_('Rendered deck (ru)'),
+                                  upload_to='decks/ru/', null=True, blank=True)
+
     nameless = NamelessDeckManager()
     objects = models.Manager()
     named = NamedDeckManager()
@@ -111,13 +116,19 @@ class Deck(models.Model):
     def included_cards(self):
         """ Queryset 'cards', дополненный данными о количестве экземпляров в колоде """
 
-        decklist = self.cards.all().prefetch_related('card_class', 'tribe').select_related('card_set')\
-            .annotate(number=models.F('inclusions__number'))
+        decklist = self.cards.all().prefetch_related(
+            'card_class',
+            'tribe',
+        ).select_related(
+            'card_set',
+        ).annotate(
+            number=models.F('inclusions__number'),
+        )
         return decklist.order_by('cost', 'name')
 
     def get_deckstring_form(self):
         """ Возвращает форму, используемую для копирования кода колоды """
-        from .forms import DeckStringCopyForm   # импорт здесь во избежание перекрестного импорта
+        from .forms import DeckStringCopyForm  # импорт здесь во избежание перекрестного импорта
         return DeckStringCopyForm(initial={'deckstring': self.string})
 
     def get_absolute_url(self):

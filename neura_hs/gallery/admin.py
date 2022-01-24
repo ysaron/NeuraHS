@@ -50,13 +50,20 @@ class RealCardAdmin(TranslationAdmin):
     list_display = ('name', 'card_type', 'display_card_class', 'card_set', 'creation_date')
     list_filter = ('card_type', 'card_class', 'cost', 'collectible', 'card_set')
     fieldsets = (
-        ('Общее', {'fields': (('name', 'author'), 'slug', ('card_id', 'dbf_id'))}),
-        ('Принадлежность', {'fields': (('card_type', 'card_class'), ('rarity', 'tribe'), 'card_set')}),
-        ('Статы', {'fields': ('cost', ('attack', 'health', 'armor', 'durability'))}),
+        ('Общее', {'fields': (('name_en', 'name_ru', 'slug', 'collectible'),
+                              ('card_id', 'dbf_id'),
+                              ('image_en', 'image_ru', 'thumbnail'))}),
+        ('Принадлежность', {'fields': (('card_type', 'card_class'),
+                                       ('rarity', 'tribe'),
+                                       'card_set')}),
+        ('Статы', {'fields': ('cost',
+                              ('attack', 'health', 'armor', 'durability'))}),
         ('Текст', {'fields': ('text', 'flavor')}),
-        (None, {'fields': ('collectible', 'artist')}),
+        (None, {'fields': ('artist',)}),
     )
     prepopulated_fields = {"slug": ("name",)}
+    readonly_fields = ('card_id', 'dbf_id', 'collectible', 'artist', 'card_type', 'card_set')
+    filter_horizontal = ('card_class', 'tribe')
     search_fields = ('name', 'card_set__name')
     save_on_top = True
 

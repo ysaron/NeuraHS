@@ -40,7 +40,7 @@ class DeckAdmin(admin.ModelAdmin):
         (None, {'fields': ('string',)}),
         (None, {'fields': ('created',)})
     )
-    readonly_fields = ('created',)
+    readonly_fields = ('created', 'author', 'deck_format', 'deck_class', 'string')
     search_fields = ('name',)
     save_on_top = True
 
