@@ -25,7 +25,7 @@
 </div>
 <div class="card-detail">
   {% get_current_language as LANGUAGE_CODE %}
-  <div><img src="https://art.hearthstonejson.com/v1/render/latest/{{ LANGUAGE_CODE|locale }}/256x/{{ real_card.card_id }}.png" alt="{{ real_card.name }}" width="300px" height="456px"></div>
+  <div><img src="{% if LANGUAGE_CODE == 'en' %}{{ real_card.image_en.url }}{% else %}{{ real_card.image_ru.url }}{% endif %}" alt="{{ real_card.name }}" width="300px" height="456px"></div>
 <div>
 <table class="table">
   <tr>

@@ -18,7 +18,4 @@ neura_hs/logs
 neura_hs/config
 
 neura_hs/tests/temp
-neura_hs/media/classes/*
-neura_hs/media/cards/en/*
-neura_hs/media/cards/ru/*
-neura_hs/media/cards/thumbnails/*
+neura_hs/media/*

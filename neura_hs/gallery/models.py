@@ -324,11 +324,11 @@ class RealCard(Card):
     collectible = models.BooleanField(default=True, verbose_name=_('Collectible'))
 
     image_en = models.ImageField(verbose_name=_('Image (enUS)'), help_text=_('Rendered card image (en)'),
-                                 upload_to='cards/en/', null=True, blank=True)
+                                 upload_to='cards/en/', default='cards/defaults/default_card.png')
     image_ru = models.ImageField(verbose_name=_('Image (ruRU)'), help_text=_('Rendered card image (ru)'),
-                                 upload_to='cards/ru/', null=True, blank=True)
+                                 upload_to='cards/ru/', default='cards/defaults/default_card.png')
     thumbnail = models.ImageField(verbose_name=_('Thumbnail'), help_text=_('Card thumbnail to display in the deck'),
-                                  upload_to='cards/thumbnails/', null=True, blank=True)
+                                  upload_to='cards/thumbnails/', default='cards/defaults/default_thumbnail.png')
 
     objects = CardQuerySet.as_manager()
     includibles = IncludibleCardManager()
