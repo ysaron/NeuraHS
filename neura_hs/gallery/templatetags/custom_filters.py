@@ -211,3 +211,11 @@ def get_locale_name(language_code):
     matches = {'en': 'enUS',
                'ru': 'ruRU'}
     return matches.get(language_code, 'enUS')
+
+
+@register.filter(name='shortclassname')
+def get_short_class_name(deck):
+    """ Заменяет слишком длинное название класса на синоним для улучшения отображения """
+    if deck.deck_class.service_name == 'Demon Hunter':
+        return _('DH')
+    return deck.deck_class

@@ -5,9 +5,9 @@
     <tbody class="deck-header {{ deck|dclass }}">
     <tr>
         <td colspan="3" class="deck-name">
-            <span class="deck-name-text">{% if deck.is_named %}{{ deck.name }}{% else %}{{ deck.deck_class }}-{{ deck.pk }}{% endif %}</span>
+            <span class="deck-name-text">{% if deck.is_named %}{{ deck.name }}{% else %}{{ deck|shortclassname }}-{{ deck.pk }}{% endif %}</span>
             <br>
-            <span class="deck-caption">{{ deck.deck_class }}, {{ deck.deck_format }}, {{ deck.created|date:"d.m.Y" }}</span>
+            <span class="deck-caption">{{ deck|shortclassname }}, {{ deck.deck_format }}, {{ deck.created|date:"d.m.Y" }}</span>
         </td>
     </tr>
     <tr>

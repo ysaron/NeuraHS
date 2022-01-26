@@ -29,8 +29,8 @@
 <div>
 <table class="table">
   <tr>
-    <td style="width:15%;"><strong>{% trans "Class" %}</strong></td>
-    <td style="width:85%;">{% for card_class in real_card.card_class.all %} {{ card_class }}{% if not forloop.last %} | {% endif %}{% endfor %}</td>
+    <td style="min-width:144px;"><strong>{% trans "Class" %}</strong></td>
+    <td>{% for card_class in real_card.card_class.all %} {{ card_class }}{% if not forloop.last %} | {% endif %}{% endfor %}</td>
   </tr>
   {% if real_card.text %}
     <tr>
