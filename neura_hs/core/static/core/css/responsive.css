@@ -25,6 +25,10 @@
   .card-detail {
     flex-direction: column;
   }
+  .modulewrap {
+    padding: 5px;
+    border-radius: 30px;
+  }
 }
 
 @media screen and (max-width: 1250px) {

@@ -252,13 +252,16 @@ a.sub:hover {border-radius: 0;}
 }
 .clickable-row a, .clickable-row span {
   display: block;
-  padding: 5px;
   text-decoration: none;
 }
 .clickable-row a:hover {text-decoration: overline;}
 thead.darktable {
   background-color: var(--dark);
   color: white;
+}
+.clickable-row td {
+  white-space: nowrap;
+  padding: 5px;
 }
 thead.darktable th {padding: 8px;}
 
@@ -464,7 +467,7 @@ table.standard::before {
   position: absolute;
   top: 0; bottom: 0; left: 0; right: 0;
   z-index: -1;
-  box-shadow: 5px 0 25px 5px var(--standard), -5px 0 25px 5px var(--standard);
+  box-shadow: 5px 0 20px 5px var(--standard), -5px 0 20px 5px var(--standard);
 }
 table.wild::before {
   content: "";
@@ -472,7 +475,7 @@ table.wild::before {
   position: absolute;
   top: 0; bottom: 0; left: 0; right: 0;
   z-index: -1;
-  box-shadow: 5px 0 25px 5px var(--wild), -5px 0 25px 5px var(--wild);
+  box-shadow: 5px 0 20px 5px var(--wild), -5px 0 20px 5px var(--wild);
 }
 table.classic::before {
   content: "";
@@ -480,7 +483,7 @@ table.classic::before {
   position: absolute;
   top: 0; bottom: 0; left: 0; right: 0;
   z-index: -1;
-  box-shadow: 5px 0 25px 5px var(--classic), -5px 0 25px 5px var(--classic);
+  box-shadow: 5px 0 20px 5px var(--classic), -5px 0 20px 5px var(--classic);
 }
 table.unknown::before {
   content: "";
@@ -682,9 +685,9 @@ a.author-link {
 }
 .modulewrap {
   margin-top: 3.5px;
-  padding: 25px;
+  padding: 10px;
   border: 1px solid black;
-  border-radius: 50px;
+  border-radius: 35px;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
