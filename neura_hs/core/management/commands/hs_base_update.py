@@ -171,6 +171,16 @@ class DbWorker:
 
             r_card.battlegrounds = r_card.card_set == 'Battlegrounds'
 
+            image_en_path = f'cards/en/{r_card.card_id}.png'
+            image_ru_path = f'cards/ru/{r_card.card_id}.png'
+            thumbnail_path = f'cards/thumbnails/{r_card.card_id}.png'
+            if (settings.MEDIA_ROOT / image_en_path).is_file():
+                r_card.image_en = image_en_path
+            if (settings.MEDIA_ROOT / image_ru_path).is_file():
+                r_card.image_ru = image_ru_path
+            if (settings.MEDIA_ROOT / thumbnail_path).is_file():
+                r_card.thumbnail = thumbnail_path
+
             self.write_mechanics_to_card(r_card, j_card)
             self.write_set_to_card(r_card, j_card)
 

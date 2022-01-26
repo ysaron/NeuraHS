@@ -6,6 +6,8 @@ import os
 from io import BytesIO
 from tqdm import tqdm
 from time import sleep
+from pathlib import Path
+from PIL import Image
 
 from gallery.models import RealCard
 
@@ -23,6 +25,7 @@ class Command(BaseCommand):
             update_specific_images(id_list)
         else:
             download_missing_images()
+            process_images()
 
 
 def get_image(url: str) -> BytesIO:
@@ -46,17 +49,17 @@ def download_missing_images():
     cards = RealCard.includibles.all()
     for card in tqdm(cards, desc='Download missing images', ncols=120):
 
-        image_en_path = settings.MEDIA_ROOT / 'cards' / 'en' / f'{card.card_id}.png'
+        image_en_path: Path = settings.MEDIA_ROOT / 'cards' / 'en' / f'{card.card_id}.png'
         if not image_en_path.is_file():
             image_en = get_image(f'https://art.hearthstonejson.com/v1/render/latest/enUS/256x/{card.card_id}.png')
             card.image_en.save(os.path.basename(image_en_path), File(image_en))
 
-        image_ru_path = settings.MEDIA_ROOT / 'cards' / 'ru' / f'{card.card_id}.png'
+        image_ru_path: Path = settings.MEDIA_ROOT / 'cards' / 'ru' / f'{card.card_id}.png'
         if not image_ru_path.is_file():
             image_ru = get_image(f'https://art.hearthstonejson.com/v1/render/latest/ruRU/256x/{card.card_id}.png')
             card.image_ru.save(os.path.basename(image_ru_path), File(image_ru))
 
-        thumbnail_path = settings.MEDIA_ROOT / 'cards' / 'thumbnails' / f'{card.card_id}.png'
+        thumbnail_path: Path = settings.MEDIA_ROOT / 'cards' / 'thumbnails' / f'{card.card_id}.png'
         if not thumbnail_path.is_file():
             thumbnail = get_image(f'https://art.hearthstonejson.com/v1/tiles/{card.card_id}.png')
             card.thumbnail.save(os.path.basename(thumbnail_path), File(thumbnail))
@@ -89,3 +92,39 @@ def update_specific_images(card_ids: list):
         card.image_ru.save(os.path.basename(image_ru_path), File(image_ru))
 
         card.save()
+
+
+def fade_thumbnail(path: Path, from_perc: int = 20, to_perc: int = 50) -> None:
+    """
+    Добавляет изображению затухание справа налево
+    :param path: путь до изображения
+    :param from_perc: % от ширины изображения (отсчет слева направо), определяющий место начала затухания
+    :param to_perc: % от ширины изображения (отсчет слева направо), определяющий место конца затухания
+    """
+
+    if not all(0 <= x <= 100 for x in (from_perc, to_perc)):
+        raise ValueError('from_perc and to_perc must be in range 0-100')
+
+    with Image.open(path) as orig:
+        orig.putalpha(255)          # добавление альфа-канала без прозрачности
+        width, height = orig.size
+        pixels = orig.load()        # получение r/w доступа к изображению на уровне пикселей
+
+        from_, to_ = from_perc / 100, to_perc / 100
+
+        for x in range(int(width * from_), int(width * to_)):
+            alpha = int((x - width * from_) * 255/width/(to_ - from_))
+            for y in range(height):
+                pixels[x, y] = pixels[x, y][:3] + (alpha,)
+        for x in range(0, int(width * from_)):
+            for y in range(height):
+                pixels[x, y] = pixels[x, y][:3] + (0,)
+
+        orig.save(path)
+
+
+def process_images():
+
+    for child in tqdm(Path('media/cards/thumbnails').glob('*.png'), desc='Processing images', ncols=120):
+        if child.is_file():
+            fade_thumbnail(child)
