@@ -27,21 +27,18 @@
   }
 }
 
-@media screen and (max-width: 1050px) {
+@media screen and (max-width: 1250px) {
   .decks-grid {
-    grid-template-columns: auto;
-  }
-  table.deck {
-    width: 300px;
-    max-width: 300px;
-  }
-  .info-deck, .info-author {
-    width: 300px;
-    max-width: 300px;
+    grid-template-columns: auto auto;
   }
   .my-pagination-block {
     display: inline-flex;
     flex-direction: column;
+  }
+}
+@media screen and (max-width: 800px) {
+  .decks-grid {
+    grid-template-columns: auto;
   }
 }
 

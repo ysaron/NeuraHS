@@ -37,7 +37,7 @@
   --standard: rgba(24, 24, 129, 0.6);
   --wild: rgba(38, 38, 38, 0.7);
   --classic: rgba(0, 102, 0, 0.6);
-  --deck-width: 400px;
+  --deck-width: 300px;
 }
 
 html, body {
@@ -585,7 +585,7 @@ td.deck-control * {
 /* Список колод */
 .decks-grid {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto auto auto;
   grid-row-gap: 50px;
   padding: 35px 0;
   justify-content: space-around;

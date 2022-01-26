@@ -158,7 +158,7 @@
         {% for card in deck.included_cards %}
         <tr class="{{ card|cclass }} {{ card|rar }} rartext">
             <td class="deck-number-cell" style="width:10%;"><a href="{{ card.get_absolute_url }}">{{ card.cost }}</a></td>
-            <td class="deck-card-cell" style="width:80%; background: no-repeat 100% 30%/60% url({{ card.thumbnail.url }});"><a href="{{ card.get_absolute_url }}">{{ card.name }}</a></td>
+            <td class="deck-card-cell" style="width:80%; background: no-repeat 105% 30%/60% url({{ card.thumbnail.url }});"><a href="{{ card.get_absolute_url }}">{{ card.name|truncatechars:23 }}</a></td>
             <td class="deck-number-cell" style="width:10%;"><a href="{{ card.get_absolute_url }}">{% if card.rarity == 'L' %}&#9733;{% else %}{{ card.number }}x{% endif %}</a></td>
         </tr>
         {% endfor %}
@@ -194,20 +194,22 @@
             </ol>
         </div>
         <div class="info-item info-deck">
-            <h4>{% trans 'Sets' %}</h4>
+            <h4>{% trans 'Mechanics' %}</h4>
             <ol>
-                {% for set in deck.included_cards|dsetsstat %}
-                    <li>{{ set.name }} ({{ set.num_cards }})</li>
+                {% for mech in deck.included_cards|dmechstat %}
+                    <li>{{ mech.name }} ({{ mech.num_cards }})</li>
                 {% empty %}
                     <li>{% trans 'No data' %}</li>
                 {% endfor %}
             </ol>
         </div>
+    </div>
+    <div>
         <div class="info-item info-deck">
-            <h4>{% trans 'Mechanics' %}</h4>
+            <h4>{% trans 'Sets' %}</h4>
             <ol>
-                {% for mech in deck.included_cards|dmechstat %}
-                    <li>{{ mech.name }} ({{ mech.num_cards }})</li>
+                {% for set in deck.included_cards|dsetsstat %}
+                    <li>{{ set.name }} ({{ set.num_cards }})</li>
                 {% empty %}
                     <li>{% trans 'No data' %}</li>
                 {% endfor %}
