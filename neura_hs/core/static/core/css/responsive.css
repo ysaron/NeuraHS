@@ -29,6 +29,10 @@
     padding: 5px;
     border-radius: 30px;
   }
+  .deck-card-cell:hover span {
+    top: -1400%;
+    left: 0;
+  }
 }
 
 @media screen and (max-width: 1250px) {
