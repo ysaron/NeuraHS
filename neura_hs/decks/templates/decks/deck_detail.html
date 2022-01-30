@@ -161,7 +161,7 @@
             <td class="deck-card-cell" style="background: no-repeat 110% 30%/90% url({{ card.thumbnail.url }});">
                 <a href="{{ card.get_absolute_url }}">
                     {{ card.name|truncatechars:23 }}
-                    <span><img src="{{ card.image_en.url }}"></span>
+                    <span><img src="{{ card|locrender }}"></span>
                 </a>
             </td>
             <td class="deck-number-cell" style="width:10%;"><a href="{{ card.get_absolute_url }}">{% if card.rarity == 'L' %}&#9733;{% else %}{{ card.number }}x{% endif %}</a></td>

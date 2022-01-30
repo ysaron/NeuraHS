@@ -1,5 +1,5 @@
 from django import template
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as _, to_locale, get_language
 from collections import namedtuple
 from ..models import Card, FanCard, RealCard
 
@@ -219,3 +219,11 @@ def get_short_class_name(deck):
     if deck.deck_class.service_name == 'Demon Hunter':
         return _('DH')
     return deck.deck_class
+
+
+@register.filter(name='locrender')
+def get_localized_render(card: RealCard):
+    lang = to_locale(get_language())
+    matches = {'en': card.image_en.url,
+               'ru': card.image_ru.url}
+    return matches.get(lang, card.image_en.url)
