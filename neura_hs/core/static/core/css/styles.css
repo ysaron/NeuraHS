@@ -563,9 +563,10 @@ td.deck-control * {
 .deck-cards td.deck-number-cell {
   text-align: center;
   width: calc(var(--deck-width) * 0.1);
+  overflow: hidden;
 }
 .deck-cards td.deck-card-cell {
-  padding-left: 5px;
+  padding: 4px 8px;
   width: calc(var(--deck-width) * 0.8);
   position: relative;
 }
