@@ -30,8 +30,12 @@
     border-radius: 30px;
   }
   .deck-card-cell:hover span {
-    top: -1400%;
-    left: 0;
+    top: -520%;
+    left: -25%;
+  }
+  .deck-card-cell:hover span img {
+    height: 90%;
+    width: 90%;
   }
 }
 

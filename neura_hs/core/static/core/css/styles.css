@@ -574,7 +574,7 @@ td.deck-control * {
 .deck-card-cell:hover span {
   display: block;
   position: absolute;
-  top: -700%;
+  top: -600%;
   left: 110%;
   z-index: 1000;
   width: auto;
