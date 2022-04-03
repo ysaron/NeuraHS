@@ -579,7 +579,13 @@ td.deck-control * {
   z-index: 1000;
   width: auto;
   overflow: hidden;
+  pointer-events: none;
 }
+.deck-card-cell:hover span.mobile-tooltip {
+  top: -520%;
+  left: -17%;
+}
+
 .deck-cards-collapsed {
   max-height: 0;
   display: block;

@@ -47,7 +47,12 @@
     {% for card in deck.included_cards %}
     <tr class="{{ card|cclass }} {{ card|rar }} rartext">
         <td class="deck-number-cell" style=""><a href="{{ card.get_absolute_url }}">{{ card.cost }}</a></td>
-        <td class="deck-card-cell" style="background: no-repeat 115% 30%/90% url({{ card.thumbnail.url }});"><a href="{{ card.get_absolute_url }}">{{ card.name|truncatechars:22 }}</a></td>
+        <td class="deck-card-cell" style="background: no-repeat 115% 30%/90% url({{ card.thumbnail.url }});">
+            <a href="{{ card.get_absolute_url }}">
+                {{ card.name|truncatechars:22 }}
+                <span class="mobile-tooltip"><img src="{{ card|locrender }}"></span>
+            </a>
+        </td>
         <td class="deck-number-cell" style=""><a href="{{ card.get_absolute_url }}">{% if card.rarity == 'L' %}&#9733;{% else %}{{ card.number }}x{% endif %}</a></td>
     </tr>
     {% endfor %}

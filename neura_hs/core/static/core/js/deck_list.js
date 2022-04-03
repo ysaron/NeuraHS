@@ -3,7 +3,19 @@
 document.addEventListener("DOMContentLoaded", function() {
     addAccordionListeners();
     addCopyDeckstringListeners();
+    positionCardTooltips();
 })
+
+function positionCardTooltips() {
+    // позиционирует tooltip карты в соответствии с ее положением в колоде
+    let decks = document.getElementsByClassName("deck");
+    for (let i = 0; i < decks.length; i++) {
+        let cards = decks[i].getElementsByClassName("deck-card-cell");
+        for (let j = 0; j < cards.length; j++) {
+            cards[j].firstElementChild.lastElementChild.style.top = -100 - 1000 * j / cards.length + '%';
+        }
+    }
+}
 
 function addAccordionListeners() {
     let accs = document.getElementsByClassName("deck-accordion");
