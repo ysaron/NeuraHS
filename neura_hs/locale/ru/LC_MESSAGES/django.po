@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-26 19:32+0700\n"
+"POT-Creation-Date: 2022-04-17 17:48+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -303,7 +303,7 @@ msgid "HS cards"
 msgstr "Карты HS"
 
 #: .\core\services\statistics.py:65 .\core\templates\core\about.html:11
-#: .\decks\models.py:76 .\decks\views.py:89 .\decks\views.py:122
+#: .\decks\models.py:71 .\decks\views.py:102 .\decks\views.py:135
 #: .\neura_hs\settings.py:237
 msgid "Decks"
 msgstr "Колоды"
@@ -365,8 +365,9 @@ msgid "Paste the deck code here"
 msgstr "Скопируйте сюда код колоды"
 
 #: .\decks\forms.py:22 .\decks\forms.py:25 .\decks\models.py:34
-#: .\decks\models.py:50 .\gallery\forms.py:27 .\gallery\forms.py:62
-#: .\gallery\models.py:127 .\gallery\models.py:211
+#: .\decks\models.py:50 .\decks\models.py:170
+#: .\decks\templates\decks\deck_detail.html:234 .\gallery\forms.py:27
+#: .\gallery\forms.py:62 .\gallery\models.py:127 .\gallery\models.py:211
 #: .\gallery\templates\gallery\authors\author_detail.html:37
 #: .\gallery\templates\gallery\fancard\fancard_list.html:49
 #: .\gallery\templates\gallery\realcard\realcard_list.html:80
@@ -377,7 +378,7 @@ msgstr "Название"
 #: .\gallery\models.py:93 .\gallery\models.py:217 .\gallery\models.py:299
 #: .\gallery\templates\gallery\authors\author_detail.html:39
 #: .\gallery\templates\gallery\fancard\fancard_detail.html:41
-#: .\gallery\templates\gallery\realcard\realcard_detail.html:32
+#: .\gallery\templates\gallery\realcard\realcard_detail.html:31
 #: .\gallery\templates\gallery\realcard\realcard_list.html:82
 msgid "Class"
 msgstr "Класс"
@@ -436,40 +437,24 @@ msgstr "Класс, для которого собрана колода."
 msgid "The format for which the deck is intended."
 msgstr "Формат, для которого предназначена колода."
 
-#: .\decks\models.py:63
+#: .\decks\models.py:63 .\decks\models.py:171
 msgid "Time of creation."
 msgstr "Время создания."
 
-#: .\decks\models.py:65
-msgid "Render (enUS)"
-msgstr "Рендер (enUS)"
-
-#: .\decks\models.py:65
-msgid "Rendered deck (en)"
-msgstr "Рендер колоды (en)"
-
-#: .\decks\models.py:67
-msgid "Render (ruRU)"
-msgstr "Рендер (ruRU)"
-
-#: .\decks\models.py:67
-msgid "Rendered deck (ru)"
-msgstr "Рендер колоды (ru)"
-
-#: .\decks\models.py:75
+#: .\decks\models.py:70 .\decks\models.py:168
 msgid "Deck"
 msgstr "Колода"
 
-#: .\decks\models.py:102
+#: .\decks\models.py:97
 #, python-format
 msgid "No card data (id %(id)s)"
 msgstr "Нет данных о карте (id %(id)s)"
 
-#: .\decks\models.py:142
+#: .\decks\models.py:155
 msgid "Amount"
 msgstr "Количество"
 
-#: .\decks\models.py:143
+#: .\decks\models.py:156
 msgid "The number of card inclusions in the deck."
 msgstr "Число вхождений карты в колоду."
 
@@ -524,40 +509,44 @@ msgstr "Авторизуйтесь, чтобы сохранить колоду"
 msgid "Save with this name"
 msgstr "Сохранить с этим названием"
 
-#: .\decks\templates\decks\deck_detail.html:169
-#: .\decks\templates\decks\tags\deck-accordion.html:58
+#: .\decks\templates\decks\deck_detail.html:173
+#: .\decks\templates\decks\tags\deck-accordion.html:62
 msgid "Craft"
 msgstr "Крафт"
 
-#: .\decks\templates\decks\deck_detail.html:169
-#: .\decks\templates\decks\tags\deck-accordion.html:58
+#: .\decks\templates\decks\deck_detail.html:173
+#: .\decks\templates\decks\tags\deck-accordion.html:62
 msgid "gold"
 msgstr "голд"
 
-#: .\decks\templates\decks\deck_detail.html:177
+#: .\decks\templates\decks\deck_detail.html:180
 msgid "Types"
 msgstr "Типы"
 
-#: .\decks\templates\decks\deck_detail.html:182
-#: .\decks\templates\decks\deck_detail.html:192
-#: .\decks\templates\decks\deck_detail.html:202
-#: .\decks\templates\decks\deck_detail.html:214
+#: .\decks\templates\decks\deck_detail.html:185
+#: .\decks\templates\decks\deck_detail.html:195
+#: .\decks\templates\decks\deck_detail.html:205
+#: .\decks\templates\decks\deck_detail.html:217
 msgid "No data"
 msgstr "Нет данных"
 
-#: .\decks\templates\decks\deck_detail.html:187
+#: .\decks\templates\decks\deck_detail.html:190
 msgid "Rarities"
 msgstr "Редкости"
 
-#: .\decks\templates\decks\deck_detail.html:197 .\gallery\forms.py:35
+#: .\decks\templates\decks\deck_detail.html:200 .\gallery\forms.py:35
 msgid "Mechanics"
 msgstr "Механика"
 
-#: .\decks\templates\decks\deck_detail.html:209 .\gallery\models.py:132
+#: .\decks\templates\decks\deck_detail.html:212 .\gallery\models.py:132
 msgid "Sets"
 msgstr "Наборы"
 
-#: .\decks\templates\decks\deck_detail.html:221
+#: .\decks\templates\decks\deck_detail.html:246
+msgid "Draw"
+msgstr "Нарисовать"
+
+#: .\decks\templates\decks\deck_detail.html:261
 msgid "Similar decks"
 msgstr "Похожие колоды"
 
@@ -597,13 +586,13 @@ msgstr "Ошибка: %(error)s"
 msgid "%(error)s. The database will be updated shortly."
 msgstr "%(error)s. База данных будет обновлена в ближайшее время."
 
-#: .\decks\views.py:182
+#: .\decks\views.py:197
 msgid "Deck has been removed"
 msgstr "Колода была удалена"
 
 #: .\gallery\forms.py:30 .\gallery\models.py:237
 #: .\gallery\templates\gallery\fancard\fancard_detail.html:61
-#: .\gallery\templates\gallery\realcard\realcard_detail.html:56
+#: .\gallery\templates\gallery\realcard\realcard_detail.html:55
 msgid "Rarity"
 msgstr "Редкость"
 
@@ -611,19 +600,19 @@ msgstr "Редкость"
 #: .\gallery\templates\gallery\authors\author_detail.html:38
 #: .\gallery\templates\gallery\fancard\fancard_detail.html:57
 #: .\gallery\templates\gallery\fancard\fancard_list.html:51
-#: .\gallery\templates\gallery\realcard\realcard_detail.html:48
+#: .\gallery\templates\gallery\realcard\realcard_detail.html:47
 #: .\gallery\templates\gallery\realcard\realcard_list.html:81
 msgid "Type"
 msgstr "Тип"
 
 #: .\gallery\forms.py:41 .\gallery\models.py:239
 #: .\gallery\templates\gallery\fancard\fancard_detail.html:66
-#: .\gallery\templates\gallery\realcard\realcard_detail.html:61
+#: .\gallery\templates\gallery\realcard\realcard_detail.html:60
 msgid "Tribe"
 msgstr "Раса"
 
 #: .\gallery\forms.py:47 .\gallery\models.py:131 .\gallery\models.py:321
-#: .\gallery\templates\gallery\realcard\realcard_detail.html:52
+#: .\gallery\templates\gallery\realcard\realcard_detail.html:51
 #: .\gallery\templates\gallery\realcard\realcard_list.html:83
 msgid "Set"
 msgstr "Набор"
@@ -920,7 +909,7 @@ msgstr "Только для карт героя."
 
 #: .\gallery\models.py:233
 #: .\gallery\templates\gallery\fancard\fancard_detail.html:46
-#: .\gallery\templates\gallery\realcard\realcard_detail.html:37
+#: .\gallery\templates\gallery\realcard\realcard_detail.html:36
 msgid "Text"
 msgstr "Текст"
 
@@ -930,7 +919,7 @@ msgstr "Текст карты, определяющий ее свойства."
 
 #: .\gallery\models.py:235
 #: .\gallery\templates\gallery\fancard\fancard_detail.html:52
-#: .\gallery\templates\gallery\realcard\realcard_detail.html:43
+#: .\gallery\templates\gallery\realcard\realcard_detail.html:42
 msgid "Flavor"
 msgstr "Описание"
 
@@ -967,7 +956,7 @@ msgid "Integer ID of an existing card"
 msgstr "Целочисленный ID существующей карты"
 
 #: .\gallery\models.py:323
-#: .\gallery\templates\gallery\realcard\realcard_detail.html:80
+#: .\gallery\templates\gallery\realcard\realcard_detail.html:79
 msgid "Artist"
 msgstr "Художник"
 
@@ -1087,7 +1076,7 @@ msgid "Edit"
 msgstr "Редактировать"
 
 #: .\gallery\templates\gallery\fancard\fancard_detail.html:72
-#: .\gallery\templates\gallery\realcard\realcard_detail.html:67
+#: .\gallery\templates\gallery\realcard\realcard_detail.html:66
 msgid "Spell type"
 msgstr "Тип заклинания"
 
@@ -1104,16 +1093,16 @@ msgstr "Поля Сражений"
 msgid "Non-collectible"
 msgstr "Неколлекционная"
 
-#: .\gallery\templates\gallery\realcard\realcard_detail.html:74
+#: .\gallery\templates\gallery\realcard\realcard_detail.html:73
 msgctxt "list"
 msgid "Mechanics"
 msgstr "Механики"
 
-#: .\gallery\templates\gallery\realcard\realcard_detail.html:88
+#: .\gallery\templates\gallery\realcard\realcard_detail.html:87
 msgid "Related decks"
 msgstr "Связанные колоды"
 
-#: .\gallery\templates\gallery\realcard\realcard_detail.html:93
+#: .\gallery\templates\gallery\realcard\realcard_detail.html:92
 msgid "This card hasn't been found in known decks."
 msgstr "В известных колодах данная карта не найдена."
 
@@ -1137,7 +1126,7 @@ msgstr "Пользователь"
 msgid "Cost"
 msgstr "Стоимость"
 
-#: .\gallery\templatetags\custom_filters.py:220
+#: .\gallery\templatetags\custom_filters.py:199
 msgid "DH"
 msgstr "ДХ"
 
@@ -1206,6 +1195,18 @@ msgstr "Выйти"
 #: .\templates\header.html:10
 msgid "Sign In"
 msgstr "Войти"
+
+#~ msgid "Render (enUS)"
+#~ msgstr "Рендер (enUS)"
+
+#~ msgid "Rendered deck (en)"
+#~ msgstr "Рендер колоды (en)"
+
+#~ msgid "Render (ruRU)"
+#~ msgstr "Рендер (ruRU)"
+
+#~ msgid "Rendered deck (ru)"
+#~ msgstr "Рендер колоды (ru)"
 
 #~ msgid "Decks with this card"
 #~ msgstr "Колоды с этой картой"

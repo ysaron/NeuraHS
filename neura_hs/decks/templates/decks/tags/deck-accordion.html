@@ -59,9 +59,7 @@
     </tbody>
     <tbody class="deck-footer {{ deck|dclass }}">
     <tr>
-    {% with prices=deck.included_cards|craft_cost %}
-        <td colspan="3">{% trans 'Craft' %}: {{ prices.0 }} | {{ prices.1 }} ({% trans 'gold' %})</td>
-    {% endwith %}
+    <td colspan="3">{% trans 'Craft' %}: {{ deck.get_craft_cost.basic }} | {{ deck.get_craft_cost.gold }} ({% trans 'gold' %})</td>
     </tr>
     </tbody>
 </table>

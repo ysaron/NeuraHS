@@ -19,3 +19,5 @@ neura_hs/config
 
 neura_hs/tests/temp
 neura_hs/media/*
+
+neura_hs/core/services/fonts

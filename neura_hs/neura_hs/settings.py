@@ -240,6 +240,8 @@ SIDE_MENU = {
               'mine': {'title': _('My decks'), 'url_name': 'decks:user_decks', 'popup': ''}},
 }
 
+DECK_RENDER_MAX_NUMBER = 10     # максимальное число сохраненных рендеров колод
+
 # API Hearthstone
 HSAPI_BASEURL = 'https://omgvamp-hearthstone-v1.p.rapidapi.com/'
 HSAPI_HOST = 'omgvamp-hearthstone-v1.p.rapidapi.com'

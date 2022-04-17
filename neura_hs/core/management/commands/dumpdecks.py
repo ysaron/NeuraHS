@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 import json
 
-from core.services.decks import DumpDeckListSerializer
+from core.services.deck_utils import DumpDeckListSerializer
 from decks.models import Deck
 
 

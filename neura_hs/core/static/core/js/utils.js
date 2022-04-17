@@ -86,3 +86,66 @@ function mail() {
         error: function(response) {console.log(response.responseJSON.errors);}
     });
 }
+
+function showRenderForm() {
+    let btn = document.getElementById('deckRenderDiv');
+    let renderForm = document.getElementById('renderForm');
+    btn.style.display = "none";
+    renderForm.style.display = "flex";
+}
+
+function render() {
+
+    document.getElementById('renderForm').style.display = "none";
+    let loading = document.getElementById('deckRenderLoading');
+    loading.style.display = "block";
+    document.getElementById('renderForm').style.display = "none";
+
+    let btn = $('#renderForm');
+    let deckId = btn.attr('datasrc');
+    let name = $('#renderName').val();
+    let lang = $('input[name=renderLang]:checked', btn.find('form')).val();
+    $.ajax({
+        data: {
+            render: true,
+            deck_id: deckId,
+            name: name,
+            language: lang
+        },
+        url: 'get_render/',
+        success: function(response) {
+            let a = document.createElement("a");
+            a.setAttribute("href", response.render);
+            a.setAttribute("target", "_blank");
+            a.setAttribute("display", "block");
+            a.setAttribute("width", "100%");
+            a.setAttribute("height", "100%");
+
+            let deckRender = document.createElement("img");
+            deckRender.src = response.render;
+
+            let div = document.getElementById("deckRenderPlaceholder");
+
+            let width = "";
+            let height = "";
+            if (response.width >= response.height) {
+                width = "308px";
+                height = "auto";
+            }
+            else {
+                width = "auto";
+                height = "308px";
+            }
+            deckRender.setAttribute("width", width);
+            deckRender.setAttribute("height", height);
+            deckRender.setAttribute("alt", "Deck Render");
+
+            a.appendChild(deckRender);
+
+            loading.style.display = "none";
+            div.style.display = "flex";
+            div.appendChild(a);
+        },
+        error: function(response) {console.log(response.responseJSON.errors);}
+    });
+}

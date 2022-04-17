@@ -412,6 +412,68 @@ hr.form-separator {
   box-shadow: 2px 2px 5px 0 var(--dark);
 }
 
+div.render {
+  width: var(--deck-width);
+  height: var(--deck-width);
+}
+.render-button {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  color: var(--dark);
+  border: 1px solid var(--dark);
+  border-radius: 10px;
+
+}
+.render-button span {
+  font-size: 13.5rem;
+}
+.render-button:hover {
+  transition: background-color 0.4s, color 0.4s;
+  background-color: var(--dark);
+  color: white;
+}
+.render-form {
+  width: var(--deck-width);
+  height: var(--deck-width);
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: space-around;
+  background-color: white;
+  color: var(--dark);
+  border: 1px solid var(--dark);
+  border-radius: 10px;
+}
+.render-form div {
+  padding: 15px;
+  margin: 15px;
+  display: block;
+}
+
+.render-loading {
+  font-size: 13.5rem;
+  padding: 0 3rem;
+  display: block;
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: white;
+}
+.render-image-wrapper {
+  background-color: var(--dark);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
+}
+.render-image-wrapper:hover {
+  box-shadow: 0 16px 32px 0 rgba(0, 0, 0, 0.7);
+  border-color: white;
+  transition: 0.4s;
+}
+
 .mytooltip {
   position: relative;
   display: inline-block;
@@ -599,7 +661,7 @@ td.deck-control * {
   display: grid;
   grid-template-columns: auto auto auto;
   grid-row-gap: 50px;
-  padding: 35px 0 125px 0;
+  padding: 35px 0;
   justify-content: space-around;
   overflow: hidden;
 }

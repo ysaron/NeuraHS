@@ -170,9 +170,7 @@
         </tbody>
         <tbody class="deck-footer {{ deck|dclass }}">
         <tr>
-        {% with prices=deck.included_cards|craft_cost %}
-            <td colspan="3">{% trans 'Craft' %}: {{ prices.0 }} | {{ prices.1 }} ({% trans 'gold' %})</td>
-        {% endwith %}
+        <td colspan="3">{% trans 'Craft' %}: {{ deck.get_craft_cost.basic }} | {{ deck.get_craft_cost.gold }} ({% trans 'gold' %})</td>
         </tr>
         </tbody>
     </table>
@@ -222,6 +220,42 @@
         </div>
     </div>
 </div>
+
+<div class="center-wrapper">
+<div id="deckRenderDiv" class="render">
+    <button type="button" id="deckRenderBtn" class="render-button" onclick="showRenderForm()">
+        <span><i class="fas fa-file-image"></i></span>
+    </button>
+</div>
+<div class="render" id="renderForm" datasrc="{{ deck.pk }}" style="display: none;">
+    <div class="render-form">
+        <form>
+            <div>
+                <label for="renderName">{% trans 'Name' %}</label><br>
+                <input type="text" class="form-input" id="renderName" name="renderName" value="{{ deck.deck_format }} {{ deck.deck_class }}" maxlength="50"><br>
+            </div>
+            <div>
+                <input type="radio" id="engRender" name="renderLang" value="en" checked>
+                <label for="engRender">English</label><br>
+                <input type="radio" id="rusRender" name="renderLang" value="ru">
+                <label for="rusRender">Русский</label><br>
+            </div>
+            <div>
+                <button type="button" class="form-button" onclick="render()">
+                    <span class="button-icon"><i class="fas fa-file-image"></i></span>
+                    <span class="button-text">{% trans "Draw" %}</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="deckRenderLoading" class="render render-loading" style="display: none;">
+    <span><i class="fas fa-spinner fa-spin"></i></span>
+</div>
+<div id="deckRenderPlaceholder" class="render render-image-wrapper" style="display: none;">
+</div>
+</div>
+
 {% if similar %}
 <h1>{% trans 'Similar decks' %}</h1>
 <div class="decks-grid">

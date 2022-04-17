@@ -62,11 +62,6 @@ class Deck(models.Model):
                                     help_text=_('The format for which the deck is intended.'))
     created = models.DateTimeField(default=now, verbose_name=_('Time of creation.'))
 
-    render_en = models.ImageField(verbose_name=_('Render (enUS)'), help_text=_('Rendered deck (en)'),
-                                  upload_to='decks/en/', null=True, blank=True)
-    render_ru = models.ImageField(verbose_name=_('Render (ruRU)'), help_text=_('Rendered deck (ru)'),
-                                  upload_to='decks/ru/', null=True, blank=True)
-
     nameless = NamelessDeckManager()
     objects = models.Manager()
     named = NamedDeckManager()
@@ -131,6 +126,24 @@ class Deck(models.Model):
         from .forms import DeckStringCopyForm  # импорт здесь во избежание перекрестного импорта
         return DeckStringCopyForm(initial={'deckstring': self.string})
 
+    def get_craft_cost(self):
+        """
+        Возвращает суммарную стоимость (во внутриигровой валюте)
+        создания карт из колоды (в обычном и золотом варианте)
+        """
+        craft_cost, craft_cost_gold = 0, 0
+        rarities = RealCard.Rarities
+        prices = {rarities.UNKNOWN: (0, 0),
+                  rarities.NO_RARITY: (0, 0),
+                  rarities.COMMON: (40, 400),
+                  rarities.RARE: (100, 800),
+                  rarities.EPIC: (100, 1600),
+                  rarities.LEGENDARY: (1600, 3200)}
+        for card in self.included_cards:
+            craft_cost += prices[card.rarity][0] * card.number
+            craft_cost_gold += prices[card.rarity][1] * card.number
+        return {'basic': craft_cost, 'gold': craft_cost_gold}
+
     def get_absolute_url(self):
         return reverse_lazy('decks:deck-detail', kwargs={'deck_id': self.pk})
 
@@ -143,3 +156,20 @@ class Inclusion(models.Model):
                                               help_text=_('The number of card inclusions in the deck.'))
 
     objects = IncluSionManager.as_manager()
+
+
+class Render(models.Model):
+    """ Детализированное изображение колоды """
+
+    class Languages(models.TextChoices):
+        ENGLISH = 'en', 'English'
+        RUSSIAN = 'ru', 'Русский'
+
+    deck = models.ForeignKey(Deck, on_delete=models.CASCADE, related_name='renders', verbose_name=_('Deck'))
+    render = models.ImageField(verbose_name='Render', upload_to='decks/', null=True, blank=True)
+    name = models.CharField(max_length=255, verbose_name=_('Name'), default='', blank=True)
+    created = models.DateTimeField(auto_now_add=True, verbose_name=_('Time of creation.'))
+    language = models.CharField(max_length=2, choices=Languages.choices, default=Languages.ENGLISH)
+
+    objects = models.Manager()
+

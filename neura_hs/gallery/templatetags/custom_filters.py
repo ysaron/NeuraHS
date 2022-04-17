@@ -93,27 +93,6 @@ def can_change(user, card: FanCard):
                                           user.has_perm('gallery.change_fancard')))
 
 
-@register.filter(name='craft_cost')
-def calc_deck_craft_cost(cards) -> tuple[int, int]:
-    """
-    Возвращает суммарную стоимость (во внутриигровой валюте)
-    создания карт из колоды (в обычном и золотом варианте)
-    """
-    craft_cost, craft_cost_gold = 0, 0
-    rarities = RealCard.Rarities
-    prices = {rarities.UNKNOWN: (0, 0),
-              rarities.NO_RARITY: (0, 0),
-              rarities.COMMON: (40, 400),
-              rarities.RARE: (100, 800),
-              rarities.EPIC: (100, 1600),
-              rarities.LEGENDARY: (1600, 3200)}
-    for card in cards:
-        craft_cost += prices[card.rarity][0] * card.number
-        craft_cost_gold += prices[card.rarity][1] * card.number
-
-    return craft_cost, craft_cost_gold
-
-
 @register.filter(name='dformat')
 def get_format_style(deck) -> str:
     """ Возвращает соответствующий класс стиля формата колоды """

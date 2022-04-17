@@ -1,9 +1,35 @@
 from django.db.models import Q, Count
+from django.conf import settings
 from rest_framework import serializers
 
-from decks.models import Deck, Format, Inclusion
+from decks.models import Deck, Format, Inclusion, Render
 from gallery.models import RealCard
 from .deck_codes import parse_deckstring
+from .images import DeckRender
+
+
+def get_render(deck_id: str, name: str, language: str) -> dict:
+    """ Возвращает словарь с данными рендера колоды """
+    deck = Deck.objects.get(pk=deck_id)
+    dr = DeckRender(name=name, deck=deck, language=language)
+    dr.create()
+    render = Render()
+    render.deck = deck
+    render.render.save(**dr.for_imagefield)
+    render.name = dr.name
+    render.language = Render.Languages(language)
+    render.save()
+
+    if Render.objects.count() > settings.DECK_RENDER_MAX_NUMBER:
+        r = Render.objects.first()      # автоудаление самого старого рендера
+        r.render.delete(save=True)      # в т.ч. из файловой системы
+        r.delete()
+
+    return {
+        'render': render.render.url,
+        'width': dr.width,
+        'height': dr.height,
+    }
 
 
 def find_similar_decks(target_deck: Deck):

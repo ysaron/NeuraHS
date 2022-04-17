@@ -14,7 +14,7 @@ from random import choice
 from .models import Deck
 from .forms import DeckstringForm, DeckSaveForm, DeckFilterForm
 from core.services.deck_codes import get_clean_deckstring
-from core.services.decks import find_similar_decks
+from core.services.deck_utils import find_similar_decks, get_render
 from core.exceptions import DecodeError, UnsupportedCards
 
 
@@ -68,6 +68,19 @@ def get_random_deckstring(request: HttpRequest):
     if request.GET.get('deckstring') == 'random' and request.is_ajax():
         deck = choice(Deck.nameless.all())
         response = {'deckstring': deck.string}
+        return JsonResponse(response)
+
+    return redirect(reverse_lazy('decks:index'))
+
+
+def get_deck_render(request: HttpRequest):
+    """ AJAX-view для получения наглядного изображения колоды """
+    if all([
+        request.GET.get('render'),
+        deck_id := request.GET.get('deck_id'),
+        request.is_ajax(),
+    ]):
+        response = get_render(deck_id, name=request.GET.get('name'), language=request.GET.get('language'))
         return JsonResponse(response)
 
     return redirect(reverse_lazy('decks:index'))
