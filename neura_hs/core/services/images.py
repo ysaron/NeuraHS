@@ -266,17 +266,26 @@ class DeckRender(Picture):
 
     def __draw_craft_cost(self):
         """ Добавляет на нижний колонтитул информацию о стоимости колоды """
-        with Image.open(settings.MEDIA_ROOT / 'decks' / 'craft_cost.png', 'r') as craft_cost:
+
+        area_size = (270, 100)
+        top_left = ((self.width - area_size[0]) // 2, 1235 + (400 - area_size[1]) / 2)
+        x0, y0, x1, y1 = top_left[0], top_left[1], top_left[0] + area_size[0], top_left[1] + area_size[1]
+        self.__draw.rounded_rectangle([x0, y0, x1, y1], radius=10, outline='#ffffff', fill='#333', width=2)
+
+        with Image.open(settings.MEDIA_ROOT / 'decks' / 'craft.png', 'r') as craft_cost:
             w, h = craft_cost.size
-            self.__render.paste(craft_cost, ((self.width - w) // 2, 1384), mask=craft_cost)
+            w, h = w * 85 // h, 85
+            craft_cost = craft_cost.resize((w, h))
+            craft_cost = craft_cost.rotate(angle=-20, resample=Image.BICUBIC, expand=True)
+            self.__render.paste(craft_cost, (int(x0) + 10, int(y0)), mask=craft_cost)
 
         path: Path = settings.BASE_DIR / 'core' / 'services' / 'fonts' / 'consola.ttf'
-        font = ImageFont.truetype(str(path), 48, encoding='utf-8')
-        craft_cost_text = str(self.deck.get_craft_cost().get('basic'))
-        w, h = self.__draw.textsize(craft_cost_text, font=font)
+        font = ImageFont.truetype(str(path), 60, encoding='utf-8')
+
         self.__draw.text(
-            ((self.width - w + 90) // 2, 1432 - h // 2),
-            craft_cost_text,
+            (int(x1 + x0 + w + 10) // 2, int(y0 + y1) // 2 + 2),
+            text=str(self.deck.get_craft_cost().get('basic')),
+            anchor='mm',
             fill='#ffffff',
             font=font,
             stroke_width=1,
