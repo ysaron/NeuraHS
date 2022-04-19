@@ -7,6 +7,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageEnhance
 
 from django.conf import settings
 from django.core.files import File
+from django.db.models import Q
 
 from decks.models import Deck
 from gallery.models import RealCard
@@ -196,10 +197,10 @@ class DeckRender(Picture):
         self.__draw.text(
             ((self.width - w) // 2, 40),
             title_text,
-            fill='white',
+            fill='#ffffff',
             font=font,
             stroke_width=2,
-            stroke_fill='black',
+            stroke_fill='#000000',
         )
 
     def __draw_footer(self):
@@ -210,10 +211,58 @@ class DeckRender(Picture):
             self.__render.paste(stripe, ((self.width - w) // 2, 1230))
 
         self.__draw_craft_cost()
+        self.__draw_mana_curve()
 
     def __draw_mana_curve(self):
-        """  """
-        pass
+        """ Добавляет на рендер столбчатую диаграмму, отражающую распределение карт колоды по стоимости """
+        cards = self.deck.included_cards
+        cost_distribution = self.__calc_cost_distribution(cards)
+        mfc_value = max(cost_distribution)
+        col_max_height = 280
+        col_width = 40
+        gap = 5
+        area_size = (col_width * 11 + gap * 12, col_max_height + col_width + 2 * gap)
+        top_left = (self.width // 27, 1235 + (400 - area_size[1]) / 2)
+        x0, y0, x1, y1 = top_left[0], top_left[1], top_left[0] + area_size[0], top_left[1] + area_size[1]
+        one_card_height = col_max_height / 10 if mfc_value <= 10 else col_max_height / mfc_value
+
+        path: Path = settings.BASE_DIR / 'core' / 'services' / 'fonts' / 'consola.ttf'
+        font_1 = ImageFont.truetype(str(path), 44, encoding='utf-8')
+        font_2 = ImageFont.truetype(str(path), 26, encoding='utf-8')
+
+        self.__draw.rounded_rectangle([x0, y0, x1, y1], radius=10, outline='#ffffff', fill='#333', width=2)
+
+        for cost, value in enumerate(cost_distribution):
+            rect_area = [
+                x0 + (col_width + gap) * cost + gap,
+                y1 - col_width - gap - one_card_height * value,
+                x0 + (col_width + gap) * cost + gap + col_width,
+                y1 - col_width - gap,
+            ]
+            if not value:
+                # улучшение отображения столбца, соотв. 0 карт
+                rect_area[1] -= 3
+            cost_text_area = [
+                x0 + col_width / 2 + (col_width + gap) * cost + gap,
+                y1 - col_width / 2
+            ]
+            value_text_area = [
+                cost_text_area[0],
+                rect_area[1] + (one_card_height + gap) / 2,
+            ]
+            cost_digit = str(cost) if cost < 10 else '+'
+
+            self.__draw.rectangle(rect_area, outline='#000000', fill='#ffffff', width=1)
+            self.__draw.text(
+                cost_text_area,
+                text=cost_digit,
+                anchor='mm',
+                font=font_1,
+                stroke_fill='#000000',
+                stroke_width=1,
+            )
+            if value:
+                self.__draw.text(value_text_area, text=str(value), anchor='mm', font=font_2, fill='#333')
 
     def __draw_craft_cost(self):
         """ Добавляет на нижний колонтитул информацию о стоимости колоды """
@@ -231,7 +280,7 @@ class DeckRender(Picture):
             fill='#ffffff',
             font=font,
             stroke_width=1,
-            stroke_fill='black',
+            stroke_fill='#000000',
         )
 
     @staticmethod
@@ -252,3 +301,18 @@ class DeckRender(Picture):
         """
         enhancer = ImageEnhance.Contrast(image)
         return enhancer.enhance(factor)
+
+    @staticmethod
+    def __calc_cost_distribution(cards) -> tuple[int, ...]:
+        """
+        Возвращает кортеж с распределением карт по стоимости.
+        Индексы - стоимости карт, значения - количества карт данной стоимости
+        """
+        cost_distribution = []
+        for cost in range(11):
+            kwargs_1 = Q(cost=cost, number=1) if cost < 10 else Q(cost__gte=cost, number=1)
+            kwargs_2 = Q(cost=cost, number=2) if cost < 10 else Q(cost__gte=cost, number=2)
+            num_cards = cards.filter(kwargs_1).count() + cards.filter(kwargs_2).count() * 2
+            cost_distribution.append(num_cards)
+
+        return tuple(cost_distribution)
