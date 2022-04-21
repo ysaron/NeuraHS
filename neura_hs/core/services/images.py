@@ -4,6 +4,7 @@ import time
 from pathlib import Path
 from io import BytesIO
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance
+from collections import namedtuple
 
 from django.conf import settings
 from django.core.files import File
@@ -29,6 +30,9 @@ IMAGE_CLASS_MAP = {
     'Hunter': {'stripe': 'hunter_stripe.png'},
     'Druid': {'stripe': 'druid_stripe.png'},
 }
+
+Point = namedtuple('Point', ['x', 'y'])
+Size = namedtuple('Size', ['x', 'y'])
 
 
 class Picture:
@@ -137,6 +141,9 @@ class DeckRender(Picture):
         filename = f'{self.deck.pk}{int(time.time()):x}.png'
         return settings.MEDIA_ROOT / 'decks' / filename
 
+    def download(self):
+        raise NotImplementedError()
+
     def create(self):
         """ Создает рендер """
 
@@ -170,7 +177,7 @@ class DeckRender(Picture):
         for card, c in zip(self.deck.included_cards, self.coord):
             with Image.open(getattr(card, image_field), 'r') as card_render:
                 if card.number > 1:
-                    cr2 = card_render.rotate(angle=-5, center=(350, 150), resample=Image.BICUBIC, expand=True)
+                    cr2 = card_render.rotate(angle=-8, center=(350, 150), resample=Image.BICUBIC, expand=True)
                     cr2 = self.__adjust_brightness(cr2, factor=0.8)
                     self.__render.paste(cr2, c, mask=cr2)
                 card_render = self.__adjust_brightness(card_render, factor=1.2)
@@ -212,6 +219,7 @@ class DeckRender(Picture):
 
         self.__draw_craft_cost()
         self.__draw_mana_curve()
+        self.__draw_statistics()
 
     def __draw_mana_curve(self):
         """ Добавляет на рендер столбчатую диаграмму, отражающую распределение карт колоды по стоимости """
@@ -221,9 +229,9 @@ class DeckRender(Picture):
         col_max_height = 280
         col_width = 40
         gap = 5
-        area_size = (col_width * 11 + gap * 12, col_max_height + col_width + 2 * gap)
-        top_left = (self.width // 27, 1235 + (400 - area_size[1]) / 2)
-        x0, y0, x1, y1 = top_left[0], top_left[1], top_left[0] + area_size[0], top_left[1] + area_size[1]
+        area_size = Size(x=col_width * 11 + gap * 12, y=col_max_height + col_width + 2 * gap)
+        top_left = Point(x=self.width // 27, y=1235 + (400 - area_size.y) / 2)
+        x0, y0, x1, y1 = top_left.x, top_left.y, top_left.x + area_size.x, top_left.y + area_size.y
         one_card_height = col_max_height / 10 if mfc_value <= 10 else col_max_height / mfc_value
 
         path: Path = settings.BASE_DIR / 'core' / 'services' / 'fonts' / 'consola.ttf'
@@ -267,9 +275,9 @@ class DeckRender(Picture):
     def __draw_craft_cost(self):
         """ Добавляет на нижний колонтитул информацию о стоимости колоды """
 
-        area_size = (270, 100)
-        top_left = ((self.width - area_size[0]) // 2, 1235 + (400 - area_size[1]) / 2)
-        x0, y0, x1, y1 = top_left[0], top_left[1], top_left[0] + area_size[0], top_left[1] + area_size[1]
+        area_size = Size(x=270, y=100)
+        top_left = Point(x=(self.width - area_size.x) // 2, y=1235 + (400 - area_size.y) / 2)
+        x0, y0, x1, y1 = top_left.x, top_left.y, top_left.x + area_size.x, top_left.y + area_size.y
         self.__draw.rounded_rectangle([x0, y0, x1, y1], radius=10, outline='#ffffff', fill='#333', width=2)
 
         with Image.open(settings.MEDIA_ROOT / 'decks' / 'craft.png', 'r') as craft_cost:
@@ -291,6 +299,123 @@ class DeckRender(Picture):
             stroke_width=1,
             stroke_fill='#000000',
         )
+
+    def __draw_statistics(self):
+        """ Добавляет на рендер информацию о колоде """
+        area_size = Size(x=500, y=330)
+        top_left = Point(x=self.width * 26 // 27 - area_size.x, y=1235 + (400 - area_size.y) // 2)
+
+        self.__draw_statistics_fmt(area_size, top_left)
+        self.__draw_statistics_types(area_size, top_left)
+        self.__draw_statistics_rarities(area_size, top_left)
+
+    def __draw_statistics_fmt(self, area_size: Size, top_left: Point):
+        """ Добавляет на рендер информацию о формате колоды """
+        fmt_area_size = Size(x=area_size.x, y=area_size.y - (area_size.x + 10) // 2)
+        fmt_top_left = top_left
+        x0, y0 = fmt_top_left.x, fmt_top_left.y
+        x1, y1 = fmt_top_left.x + fmt_area_size.x, fmt_top_left.y + fmt_area_size.y
+        self.__draw.rounded_rectangle([x0, y0, x1, y1], radius=10, outline='#ffffff', fill='#333', width=2)
+
+        path: Path = settings.BASE_DIR / 'core' / 'services' / 'fonts' / 'consola.ttf'
+        font = ImageFont.truetype(str(path), 60, encoding='utf-8')
+
+        fmt_text = getattr(self.deck.deck_format, f'name_{self.language}').upper()
+
+        self.__draw.text(
+            ((x0 + x1) // 2, (y0 + y1) // 2 + 4),
+            text=fmt_text,
+            anchor='mm',
+            fill='#ffffff',
+            font=font,
+            stroke_width=1,
+            stroke_fill='#000000',
+        )
+
+    def __draw_statistics_types(self, area_size: Size, top_left: Point):
+        """ Добавляет на рендер информацию о типах карт колоды """
+        types_area_size = Size(x=(area_size.x - 10) // 2, y=(area_size.x - 10) // 2)
+        types_top_left = Point(x=top_left.x, y=top_left.y + area_size.y - types_area_size.y)
+        x0, y0 = types_top_left.x, types_top_left.y
+        x1, y1 = types_top_left.x + types_area_size.x, types_top_left.y + types_area_size.y
+        self.__draw.rounded_rectangle([x0, y0, x1, y1], radius=10, outline='#ffffff', fill='#333', width=2)
+
+        vertical = [(x0 + x1) // 2, y0 + 10, (x0 + x1) // 2, y1 - 10]
+        self.__draw.line(vertical, fill='#ffffff')
+        horizontal = [x0 + 10, (y0 + y1) // 2, x1 - 10, (y0 + y1) // 2]
+        self.__draw.line(horizontal, fill='#ffffff')
+
+        path: Path = settings.BASE_DIR / 'core' / 'services' / 'fonts' / 'consola.ttf'
+        font = ImageFont.truetype(str(path), 54, encoding='utf-8')
+
+        card_types = (
+            RealCard.CardTypes.MINION,
+            RealCard.CardTypes.HERO,
+            RealCard.CardTypes.WEAPON,
+            RealCard.CardTypes.SPELL,
+        )
+        icon_coordinates = (
+            Point(x=x0 + int(types_area_size.x / 20), y=y0 + int(types_area_size.y / 8)),
+            Point(x=x0 + int(types_area_size.x * 11 / 20), y=y0 + int(types_area_size.y * 5 / 8)),
+            Point(x=x0 + int(types_area_size.x / 20), y=y0 + int(types_area_size.y * 5 / 8)),
+            Point(x=x0 + int(types_area_size.x * 11 / 20), y=y0 + int(types_area_size.y / 8)),
+        )
+        for data, icon_top_left in zip(card_types, icon_coordinates):
+            stat = next((x for x in self.deck.types_statistics if x['data'] == data), {'num_cards': '-'})
+            with Image.open(settings.MEDIA_ROOT / 'decks' / f'{data}.png', 'r') as type_icon:
+                w, h = int(types_area_size.x / 5), int(types_area_size.y / 4)
+                type_icon = type_icon.resize((w, h))
+                self.__render.paste(type_icon, icon_top_left, mask=type_icon)
+
+            self.__draw.text(
+                (icon_top_left.x + int(w * 1.6), icon_top_left.y + h // 2 + 4),
+                text=str(stat['num_cards']),
+                anchor='mm',
+                fill='#ffffff',
+                font=font,
+                stroke_width=1,
+                stroke_fill='#ffffff',
+            )
+
+    def __draw_statistics_rarities(self, area_size: Size, top_left: Point):
+        """ Добавляет на рендер информацию о редкостях карт колоды """
+        rar_area_size = Size(x=(area_size.x - 10) // 2, y=(area_size.x - 10) // 2)
+        rar_top_right = Point(x=top_left.x + area_size.x, y=top_left.y + area_size.y - rar_area_size.y)
+        x0, y0 = rar_top_right.x - rar_area_size.x, rar_top_right.y
+        x1, y1 = rar_top_right.x, rar_top_right.y + rar_area_size.y
+        self.__draw.rounded_rectangle([x0, y0, x1, y1], radius=10, outline='#ffffff', fill='#333', width=2)
+
+        vertical = [(x0 + x1) // 2, y0 + 10, (x0 + x1) // 2, y1 - 10]
+        self.__draw.line(vertical, fill='#ffffff')
+        horizontal = [x0 + 10, (y0 + y1) // 2, x1 - 10, (y0 + y1) // 2]
+        self.__draw.line(horizontal, fill='#ffffff')
+
+        path: Path = settings.BASE_DIR / 'core' / 'services' / 'fonts' / 'consola.ttf'
+        font = ImageFont.truetype(str(path), 60, encoding='utf-8')
+
+        rarities = {
+            RealCard.Rarities.COMMON: '#ffffff',
+            RealCard.Rarities.RARE: '#3366ff',
+            RealCard.Rarities.EPIC: '#db4dff',
+            RealCard.Rarities.LEGENDARY: '#ffa31a',
+        }
+        text_coordinates = (
+            Point(x=x0 + int(rar_area_size.x / 4 * 3), y=y0 + int(rar_area_size.y / 4 * 3 + 4)),
+            Point(x=x0 + int(rar_area_size.x / 4 * 3), y=y0 + int(rar_area_size.y / 4 + 4)),
+            Point(x=x0 + int(rar_area_size.x / 4), y=y0 + int(rar_area_size.y / 4 * 3 + 4)),
+            Point(x=x0 + int(rar_area_size.x / 4), y=y0 + int(rar_area_size.y / 4 + 4)),
+        )
+        for data, text_coord in zip(rarities.keys(), text_coordinates):
+            stat = next((x for x in self.deck.rarity_statistics if x['data'] == data), {'num_cards': '-'})
+            self.__draw.text(
+                text_coord,
+                text=str(stat['num_cards']),
+                anchor='mm',
+                fill=rarities.get(data, '#ffffff'),
+                font=font,
+                stroke_width=2,
+                stroke_fill='#ffffff',
+            )
 
     @staticmethod
     def __adjust_brightness(image: Image, factor: float) -> Image:

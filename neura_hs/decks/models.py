@@ -144,6 +144,73 @@ class Deck(models.Model):
             craft_cost_gold += prices[card.rarity][1] * card.number
         return {'basic': craft_cost, 'gold': craft_cost_gold}
 
+    def __get_statistics(self, field: str) -> list[dict]:
+        """
+        Возвращает данные о количестве карт в колоде,
+        соответствующих различным значением поля field
+        """
+        lst = []
+        result = []
+        for card in self.included_cards:
+            try:
+                data = getattr(card, field)
+            except AttributeError:
+                return []  # отразится в шаблоне как отсутствие данных
+
+            if field == 'card_type':
+                verbose_data = RealCard.CardTypes(data)
+            elif field == 'rarity':
+                verbose_data = RealCard.Rarities(data)
+            else:
+                verbose_data = data
+
+            if verbose_data not in lst:
+                lst.append(verbose_data)
+                result.append({'name': verbose_data, 'data': data, 'num_cards': card.number})
+            else:
+                d = next(stat for stat in result if stat['name'] == verbose_data)
+                d['num_cards'] += card.number
+
+        return sorted(result, key=lambda stat: stat['num_cards'], reverse=True)
+
+    @property
+    def sets_statistics(self):
+        """
+        Возвращает данные о наборах карт, используемых в колоде,
+        и о кол-ве карт каждого набора
+        """
+        return self.__get_statistics('card_set')
+
+    @property
+    def types_statistics(self):
+        """ Возвращает данные о типах карт в колоде и кол-ве карт каждого типа """
+        return self.__get_statistics('card_type')
+
+    @property
+    def rarity_statistics(self):
+        """ Возвращает данные о редкостях карт в колоде и кол-ве карт каждой редкости """
+        return self.__get_statistics('rarity')
+
+    @property
+    def mechanics_statistics(self):
+        """
+        Возвращает данные о механиках Hearthstone, использующихся
+        картами колоды, и о кол-ве этих карт на каждую механику
+        """
+        mechanics = []
+        result: list[dict] = []
+        for card in self.included_cards:
+            for mech in card.mechanics_list:
+                if mech not in mechanics:
+                    mechanics.append(mech)
+                    result.append({'name': mech, 'num_cards': card.number})
+                else:
+                    m = next(m for m in result if m['name'] == mech)
+                    m['num_cards'] += card.number
+
+        result.sort(key=lambda mech_: mech_['num_cards'], reverse=True)
+        return result
+
     def get_absolute_url(self):
         return reverse_lazy('decks:deck-detail', kwargs={'deck_id': self.pk})
 

@@ -179,7 +179,7 @@
         <div class="info-item info-deck">
             <h4>{% trans 'Types' %}</h4>
             <ol>
-                {% for ctype in deck.included_cards|dtypestat %}
+                {% for ctype in deck.types_statistics %}
                     <li>{{ ctype.name.label }}: {{ ctype.num_cards }}</li>
                 {% empty %}
                     <li>{% trans 'No data' %}</li>
@@ -189,7 +189,7 @@
         <div class="info-item info-deck">
             <h4>{% trans 'Rarities' %}</h4>
             <ol>
-                {% for rar in deck.included_cards|draritystat %}
+                {% for rar in deck.rarity_statistics %}
                     <li>{{ rar.name.label }}: {{ rar.num_cards }}</li>
                 {% empty %}
                     <li>{% trans 'No data' %}</li>
@@ -199,7 +199,7 @@
         <div class="info-item info-deck">
             <h4>{% trans 'Mechanics' %}</h4>
             <ol>
-                {% for mech in deck.included_cards|dmechstat %}
+                {% for mech in deck.mechanics_statistics %}
                     <li>{{ mech.name }} ({{ mech.num_cards }})</li>
                 {% empty %}
                     <li>{% trans 'No data' %}</li>
@@ -211,7 +211,7 @@
         <div class="info-item info-deck">
             <h4>{% trans 'Sets' %}</h4>
             <ol>
-                {% for set in deck.included_cards|dsetsstat %}
+                {% for set in deck.sets_statistics %}
                     <li>{{ set.name }} ({{ set.num_cards }})</li>
                 {% empty %}
                     <li>{% trans 'No data' %}</li>
