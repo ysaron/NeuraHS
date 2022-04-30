@@ -1,6 +1,5 @@
 import pytest
 from gallery.models import CardClass, CardSet, Tribe, RealCard, FanCard
-from core.management.commands.hs_base_update import DbWorker
 from slugify import slugify
 import time
 
@@ -44,11 +43,11 @@ def en_cards():
         {'name': 'Aya Blackpaw', 'cardSet': 'Mean Streets of Gadgetzan', 'type': 'Minion', 'rarity': 'Legendary',
          'cost': 6, 'attack': 5, 'health': 3, 'text': 'some random text', 'flavor': 'some insignificant flavor',
          'collectible': True, 'classes': ['Druid', 'Rogue', 'Shaman'], 'cardId': 'CFM_902', 'dbfId': '40596',
-         'mechanics': [{'name': 'Jade Golem'}, {'name': 'Battlecry'}, {'name': 'Deathrattle'}]},
+         'mechanics': ['Jade Golem', 'Battlecry', 'Deathrattle']},
         {'name': 'Twilight Deceptor', 'cardSet': 'United in Stormwind', 'type': 'Minion', 'rarity': 'Common',
          'cost': 2, 'attack': 2, 'health': 3, 'text': 'some random text', 'flavor': 'some insignificant flavor',
          'collectible': True, 'playerClass': 'Priest', 'cardId': 'SW_444', 'dbfId': '64419',
-         'mechanics': [{'name': 'Battlecry'}]},
+         'mechanics': ['Battlecry']},
     ]
 
 
@@ -58,11 +57,11 @@ def ru_cards():
         {'name': 'Айя Черная Лапа', 'cardSet': 'Mean Streets of Gadgetzan', 'type': 'Minion', 'rarity': 'Legendary',
          'cost': 6, 'attack': 5, 'health': 3, 'text': 'какой-то текст', 'flavor': 'какой-то текст',
          'collectible': True, 'classes': ['Druid', 'Rogue', 'Shaman'], 'cardId': 'CFM_902', 'dbfId': '40596',
-         'mechanics': [{'name': 'Jade Golem'}, {'name': 'Battlecry'}, {'name': 'Deathrattle'}]},
+         'mechanics': ['Jade Golem', 'Battlecry', 'Deathrattle']},
         {'name': 'Сумеречный обманщик', 'cardSet': 'United in Stormwind', 'type': 'Minion', 'rarity': 'Common',
          'cost': 2, 'attack': 2, 'health': 3, 'text': 'какой-то текст', 'flavor': 'какой-то текст',
          'collectible': True, 'playerClass': 'Priest', 'cardId': 'SW_444', 'dbfId': '64419',
-         'mechanics': [{'name': 'Battlecry'}]},
+         'mechanics': ['Battlecry']},
     ]
 
 
@@ -129,11 +128,6 @@ def fan_card(db, card_class, tribe):
 
 
 @pytest.fixture
-def hs_db_worker(en_cards, ru_cards, card_classes, tribes, card_sets):
-    return DbWorker(en_cards, ru_cards, card_classes, tribes, card_sets)
-
-
-@pytest.fixture
 def deckstring():
     return 'AAECAaHDAwb1zgOj0QOd2AO/4AOP5AOJiwQM5boD6LoD77oDm84D8NQDieADiuADpOED0eEDiuQDjOQDr4AEAA=='
 
@@ -152,31 +146,3 @@ def deck_data():
         [57761],
         2
     )
-
-
-@pytest.fixture
-def deck(db, hs_db_worker, real_card):
-    data = [
-        ('Deadly Poison', 'CORE_CS2_074', 69522),
-        ('Hallucination', 'UNG_856', 42011),
-        ('Paralytic Poison', 'BAR_321', 62892),
-        ('Patches the Pirate', 'CFM_637', 40465),
-        ('Secret Passage', 'SCH_305', 58794),
-        ('Swashburglar', 'CORE_KAR_069', 69742),
-        ('Wand Thief', 'SCH_350', 59556),
-        ('Cavern Shinyfinder', 'LOOT_033', 43237),
-        ('Clever Disguise', 'ULD_328', 54317),
-        ('Underbelly Fence', 'DAL_714', 52603),
-        ('Beneath the Grounds', 'AT_035', 2587),
-        ('Vulpera Toxinblade', 'SCH_519', 59400),
-        ('Spectral Cutlass', 'GIL_672', 47594),
-        ("Tinker's Sharpsword Oil", 'GVG_022', 2095),
-        ('Vendetta', 'DAL_716', 52606),
-        ('Cutting Class', 'SCH_623', 60023),
-        ('Wildpaw Gnoll', 'AV_298', 70395),
-        ('Valeera the Hollow', 'ICC_827', 43392),
-        ('Valeera Sanguinar', 'HERO_03', 930),
-    ]
-    hs_db_worker.write_formats()
-    for name, card_id, dbf_id in data:
-        real_card(name, card_id, dbf_id)

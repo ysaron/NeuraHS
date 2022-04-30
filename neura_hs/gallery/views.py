@@ -141,7 +141,7 @@ class RealCardListView(DataMixin, generic.ListView):
         mechanic = self.request.GET.get('mechanic')
 
         # Оптимизация: вместо множества SQL-запросов - один сложный
-        object_list = self.model.objects.prefetch_related('card_set', 'tribe', 'card_class')
+        object_list = self.model.objects.prefetch_related('card_set', 'tribe', 'card_class', 'mechanic')
 
         if name:
             object_list = object_list.search_by_name(name)

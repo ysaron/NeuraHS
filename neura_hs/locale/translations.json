@@ -73,5 +73,223 @@
     {"num": 1, "name_en": "Wild", "name_ru": "Вольный"},
     {"num": 2, "name_en": "Standard", "name_ru": "Стандарт"},
     {"num": 3, "name_en": "Classic", "name_ru": "Классик"}
-  ]
+  ],
+  "mechanics": {
+    "Adapt": {
+      "enUS": "Adapt",
+      "ruRU": "Адаптация"
+    },
+    "Combo": {
+      "enUS": "Combo",
+      "ruRU": "Серия приемов"
+    },
+    "Inspire": {
+      "enUS": "Inspire",
+      "ruRU": "Воодушевление"
+    },
+    "Deathrattle": {
+      "enUS": "Deathrattle",
+      "ruRU": "Предсмертный хрип"
+    },
+    "Nature Spell Damage": {
+      "enUS": "Nature Spell Damage",
+      "ruRU": "Урон от заклинаний природы"
+    },
+    "Casts When Drawn": {
+      "enUS": "Casts When Drawn",
+      "ruRU": "При взятии"
+    },
+    "Avenge (X)": {
+      "enUS": "Avenge",
+      "ruRU": "Месть"
+    },
+    "Questline": {
+      "enUS": "Questline",
+      "ruRU": "Цепочка заданий"
+    },
+    "Magnetic": {
+      "enUS": "Magnetic",
+      "ruRU": "Магнетизм"
+    },
+    "AIMustPlay": {
+      "enUS": "AIMustPlay",
+      "ruRU": "AIMustPlay"
+    },
+    "Rush": {
+      "enUS": "Rush",
+      "ruRU": "Натиск"
+    },
+    "Stealth": {
+      "enUS": "Stealth",
+      "ruRU": "Маскировка"
+    },
+    "Corrupt": {
+      "enUS": "Corrupt",
+      "ruRU": "Порча"
+    },
+    "Battlecry": {
+      "enUS": "Battlecry",
+      "ruRU": "Боевой клич"
+    },
+    "Charge": {
+      "enUS": "Charge",
+      "ruRU": "Рывок"
+    },
+    "Taunt": {
+      "enUS": "Taunt",
+      "ruRU": "Провокация"
+    },
+    "Discover": {
+      "enUS": "Discover",
+      "ruRU": "Раскопка"
+    },
+    "Outcast": {
+      "enUS": "Outcast",
+      "ruRU": "Изгой"
+    },
+    "Dredge": {
+      "enUS": "Dredge",
+      "ruRU": "Улов"
+    },
+    "Tradeable": {
+      "enUS": "Tradeable",
+      "ruRU": "Можно обменять"
+    },
+    "Honorable Kill": {
+      "enUS": "Honorable Kill",
+      "ruRU": "Почетная победа"
+    },
+    "Quest": {
+      "enUS": "Quest",
+      "ruRU": "Задача"
+    },
+    "Echo": {
+      "enUS": "Echo",
+      "ruRU": "Эхо"
+    },
+    "Spell Damage": {
+      "enUS": "Spell Damage",
+      "ruRU": "Урон от заклинаний"
+    },
+    "Secret": {
+      "enUS": "Secret",
+      "ruRU": "Секрет"
+    },
+    "Reborn": {
+      "enUS": "Reborn",
+      "ruRU": "Перерождение"
+    },
+    "Aura": {
+      "enUS": "Aura",
+      "ruRU": "Аура"
+    },
+    "Frenzy": {
+      "enUS": "Frenzy",
+      "ruRU": "Бешенство"
+    },
+    "Sidequest": {
+      "enUS": "Sidequest",
+      "ruRU": "Побочная задача"
+    },
+    "Windfury": {
+      "enUS": "Windfury",
+      "ruRU": "Неистовство ветра"
+    },
+    "AffectedBySpellPower": {
+      "enUS": "AffectedBySpellPower",
+      "ruRU": "AffectedBySpellPower"
+    },
+    "Lifesteal": {
+      "enUS": "Lifesteal",
+      "ruRU": "Похищение жизни"
+    },
+    "Jade Golem": {
+      "enUS": "Jade Golem",
+      "ruRU": "Нефритовые големы"
+    },
+    "ImmuneToSpellpower": {
+      "enUS": "ImmuneToSpellpower",
+      "ruRU": "ImmuneToSpellpower"
+    },
+    "Freeze": {
+      "enUS": "Freeze",
+      "ruRU": "Заморозка"
+    },
+    "Spellburst": {
+      "enUS": "Spellburst",
+      "ruRU": "Резонанс"
+    },
+    "Invoke": {
+      "enUS": "Invoke",
+      "ruRU": "Воззвание"
+    },
+    "Poisonous": {
+      "enUS": "Poisonous",
+      "ruRU": "Яд"
+    },
+    "Divine Shield": {
+      "enUS": "Divine Shield",
+      "ruRU": "Божественный щит"
+    },
+    "InvisibleDeathrattle": {
+      "enUS": "InvisibleDeathrattle",
+      "ruRU": "InvisibleDeathrattle"
+    },
+    "Recruit": {
+      "enUS": "Recruit",
+      "ruRU": "Вербовка"
+    },
+    "OneTurnEffect": {
+      "enUS": "OneTurnEffect",
+      "ruRU": "OneTurnEffect"
+    },
+    "Overkill": {
+      "enUS": "Overkill",
+      "ruRU": "Сверхурон"
+    },
+    "Blood Gem": {
+      "enUS": "Blood Gem",
+      "ruRU": "Кровавые самоцветы"
+    },
+    "AdjacentBuff": {
+      "enUS": "Adjacent Buff",
+      "ruRU": "Бафф соседних"
+    },
+    "Colossal +X": {
+      "enUS": "Colossal",
+      "ruRU": "Гигант"
+    },
+    "Silence": {
+      "enUS": "Silence",
+      "ruRU": "Немота"
+    },
+    "Overload": {
+      "enUS": "Overload",
+      "ruRU": "Перегрузка"
+    },
+    "Twinspell": {
+      "enUS": "Twinspell",
+      "ruRU": "Дуплет"
+    },
+    "Lackey": {
+      "enUS": "Lackey",
+      "ruRU": "Прихвостень"
+    },
+    "Dormant": {
+      "enUS": "Dormant",
+      "ruRU": "Спячка"
+    },
+    "Choose One": {
+      "enUS": "Choose One",
+      "ruRU": "Выберите одно"
+    },
+    "Start of Game": {
+      "enUS": "Start of Game",
+      "ruRU": "Начало игры"
+    },
+    "Immune": {
+      "enUS": "Immune",
+      "ruRU": "Неуязвимость"
+    }
+  }
 }

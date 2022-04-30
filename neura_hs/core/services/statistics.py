@@ -25,9 +25,9 @@ def get_realcard_statistics() -> list[StatisticsItem]:
     num_realcards_epic = collectibles.search_by_rarity(RealCard.Rarities.EPIC).count()
     num_realcards_rare = collectibles.search_by_rarity(RealCard.Rarities.RARE).count()
     num_realcards_common = collectibles.search_by_rarity(RealCard.Rarities.COMMON).count()
-    num_realcards_bc = collectibles.search_by_mechanic(RealCard.Mechanics.BATTLECRY).count()
-    num_realcards_dr = collectibles.search_by_mechanic(RealCard.Mechanics.DEATHRATTLE).count()
-    num_realcards_lf = collectibles.search_by_mechanic(RealCard.Mechanics.LIFESTEAL).count()
+    num_realcards_bc = 'DEPRECATED'
+    num_realcards_dr = 'DEPRECATED'
+    num_realcards_lf = 'DEPRECATED'
     num_realcards_spells = collectibles.search_by_type(RealCard.CardTypes.SPELL).count()
 
     return [StatisticsItem(_('Total'), num_realcards),

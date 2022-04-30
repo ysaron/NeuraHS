@@ -1,5 +1,5 @@
 from modeltranslation.translator import register, TranslationOptions
-from .models import RealCard, FanCard, CardClass, Tribe, CardSet
+from .models import RealCard, FanCard, CardClass, Tribe, CardSet, Mechanic
 
 
 @register(RealCard)
@@ -19,4 +19,9 @@ class TribeTranslationOptions(TranslationOptions):
 
 @register(CardSet)
 class CardSetTranslationOptions(TranslationOptions):
+    fields = ('name',)
+
+
+@register(Mechanic)
+class MechanicTranslationOptions(TranslationOptions):
     fields = ('name',)

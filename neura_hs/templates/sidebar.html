@@ -31,7 +31,7 @@
         </div>
       </div>
     </div>
-    <a href="{% url side_menu.real_cards.url_name %}" title="{{ side_menu.real_cards.popup }}">{{ side_menu.real_cards.title }}</a>
+    <a href="{% url side_menu.real_cards.url_name %}?collectible=true" title="{{ side_menu.real_cards.popup }}">{{ side_menu.real_cards.title }}</a>
     <a href="{% url side_menu.main.url_name %}" title="{{ side_menu.main.popup }}">{{ side_menu.main.title }}</a>
     <hr style="margin: 0px 0px;">
     <form action="{% url 'set_language' %}" method="post" id="form-i18n">

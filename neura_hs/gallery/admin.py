@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 from modeltranslation.admin import TranslationAdmin
-from .models import RealCard, FanCard, CardClass, Tribe, CardSet, Author
+from .models import RealCard, FanCard, CardClass, Tribe, CardSet, Author, Mechanic
 
 
 class AuthorInline(admin.StackedInline):
@@ -59,12 +59,13 @@ class RealCardAdmin(TranslationAdmin):
         ('Статы', {'fields': ('cost',
                               ('attack', 'health', 'armor', 'durability'))}),
         ('Текст', {'fields': ('text', 'flavor')}),
-        (None, {'fields': ('artist',)}),
+        (None, {'fields': (('artist',),
+                           ('mechanic',))}),
     )
     prepopulated_fields = {"slug": ("name",)}
     readonly_fields = ('card_id', 'dbf_id', 'collectible', 'artist', 'card_type', 'card_set')
     filter_horizontal = ('card_class', 'tribe')
-    search_fields = ('name', 'card_set__name')
+    search_fields = ('name', 'card_set__name', 'text')
     save_on_top = True
 
 
@@ -80,4 +81,9 @@ class TribeAdmin(TranslationAdmin):
 
 @admin.register(CardSet)
 class CardSetAdmin(TranslationAdmin):
+    pass
+
+
+@admin.register(Mechanic)
+class MechanicAdmin(TranslationAdmin):
     pass

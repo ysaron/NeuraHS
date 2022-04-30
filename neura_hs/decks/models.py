@@ -200,12 +200,12 @@ class Deck(models.Model):
         mechanics = []
         result: list[dict] = []
         for card in self.included_cards:
-            for mech in card.mechanics_list:
+            for mech in card.mechanic.all():
                 if mech not in mechanics:
                     mechanics.append(mech)
-                    result.append({'name': mech, 'num_cards': card.number})
+                    result.append({'name': mech.name, 'num_cards': card.number})
                 else:
-                    m = next(m for m in result if m['name'] == mech)
+                    m = next(m for m in result if m['name'] == mech.name)
                     m['num_cards'] += card.number
 
         result.sort(key=lambda mech_: mech_['num_cards'], reverse=True)

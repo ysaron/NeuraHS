@@ -1,17 +1,7 @@
 from django.core.management import call_command
 import pytest
-from decks.models import Deck, Format
 from core.services.deck_codes import parse_deckstring
 from core.exceptions import DecodeError
-
-
-@pytest.mark.django_db
-def test_write_formats(hs_db_worker):
-    hs_db_worker.write_formats()
-    formats = Format.objects.all()
-    assert formats.count() == 4
-    assert formats.filter(name='Wild').exists(), 'Формат не был записан в БД'
-    assert formats.filter(name_ru='Вольный').exists(), 'Формат не был переведен'
 
 
 @pytest.mark.django_db
@@ -31,27 +21,3 @@ def test_parse_deckstring(deckstring, deck_data):
     assert set(cards) == set(deck_data[0]), 'данные о картах не совпадают'
     assert heroes == deck_data[1], 'данные о герое не совпадают'
     assert format_ == deck_data[2], 'данные о формате не совпадают'
-
-
-@pytest.mark.django_db
-def test_deck_from_deckstring(deckstring2, deck, hs_db_worker):
-
-    Deck.create_from_deckstring(deckstring2)
-    decks = Deck.nameless.all()
-    assert decks.count() == 1
-    cards = decks.first().included_cards
-    amount = sum(card.number for card in cards)
-    assert amount == 30, 'В колоде должно быть ровно 30 карт'
-
-
-@pytest.mark.django_db
-def test_backup_decks(deckstring2, deck, tmp_path):
-    Deck.create_from_deckstring(deckstring2)
-    call_command('dumpdecks', tmp_path / 'decks.json')
-    Deck.objects.all().delete()
-    call_command('loaddecks', tmp_path / 'decks.json')
-    decks = Deck.objects.all()
-    assert decks.count() == 1
-    cards = decks.first().included_cards
-    amount = sum(card.number for card in cards)
-    assert amount == 30, 'В колоде должно быть ровно 30 карт'

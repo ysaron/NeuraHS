@@ -1,6 +1,6 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
-from .models import RealCard, FanCard, CardClass, Tribe, CardSet
+from .models import RealCard, FanCard, CardClass, Tribe, CardSet, Mechanic
 from core.mixins import EditCardMixin
 
 
@@ -31,8 +31,8 @@ class RealCardFilterForm(forms.Form):
 
     collectible = forms.NullBooleanField(required=False, label=_('Collectible'))
 
-    MECHANICS = RealCard.Mechanics.choices
-    mechanic = forms.ChoiceField(choices=MECHANICS, required=False, label=_('Mechanics'))
+    MECHANICS = Mechanic.objects.filter(hidden=False)
+    mechanic = forms.ModelChoiceField(queryset=MECHANICS, required=False, label=_('Mechanics'))
 
     CARD_TYPES = RealCard.CardTypes.choices
     card_type = forms.ChoiceField(choices=CARD_TYPES, required=False, label=_('Type'))
