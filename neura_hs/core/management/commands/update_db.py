@@ -247,7 +247,6 @@ class Updater:
         for m in mechanics:
             r_card.mechanic.add(Mechanic.objects.get(service_name=m))
 
-
     @staticmethod
     def __write_classes_to_card(r_card: RealCard, j_card: dict):
         """ Связывает карту с классами (m2m) """

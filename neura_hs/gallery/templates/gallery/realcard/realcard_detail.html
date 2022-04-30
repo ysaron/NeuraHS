@@ -55,7 +55,7 @@
     <td><strong>{% trans "Rarity" %}</strong></td>
     <td><a href="{% url 'gallery:realcards' %}?rarity={{ real_card.rarity }}&collectible=true">{{ real_card.get_rarity_display }}</a></td>
   </tr>
-  {% if real_card.card_type == c_types.MINION %}
+  {% if real_card.card_type == c_types.MINION and real_card.tribe.all %}
     <tr>
       <td><strong>{% trans "Tribe" %}</strong></td>
       <td>{% for tribe in real_card.tribe.all %}<a href="{% url 'gallery:realcards' %}?tribe={{ tribe.pk }}&collectible=true">{{ tribe }}</a>{% if not forloop.last %} | {% endif %}{% endfor %}</td>
@@ -68,10 +68,12 @@
     </tr>
   {% endif %}
   {% format_stats real_card %}
-  <tr>
-    <td><strong>{% trans "Mechanics" context "list" %}</strong></td>
-    <td>{% for mech in real_card.mechanic.all %}<a href="{% url 'gallery:realcards' %}?mechanic={{ mech.pk }}&collectible=true">{{ mech }}</a>{% if not forloop.last %} | {% endif %}{% endfor %}</td>
-  </tr>
+  {% if real_card.mechanic.all %}
+    <tr>
+      <td><strong>{% trans "Mechanics" context "list" %}</strong></td>
+      <td>{% for mech in real_card.mechanic.all %}<a href="{% url 'gallery:realcards' %}?mechanic={{ mech.pk }}&collectible=true">{{ mech }}</a>{% if not forloop.last %} | {% endif %}{% endfor %}</td>
+    </tr>
+  {% endif %}
   {% if real_card.artist %}
     <tr>
       <td><strong>{% trans "Artist" %}</strong></td>
