@@ -166,6 +166,8 @@ class DeckRender(Picture):
         amount = cards.count()
         vertical_num = 3
         horizontal_num = (amount + vertical_num - 1) // vertical_num    # деление с округлением вверх
+        if horizontal_num < 6:
+            horizontal_num = 6
         self.width = 238 * horizontal_num + 10
 
         x, y = 0, 100
