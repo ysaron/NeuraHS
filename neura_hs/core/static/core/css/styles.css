@@ -115,6 +115,19 @@ a:hover, a:active {
   text-decoration: none;
 }
 a[role="button"] {color: inherit;}
+a.intext {
+  display: inline-block;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 0 5px;
+  background-color: white;
+  color: black;
+}
+a.intext:hover {
+  color: black;
+  box-shadow: inset 0 0 5px #000000;
+  transition: 0.3s;
+}
 
 /* Верхнее меню */
 .topmenu {
@@ -521,7 +534,11 @@ table.standard::before {
   position: absolute;
   top: 0; bottom: 0; left: 0; right: 0;
   z-index: -1;
-  box-shadow: 5px 0 20px 5px var(--standard), -5px 0 20px 5px var(--standard);
+  box-shadow: 3px 0 22px 3px var(--standard), -3px 0 22px 3px var(--standard);
+}
+table.standard:hover::before {
+  box-shadow: 5px 0 22px 5px var(--standard), -5px 0 22px 5px var(--standard);
+  transition: 0.3s;
 }
 table.wild::before {
   content: "";
@@ -529,7 +546,11 @@ table.wild::before {
   position: absolute;
   top: 0; bottom: 0; left: 0; right: 0;
   z-index: -1;
-  box-shadow: 5px 0 20px 5px var(--wild), -5px 0 20px 5px var(--wild);
+  box-shadow: 3px 0 22px 3px var(--wild), -3px 0 22px 3px var(--wild);
+}
+table.wild:hover::before {
+  box-shadow: 5px 0 22px 5px var(--wild), -5px 0 22px 5px var(--wild);
+  transition: 0.3s;
 }
 table.classic::before {
   content: "";
@@ -537,7 +558,11 @@ table.classic::before {
   position: absolute;
   top: 0; bottom: 0; left: 0; right: 0;
   z-index: -1;
-  box-shadow: 5px 0 20px 5px var(--classic), -5px 0 20px 5px var(--classic);
+  box-shadow: 3px 0 22px 3px var(--classic), -3px 0 22px 3px var(--classic);
+}
+table.classic:hover::before {
+  box-shadow: 5px 0 22px 5px var(--classic), -5px 0 22px 5px var(--classic);
+  transition: 0.3s;
 }
 table.unknown::before {
   content: "";
@@ -545,7 +570,7 @@ table.unknown::before {
   position: absolute;
   top: 0; bottom: 0; left: 0; right: 0;
   z-index: -1;
-  box-shadow: 5px 0 25px 5px rgba(0, 0, 0, 0.5), -5px 0 25px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 3px 0 25px 3px rgba(0, 0, 0, 0.5), -3px 0 25px 3px rgba(0, 0, 0, 0.5);
 }
 table.deck td {
   border: 1px solid #999999;
