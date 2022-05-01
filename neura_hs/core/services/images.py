@@ -5,6 +5,7 @@ from pathlib import Path
 from io import BytesIO
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance
 from collections import namedtuple
+from qrcode import QRCode, constants
 
 from django.conf import settings
 from django.core.files import File
@@ -33,6 +34,7 @@ IMAGE_CLASS_MAP = {
 
 Point = namedtuple('Point', ['x', 'y'])
 Size = namedtuple('Size', ['x', 'y'])
+Window = namedtuple('Window', ['size', 'top_left'])     # определяет размеры и положение инфо-окна на рендере
 
 
 class Picture:
@@ -129,6 +131,12 @@ class DeckRender(Picture):
         self.height = 1644
         self.coord: list[tuple[int, int]] = []
 
+        self.footer = Window(Size(0, 0), Point(0, 0))
+        self.manacurve = Window(Size(0, 0), Point(0, 0))
+        self.stats = Window(Size(0, 0), Point(0, 0))
+        self.craft = Window(Size(0, 0), Point(0, 0))
+        self.qr = Window(Size(0, 0), Point(0, 0))
+
         self.__pre_format_render()
         self.__render = Image.new('RGBA', size=self.size, color='#333')
         self.__draw = ImageDraw.Draw(self.__render)
@@ -198,12 +206,12 @@ class DeckRender(Picture):
     def __draw_title_text(self):
         """ Добавляет на рендер текст заголовка """
         path: Path = settings.BASE_DIR / 'core' / 'services' / 'fonts' / 'consola.ttf'
-        font = ImageFont.truetype(str(path), 44, encoding='utf-8')
+        font = ImageFont.truetype(str(path), 60, encoding='utf-8')
         title_text = self.name
-        w, h = self.__draw.textsize(title_text, font=font)
         self.__draw.text(
-            ((self.width - w) // 2, 40),
+            (self.width // 2, 60),
             title_text,
+            anchor='mm',
             fill='#ffffff',
             font=font,
             stroke_width=2,
@@ -214,24 +222,94 @@ class DeckRender(Picture):
         """ Добавляет на рендер нижний колонтитул """
         stripe_png = IMAGE_CLASS_MAP[self.deck.deck_class.service_name]['stripe']
         with Image.open(settings.MEDIA_ROOT / 'decks' / stripe_png, 'r') as stripe:
-            w, h = stripe.size
-            self.__render.paste(stripe, ((self.width - w) // 2, 1230))
+            footer_width, footer_height = stripe.size
+            footer_size = Size(x=footer_width, y=footer_height)
+            footer_topleft = Point(
+                x=(self.width - footer_size.x) // 2,
+                y=self.height - footer_size.y - 14
+            )
+            self.footer = Window(size=footer_size, top_left=footer_topleft)
+            self.__render.paste(stripe, self.footer.top_left)
 
+        self.__calc_footer_params_v1() if self.width > 2000 else self.__calc_footer_params_v2()
         self.__draw_craft_cost()
         self.__draw_mana_curve()
         self.__draw_statistics()
+        self.__draw_qr()
+
+    def __calc_footer_params_v1(self):
+        """ Рассчитывает размеры и положение инфо-окон нижнего колонтитула (рендер шире 2000px) """
+        max_window_height = 330
+        max_window_width = 550
+        qr_size = Size(x=max_window_height, y=max_window_height)    # квадрат со стороной == макс. высоте
+        manacurve_size = Size(x=max_window_width, y=max_window_height)
+        stats_size = Size(x=max_window_width + 10, y=max_window_height)
+        craft_size = Size(x=max_window_height, y=100)
+        gap = int((self.width - qr_size.x - manacurve_size.x - stats_size.x - craft_size.x) / 5)
+        manacurve_topleft = Point(
+            x=gap,
+            y=self.footer.top_left.y + (self.footer.size.y - manacurve_size.y) // 2 + 5
+        )
+        craft_topleft = Point(
+            x=2 * gap + manacurve_size.x,
+            y=self.footer.top_left.y + (self.footer.size.y - craft_size.y) // 2
+        )
+        qr_topleft = Point(
+            x=3 * gap + manacurve_size.x + craft_size.x,
+            y=self.footer.top_left.y + (self.footer.size.y - qr_size.y) // 2
+        )
+        stats_topleft = Point(
+            x=4 * gap + manacurve_size.x + craft_size.x + qr_size.x,
+            y=self.footer.top_left.y + (self.footer.size.y - stats_size.y) // 2
+        )
+        self.manacurve = Window(size=manacurve_size, top_left=manacurve_topleft)
+        self.craft = Window(size=craft_size, top_left=craft_topleft)
+        self.qr = Window(size=qr_size, top_left=qr_topleft)
+        self.stats = Window(size=stats_size, top_left=stats_topleft)
+
+    def __calc_footer_params_v2(self):
+        """ Рассчитывает размеры и положение инфо-окон нижнего колонтитула (рендер уже 2000px) """
+        max_window_height = 330
+        max_window_width = 550
+        craft_width = 230
+        qr_size = Size(x=craft_width, y=craft_width)
+        craft_height = max_window_height - qr_size.y - 10
+        craft_size = Size(x=craft_width, y=craft_height)
+        manacurve_size = Size(x=max_window_width, y=max_window_height)
+        stats_size = Size(x=max_window_width + 10, y=max_window_height)
+        gap = int((self.width - manacurve_size.x - qr_size.x - stats_size.x) / 4)
+        manacurve_topleft = Point(
+            x=gap,
+            y=self.footer.top_left.y + (self.footer.size.y - manacurve_size.y) // 2 + 5
+        )
+        craft_topleft = Point(
+            x=2 * gap + manacurve_size.x,
+            y=manacurve_topleft.y
+        )
+        qr_topleft = Point(
+            x=craft_topleft.x,
+            y=craft_topleft.y + craft_size.y + 10
+        )
+        stats_topleft = Point(
+            x=3 * gap + manacurve_size.x + qr_size.x,
+            y=manacurve_topleft.y
+        )
+        self.manacurve = Window(size=manacurve_size, top_left=manacurve_topleft)
+        self.craft = Window(size=craft_size, top_left=craft_topleft)
+        self.qr = Window(size=qr_size, top_left=qr_topleft)
+        self.stats = Window(size=stats_size, top_left=stats_topleft)
 
     def __draw_mana_curve(self):
         """ Добавляет на рендер столбчатую диаграмму, отражающую распределение карт колоды по стоимости """
         cards = self.deck.included_cards
         cost_distribution = self.__calc_cost_distribution(cards)
         mfc_value = max(cost_distribution)
-        col_max_height = 280
-        col_width = 40
-        gap = 5
-        area_size = Size(x=col_width * 11 + gap * 12, y=col_max_height + col_width + 2 * gap)
-        top_left = Point(x=self.width // 27, y=1235 + (400 - area_size.y) / 2)
-        x0, y0, x1, y1 = top_left.x, top_left.y, top_left.x + area_size.x, top_left.y + area_size.y
+        col_max_height = self.manacurve.size.y - 50
+        col_width = int(self.manacurve.size.x / 100 * 8)
+        gap = int(col_width / 8)
+
+        x0, y0 = self.manacurve.top_left.x, self.manacurve.top_left.y
+        x1, y1 = self.manacurve.top_left.x + self.manacurve.size.x, self.manacurve.top_left.y + self.manacurve.size.y
         one_card_height = col_max_height / 10 if mfc_value <= 10 else col_max_height / mfc_value
 
         path: Path = settings.BASE_DIR / 'core' / 'services' / 'fonts' / 'consola.ttf'
@@ -240,19 +318,20 @@ class DeckRender(Picture):
 
         self.__draw.rounded_rectangle([x0, y0, x1, y1], radius=10, outline='#ffffff', fill='#333', width=2)
 
+        x0 += gap // 2      # корректировка положения столбцов по горизонтали
         for cost, value in enumerate(cost_distribution):
             rect_area = [
                 x0 + (col_width + gap) * cost + gap,
-                y1 - col_width - gap - one_card_height * value,
+                y1 - (self.manacurve.size.y - col_max_height) - one_card_height * value + gap,
                 x0 + (col_width + gap) * cost + gap + col_width,
-                y1 - col_width - gap,
+                y1 - (self.manacurve.size.y - col_max_height) + gap,
             ]
             if not value:
                 # улучшение отображения столбца, соотв. 0 карт
                 rect_area[1] -= 3
             cost_text_area = [
                 x0 + col_width / 2 + (col_width + gap) * cost + gap,
-                y1 - col_width / 2
+                (y1 + rect_area[3] + gap) / 2
             ]
             value_text_area = [
                 cost_text_area[0],
@@ -275,20 +354,20 @@ class DeckRender(Picture):
     def __draw_craft_cost(self):
         """ Добавляет на нижний колонтитул информацию о стоимости колоды """
 
-        area_size = Size(x=270, y=100)
-        top_left = Point(x=(self.width - area_size.x) // 2, y=1235 + (400 - area_size.y) / 2)
-        x0, y0, x1, y1 = top_left.x, top_left.y, top_left.x + area_size.x, top_left.y + area_size.y
+        x0, y0 = self.craft.top_left.x, self.craft.top_left.y
+        x1, y1 = self.craft.top_left.x + self.craft.size.x, self.craft.top_left.y + self.craft.size.y
         self.__draw.rounded_rectangle([x0, y0, x1, y1], radius=10, outline='#ffffff', fill='#333', width=2)
 
-        with Image.open(settings.MEDIA_ROOT / 'decks' / 'craft.png', 'r') as craft_cost:
-            w, h = craft_cost.size
-            w, h = w * 85 // h, 85
-            craft_cost = craft_cost.resize((w, h))
-            craft_cost = craft_cost.rotate(angle=-20, resample=Image.BICUBIC, expand=True)
-            self.__render.paste(craft_cost, (int(x0) + 10, int(y0)), mask=craft_cost)
+        with Image.open(settings.MEDIA_ROOT / 'decks' / 'craft.png', 'r') as craft_cost_icon:
+            w, h = craft_cost_icon.size
+            w, h = int(w * self.craft.size.y * 0.85 / h), int(self.craft.size.y * 0.85)
+            craft_cost_icon = craft_cost_icon.resize((w, h))
+            craft_cost_icon = craft_cost_icon.rotate(angle=-20, resample=Image.BICUBIC, expand=True)
+            self.__render.paste(craft_cost_icon, (int(x0) + 10, int(y0)), mask=craft_cost_icon)
 
         path: Path = settings.BASE_DIR / 'core' / 'services' / 'fonts' / 'consola.ttf'
-        font = ImageFont.truetype(str(path), 60, encoding='utf-8')
+        font_size = 60 if self.width > 2000 else 48
+        font = ImageFont.truetype(str(path), font_size, encoding='utf-8')
 
         self.__draw.text(
             (int(x1 + x0 + w + 10) // 2, int(y0 + y1) // 2 + 2),
@@ -300,27 +379,61 @@ class DeckRender(Picture):
             stroke_fill='#000000',
         )
 
+    def __draw_qr(self):
+        """ Добавляет на рендер QR-код с кодом колоды """
+        x0, y0 = self.qr.top_left.x, self.qr.top_left.y
+        x1, y1 = self.qr.top_left.x + self.qr.size.x, self.qr.top_left.y + self.qr.size.y
+        self.__draw.rounded_rectangle([x0, y0, x1, y1], radius=10, outline='#ffffff', fill='#333', width=2)
+
+        qr = QRCode(
+            version=None,
+            error_correction=constants.ERROR_CORRECT_L,
+            box_size=10,
+            border=1,
+        )
+        qr.add_data(self.deck.string)
+        qr.make(fit=True)
+        img = qr.make_image(
+            fill_color='#333333',
+            back_color='#ffffff',
+        )
+        resize_factor = 0.92
+        offset_factor = (1 - resize_factor) / 2
+        img = img.resize((
+            int(self.qr.size.x * resize_factor),
+            int(self.qr.size.y * resize_factor)
+        ))
+        self.__render.paste(
+            img,
+            (
+                self.qr.top_left.x + int(self.qr.size.x * offset_factor),
+                self.qr.top_left.y + int(self.qr.size.y * offset_factor)
+            ),
+        )
+
     def __draw_statistics(self):
         """ Добавляет на рендер информацию о колоде """
-        area_size = Size(x=500, y=330)
-        top_left = Point(x=self.width * 26 // 27 - area_size.x, y=1235 + (400 - area_size.y) // 2)
+        self.__draw_statistics_fmt()
+        self.__draw_statistics_types()
+        self.__draw_statistics_rarities()
 
-        self.__draw_statistics_fmt(area_size, top_left)
-        self.__draw_statistics_types(area_size, top_left)
-        self.__draw_statistics_rarities(area_size, top_left)
-
-    def __draw_statistics_fmt(self, area_size: Size, top_left: Point):
+    def __draw_statistics_fmt(self):
         """ Добавляет на рендер информацию о формате колоды """
-        fmt_area_size = Size(x=area_size.x, y=area_size.y - (area_size.x + 10) // 2)
-        fmt_top_left = top_left
-        x0, y0 = fmt_top_left.x, fmt_top_left.y
-        x1, y1 = fmt_top_left.x + fmt_area_size.x, fmt_top_left.y + fmt_area_size.y
+        fmt_area_size = Size(
+            x=self.stats.size.x,
+            y=self.stats.size.y - (self.stats.size.x + 10) // 2 + 10
+        )
+        fmt_top_left = self.stats.top_left
+        fmt = Window(size=fmt_area_size, top_left=fmt_top_left)
+        x0, y0 = fmt.top_left.x, fmt.top_left.y
+        x1, y1 = fmt.top_left.x + fmt.size.x, fmt.top_left.y + fmt.size.y
         self.__draw.rounded_rectangle([x0, y0, x1, y1], radius=10, outline='#ffffff', fill='#333', width=2)
 
         path: Path = settings.BASE_DIR / 'core' / 'services' / 'fonts' / 'consola.ttf'
-        font = ImageFont.truetype(str(path), 60, encoding='utf-8')
+        font = ImageFont.truetype(str(path), 54, encoding='utf-8')
 
         fmt_text = getattr(self.deck.deck_format, f'name_{self.language}').upper()
+        fmt_text = ' '.join(fmt_text)
 
         self.__draw.text(
             ((x0 + x1) // 2, (y0 + y1) // 2 + 4),
@@ -332,12 +445,19 @@ class DeckRender(Picture):
             stroke_fill='#000000',
         )
 
-    def __draw_statistics_types(self, area_size: Size, top_left: Point):
+    def __draw_statistics_types(self):
         """ Добавляет на рендер информацию о типах карт колоды """
-        types_area_size = Size(x=(area_size.x - 10) // 2, y=(area_size.x - 10) // 2)
-        types_top_left = Point(x=top_left.x, y=top_left.y + area_size.y - types_area_size.y)
-        x0, y0 = types_top_left.x, types_top_left.y
-        x1, y1 = types_top_left.x + types_area_size.x, types_top_left.y + types_area_size.y
+        types_area_size = Size(
+            x=(self.stats.size.x + 10) // 2,
+            y=(self.stats.size.x - 10) // 2 - 10
+        )
+        types_top_left = Point(
+            x=self.stats.top_left.x,
+            y=self.stats.top_left.y + self.stats.size.y - types_area_size.y
+        )
+        types = Window(size=types_area_size, top_left=types_top_left)
+        x0, y0 = types.top_left.x, types.top_left.y
+        x1, y1 = types.top_left.x + types.size.x, types.top_left.y + types.size.y
         self.__draw.rounded_rectangle([x0, y0, x1, y1], radius=10, outline='#ffffff', fill='#333', width=2)
 
         vertical = [(x0 + x1) // 2, y0 + 10, (x0 + x1) // 2, y1 - 10]
@@ -355,15 +475,15 @@ class DeckRender(Picture):
             RealCard.CardTypes.SPELL,
         )
         icon_coordinates = (
-            Point(x=x0 + int(types_area_size.x / 20), y=y0 + int(types_area_size.y / 8)),
-            Point(x=x0 + int(types_area_size.x * 11 / 20), y=y0 + int(types_area_size.y * 5 / 8)),
-            Point(x=x0 + int(types_area_size.x / 20), y=y0 + int(types_area_size.y * 5 / 8)),
-            Point(x=x0 + int(types_area_size.x * 11 / 20), y=y0 + int(types_area_size.y / 8)),
+            Point(x=x0 + int(types.size.x / 20), y=y0 + int(types.size.y / 8)),
+            Point(x=x0 + int(types.size.x * 11 / 20), y=y0 + int(types.size.y * 5 / 8)),
+            Point(x=x0 + int(types.size.x / 20), y=y0 + int(types.size.y * 5 / 8)),
+            Point(x=x0 + int(types.size.x * 11 / 20), y=y0 + int(types.size.y / 8)),
         )
         for data, icon_top_left in zip(card_types, icon_coordinates):
             stat = next((x for x in self.deck.types_statistics if x['data'] == data), {'num_cards': '-'})
             with Image.open(settings.MEDIA_ROOT / 'decks' / f'{data}.png', 'r') as type_icon:
-                w, h = int(types_area_size.x / 5), int(types_area_size.y / 4)
+                w, h = int(types.size.x / 5), int(types.size.y / 4)
                 type_icon = type_icon.resize((w, h))
                 self.__render.paste(type_icon, icon_top_left, mask=type_icon)
 
@@ -377,12 +497,19 @@ class DeckRender(Picture):
                 stroke_fill='#ffffff',
             )
 
-    def __draw_statistics_rarities(self, area_size: Size, top_left: Point):
+    def __draw_statistics_rarities(self):
         """ Добавляет на рендер информацию о редкостях карт колоды """
-        rar_area_size = Size(x=(area_size.x - 10) // 2, y=(area_size.x - 10) // 2)
-        rar_top_right = Point(x=top_left.x + area_size.x, y=top_left.y + area_size.y - rar_area_size.y)
-        x0, y0 = rar_top_right.x - rar_area_size.x, rar_top_right.y
-        x1, y1 = rar_top_right.x, rar_top_right.y + rar_area_size.y
+        rar_area_size = Size(
+            x=(self.stats.size.x - 10) // 2 - 10,
+            y=(self.stats.size.x - 10) // 2 - 10
+        )
+        rar_top_left = Point(
+            x=self.stats.top_left.x + self.stats.size.x - rar_area_size.x,
+            y=self.stats.top_left.y + self.stats.size.y - rar_area_size.y
+        )
+        rarities = Window(size=rar_area_size, top_left=rar_top_left)
+        x0, y0 = rarities.top_left.x, rarities.top_left.y
+        x1, y1 = rarities.top_left.x + rarities.size.x, rarities.top_left.y + rarities.size.y
         self.__draw.rounded_rectangle([x0, y0, x1, y1], radius=10, outline='#ffffff', fill='#333', width=2)
 
         vertical = [(x0 + x1) // 2, y0 + 10, (x0 + x1) // 2, y1 - 10]

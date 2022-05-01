@@ -473,6 +473,7 @@ div.render {
   border-color: white;
   transition: 0.4s;
 }
+.render-image-wrapper img {border-radius: 6px;}
 
 .mytooltip {
   position: relative;
