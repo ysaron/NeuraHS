@@ -170,7 +170,7 @@ class DeckRender(Picture):
             horizontal_num = 6
         self.width = 238 * horizontal_num + 10
 
-        x, y = 0, 100
+        x, y = 0, 120
         for card in cards:
             if x >= self.width - 238:
                 x = 0
@@ -191,7 +191,7 @@ class DeckRender(Picture):
                     cr2 = self.__adjust_brightness(cr2, factor=0.8)
                     self.__render.paste(cr2, c, mask=cr2)
                 card_render = self.__adjust_brightness(card_render, factor=1.2)
-                card_render = self.__contrast(card_render, 1.2)
+                card_render = self.__contrast(card_render, 1.1)
                 self.__render.paste(card_render, c, mask=card_render)
 
     def __draw_header(self):
@@ -339,6 +339,8 @@ class DeckRender(Picture):
                 cost_text_area[0],
                 rect_area[1] + (one_card_height + gap) / 2,
             ]
+            if value_text_area[1] < (max_y := rect_area[1] + 3 * gap):
+                value_text_area[1] = max_y
             cost_digit = str(cost) if cost < 10 else '+'
 
             self.__draw.rectangle(rect_area, outline='#000000', fill='#ffffff', width=1)
@@ -364,21 +366,20 @@ class DeckRender(Picture):
             w, h = craft_cost_icon.size
             w, h = int(w * self.craft.size.y * 0.85 / h), int(self.craft.size.y * 0.85)
             craft_cost_icon = craft_cost_icon.resize((w, h))
-            craft_cost_icon = craft_cost_icon.rotate(angle=-20, resample=Image.BICUBIC, expand=True)
-            self.__render.paste(craft_cost_icon, (int(x0) + 10, int(y0)), mask=craft_cost_icon)
+            self.__render.paste(craft_cost_icon, (int(x0) + 10, int(y0) + 7), mask=craft_cost_icon)
 
         path: Path = settings.BASE_DIR / 'core' / 'services' / 'fonts' / 'consola.ttf'
         font_size = 60 if self.width > 2000 else 48
         font = ImageFont.truetype(str(path), font_size, encoding='utf-8')
 
         self.__draw.text(
-            (int(x1 + x0 + w + 10) // 2, int(y0 + y1) // 2 + 2),
+            (int(x1 + x0 + w + 10) // 2, int(y0 + y1) // 2 + 3),
             text=str(self.deck.get_craft_cost().get('basic')),
             anchor='mm',
             fill='#ffffff',
             font=font,
             stroke_width=1,
-            stroke_fill='#000000',
+            stroke_fill='#ffffff',
         )
 
     def __draw_qr(self):
@@ -408,8 +409,8 @@ class DeckRender(Picture):
         self.__render.paste(
             img,
             (
-                self.qr.top_left.x + int(self.qr.size.x * offset_factor),
-                self.qr.top_left.y + int(self.qr.size.y * offset_factor)
+                self.qr.top_left.x + int(self.qr.size.x * offset_factor) + 1,
+                self.qr.top_left.y + int(self.qr.size.y * offset_factor) + 1
             ),
         )
 
@@ -444,7 +445,7 @@ class DeckRender(Picture):
             fill='#ffffff',
             font=font,
             stroke_width=1,
-            stroke_fill='#000000',
+            stroke_fill='#ffffff',
         )
 
     def __draw_statistics_types(self):
@@ -473,8 +474,8 @@ class DeckRender(Picture):
         card_types = (
             RealCard.CardTypes.MINION,
             RealCard.CardTypes.HERO,
-            RealCard.CardTypes.WEAPON,
             RealCard.CardTypes.SPELL,
+            RealCard.CardTypes.WEAPON,
         )
         icon_coordinates = (
             Point(x=x0 + int(types.size.x / 20), y=y0 + int(types.size.y / 8)),
