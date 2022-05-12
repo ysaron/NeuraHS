@@ -1,13 +1,21 @@
 {% load i18n %}
 <div class="topmenu">
-    <a href="{% url top_menu.main.url_name %}">{{ top_menu.main.title }}</a>
-    <a href="{% url top_menu.about.url_name %}">{{ top_menu.about.title }}</a>
-    <a href="{% url top_menu.api.url_name %}">{{ top_menu.api.title }}</a>
-    {% if user.is_authenticated %}
-        <a class="logbar logbar-in" id="logout" href="{% url 'accounts:signout' %}">{% trans "Log out" %}</a>
-        <a class="logbar logbar-in"><b>{{ user.username }}</b></a>
-    {% else %}
-        <a class="logbar logbar-out" href="{% url 'accounts:signin' %}">{% trans "Sign In" %}</a>
-        <a class="logbar logbar-out" href="{% url 'accounts:signup' %}">{% trans "Sign Up" %}</a>
-    {% endif %}
+    <a href="{% url 'home' %}">{% trans 'Main page' %}</a>
+    <a href="{% url 'gallery:realcards' %}?collectible=true">{% trans 'Cards' %}</a>
+    <div class="topmenu-dropdown">
+        <button class="dropbtn" onclick="decksDropdown()">
+            <span>{% trans 'Decks' %}</span>
+            <span class="dropdown-icon"><i class="far fa-caret-square-down"></i></span>
+        </button>
+        <div class="dropcontent" id="decksDropdown">
+            <a href="{% url 'decks:index' %}">{% trans 'Create' %}</a>
+            <a href="{% url 'decks:all_decks' %}">{% trans 'Database' %}</a>
+            <a href="{% url 'decks:user_decks' %}">{% trans 'My decks' %}</a>
+        </div>
+    </div>
+
+    <a href="{% url 'statistics' %}">{% trans 'Statistics' %}</a>
+    <a href="{% url 'api_greeting' %}">API</a>
+
 </div>
+

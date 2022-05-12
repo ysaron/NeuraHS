@@ -29,7 +29,7 @@
 <table class="table">
   <tr>
     <td style="min-width:144px;"><strong>{% trans "Class" %}</strong></td>
-    <td>{% for card_class in real_card.card_class.all %}<a href="{% url 'gallery:realcards' %}?card_class={{ card_class.pk }}&collectible=true" class="intext">{{ card_class }}</a>{% if not forloop.last %} | {% endif %}{% endfor %}</td>
+    <td>{% for card_class in real_card.card_class.all %}<a href="{% url 'gallery:realcards' %}?card_class={{ card_class.pk }}&collectible=true" class="intext">{{ card_class }}</a>{% if not forloop.last %} {% endif %}{% endfor %}</td>
   </tr>
   {% if real_card.text %}
     <tr>
@@ -58,7 +58,7 @@
   {% if real_card.card_type == c_types.MINION and real_card.tribe.all %}
     <tr>
       <td><strong>{% trans "Tribe" %}</strong></td>
-      <td>{% for tribe in real_card.tribe.all %}<a href="{% url 'gallery:realcards' %}?tribe={{ tribe.pk }}&collectible=true" class="intext">{{ tribe }}</a>{% if not forloop.last %} | {% endif %}{% endfor %}</td>
+      <td>{% for tribe in real_card.tribe.all %}<a href="{% url 'gallery:realcards' %}?tribe={{ tribe.pk }}&collectible=true" class="intext">{{ tribe }}</a>{% if not forloop.last %} {% endif %}{% endfor %}</td>
     </tr>
   {% endif %}
   {% if real_card.card_type == c_types.SPELL %}
@@ -71,7 +71,7 @@
   {% if real_card.mechanic.all %}
     <tr>
       <td><strong>{% trans "Mechanics" context "list" %}</strong></td>
-      <td>{% for mech in real_card.mechanic.all %}<a href="{% url 'gallery:realcards' %}?mechanic={{ mech.pk }}&collectible=true" class="intext">{{ mech }}</a>{% if not forloop.last %} | {% endif %}{% endfor %}</td>
+      <td>{% for mech in real_card.mechanic.all %}<a href="{% url 'gallery:realcards' %}?mechanic={{ mech.pk }}&collectible=true" class="intext">{{ mech }}</a>{% if not forloop.last %} {% endif %}{% endfor %}</td>
     </tr>
   {% endif %}
   {% if real_card.artist %}

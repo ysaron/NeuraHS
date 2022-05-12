@@ -175,12 +175,46 @@
         </tbody>
     </table>
     </div>
+    <div id="deckRenderDiv" class="render">
+        <button type="button" id="deckRenderBtn" class="render-button" onclick="showRenderForm()">
+            <span><i class="fas fa-file-image"></i></span>
+        </button>
+    </div>
+    <div class="render" id="renderForm" datasrc="{{ deck.pk }}" style="display: none;">
+        <div class="render-form">
+            <form>
+                <div>
+                    <label for="renderName">{% trans 'Name' %}</label><br>
+                    <input type="text" class="form-input" id="renderName" name="renderName" value="{{ deck.deck_format }} {{ deck.deck_class }}" maxlength="40"><br>
+                </div>
+                <div>
+                    <input type="radio" id="engRender" name="renderLang" value="en" checked>
+                    <label for="engRender">English</label><br>
+                    <input type="radio" id="rusRender" name="renderLang" value="ru">
+                    <label for="rusRender">Русский</label><br>
+                </div>
+                <div>
+                    <button type="button" class="form-button" onclick="render()">
+                        <span class="button-icon"><i class="fas fa-file-image"></i></span>
+                        <span class="button-text">{% trans "Draw" %}</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="deckRenderLoading" class="render render-loading" style="display: none;">
+        <span><i class="fas fa-spinner fa-spin"></i></span>
+    </div>
+    <div id="deckRenderPlaceholder" class="render render-image-wrapper" style="display: none;">
+    </div>
+</div>
+<div class="decks-grid">
     <div>
         <div class="info-item info-deck">
             <h4>{% trans 'Types' %}</h4>
             <ol>
                 {% for ctype in deck.types_statistics %}
-                    <li>{{ ctype.name.label }}: {{ ctype.num_cards }}</li>
+                <li style="margin: 5px 0;"><a class="intext" href="{% url 'gallery:realcards' %}?card_type={{ ctype.name }}&collectible=true">{{ ctype.name.label }}</a>: <b>{{ ctype.num_cards }}</b></li>
                 {% empty %}
                     <li>{% trans 'No data' %}</li>
                 {% endfor %}
@@ -190,17 +224,19 @@
             <h4>{% trans 'Rarities' %}</h4>
             <ol>
                 {% for rar in deck.rarity_statistics %}
-                    <li>{{ rar.name.label }}: {{ rar.num_cards }}</li>
+                <li style="margin: 5px 0;"><a class="intext" href="{% url 'gallery:realcards' %}?rarity={{ rar.name }}&collectible=true">{{ rar.name.label }}</a>: <b>{{ rar.num_cards }}</b></li>
                 {% empty %}
                     <li>{% trans 'No data' %}</li>
                 {% endfor %}
             </ol>
         </div>
+    </div>
+    <div>
         <div class="info-item info-deck">
             <h4>{% trans 'Mechanics' %}</h4>
             <ol>
                 {% for mech in deck.mechanics_statistics %}
-                    <li>{{ mech.name }} ({{ mech.num_cards }})</li>
+                <li style="margin: 5px 0;"><a class="intext" href="{% url 'gallery:realcards' %}?mechanic={{ mech.mech.pk }}&collectible=true">{{ mech.mech.name }}</a>: <b>{{ mech.num_cards }}</b></li>
                 {% empty %}
                     <li>{% trans 'No data' %}</li>
                 {% endfor %}
@@ -212,7 +248,7 @@
             <h4>{% trans 'Sets' %}</h4>
             <ol>
                 {% for set in deck.sets_statistics %}
-                    <li>{{ set.name }} ({{ set.num_cards }})</li>
+                    <li style="margin: 5px 0;"><a class="intext" href="{% url 'gallery:realcards' %}?card_set={{ set.data.pk }}&collectible=true">{{ set.name }}</a>: <b>{{ set.num_cards }}</b></li>
                 {% empty %}
                     <li>{% trans 'No data' %}</li>
                 {% endfor %}
@@ -221,39 +257,10 @@
     </div>
 </div>
 
+
+
 <div class="center-wrapper">
-<div id="deckRenderDiv" class="render">
-    <button type="button" id="deckRenderBtn" class="render-button" onclick="showRenderForm()">
-        <span><i class="fas fa-file-image"></i></span>
-    </button>
-</div>
-<div class="render" id="renderForm" datasrc="{{ deck.pk }}" style="display: none;">
-    <div class="render-form">
-        <form>
-            <div>
-                <label for="renderName">{% trans 'Name' %}</label><br>
-                <input type="text" class="form-input" id="renderName" name="renderName" value="{{ deck.deck_format }} {{ deck.deck_class }}" maxlength="40"><br>
-            </div>
-            <div>
-                <input type="radio" id="engRender" name="renderLang" value="en" checked>
-                <label for="engRender">English</label><br>
-                <input type="radio" id="rusRender" name="renderLang" value="ru">
-                <label for="rusRender">Русский</label><br>
-            </div>
-            <div>
-                <button type="button" class="form-button" onclick="render()">
-                    <span class="button-icon"><i class="fas fa-file-image"></i></span>
-                    <span class="button-text">{% trans "Draw" %}</span>
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
-<div id="deckRenderLoading" class="render render-loading" style="display: none;">
-    <span><i class="fas fa-spinner fa-spin"></i></span>
-</div>
-<div id="deckRenderPlaceholder" class="render render-image-wrapper" style="display: none;">
-</div>
+
 </div>
 
 {% if similar %}

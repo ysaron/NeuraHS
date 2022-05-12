@@ -149,3 +149,19 @@ function render() {
         error: function(response) {console.log(response.responseJSON.errors);}
     });
 }
+
+// Открытие Dropdown по клику на Decks
+function decksDropdown() {
+    document.getElementById("decksDropdown").classList.toggle("show");
+}
+
+// Закрытие Dropdown
+window.onclick = function(e) {
+  if (!e.target.matches('.dropbtn')) {
+  var myDropdown = document.getElementById("decksDropdown");
+    if (myDropdown.classList.contains('show')) {
+      myDropdown.classList.remove('show');
+    }
+  }
+}
+

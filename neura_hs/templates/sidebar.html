@@ -1,38 +1,40 @@
 {% load i18n %}
 <div class="sidemenu sidemenu-shadow">
-    <div class="accordion" id="accordionBase">
-      <div class="accordion-item sidemenu">
-        <h2 class="accordion-header" id="headingTwo">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-            <span>{{ side_menu.decks.title }}</span>
-          </button>
-        </h2>
-        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionBase">
-          <div class="accordion-body">
-            <a class="sub" href="{% url side_menu.decks.create.url_name %}" title="{{ side_menu.decks.create.popup }}">{{ side_menu.decks.create.title }}</a>
-            <a class="sub" href="{% url side_menu.decks.base.url_name %}" title="{{ side_menu.decks.base.popup }}">{{ side_menu.decks.base.title }}</a>
-            <a class="sub" href="{% url side_menu.decks.mine.url_name %}" title="{{ side_menu.decks.mine.popup }}">{{ side_menu.decks.mine.title }}</a>
-          </div>
-        </div>
-        <h2 class="accordion-header" id="headingOne">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+    {% if user.is_authenticated %}
+        <a class="">
             <span>
-                {{ side_menu.fan_cards.title }}
-                <span class="badge bg-primary" style="padding: 0 2px;">BETA</span>
+                <i class="fas fa-user-check"></i>
             </span>
-          </button>
-        </h2>
-        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionBase">
-          <div class="accordion-body">
-            <a class="sub" href="{% url side_menu.fan_cards.create.url_name %}" title="{{ side_menu.fan_cards.create.popup }}">{{ side_menu.fan_cards.create.title }}</a>
-            <a class="sub" href="{% url side_menu.fan_cards.base.url_name %}" title="{{ side_menu.fan_cards.base.popup }}">{{ side_menu.fan_cards.base.title }}</a>
-            <a class="sub" href="{% url side_menu.fan_cards.authors.url_name %}" title="{{ side_menu.fan_cards.authors.popup }}">{{ side_menu.fan_cards.authors.title }}</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <a href="{% url side_menu.real_cards.url_name %}?collectible=true" title="{{ side_menu.real_cards.popup }}">{{ side_menu.real_cards.title }}</a>
-    <a href="{% url side_menu.main.url_name %}" title="{{ side_menu.main.popup }}">{{ side_menu.main.title }}</a>
+            <span>
+                <b>{{ user.username }}</b>
+            </span>
+        </a>
+        <a class="" id="logout" href="{% url 'accounts:signout' %}">
+            <span style="margin: 0 2px;">
+                <i class="fas fa-sign-out-alt"></i>
+            </span>
+            <span>
+                {% trans "Log out" %}
+            </span>
+        </a>
+    {% else %}
+        <a class="" href="{% url 'accounts:signin' %}">
+            <span style="margin: 0 2px;">
+                <i class="fas fa-sign-in-alt"></i>
+            </span>
+            <span>
+                {% trans "Sign In" %}
+            </span>
+        </a>
+        <a class="" href="{% url 'accounts:signup' %}">
+            <span>
+                <i class="fas fa-user-plus"></i>
+            </span>
+            <span>
+                {% trans "Sign Up" %}
+            </span>
+        </a>
+    {% endif %}
     <hr style="margin: 0px 0px;">
     <form action="{% url 'set_language' %}" method="post" id="form-i18n">
         {% csrf_token %}

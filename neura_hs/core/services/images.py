@@ -254,15 +254,15 @@ class DeckRender(Picture):
         )
         craft_topleft = Point(
             x=2 * gap + manacurve_size.x,
-            y=self.footer.top_left.y + (self.footer.size.y - craft_size.y) // 2
+            y=self.footer.top_left.y + (self.footer.size.y - craft_size.y) // 2 + 5
         )
         qr_topleft = Point(
             x=3 * gap + manacurve_size.x + craft_size.x,
-            y=self.footer.top_left.y + (self.footer.size.y - qr_size.y) // 2
+            y=self.footer.top_left.y + (self.footer.size.y - qr_size.y) // 2 + 5
         )
         stats_topleft = Point(
             x=4 * gap + manacurve_size.x + craft_size.x + qr_size.x,
-            y=self.footer.top_left.y + (self.footer.size.y - stats_size.y) // 2
+            y=self.footer.top_left.y + (self.footer.size.y - stats_size.y) // 2 + 5
         )
         self.manacurve = Window(size=manacurve_size, top_left=manacurve_topleft)
         self.craft = Window(size=craft_size, top_left=craft_topleft)

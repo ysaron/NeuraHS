@@ -151,6 +151,8 @@ class RealCardListView(DataMixin, generic.ListView):
             object_list = object_list.search_collectible(collectible)
         if card_type:
             object_list = object_list.search_by_type(card_type)
+            if card_type == 'H' and collectible:
+                object_list = object_list.exclude(card_set__service_name='Hero Skins')
         if tribe:
             object_list = object_list.search_by_tribe(tribe)
         if card_class:
