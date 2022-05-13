@@ -10,7 +10,6 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.translation import gettext_lazy as _
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views import generic
-from django.conf import settings
 
 from .forms import RegisterUserForm, LoginUserForm
 from core.mixins import DataMixin
@@ -58,9 +57,7 @@ class SignUp(DataMixin, generic.CreateView):
         user.groups.add(group)
 
         return render(request=self.request,
-                      context={'title': _('Check your email'),
-                               'top_menu': settings.TOP_MENU,
-                               'side_menu': settings.SIDE_MENU},
+                      context={'title': _('Check your email')},
                       template_name='accounts/acc_active_done.html')
 
 
@@ -76,15 +73,11 @@ def activate(request, uidb64, token):
         user.save()
         login(request, user)
         return render(request,
-                      context={'title': _('The account is activated'),
-                               'top_menu': settings.TOP_MENU,
-                               'side_menu': settings.SIDE_MENU},
+                      context={'title': _('The account is activated')},
                       template_name='accounts/acc_active_complete.html')
     else:
         return render(request,
-                      context={'title': _('Activation has failed.'),
-                               'top_menu': settings.TOP_MENU,
-                               'side_menu': settings.SIDE_MENU},
+                      context={'title': _('Activation has failed.')},
                       template_name='accounts/acc_active_complete.html')
 
 

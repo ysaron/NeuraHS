@@ -72,9 +72,7 @@ class UpdateCard(LoginRequiredMixin, UserPassesTestMixin, DataMixin, generic.Upd
 
 def card_changed(request):
     """ Уведомление о создании/изменении карты и наличии премодерации на сайте """
-    context = {'title': _('The card has been changed'),
-               'top_menu': settings.TOP_MENU,
-               'side_menu': settings.SIDE_MENU}
+    context = {'title': _('The card has been changed')}
     return render(request,
                   template_name='gallery/fancard/card_changed.html',
                   context=context)

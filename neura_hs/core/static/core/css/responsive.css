@@ -1,11 +1,16 @@
 
 @media screen and (max-width: 600px) {
+  h2 {text-align: center;}
   .topmenu {
     position: static;
   }
-  .topmenu a {
+  .topmenu a, .topmenu-dropdown {
     float: none;
     width: 100%;
+  }
+  .dropcontent {
+    width: 35%;
+    right: 33%;
   }
   .common-form-item {
     max-width: 300px;
@@ -36,6 +41,9 @@
   .deck-card-cell:hover span img {
     height: 90%;
     width: 90%;
+  }
+  .decks-grid {
+    grid-row-gap: 30px;
   }
 }
 

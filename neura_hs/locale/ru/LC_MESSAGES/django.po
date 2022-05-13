@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-17 17:48+0700\n"
+"POT-Creation-Date: 2022-05-13 16:22+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "A couple of words (optional); will be displayed next to your nickname"
 msgstr "Пара слов (по желанию); будет отображаться рядом с вашим никнеймом"
 
-#: .\accounts\forms.py:13 .\accounts\views.py:123
+#: .\accounts\forms.py:13 .\accounts\views.py:116
 msgid "Email"
 msgstr "Email"
 
@@ -140,7 +140,7 @@ msgstr "Войти"
 msgid "Forgot password?"
 msgstr "Забыли пароль?"
 
-#: .\accounts\templates\accounts\signup.html:23 .\templates\header.html:11
+#: .\accounts\templates\accounts\signup.html:23 .\templates\sidebar.html:34
 msgid "Sign Up"
 msgstr "Регистрация"
 
@@ -149,79 +149,79 @@ msgstr "Регистрация"
 msgid "required fields"
 msgstr "обязательные поля"
 
-#: .\accounts\views.py:28
+#: .\accounts\views.py:27
 msgid "Registration"
 msgstr "Регистрация"
 
-#: .\accounts\views.py:38
+#: .\accounts\views.py:37
 msgid "NeuraHS account activation"
 msgstr "Активация учетной записи NeuraHS"
 
-#: .\accounts\views.py:61 .\accounts\views.py:134
+#: .\accounts\views.py:60 .\accounts\views.py:127
 msgid "Check your email"
 msgstr "Проверьте электронную почту"
 
-#: .\accounts\views.py:79
+#: .\accounts\views.py:76
 msgid "The account is activated"
 msgstr "Аккаунт активирован"
 
-#: .\accounts\views.py:85
+#: .\accounts\views.py:80
 msgid "Activation has failed."
 msgstr "Активация не удалась."
 
-#: .\accounts\views.py:98
+#: .\accounts\views.py:91
 msgid "Authorization"
 msgstr "Авторизация"
 
-#: .\accounts\views.py:123
+#: .\accounts\views.py:116
 msgid "Change password"
 msgstr "Сменить пароль"
 
-#: .\accounts\views.py:146
+#: .\accounts\views.py:139
 msgid "New password"
 msgstr "Новый пароль"
 
-#: .\accounts\views.py:157
+#: .\accounts\views.py:150
 msgid "The password has been changed."
 msgstr "Пароль был изменен"
 
-#: .\core\mixins.py:37
+#: .\core\mixins.py:32
 #, python-format
 msgid "\"%(name)s\" is longer than %(num)s characters"
 msgstr "\"%(name)s\" превышает лимит в %(num)s символов"
 
-#: .\core\mixins.py:49
+#: .\core\mixins.py:44
 #, python-format
 msgid "A maximum of 3 classes can be selected (selected: %(num)s)"
 msgstr "Можно выбрать максимум 3 класса (выбрано: %(num)s)"
 
-#: .\core\mixins.py:60
+#: .\core\mixins.py:55
 msgid ""
 "Tribe can only be specified for minions. Ctrl + LMB - deselect the tribe."
 msgstr "Расу можно выбрать только для существ. Ctrl + ЛКМ - отменить выбор."
 
-#: .\core\mixins.py:62
+#: .\core\mixins.py:57
 #, python-format
 msgid "You can select up to 2 races (selected: %(num)s)"
 msgstr "Можно выбрать максимум 2 расы (выбрано: %(num)s)"
 
-#: .\core\mixins.py:70
+#: .\core\mixins.py:65
 msgid "The spell type can only be specified for... well, spells."
 msgstr "Тип заклинания можно указать только для... ну, заклинаний."
 
-#: .\core\mixins.py:77
+#: .\core\mixins.py:72
 msgid "Attack can only be specified for minion or weapon."
 msgstr "Атака может быть указана только для существа или оружия."
 
-#: .\core\mixins.py:84
+#: .\core\mixins.py:79
 msgid "Only minions can have a health."
 msgstr "Только существа могут иметь здоровье."
 
-#: .\core\mixins.py:91
+#: .\core\mixins.py:86
 msgid "Only weapons can have a durability."
 msgstr "Только оружие может иметь прочность."
 
-#: .\core\mixins.py:98
+#: .\core\mixins.py:93
 msgid "Only hero cards can have an armor."
 msgstr "Только карты героя могут иметь броню."
 
@@ -233,78 +233,78 @@ msgstr "Некорректный код колоды"
 msgid "Unsupported deckstring version"
 msgstr "Версия кода колоды не поддерживается"
 
-#: .\core\services\statistics.py:16 .\core\services\statistics.py:33
-#: .\core\services\statistics.py:54
+#: .\core\services\statistics.py:20 .\core\services\statistics.py:118
+#: .\decks\models.py:222
+msgid "Amount"
+msgstr "Количество"
+
+#: .\core\services\statistics.py:23 .\core\services\statistics.py:121
 msgid "Total"
 msgstr "Всего"
 
-#: .\core\services\statistics.py:17 .\core\services\statistics.py:35
-#: .\gallery\models.py:156
-msgid "Legendary"
-msgstr "Легендарная"
-
-#: .\core\services\statistics.py:34 .\gallery\forms.py:32
-#: .\gallery\models.py:96 .\gallery\models.py:324
+#: .\core\services\statistics.py:29 .\gallery\forms.py:32
+#: .\gallery\models.py:93 .\gallery\models.py:235
 #: .\gallery\templates\gallery\realcard\realcard_detail.html:19
 msgid "Collectible"
 msgstr "Коллекционная"
 
-#: .\core\services\statistics.py:36 .\gallery\models.py:155
+#: .\core\services\statistics.py:46
+#: .\decks\templates\decks\deck_detail.html:224
+msgid "Rarities"
+msgstr "Редкости"
+
+#: .\core\services\statistics.py:49 .\gallery\models.py:164
+msgid "Legendary"
+msgstr "Легендарная"
+
+#: .\core\services\statistics.py:55 .\gallery\models.py:163
 msgid "Epic"
 msgstr "Эпическая"
 
-#: .\core\services\statistics.py:37 .\gallery\models.py:154
+#: .\core\services\statistics.py:61 .\gallery\models.py:162
 msgid "Rare"
 msgstr "Редкая"
 
-#: .\core\services\statistics.py:38 .\gallery\models.py:153
+#: .\core\services\statistics.py:67 .\gallery\models.py:161
 msgid "Common"
 msgstr "Обычная"
 
-#: .\core\services\statistics.py:39
-msgid "Has BattleCry"
-msgstr "Имеет Боевой клич"
+#: .\core\services\statistics.py:89
+msgid "Most popular mechanics"
+msgstr "Популярные механики"
 
-#: .\core\services\statistics.py:40
-msgid "Has DeathRattle"
-msgstr "Имеет Предсмертный хрип"
+#: .\core\services\statistics.py:108
+msgid "Most popular cards"
+msgstr "Популярные карты"
 
-#: .\core\services\statistics.py:41
-msgid "Has LifeSteal"
-msgstr "Имеет Похищение жизни"
-
-#: .\core\services\statistics.py:42
-msgid "Spells"
-msgstr "Заклинания"
-
-#: .\core\services\statistics.py:55
-msgid "Standard"
-msgstr "Стандарт"
-
-#: .\core\services\statistics.py:56
-msgid "Wild"
-msgstr "Вольный"
-
-#: .\core\services\statistics.py:57
-msgid "Classic"
-msgstr "Классик"
-
-#: .\core\services\statistics.py:58
+#: .\core\services\statistics.py:127
 msgid "Highlander"
 msgstr "Хайлендер"
 
-#: .\core\services\statistics.py:63 .\gallery\models.py:360
-#: .\gallery\views.py:202 .\neura_hs\settings.py:233
-msgid "Fan cards"
-msgstr "Фан-карты"
+#: .\core\services\statistics.py:145 .\decks\models.py:41 .\decks\models.py:61
+msgid "Formats"
+msgstr "Форматы"
 
-#: .\core\services\statistics.py:64 .\neura_hs\settings.py:230
-msgid "HS cards"
-msgstr "Карты HS"
+#: .\core\services\statistics.py:148
+msgid "Standard"
+msgstr "Стандарт"
 
-#: .\core\services\statistics.py:65 .\core\templates\core\about.html:11
-#: .\decks\models.py:71 .\decks\views.py:102 .\decks\views.py:135
-#: .\neura_hs\settings.py:237
+#: .\core\services\statistics.py:154
+msgid "Wild"
+msgstr "Вольный"
+
+#: .\core\services\statistics.py:160
+msgid "Classic"
+msgstr "Классик"
+
+#: .\core\services\statistics.py:171 .\core\templates\core\about.html:18
+#: .\decks\models.py:57 .\templates\header.html:4
+msgid "Cards"
+msgstr "Карты"
+
+#: .\core\services\statistics.py:182 .\core\templates\core\about.html:11
+#: .\decks\models.py:71 .\decks\views.py:99 .\decks\views.py:132
+#: .\templates\header.html:7
 msgid "Decks"
 msgstr "Колоды"
 
@@ -319,10 +319,6 @@ msgstr "Хранилище колод"
 #: .\core\templates\core\about.html:15
 msgid "Personal deck storage"
 msgstr "Личное хранилище колод"
-
-#: .\core\templates\core\about.html:18 .\decks\models.py:57
-msgid "Cards"
-msgstr "Карты"
 
 #: .\core\templates\core\about.html:20
 msgid "Hearthstone card database"
@@ -348,11 +344,11 @@ msgstr "Для использования функций, отмеченных"
 msgid "registration is required"
 msgstr "необходима регистрация"
 
-#: .\core\views.py:13
+#: .\core\views.py:10
 msgid "Site functionality"
 msgstr "Функционал сайта"
 
-#: .\core\views.py:35 .\neura_hs\settings.py:227
+#: .\core\views.py:28 .\templates\header.html:17
 msgid "Statistics"
 msgstr "Статистика"
 
@@ -365,9 +361,10 @@ msgid "Paste the deck code here"
 msgstr "Скопируйте сюда код колоды"
 
 #: .\decks\forms.py:22 .\decks\forms.py:25 .\decks\models.py:34
-#: .\decks\models.py:50 .\decks\models.py:170
-#: .\decks\templates\decks\deck_detail.html:234 .\gallery\forms.py:27
-#: .\gallery\forms.py:62 .\gallery\models.py:127 .\gallery\models.py:211
+#: .\decks\models.py:50 .\decks\models.py:237
+#: .\decks\templates\decks\deck_detail.html:187 .\gallery\forms.py:27
+#: .\gallery\forms.py:62 .\gallery\models.py:122 .\gallery\models.py:135
+#: .\gallery\models.py:176
 #: .\gallery\templates\gallery\authors\author_detail.html:37
 #: .\gallery\templates\gallery\fancard\fancard_list.html:49
 #: .\gallery\templates\gallery\realcard\realcard_list.html:80
@@ -375,7 +372,7 @@ msgid "Name"
 msgstr "Название"
 
 #: .\decks\forms.py:31 .\decks\models.py:58 .\gallery\forms.py:44
-#: .\gallery\models.py:93 .\gallery\models.py:217 .\gallery\models.py:299
+#: .\gallery\models.py:90 .\gallery\models.py:182 .\gallery\models.py:224
 #: .\gallery\templates\gallery\authors\author_detail.html:39
 #: .\gallery\templates\gallery\fancard\fancard_detail.html:41
 #: .\gallery\templates\gallery\realcard\realcard_detail.html:31
@@ -403,15 +400,11 @@ msgstr "Доступные наборы"
 msgid "Card sets that can be used in this format"
 msgstr "Наборы карт, которые можно использовать в этом формате"
 
-#: .\decks\models.py:41 .\decks\models.py:61
-msgid "Formats"
-msgstr "Форматы"
-
 #: .\decks\models.py:51
 msgid "User-definable name"
 msgstr "Название, определяемое пользователем"
 
-#: .\decks\models.py:53 .\gallery\models.py:214 .\gallery\models.py:353
+#: .\decks\models.py:53 .\gallery\models.py:179 .\gallery\models.py:264
 #: .\gallery\templates\gallery\fancard\fancard_detail.html:37
 #: .\gallery\templates\gallery\fancard\fancard_list.html:50
 msgid "Author"
@@ -437,11 +430,11 @@ msgstr "Класс, для которого собрана колода."
 msgid "The format for which the deck is intended."
 msgstr "Формат, для которого предназначена колода."
 
-#: .\decks\models.py:63 .\decks\models.py:171
+#: .\decks\models.py:63 .\decks\models.py:238
 msgid "Time of creation."
 msgstr "Время создания."
 
-#: .\decks\models.py:70 .\decks\models.py:168
+#: .\decks\models.py:70 .\decks\models.py:235
 msgid "Deck"
 msgstr "Колода"
 
@@ -450,11 +443,7 @@ msgstr "Колода"
 msgid "No card data (id %(id)s)"
 msgstr "Нет данных о карте (id %(id)s)"
 
-#: .\decks\models.py:155
-msgid "Amount"
-msgstr "Количество"
-
-#: .\decks\models.py:156
+#: .\decks\models.py:223
 msgid "The number of card inclusions in the deck."
 msgstr "Число вхождений карты в колоду."
 
@@ -519,34 +508,31 @@ msgstr "Крафт"
 msgid "gold"
 msgstr "голд"
 
-#: .\decks\templates\decks\deck_detail.html:180
-msgid "Types"
-msgstr "Типы"
-
-#: .\decks\templates\decks\deck_detail.html:185
-#: .\decks\templates\decks\deck_detail.html:195
-#: .\decks\templates\decks\deck_detail.html:205
-#: .\decks\templates\decks\deck_detail.html:217
-msgid "No data"
-msgstr "Нет данных"
-
-#: .\decks\templates\decks\deck_detail.html:190
-msgid "Rarities"
-msgstr "Редкости"
-
-#: .\decks\templates\decks\deck_detail.html:200 .\gallery\forms.py:35
-msgid "Mechanics"
-msgstr "Механика"
-
-#: .\decks\templates\decks\deck_detail.html:212 .\gallery\models.py:132
-msgid "Sets"
-msgstr "Наборы"
-
-#: .\decks\templates\decks\deck_detail.html:246
+#: .\decks\templates\decks\deck_detail.html:199
 msgid "Draw"
 msgstr "Нарисовать"
 
-#: .\decks\templates\decks\deck_detail.html:261
+#: .\decks\templates\decks\deck_detail.html:214
+msgid "Types"
+msgstr "Типы"
+
+#: .\decks\templates\decks\deck_detail.html:219
+#: .\decks\templates\decks\deck_detail.html:229
+#: .\decks\templates\decks\deck_detail.html:241
+#: .\decks\templates\decks\deck_detail.html:253
+msgid "No data"
+msgstr "Нет данных"
+
+#: .\decks\templates\decks\deck_detail.html:236 .\gallery\forms.py:35
+#: .\gallery\models.py:141
+msgid "Mechanics"
+msgstr "Механика"
+
+#: .\decks\templates\decks\deck_detail.html:248 .\gallery\models.py:127
+msgid "Sets"
+msgstr "Наборы"
+
+#: .\decks\templates\decks\deck_detail.html:267
 msgid "Similar decks"
 msgstr "Похожие колоды"
 
@@ -572,31 +558,31 @@ msgstr "Открыть страницу с подробной информаци
 msgid "Expand (see cards)"
 msgstr "Развернуть (смотреть карты)"
 
-#: .\decks\views.py:25
+#: .\decks\views.py:24
 msgid "Hearthstone | Decoding the deck code"
 msgstr "Hearthstone | Расшифровка кода колоды"
 
-#: .\decks\views.py:41
+#: .\decks\views.py:40
 #, python-format
 msgid "Error: %(error)s"
 msgstr "Ошибка: %(error)s"
 
-#: .\decks\views.py:44
+#: .\decks\views.py:43
 #, python-format
 msgid "%(error)s. The database will be updated shortly."
 msgstr "%(error)s. База данных будет обновлена в ближайшее время."
 
-#: .\decks\views.py:197
+#: .\decks\views.py:190
 msgid "Deck has been removed"
 msgstr "Колода была удалена"
 
-#: .\gallery\forms.py:30 .\gallery\models.py:237
+#: .\gallery\forms.py:30 .\gallery\models.py:202
 #: .\gallery\templates\gallery\fancard\fancard_detail.html:61
 #: .\gallery\templates\gallery\realcard\realcard_detail.html:55
 msgid "Rarity"
 msgstr "Редкость"
 
-#: .\gallery\forms.py:38 .\gallery\models.py:216
+#: .\gallery\forms.py:38 .\gallery\models.py:181
 #: .\gallery\templates\gallery\authors\author_detail.html:38
 #: .\gallery\templates\gallery\fancard\fancard_detail.html:57
 #: .\gallery\templates\gallery\fancard\fancard_list.html:51
@@ -605,13 +591,13 @@ msgstr "Редкость"
 msgid "Type"
 msgstr "Тип"
 
-#: .\gallery\forms.py:41 .\gallery\models.py:239
+#: .\gallery\forms.py:41 .\gallery\models.py:204
 #: .\gallery\templates\gallery\fancard\fancard_detail.html:66
 #: .\gallery\templates\gallery\realcard\realcard_detail.html:60
 msgid "Tribe"
 msgstr "Раса"
 
-#: .\gallery\forms.py:47 .\gallery\models.py:131 .\gallery\models.py:321
+#: .\gallery\forms.py:47 .\gallery\models.py:126 .\gallery\models.py:232
 #: .\gallery\templates\gallery\realcard\realcard_detail.html:51
 #: .\gallery\templates\gallery\realcard\realcard_list.html:83
 msgid "Set"
@@ -621,384 +607,239 @@ msgstr "Набор"
 msgid "Enter card name"
 msgstr "Введите название карты"
 
-#: .\gallery\models.py:92
+#: .\gallery\models.py:89
 msgid "The name of the in-game class."
 msgstr "Название внутриигрового класса."
 
-#: .\gallery\models.py:97
+#: .\gallery\models.py:94
 msgid "Image"
 msgstr "Изображение"
 
-#: .\gallery\models.py:97
+#: .\gallery\models.py:94
 msgid "Class image to display in deck header"
 msgstr "Изображение класса для отображения в шапке колоды"
 
-#: .\gallery\models.py:101
+#: .\gallery\models.py:98
 msgid "In-game class"
 msgstr "Внутриигровой класс"
 
-#: .\gallery\models.py:102
+#: .\gallery\models.py:99
 msgid "In-game classes"
 msgstr "Внутриигровые классы"
 
-#: .\gallery\models.py:112 .\gallery\models.py:117
+#: .\gallery\models.py:108 .\gallery\models.py:113
 msgid "The tribe of the minion."
 msgstr "Раса существа."
 
-#: .\gallery\models.py:118
+#: .\gallery\models.py:114
 msgid "The tribes of the minion."
 msgstr "Расы существа."
 
-#: .\gallery\models.py:143 .\gallery\models.py:151 .\gallery\models.py:159
-#: .\gallery\models.py:169
+#: .\gallery\models.py:137
+msgid "Hidden?"
+msgstr "Скрытая?"
+
+#: .\gallery\models.py:140 .\gallery\models.py:211
+msgid "Mechanic"
+msgstr "Механика"
+
+#: .\gallery\models.py:151 .\gallery\models.py:159 .\gallery\models.py:167
 msgid "---------"
 msgstr "---------"
 
-#: .\gallery\models.py:144
+#: .\gallery\models.py:152
 msgid "Minion"
 msgstr "Существо"
 
-#: .\gallery\models.py:145
+#: .\gallery\models.py:153
 msgid "Spell"
 msgstr "Заклинание"
 
-#: .\gallery\models.py:146
+#: .\gallery\models.py:154
 msgid "Hero"
 msgstr "Герой"
 
-#: .\gallery\models.py:147
+#: .\gallery\models.py:155
 msgid "Weapon"
 msgstr "Оружие"
 
-#: .\gallery\models.py:148
+#: .\gallery\models.py:156
 msgid "Hero power"
 msgstr "Сила героя"
 
-#: .\gallery\models.py:152
+#: .\gallery\models.py:160
 msgid "No rarity"
 msgstr "Без редкости"
 
-#: .\gallery\models.py:160
+#: .\gallery\models.py:168
 msgid "Holy"
 msgstr "Свет"
 
-#: .\gallery\models.py:161
+#: .\gallery\models.py:169
 msgid "Shadow"
 msgstr "Тьма"
 
-#: .\gallery\models.py:162
+#: .\gallery\models.py:170
 msgid "Nature"
 msgstr "Природа"
 
-#: .\gallery\models.py:163
+#: .\gallery\models.py:171
 msgid "Fel"
 msgstr "Скверна"
 
-#: .\gallery\models.py:164
+#: .\gallery\models.py:172
 msgid "Fire"
 msgstr "Огонь"
 
-#: .\gallery\models.py:165
+#: .\gallery\models.py:173
 msgid "Frost"
 msgstr "Лед"
 
-#: .\gallery\models.py:166
+#: .\gallery\models.py:174
 msgid "Arcane"
 msgstr "Тайная магия"
 
-#: .\gallery\models.py:170
-msgid "Silence"
-msgstr "Немота"
-
-#: .\gallery\models.py:171
-msgid "Battlecry"
-msgstr "Боевой клич"
-
-#: .\gallery\models.py:172
-msgid "Divine shield"
-msgstr "Божественный щит"
-
-#: .\gallery\models.py:173
-msgid "Stealth"
-msgstr "Маскировка"
-
-#: .\gallery\models.py:174
-msgid "Overload"
-msgstr "Перегрузка"
-
-#: .\gallery\models.py:175
-msgid "Windfury"
-msgstr "Неистовство ветра"
-
-#: .\gallery\models.py:176
-msgid "Secret"
-msgstr "Секрет"
-
-#: .\gallery\models.py:177
-msgid "Charge"
-msgstr "Рывок"
-
-#: .\gallery\models.py:178
-msgid "Deathrattle"
-msgstr "Предсмертный хрип"
-
-#: .\gallery\models.py:179
-msgid "Taunt"
-msgstr "Провокация"
-
-#: .\gallery\models.py:180
-msgid "Spell damage"
-msgstr "Урон от заклинаний"
-
-#: .\gallery\models.py:181
-msgid "Combo"
-msgstr "Серия приемов"
-
-#: .\gallery\models.py:182
-msgid "Aura"
-msgstr "Аура"
-
 #: .\gallery\models.py:183
-msgid "Poison"
-msgstr "Яд"
-
-#: .\gallery\models.py:184
-msgid "Freeze"
-msgstr "Заморозка"
-
-#: .\gallery\models.py:185
-msgid "Rush"
-msgstr "Натиск"
-
-#: .\gallery\models.py:186
-msgid "Spell immune"
-msgstr "Иммунитет к заклинаниям"
-
-#: .\gallery\models.py:187
-msgid "Lifesteal"
-msgstr "Похищение жизни"
-
-#: .\gallery\models.py:188
-msgid "Casts when drawn"
-msgstr "При взятии"
-
-#: .\gallery\models.py:189
-msgid "Inspire"
-msgstr "Воодушевление"
-
-#: .\gallery\models.py:190
-msgid "Spellburst"
-msgstr "Резонанс"
-
-#: .\gallery\models.py:191
-msgid "Discover"
-msgstr "Раскопка"
-
-#: .\gallery\models.py:192
-msgid "Echo"
-msgstr "Эхо"
-
-#: .\gallery\models.py:193
-msgid "Quest"
-msgstr "Квест"
-
-#: .\gallery\models.py:194
-msgid "Side quest"
-msgstr "Сторонний квест"
-
-#: .\gallery\models.py:195
-msgid "One turn effect"
-msgstr "Эффект на 1 ход"
-
-#: .\gallery\models.py:196
-msgid "Reborn"
-msgstr "Перерождение"
-
-#: .\gallery\models.py:197
-msgid "Outcast"
-msgstr "Изгой"
-
-#: .\gallery\models.py:198
-msgid "Magnetic"
-msgstr "Магнетизм"
-
-#: .\gallery\models.py:199
-msgid "Recruit"
-msgstr "Вербовка"
-
-#: .\gallery\models.py:200
-msgid "Corrupt"
-msgstr "Порча"
-
-#: .\gallery\models.py:201
-msgid "Twinspell"
-msgstr "Дуплет"
-
-#: .\gallery\models.py:202
-msgid "Jade golem"
-msgstr "Нефритовые големы"
-
-#: .\gallery\models.py:203
-msgid "Adapt"
-msgstr "Адаптация"
-
-#: .\gallery\models.py:204
-msgid "Overkill"
-msgstr "Сверхурон"
-
-#: .\gallery\models.py:205
-msgid "Invoke"
-msgstr "Воззвание"
-
-#: .\gallery\models.py:206
-msgid "Blood gem"
-msgstr "Кровавые самоцветы"
-
-#: .\gallery\models.py:207
-msgid "Frenzy"
-msgstr "Бешенство"
-
-#: .\gallery\models.py:208
-msgid "Tradeable"
-msgstr "Можно обменять"
-
-#: .\gallery\models.py:209
-msgid "Questline"
-msgstr "Цепочка заданий"
-
-#: .\gallery\models.py:218
 msgid "You can select from 1 to 3 classes [Ctrl + LMB]."
 msgstr "Можно выбрать от 1 до 3 классов [Ctrl + ЛКМ]"
 
-#: .\gallery\models.py:219
+#: .\gallery\models.py:184
 msgid "Cost (mana)"
 msgstr "Стоимость (мана)"
 
-#: .\gallery\models.py:221 .\gallery\templatetags\custom_filters.py:76
+#: .\gallery\models.py:186 .\gallery\templatetags\custom_filters.py:76
 #: .\gallery\templatetags\custom_filters.py:79
 msgid "Attack"
 msgstr "Атака"
 
-#: .\gallery\models.py:222
+#: .\gallery\models.py:187
 msgid "For minions and weapons only."
 msgstr "Только для существ и оружия."
 
-#: .\gallery\models.py:224 .\gallery\templatetags\custom_filters.py:77
+#: .\gallery\models.py:189 .\gallery\templatetags\custom_filters.py:77
 msgid "Health"
 msgstr "Здоровье"
 
-#: .\gallery\models.py:225
+#: .\gallery\models.py:190
 msgid "For minions only."
 msgstr "Только для существ."
 
-#: .\gallery\models.py:227 .\gallery\templatetags\custom_filters.py:80
+#: .\gallery\models.py:192 .\gallery\templatetags\custom_filters.py:80
 msgid "Durability"
 msgstr "Прочность"
 
-#: .\gallery\models.py:228
+#: .\gallery\models.py:193
 msgid "For weapons only."
 msgstr "Только для оружия."
 
-#: .\gallery\models.py:230 .\gallery\templatetags\custom_filters.py:82
+#: .\gallery\models.py:195 .\gallery\templatetags\custom_filters.py:82
 msgid "Armor"
 msgstr "Броня"
 
-#: .\gallery\models.py:231
+#: .\gallery\models.py:196
 msgid "For hero cards only."
 msgstr "Только для карт героя."
 
-#: .\gallery\models.py:233
+#: .\gallery\models.py:198
 #: .\gallery\templates\gallery\fancard\fancard_detail.html:46
 #: .\gallery\templates\gallery\realcard\realcard_detail.html:36
 msgid "Text"
 msgstr "Текст"
 
-#: .\gallery\models.py:234
+#: .\gallery\models.py:199
 msgid "The text of the card that defines its properties."
 msgstr "Текст карты, определяющий ее свойства."
 
-#: .\gallery\models.py:235
+#: .\gallery\models.py:200
 #: .\gallery\templates\gallery\fancard\fancard_detail.html:52
 #: .\gallery\templates\gallery\realcard\realcard_detail.html:42
 msgid "Flavor"
 msgstr "Описание"
 
-#: .\gallery\models.py:236
+#: .\gallery\models.py:201
 msgid "Free text."
 msgstr "Произвольный текст."
 
-#: .\gallery\models.py:240
+#: .\gallery\models.py:205
 msgid "For creatures only. You can select from 0 to 2 races [Ctrl + LMB]."
 msgstr "Только для существ. Можно выбрать от 0 до 2 рас [Ctrl + ЛКМ]."
 
-#: .\gallery\models.py:242
+#: .\gallery\models.py:207
 msgid "Spell school"
 msgstr "Тип заклинания"
 
-#: .\gallery\models.py:242
+#: .\gallery\models.py:207
 msgid "For spells only."
 msgstr "Только для заклинаний."
 
-#: .\gallery\models.py:244
+#: .\gallery\models.py:209
 msgid "Date of creation"
 msgstr "Дата создания"
 
-#: .\gallery\models.py:245
+#: .\gallery\models.py:210
 msgid "Battlegrounds card"
 msgstr "Карта Полей Сражений"
 
-#: .\gallery\models.py:319
+#: .\gallery\models.py:212
+msgid "Card mechanics"
+msgstr "Механики"
+
+#: .\gallery\models.py:230
 msgid "String ID of an existing card"
 msgstr "Строковый ID существующей карты"
 
-#: .\gallery\models.py:320
+#: .\gallery\models.py:231
 msgid "Integer ID of an existing card"
 msgstr "Целочисленный ID существующей карты"
 
-#: .\gallery\models.py:323
+#: .\gallery\models.py:234
 #: .\gallery\templates\gallery\realcard\realcard_detail.html:79
 msgid "Artist"
 msgstr "Художник"
 
-#: .\gallery\models.py:326
+#: .\gallery\models.py:237
 msgid "Image (enUS)"
 msgstr "Изображение (enUS)"
 
-#: .\gallery\models.py:326
+#: .\gallery\models.py:237
 msgid "Rendered card image (en)"
 msgstr "Рендер карты (en)"
 
-#: .\gallery\models.py:328
+#: .\gallery\models.py:239
 msgid "Image (ruRU)"
 msgstr "Изображение (ruRU)"
 
-#: .\gallery\models.py:328
+#: .\gallery\models.py:239
 msgid "Rendered card image (ru)"
 msgstr "Рендер карты (ru)"
 
-#: .\gallery\models.py:330
+#: .\gallery\models.py:241
 msgid "Thumbnail"
 msgstr "Миниатюра"
 
-#: .\gallery\models.py:330
+#: .\gallery\models.py:241
 msgid "Card thumbnail to display in the deck"
 msgstr "Миниатюра карты для отображения в колоде"
 
-#: .\gallery\models.py:337
+#: .\gallery\models.py:248
 msgid "Hearthstone card"
 msgstr "Карта Hearthstone"
 
-#: .\gallery\models.py:338 .\gallery\views.py:124 .\neura_hs\settings.py:232
+#: .\gallery\models.py:249 .\gallery\views.py:122
 msgid "Hearthstone cards"
 msgstr "Карты Hearthstone"
 
-#: .\gallery\models.py:354
+#: .\gallery\models.py:265
 msgid "Display"
 msgstr "Отображать"
 
-#: .\gallery\models.py:359
+#: .\gallery\models.py:270
 msgid "Fan card"
 msgstr "Фан-карта"
+
+#: .\gallery\models.py:271 .\gallery\views.py:202
+msgid "Fan cards"
+msgstr "Фан-карты"
 
 #: .\gallery\templates\gallery\authors\author_detail.html:20
 msgid "Created cards"
@@ -1058,7 +899,7 @@ msgid "Update"
 msgstr "Обновить"
 
 #: .\gallery\templates\gallery\fancard\createcard.html:27
-#: .\neura_hs\settings.py:235 .\neura_hs\settings.py:238
+#: .\templates\header.html:11
 msgid "Create"
 msgstr "Создать"
 
@@ -1126,7 +967,7 @@ msgstr "Пользователь"
 msgid "Cost"
 msgstr "Стоимость"
 
-#: .\gallery\templatetags\custom_filters.py:199
+#: .\gallery\templatetags\custom_filters.py:128
 msgid "DH"
 msgstr "ДХ"
 
@@ -1143,7 +984,7 @@ msgstr "Редактирование карты %(card)s"
 msgid "The card has been changed"
 msgstr "Карта была изменена"
 
-#: .\gallery\views.py:94
+#: .\gallery\views.py:92
 #, python-format
 msgid "Removing card %(card)s"
 msgstr "Удаление карты %(card)s"
@@ -1160,26 +1001,6 @@ msgstr "Английский"
 msgid "Russian"
 msgstr "Русский"
 
-#: .\neura_hs\settings.py:221
-msgid "Main page"
-msgstr "Главная"
-
-#: .\neura_hs\settings.py:222
-msgid "About"
-msgstr "О сайте"
-
-#: .\neura_hs\settings.py:234 .\neura_hs\settings.py:239
-msgid "Database"
-msgstr "База данных"
-
-#: .\neura_hs\settings.py:236
-msgid "Authors"
-msgstr "Авторы"
-
-#: .\neura_hs\settings.py:240
-msgid "My decks"
-msgstr "Мои колоды"
-
 #: .\templates\footer.html:3
 msgid "This website is not affiliated with Blizzard Entertainment."
 msgstr "Данный веб-сайт не связан с Blizzard Entertainment."
@@ -1188,13 +1009,166 @@ msgstr "Данный веб-сайт не связан с Blizzard Entertainment
 msgid "Show contacts"
 msgstr "Контакты"
 
-#: .\templates\header.html:7
+#: .\templates\header.html:3
+msgid "Main page"
+msgstr "Главная"
+
+#: .\templates\header.html:12
+msgid "Database"
+msgstr "База данных"
+
+#: .\templates\header.html:13
+msgid "My decks"
+msgstr "Мои колоды"
+
+#: .\templates\sidebar.html:17
 msgid "Log out"
 msgstr "Выйти"
 
-#: .\templates\header.html:10
+#: .\templates\sidebar.html:26
 msgid "Sign In"
 msgstr "Войти"
+
+#~ msgid "Has BattleCry"
+#~ msgstr "Имеет Боевой клич"
+
+#~ msgid "Has DeathRattle"
+#~ msgstr "Имеет Предсмертный хрип"
+
+#~ msgid "Has LifeSteal"
+#~ msgstr "Имеет Похищение жизни"
+
+#~ msgid "Spells"
+#~ msgstr "Заклинания"
+
+#~ msgid "HS cards"
+#~ msgstr "Карты HS"
+
+#~ msgid "Silence"
+#~ msgstr "Немота"
+
+#~ msgid "Battlecry"
+#~ msgstr "Боевой клич"
+
+#~ msgid "Divine shield"
+#~ msgstr "Божественный щит"
+
+#~ msgid "Stealth"
+#~ msgstr "Маскировка"
+
+#~ msgid "Overload"
+#~ msgstr "Перегрузка"
+
+#~ msgid "Windfury"
+#~ msgstr "Неистовство ветра"
+
+#~ msgid "Secret"
+#~ msgstr "Секрет"
+
+#~ msgid "Charge"
+#~ msgstr "Рывок"
+
+#~ msgid "Deathrattle"
+#~ msgstr "Предсмертный хрип"
+
+#~ msgid "Taunt"
+#~ msgstr "Провокация"
+
+#~ msgid "Spell damage"
+#~ msgstr "Урон от заклинаний"
+
+#~ msgid "Combo"
+#~ msgstr "Серия приемов"
+
+#~ msgid "Aura"
+#~ msgstr "Аура"
+
+#~ msgid "Poison"
+#~ msgstr "Яд"
+
+#~ msgid "Freeze"
+#~ msgstr "Заморозка"
+
+#~ msgid "Rush"
+#~ msgstr "Натиск"
+
+#~ msgid "Spell immune"
+#~ msgstr "Иммунитет к заклинаниям"
+
+#~ msgid "Lifesteal"
+#~ msgstr "Похищение жизни"
+
+#~ msgid "Casts when drawn"
+#~ msgstr "При взятии"
+
+#~ msgid "Inspire"
+#~ msgstr "Воодушевление"
+
+#~ msgid "Spellburst"
+#~ msgstr "Резонанс"
+
+#~ msgid "Discover"
+#~ msgstr "Раскопка"
+
+#~ msgid "Echo"
+#~ msgstr "Эхо"
+
+#~ msgid "Quest"
+#~ msgstr "Квест"
+
+#~ msgid "Side quest"
+#~ msgstr "Сторонний квест"
+
+#~ msgid "One turn effect"
+#~ msgstr "Эффект на 1 ход"
+
+#~ msgid "Reborn"
+#~ msgstr "Перерождение"
+
+#~ msgid "Outcast"
+#~ msgstr "Изгой"
+
+#~ msgid "Magnetic"
+#~ msgstr "Магнетизм"
+
+#~ msgid "Recruit"
+#~ msgstr "Вербовка"
+
+#~ msgid "Corrupt"
+#~ msgstr "Порча"
+
+#~ msgid "Twinspell"
+#~ msgstr "Дуплет"
+
+#~ msgid "Jade golem"
+#~ msgstr "Нефритовые големы"
+
+#~ msgid "Adapt"
+#~ msgstr "Адаптация"
+
+#~ msgid "Overkill"
+#~ msgstr "Сверхурон"
+
+#~ msgid "Invoke"
+#~ msgstr "Воззвание"
+
+#~ msgid "Blood gem"
+#~ msgstr "Кровавые самоцветы"
+
+#~ msgid "Frenzy"
+#~ msgstr "Бешенство"
+
+#~ msgid "Tradeable"
+#~ msgstr "Можно обменять"
+
+#~ msgid "Questline"
+#~ msgstr "Цепочка заданий"
+
+#~ msgid "About"
+#~ msgstr "О сайте"
+
+#~ msgid "Authors"
+#~ msgstr "Авторы"
 
 #~ msgid "Render (enUS)"
 #~ msgstr "Рендер (enUS)"

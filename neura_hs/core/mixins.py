@@ -16,12 +16,7 @@ class DataMixin:
         :param kwargs: именованные аргументы, помещаемые в контекст из views
         :return: переменная контекста
         """
-        # повторяющийся контекст (меню и т.д.)
-
         context = kwargs
-
-        context['top_menu'] = settings.TOP_MENU
-        context['side_menu'] = settings.SIDE_MENU
 
         return context
 

@@ -217,28 +217,28 @@ LOGGING = {
 
 # --------------------------------------------- НАСТРОЙКИ ПРОЕКТА --------------------------------------------------- #
 
-TOP_MENU = {
-    'main': {'title': _('Main page'), 'url_name': 'home'},
-    'about': {'title': _('About'), 'url_name': 'about'},
-    'api': {'title': 'API', 'url_name': 'api_greeting'}
-}
-
-SIDE_MENU = {
-    'main': {'title': _('Statistics'),
-             'url_name': 'statistics',
-             'popup': ''},
-    'real_cards': {'title': _('HS cards'),
-                   'url_name': 'gallery:realcards',
-                   'popup': _('Hearthstone cards')},
-    'fan_cards': {'title': _('Fan cards'),
-                  'base': {'title': _('Database'), 'url_name': 'gallery:fancards', 'popup': ''},
-                  'create': {'title': _('Create'), 'url_name': 'gallery:createcard', 'popup': ''},
-                  'authors': {'title': _('Authors'), 'url_name': 'gallery:authors', 'popup': ''}},
-    'decks': {'title': _('Decks'),
-              'create': {'title': _('Create'), 'url_name': 'decks:index', 'popup': ''},
-              'base': {'title': _('Database'), 'url_name': 'decks:all_decks', 'popup': ''},
-              'mine': {'title': _('My decks'), 'url_name': 'decks:user_decks', 'popup': ''}},
-}
+# TOP_MENU = {
+#     'main': {'title': _('Main page'), 'url_name': 'home'},
+#     'about': {'title': _('About'), 'url_name': 'about'},
+#     'api': {'title': 'API', 'url_name': 'api_greeting'}
+# }
+#
+# SIDE_MENU = {
+#     'main': {'title': _('Statistics'),
+#              'url_name': 'statistics',
+#              'popup': ''},
+#     'real_cards': {'title': _('HS cards'),
+#                    'url_name': 'gallery:realcards',
+#                    'popup': _('Hearthstone cards')},
+#     'fan_cards': {'title': _('Fan cards'),
+#                   'base': {'title': _('Database'), 'url_name': 'gallery:fancards', 'popup': ''},
+#                   'create': {'title': _('Create'), 'url_name': 'gallery:createcard', 'popup': ''},
+#                   'authors': {'title': _('Authors'), 'url_name': 'gallery:authors', 'popup': ''}},
+#     'decks': {'title': _('Decks'),
+#               'create': {'title': _('Create'), 'url_name': 'decks:index', 'popup': ''},
+#               'base': {'title': _('Database'), 'url_name': 'decks:all_decks', 'popup': ''},
+#               'mine': {'title': _('My decks'), 'url_name': 'decks:user_decks', 'popup': ''}},
+# }
 
 DECK_RENDER_MAX_NUMBER = 10     # максимальное число сохраненных рендеров колод
 

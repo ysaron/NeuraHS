@@ -1,7 +1,7 @@
 :root {
   --dark: #333;
   --grey: #595959;
-  --bcgrnd: #f2f2f2;
+  --bcgrnd: #ffffff;
   --green: #29a329;
   --red: #B22222;
   --mage-1: #3377ff;
@@ -35,7 +35,7 @@
   --rare: #3366ff;
   --common: #ffffff;
   --standard: rgba(24, 24, 129, 0.6);
-  --wild: rgba(38, 38, 38, 0.7);
+  --wild: rgba(64, 64, 64, 0.7);
   --classic: rgba(0, 102, 0, 0.6);
   --deck-width: 310px;
 }
@@ -79,6 +79,10 @@ h1:hover {
 .detailhead {
   text-align: center;
   padding: px;
+}
+h2 {
+  margin-left: 20px;
+  text-shadow: 2px 2px 5px var(--grey);
 }
 div.centered {text-align: center;}
 
@@ -165,6 +169,7 @@ a.intext:hover {
   width: 20%;
 }
 .topmenu-dropdown:hover button {
+  width: 100%;
   color: black;
   background: var(--bcgrnd);
 }
@@ -765,6 +770,9 @@ td.deck-control * {
   font-size: 20px;
   text-align: center;
 }
+.info-item:hover h4 {
+  text-decoration-line: underline;
+}
 .info-item .note {
   width: 100%;
   padding: 10px;
@@ -808,6 +816,13 @@ a.author-link {
 }
 .search-form-label {
   width: 100%;
+}
+
+.stat-item {
+  font-weight: bold;
+}
+.stat-item.dim, .stat-item.dim a {
+  color: #999999;
 }
 
 /* ------- Оформление классов Hearthstone ------- */

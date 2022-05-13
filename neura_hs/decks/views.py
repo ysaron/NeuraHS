@@ -2,7 +2,6 @@ from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
-from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -57,8 +56,6 @@ def create_deck(request: HttpRequest):
                'deck_save_form': deck_save_form,
                'deck': deck,
                'similar': find_similar_decks(deck)}
-    context |= {'top_menu': settings.TOP_MENU,
-                'side_menu': settings.SIDE_MENU}
 
     return render(request, template_name='decks/deck_detail.html', context=context)
 
@@ -181,8 +178,6 @@ def deck_view(request, deck_id):
                'deck': deck,
                'deck_save_form': deck_save_form,
                'similar': find_similar_decks(deck)}
-    context |= {'top_menu': settings.TOP_MENU,
-                'side_menu': settings.SIDE_MENU}
 
     return render(request, template_name='decks/deck_detail.html', context=context)
 
