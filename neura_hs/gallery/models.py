@@ -58,7 +58,7 @@ class AuthorManager(Manager):
 
 
 class Author(Model):
-    """ Модель автора фан-карт, расширяющая модель User """
+    """ Модель автора фан-карт (заморожено) и колод, расширяющая модель User """
     user: User = models.OneToOneField(User, on_delete=models.CASCADE)
     about = models.TextField(blank=True, default='')
 
@@ -258,6 +258,7 @@ class RealCard(Card):
         return reverse('gallery:real_card', kwargs={'card_slug': self.slug})
 
 
+# (!) Заморожено
 class FanCard(Card):
     """ Модель фановой карты. Экземпляры создаются юзерами через формы """
 

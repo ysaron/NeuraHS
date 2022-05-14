@@ -1,0 +1,13 @@
+{% extends "core/base.html" %}
+{% load custom_filters %}
+{% block title %}{{ title|mktitle }}{% endblock %}
+{% load i18n %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+<div class="center-wrapper">
+    <div class="info-item">
+        <b>{% trans "This feature has been frozen and is currently unavailable." %}</b>
+    </div>
+</div>
+{% endblock %}

@@ -5,6 +5,7 @@ from modeltranslation.admin import TranslationAdmin
 from .models import RealCard, FanCard, CardClass, Tribe, CardSet, Author, Mechanic
 
 
+# (!) Заморожено
 class AuthorInline(admin.StackedInline):
     model = Author
     can_delete = False
@@ -21,6 +22,7 @@ admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 
 
+# (!) Заморожено
 @admin.register(FanCard)
 class FanCardAdmin(admin.ModelAdmin):
     """ Класс для доступа к модели Card через админку """
@@ -40,6 +42,7 @@ class FanCardAdmin(admin.ModelAdmin):
     list_editable = ('state',)
 
 
+# (!) Заморожено
 class FanCardInline(admin.TabularInline):
     """ Для встроенного редактирования связанных записей (только для ForeignKey) """
     pass

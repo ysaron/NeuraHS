@@ -4,6 +4,7 @@ from .models import RealCard, FanCard, CardClass, Tribe, CardSet, Mechanic
 from core.mixins import EditCardMixin
 
 
+# (!) Заморожено
 class CreateCardForm(EditCardMixin, forms.ModelForm):
 
     class Meta(EditCardMixin.BaseMeta):
@@ -14,6 +15,7 @@ class CreateCardForm(EditCardMixin, forms.ModelForm):
                   'spell_school']
 
 
+# (!) Заморожено
 class UpdateCardForm(EditCardMixin, forms.ModelForm):
 
     class Meta(EditCardMixin.BaseMeta):
@@ -57,6 +59,7 @@ class RealCardFilterForm(forms.Form):
     mechanic.widget.attrs.update({'class': 'form-input'})
 
 
+# (!) Заморожено
 class FanCardFilterForm(forms.Form):
     """ Форма фильтрации и поиска фан-карт """
     name = forms.CharField(required=False, label=_('Name'))

@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 from django.views.generic import RedirectView
 
-from core.views import homepage, about, contact, statistics, api_greeting
+from core.views import contact, statistics, api_greeting, frozen
 from .yasg import urlpatterns as doc_urls
 
 urlpatterns = [
@@ -20,10 +20,10 @@ urlpatterns += i18n_patterns(
     path('gallery/', include('gallery.urls')),
     path('decks/', include('decks.urls')),
     path('accounts/', include('accounts.urls')),
-    path('about/', about, name='about'),
     path('contact/', contact, name='contact'),
     path('statistics/', statistics, name='statistics'),
     path('api/', api_greeting, name='api_greeting'),
+    path('frozen/', frozen, name='frozen'),
 )
 
 urlpatterns += doc_urls

@@ -3,7 +3,6 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 from django.utils.translation import gettext_lazy as _
-from django.conf import settings
 from .models import RealCard, FanCard, Author
 from .forms import CreateCardForm, RealCardFilterForm, UpdateCardForm, \
     FanCardFilterForm
@@ -13,6 +12,7 @@ import logging
 logger = logging.getLogger('django')
 
 
+# (!) Заморожено
 class CreateCard(LoginRequiredMixin, DataMixin, generic.CreateView):
     """ Создание нового экземпляра фан-карты """
     form_class = CreateCardForm
@@ -36,6 +36,7 @@ class CreateCard(LoginRequiredMixin, DataMixin, generic.CreateView):
         return {'slug': slug, 'author': author, 'state': state}
 
 
+# (!) Заморожено
 class UpdateCard(LoginRequiredMixin, UserPassesTestMixin, DataMixin, generic.UpdateView):
     """ Редактирование фан-карты """
     model = FanCard
@@ -70,6 +71,7 @@ class UpdateCard(LoginRequiredMixin, UserPassesTestMixin, DataMixin, generic.Upd
         return redirect(reverse_lazy('gallery:card_changed'))
 
 
+# (!) Заморожено
 def card_changed(request):
     """ Уведомление о создании/изменении карты и наличии премодерации на сайте """
     context = {'title': _('The card has been changed')}
@@ -78,6 +80,7 @@ def card_changed(request):
                   context=context)
 
 
+# (!) Заморожено
 class DeleteCard(LoginRequiredMixin, UserPassesTestMixin, DataMixin, generic.DeleteView):
     """ Удаление фан-карты """
     model = FanCard
@@ -176,6 +179,7 @@ class RealCardDetailView(DataMixin, generic.DetailView):
         return context
 
 
+# (!) Заморожено
 class FanCardListView(DataMixin, generic.ListView):
     """ Список фан-карт """
     model = FanCard
@@ -205,6 +209,7 @@ class FanCardListView(DataMixin, generic.ListView):
         return context
 
 
+# (!) Заморожено
 class FanCardDetailView(DataMixin, generic.DetailView):
     """ Детальная информация о фан-карте """
     model = FanCard
@@ -220,6 +225,7 @@ class FanCardDetailView(DataMixin, generic.DetailView):
         return context
 
 
+# (!) Заморожено
 class AuthorListView(DataMixin, generic.ListView):
     """ Список авторов фан-карт """
     model = Author
@@ -238,6 +244,7 @@ class AuthorListView(DataMixin, generic.ListView):
         return self.model.objects.active().select_related('user').prefetch_related('fancard_set')
 
 
+# (!) Заморожено
 class AuthorDetailView(DataMixin, generic.DetailView):
     """ Страница с автором и списком созданных им фан-карт """
     model = Author
@@ -252,3 +259,10 @@ class AuthorDetailView(DataMixin, generic.DetailView):
 
     def get_queryset(self):
         return self.model.objects.prefetch_related('fancard_set__card_class').select_related('user')
+
+
+class FrozenRedirectView(generic.RedirectView):
+
+    permanent = False
+    query_string = True
+    pattern_name = 'frozen'

@@ -6,11 +6,6 @@ from django.utils.translation import gettext_lazy as _
 from .services.statistics import get_statistics_context
 
 
-def about(request: HttpRequest):
-    context = {'title': _('Site functionality')}
-    return render(request, 'core/about.html', context=context)
-
-
 def homepage(request: HttpRequest):
     context = {'title': 'NeuraHS'}
     return render(request, 'core/home.html', context=context)
@@ -21,7 +16,7 @@ def contact(request: HttpRequest):
         response = {'email': 'neurahs@gmail.com'}
         return JsonResponse(response)
 
-    return redirect(reverse_lazy('about'))
+    return redirect(reverse_lazy('frozen'))
 
 
 def statistics(request: HttpRequest):
@@ -34,3 +29,9 @@ def statistics(request: HttpRequest):
 def api_greeting(request: HttpRequest):
     context = {'title': 'API'}
     return render(request, template_name='core/api.html', context=context)
+
+
+def frozen(request: HttpRequest):
+    """ Заглушка для редиректа со страниц с замороженным функционалом """
+    context = {'title': _('Frozen feature')}
+    return render(request, template_name='core/frozen.html', context=context)
