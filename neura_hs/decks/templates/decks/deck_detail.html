@@ -40,7 +40,7 @@
 {% endif %}
 
 {% if deck %}
-<div class="decks-grid">
+<div class="decks-grid" style="padding-bottom: 50px;">
     <div class="">
     <table class="deck {{ deck|dformat }}">
         <tbody class="deck-header {{ deck|dclass }}">
@@ -176,12 +176,12 @@
     </table>
     </div>
     <div id="deckRenderDiv" class="render">
-        <button type="button" id="deckRenderBtn" class="render-button" onclick="showRenderForm()">
+        <button type="button" id="deckRenderBtn" class="render-button shade" onclick="showRenderForm()">
             <span><i class="fas fa-file-image"></i></span>
         </button>
     </div>
     <div class="render" id="renderForm" datasrc="{{ deck.pk }}" style="display: none;">
-        <div class="render-form">
+        <div class="render-form shade">
             <form>
                 <div>
                     <label for="renderName">{% trans 'Name' %}</label><br>
@@ -202,10 +202,10 @@
             </form>
         </div>
     </div>
-    <div id="deckRenderLoading" class="render render-loading" style="display: none;">
+    <div id="deckRenderLoading" class="render render-loading shade" style="display: none;">
         <span><i class="fas fa-spinner fa-spin"></i></span>
     </div>
-    <div id="deckRenderPlaceholder" class="render render-image-wrapper" style="display: none;">
+    <div id="deckRenderPlaceholder" class="render render-image-wrapper shade" style="display: none;">
     </div>
 </div>
 <div class="decks-grid">

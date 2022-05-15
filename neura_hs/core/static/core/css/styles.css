@@ -477,9 +477,7 @@ div.render {
   height: 100%;
   background-color: white;
   color: var(--dark);
-  border: 1px solid var(--dark);
   border-radius: 10px;
-
 }
 .render-button span {
   font-size: 13.5rem;
@@ -498,7 +496,6 @@ div.render {
   justify-content: space-around;
   background-color: white;
   color: var(--dark);
-  border: 1px solid var(--dark);
   border-radius: 10px;
 }
 .render-form div {
@@ -511,7 +508,6 @@ div.render {
   font-size: 13.5rem;
   padding: 0 3rem;
   display: block;
-  border: 1px solid black;
   border-radius: 10px;
   background-color: white;
 }
@@ -520,16 +516,23 @@ div.render {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
   border-radius: 10px;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
 }
 .render-image-wrapper:hover {
-  box-shadow: 0 16px 32px 0 rgba(0, 0, 0, 0.7);
   border-color: white;
   transition: 0.4s;
 }
 .render-image-wrapper img {border-radius: 6px;}
+.shade {
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+.shade:hover {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  outline: 1px solid black;
+  transition: 0.4s;
+}
 
 .mytooltip {
   position: relative;
@@ -563,7 +566,6 @@ div.render {
 /* ------------------ Колода --------------------- */
 table.deck {
   border-collapse: separate;
-  /*border-collapse: collapse;*/
   border-spacing: 0 0;
   position: relative;
   z-index: 1;
@@ -577,10 +579,10 @@ table.standard::before {
   position: absolute;
   top: 0; bottom: 0; left: 0; right: 0;
   z-index: -1;
-  box-shadow: 3px 0 22px 3px var(--standard), -3px 0 22px 3px var(--standard);
+  box-shadow: -5px 10px 15px var(--standard), 0px 6px 6px var(--standard);
 }
 table.standard:hover::before {
-  box-shadow: 5px 0 22px 5px var(--standard), -5px 0 22px 5px var(--standard);
+  box-shadow: -5px 15px 28px var(--standard), 0px 10px 12px var(--standard);
   transition: 0.3s;
 }
 table.wild::before {
@@ -589,10 +591,10 @@ table.wild::before {
   position: absolute;
   top: 0; bottom: 0; left: 0; right: 0;
   z-index: -1;
-  box-shadow: 3px 0 22px 3px var(--wild), -3px 0 22px 3px var(--wild);
+  box-shadow: -5px 10px 15px var(--wild), 0px 6px 6px var(--wild);
 }
 table.wild:hover::before {
-  box-shadow: 5px 0 22px 5px var(--wild), -5px 0 22px 5px var(--wild);
+  box-shadow: -5px 15px 28px var(--wild), 0px 10px 12px var(--wild);
   transition: 0.3s;
 }
 table.classic::before {
@@ -601,10 +603,10 @@ table.classic::before {
   position: absolute;
   top: 0; bottom: 0; left: 0; right: 0;
   z-index: -1;
-  box-shadow: 3px 0 22px 3px var(--classic), -3px 0 22px 3px var(--classic);
+  box-shadow: -5px 10px 15px var(--classic), 0px 6px 6px var(--classic);
 }
 table.classic:hover::before {
-  box-shadow: 5px 0 22px 5px var(--classic), -5px 0 22px 5px var(--classic);
+  box-shadow: -5px 15px 28px var(--classic), 0px 10px 12px var(--classic);
   transition: 0.3s;
 }
 table.unknown::before {
@@ -613,7 +615,7 @@ table.unknown::before {
   position: absolute;
   top: 0; bottom: 0; left: 0; right: 0;
   z-index: -1;
-  box-shadow: 3px 0 25px 3px rgba(0, 0, 0, 0.5), -3px 0 25px 3px rgba(0, 0, 0, 0.5);
+  box-shadow: -5px 10px 15px rgba(0, 0, 0, 0.5), 0px 6px 6px rgba(0, 0, 0, 0.5);
 }
 table.deck td {
   border: 1px solid #999999;
@@ -756,13 +758,13 @@ td.deck-control * {
   padding: 20px 20px;
   margin: 5px 0;
   border-radius: 20px;
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
   color: black;
   background-color: white;
   transition: 0.3s;
 }
 .info-item:hover {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
   outline: 1px solid black;
 }
 .info-item h4 {
