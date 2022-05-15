@@ -36,6 +36,8 @@ class Format(models.Model):
     available_sets = models.ManyToManyField(CardSet, blank=True, verbose_name=_('Available sets'),
                                             help_text=_('Card sets that can be used in this format'))
 
+    objects = models.Manager()
+
     class Meta:
         verbose_name = _('Format')
         verbose_name_plural = _('Formats')
@@ -239,4 +241,3 @@ class Render(models.Model):
     language = models.CharField(max_length=2, choices=Languages.choices, default=Languages.ENGLISH)
 
     objects = models.Manager()
-

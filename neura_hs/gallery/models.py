@@ -94,6 +94,8 @@ class CardClass(Model):
     image = models.ImageField(verbose_name=_('Image'), help_text=_('Class image to display in deck header'),
                               upload_to='classes/', null=True, blank=True)
 
+    objects = Manager()
+
     class Meta:
         verbose_name = _('In-game class')
         verbose_name_plural = _('In-game classes')
@@ -109,6 +111,8 @@ class Tribe(Model):
     service_name = models.CharField(max_length=255, verbose_name='Service', default='', help_text='(!)',
                                     unique=True)
 
+    objects = Manager()
+
     class Meta:
         verbose_name = _('The tribe of the minion.')
         verbose_name_plural = _('The tribes of the minion.')
@@ -121,6 +125,8 @@ class CardSet(Model):
     """ Модель набора карт Hearthstone """
     name = models.CharField(max_length=255, verbose_name=_('Name'))
     service_name = models.CharField(max_length=255, verbose_name='Service', default='', help_text='(!)', blank=True)
+
+    objects = Manager()
 
     class Meta:
         verbose_name = _('Set')
@@ -135,6 +141,8 @@ class Mechanic(Model):
     name = models.CharField(max_length=255, verbose_name=_('Name'))
     service_name = models.CharField(max_length=255, verbose_name='Service', default='', help_text='(!)', blank=True)
     hidden = models.BooleanField(default=False, verbose_name=_('Hidden?'))
+
+    objects = Manager()
 
     class Meta:
         verbose_name = _('Mechanic')
@@ -279,3 +287,32 @@ class FanCard(Card):
     def get_absolute_url(self):
         """ Возвращает URL для доступа к подробной странице карты """
         return reverse('gallery:fan_card', kwargs={'card_slug': self.slug})
+
+
+class SingletonModel(Model):
+
+    objects = Manager()
+
+    class Meta:
+        abstract = True
+
+    def save(self, *args, **kwargs):
+        self.pk = 1
+        super().save(*args, **kwargs)
+
+    def delete(self, using=None, keep_parents=False):
+        pass
+
+    @classmethod
+    def load(cls):
+        obj, created = cls.objects.get_or_create(pk=1)
+        return obj
+
+
+class HearthstoneState(SingletonModel):
+    """ Используется для отслеживания обновлений игры """
+    version = models.CharField(max_length=255, default='0',
+                               verbose_name=_('Version'), help_text=_('Current HS version'))
+    last_updated = models.DateTimeField(auto_now=True, verbose_name=_('Last update time'))
+    success = models.BooleanField(default=True, verbose_name=_('Updated successfully'),
+                                  help_text=_('Whether the last update was successful'))
