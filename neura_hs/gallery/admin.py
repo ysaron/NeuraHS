@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 from modeltranslation.admin import TranslationAdmin
-from .models import RealCard, FanCard, CardClass, Tribe, CardSet, Author, Mechanic
+from .models import RealCard, FanCard, CardClass, Tribe, CardSet, Author, Mechanic, HearthstoneState
 
 
 # (!) Заморожено
@@ -89,4 +89,9 @@ class CardSetAdmin(TranslationAdmin):
 
 @admin.register(Mechanic)
 class MechanicAdmin(TranslationAdmin):
+    pass
+
+
+@admin.register(HearthstoneState)
+class StateAdmin(admin.ModelAdmin):
     pass
