@@ -5,7 +5,7 @@
 [![DRF](https://img.shields.io/badge/django--rest--framework-v3.12.4-blue.svg)](https://www.django-rest-framework.org/)
 [![License](https://img.shields.io/badge/license-MIT-9cf.svg)](https://opensource.org/licenses/MIT)
 
-> http://91.227.18.9/
+> ~~http://91.227.18.9/~~ (временно недоступен)
 ----
 ## Описание
 Вспомогательный сервис для игроков [Hearthstone](https://playhearthstone.com/).  
